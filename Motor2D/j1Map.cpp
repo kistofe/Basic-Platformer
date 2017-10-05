@@ -33,8 +33,17 @@ void j1Map::Draw()
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
 
+	for (int y = 0; y < data.height; y++)
+	{
+		for (int x = 0; x < data.width; x++)
+		{
+			App->render->Blit(data.tilesets.start->data->texture, x*data.tile_width, y*data.tile_height);
+		}
+	}
+	
 		// TODO 9: Complete the draw function
 
+	
 }
 
 
@@ -322,7 +331,7 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	layer->width		= layer_node.attribute("width").as_uint(0);
 	layer->name.create(layer_node.attribute("name").as_string());
 	layer->size			= layer->height * layer->width;
-	layer->layer_gid	= new uint(layer->size);
+	layer->layer_gid	= new uint[layer->size];
 	
 	memset(layer->layer_gid, 0, (sizeof(uint)*layer->size));
 
@@ -332,6 +341,15 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 		layer->layer_gid[i] = sib_iterator.attribute("gid").as_uint();
 		sib_iterator = sib_iterator.next_sibling("tile");
 	}
-
+	
 	return ret;
+}
+
+inline uint MapLayer::Get(uint x, uint y) const
+{
+	uint res = 0;
+
+
+
+	return res;
 }

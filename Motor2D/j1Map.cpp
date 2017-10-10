@@ -32,30 +32,20 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
-
+	
 	for (int y = 0; y < data.height; y++)
 	{
 		for (int x = 0; x < data.width; x++)
 		{
-			App->render->Blit(data.tilesets.start->data->texture, x*data.tile_width, y*data.tile_height);
+			App->render->Blit(data.tilesets[0]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[0]->GetTileRect(data.map_layers[0]->layer_gid[data.map_layers[0]->Get(x, y)]));
 		}
 	}
 	
-		// TODO 9: Complete the draw function
+	// TODO 9: Complete the draw function
 
 	
 }
 
-
-iPoint j1Map::MapToWorld(int x, int y) const
-{
-	iPoint ret;
-
-	ret.x = x * data.tile_width;
-	ret.y = y * data.tile_height;
-
-	return ret;
-}
 
 SDL_Rect TileSet::GetTileRect(int id) const
 {
@@ -192,6 +182,18 @@ bool j1Map::Load(const char* file_name)
 
 	return ret;
 }
+
+iPoint j1Map::MapToWorld(int x, int y) const
+{
+	iPoint ret;
+
+	ret.x = x * data.tile_width;
+	ret.y = y * data.tile_height;
+
+	return ret;
+}
+
+
 
 // Load map general properties
 bool j1Map::LoadMap()
@@ -345,11 +347,6 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	return ret;
 }
 
-inline uint MapLayer::Get(uint x, uint y) const
-{
-	uint res = 0;
 
 
 
-	return res;
-}

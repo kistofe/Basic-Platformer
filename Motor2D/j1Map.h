@@ -15,8 +15,11 @@ struct MapLayer
 	uint*		layer_gid;
 	~MapLayer() { delete layer_gid; };
 
-	inline uint Get(uint x, uint y) const;
 
+	inline uint Get(uint x, uint y)
+	{
+		return x + y*width;
+	}
 };
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
@@ -32,7 +35,7 @@ struct TileSet
 {
 	// TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
-
+	
 	p2SString			name;
 	int					firstgid;
 	int					margin;

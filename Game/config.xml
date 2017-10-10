@@ -25,5 +25,8 @@
   <map>
     <folder>maps/</folder>
   </map>
-
+	
+  <scene>
+    <map_name name = "hello2.tmx"/>
+  </scene>
 </config>

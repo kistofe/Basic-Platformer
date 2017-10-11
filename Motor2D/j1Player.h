@@ -32,6 +32,10 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
+	Animation* idle;
+	Animation* walking;
+	Animation* running;
+	Animation* jump;
 
 };
 

@@ -31,7 +31,7 @@ bool j1Player::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->tex->Load(/*ramona flowers spritsheet*/);
+	//graphics = App->tex->Load(/*ramona flowers spritsheet*/);
 
 	return true;
 }

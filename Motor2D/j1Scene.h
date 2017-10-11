@@ -2,6 +2,8 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "p2Point.h"
+#include <math.h>
 
 struct SDL_Texture;
 
@@ -31,6 +33,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	float gravity = 9.88;
 
 private:
 

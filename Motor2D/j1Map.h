@@ -24,8 +24,6 @@ struct MapLayer
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
 
-
-
 // TODO 6: Short function to get the value of x,y
 
 

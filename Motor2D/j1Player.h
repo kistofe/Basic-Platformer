@@ -21,7 +21,7 @@ public:
 	~j1Player();
 
 
-	bool Start();
+	bool Start(pugi::xml_node& config);
 
 	bool PreUpdate();
 
@@ -39,6 +39,7 @@ public:
 	Animation walking;
 	Animation running;
 	Animation jump;
+	iPoint position;
 
 	float speed_x = 0;
 	float speed_y = 0;

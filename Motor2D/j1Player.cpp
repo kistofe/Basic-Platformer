@@ -56,33 +56,21 @@ j1Player::~j1Player()
 {
 }
 
-bool j1Player::Awake(pugi::xml_node& object)
+bool j1Player::Awake()
 {
-<<<<<<< HEAD
-	
-	
-		
-=======
-	player_pos.x = object.attribute("x").as_int();
-	player_pos.y = object.attribute("y").as_int();
-
->>>>>>> origin/master
 	return true;
 }
 
-bool j1Player::Start(pugi::xml_node& object, ObjLayer* pos)
+bool j1Player::Start()
 {
 	LOG("Loading player");
+	pugi::xml_node object;
+	ObjLayer pos;
 
-<<<<<<< HEAD
+	pos.x = object.child("object").attribute("x").as_int();
+	pos.y = object.child("object").attribute("y").as_int();
 
 	graphics = App->tex->Load("images/Ramona.png");
-
-	pos->x = object.attribute("x").as_int();
-	pos->y = object.attribute("y").as_int();
-=======
-	graphics = App->tex->Load("images/Ramona.png");
->>>>>>> origin/master
 
 	return true;
 }
@@ -114,18 +102,15 @@ bool j1Player::Update(float dt, ObjLayer* pos)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &walking;
 
-<<<<<<< HEAD
-	App->render->Blit(graphics, pos->x, pos->y, &(current_animation->GetCurrentFrame()));
-=======
 	if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 		current_animation = &running;
 
 	if (facing_right)
-		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
+		App->render->Blit(graphics, pos->x, pos->y, &(current_animation->GetCurrentFrame()));
 
 	if (!facing_right)
-		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
->>>>>>> origin/master
+		App->render->Blit(graphics, pos->x, pos->y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+
 
 	return true;
 }

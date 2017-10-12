@@ -21,9 +21,9 @@ public:
 	//Destructor
 	~j1Player();
 
-	bool Awake(pugi::xml_node& object);
+	bool Awake();
 
-	bool Start(pugi::xml_node&, ObjLayer*);
+	bool Start();
 
 	bool PreUpdate();
 
@@ -32,6 +32,8 @@ public:
 	bool CleanUp();
 
 private:
+
+	void SetSpeed();
 
 public:
 
@@ -42,15 +44,8 @@ public:
 	Animation running;
 	Animation jump;
 
-<<<<<<< HEAD
-=======
 	bool facing_right = true;
-
-	iPoint player_pos;
->>>>>>> origin/master
 	fPoint player_speed;
-
-	void SetSpeed();
 
 private:
 	

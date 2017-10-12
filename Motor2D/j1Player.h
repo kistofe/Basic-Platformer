@@ -20,8 +20,9 @@ public:
 	//Destructor
 	~j1Player();
 
+	bool Awake();
 
-	bool Start(pugi::xml_node& config);
+	bool Start();
 
 	bool PreUpdate();
 
@@ -39,10 +40,9 @@ public:
 	Animation walking;
 	Animation running;
 	Animation jump;
-	iPoint position;
 
-	float speed_x = 0;
-	float speed_y = 0;
+	iPoint player_pos;
+	fPoint player_speed;
 
 	void SetSpeed();
 

@@ -21,9 +21,9 @@ public:
 	//Destructor
 	~j1Player();
 
-	bool Awake(pugi::xml_node&, ObjLayer*);
+	bool Awake();
 
-	bool Start();
+	bool Start(pugi::xml_node&, ObjLayer*);
 
 	bool PreUpdate();
 

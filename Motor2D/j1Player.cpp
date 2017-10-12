@@ -56,22 +56,24 @@ j1Player::~j1Player()
 {
 }
 
-bool j1Player::Awake(pugi::xml_node& object, ObjLayer* pos)
+bool j1Player::Awake()
 {
 	
-	pos->x = object.attribute("x").as_int();
-	pos->y = object.attribute("y").as_int();
 	
 		
 	return true;
 }
 
-bool j1Player::Start()
+bool j1Player::Start(pugi::xml_node& object, ObjLayer* pos)
 {
 	LOG("Loading player");
-		
+
+
 	graphics = App->tex->Load("images/Ramona.png");
-		
+
+	pos->x = object.attribute("x").as_int();
+	pos->y = object.attribute("y").as_int();
+
 	return true;
 }
 

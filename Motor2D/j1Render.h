@@ -28,6 +28,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Load the very first level
+	bool LoadFirstLevel(pugi::xml_node&);
+
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;

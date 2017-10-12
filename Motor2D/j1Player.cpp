@@ -57,8 +57,6 @@ j1Player::~j1Player()
 
 bool j1Player::Awake()
 {
-	graphics = App->tex->Load("images/Ramona.png");
-
 	return true;
 }
 
@@ -68,6 +66,8 @@ bool j1Player::Start()
 
 	//player_pos.x = config.child("player_pos").attribute("x").as_int();
 	//player_pos.y = config.child("player_pos").attribute("y").as_int();
+
+	graphics = App->tex->Load("images/Ramona.png");
 	
 	player_pos.create(118, 473);
 

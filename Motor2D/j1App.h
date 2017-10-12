@@ -47,6 +47,7 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	void LoadFirstLevel();
 	void LoadGame();
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
@@ -70,6 +71,9 @@ private:
 
 	// Call modules after each loop iteration
 	bool PostUpdate();
+
+	//Load the very first level
+	bool LoadFirstLevelNow();
 
 	// Load / Save
 	bool LoadGameNow();
@@ -101,6 +105,7 @@ private:
 
 	mutable bool		want_to_save;
 	bool				want_to_load;
+	bool				want_to_load_first_level;
 	p2SString			load_game;
 	mutable p2SString	save_game;
 };

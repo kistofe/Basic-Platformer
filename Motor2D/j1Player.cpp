@@ -4,6 +4,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Input.h"
+#include "j1Map.h"
 
 
 j1Player::j1Player()
@@ -55,23 +56,22 @@ j1Player::~j1Player()
 {
 }
 
-bool j1Player::Awake()
+bool j1Player::Awake(pugi::xml_node& object, ObjLayer* pos)
 {
+	
+	pos->x = object.attribute("x").as_int();
+	pos->y = object.attribute("y").as_int();
+	
+		
 	return true;
 }
 
 bool j1Player::Start()
 {
 	LOG("Loading player");
-
-	
-	//player_pos.x = config.child("player_pos").attribute("x").as_int();
-	//player_pos.y = config.child("player_pos").attribute("y").as_int();
-
+		
 	graphics = App->tex->Load("images/Ramona.png");
-	
-	player_pos.create(118, 473);
-
+		
 	return true;
 }
 
@@ -80,22 +80,22 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
-bool j1Player::Update(float dt)
+bool j1Player::Update(float dt, ObjLayer* pos)
 {
 	SetSpeed();
 
 	current_animation = &idle;
 
-	player_pos.x += player_speed.x;
-	player_pos.y += player_speed.y;
+	pos->x += player_speed.x;
+	pos->y += player_speed.y;
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		LOG("Player position: x = %i, y = %i", player_pos.x, player_pos.y);
+		LOG("Player position: x = %i, y = %i", pos->x, pos->y );
 		LOG("Speed.x = %f", player_speed.x);
 	}
 
-	App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(graphics, pos->x, pos->y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }

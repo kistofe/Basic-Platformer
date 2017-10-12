@@ -40028,7 +40028,6 @@
  <objectgroup color="#00ff00" name="main character">
   <object id="7" name="mainPlayer" x="138" y="473" width="50" height="69">
    <properties>
-    <property name="graphics" type="file" value="../images/Ramona.png"/>
     <property name="touching_ground" type="bool" value="true"/>
    </properties>
   </object>

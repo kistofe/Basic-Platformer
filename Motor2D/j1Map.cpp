@@ -149,6 +149,24 @@ bool j1Map::Load(const char* file_name)
 		data.map_layers.add(set);
 	}
 
+	// Load Obj layer info --------------------------------------------
+	pugi::xml_node obj_layers;
+	for (obj_layers = map_file.child("map").child("objectgroup"); obj_layers && ret; obj_layers = obj_layers.next_sibling("objectgroup"))
+	{
+		ObjLayer* set = new ObjLayer();
+
+		if (ret == true)
+		{
+			ret = Load_ObjGroup_Layer(obj_layers, set);
+		}
+
+		if (ret == true)
+		{
+			ret = Load_Obj_Layer(obj_layers, set);
+		}
+		data.obj_layers.add(set);
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -336,13 +354,49 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	
 	memset(layer->layer_gid, 0, (sizeof(uint)*layer->size));
 
-
+	
 	for (int i = 0; i < layer->size; i++)
 	{
 		layer->layer_gid[i] = sib_iterator.attribute("gid").as_uint();
 		sib_iterator = sib_iterator.next_sibling("tile");
 	}
 	
+	return ret;
+}
+
+bool j1Map::Load_ObjGroup_Layer(pugi::xml_node& obj_node, ObjLayer* obj)
+{
+	bool ret = true;
+	obj->layer_name.create(obj_node.attribute("name").as_string());
+	
+	return ret;
+}
+
+bool j1Map::Load_Obj_Layer(pugi::xml_node& obj_node, ObjLayer* obj)
+{
+	bool ret = true;
+	
+	pugi::xml_node sib_iterator = obj_node.child("data").child("objectgroup").child("object");
+
+	
+	obj->height			= obj_node.child("object").attribute("height").as_uint(0);
+	obj->width			= obj_node.child("object").attribute("width").as_uint(0);
+	obj->name.create(obj_node.child("object").attribute("name").as_string());
+	obj->x				= obj_node.child("object").attribute("x").as_uint(0);
+	obj->y				= obj_node.child("object").attribute("y").as_uint(0);
+	obj->size			= obj->height * obj->width;
+	obj->object_id		= new uint[obj->size];
+
+	memset(obj->object_id, 0, (sizeof(uint)*obj->size));
+
+
+	for (int i = 0; i < obj->size; i++)
+	{
+		obj->object_id[i] = sib_iterator.attribute("id").as_uint();
+		sib_iterator = sib_iterator.next_sibling("object");
+	}
+
+
 	return ret;
 }
 

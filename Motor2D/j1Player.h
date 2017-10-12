@@ -9,6 +9,7 @@
 #include "Animation.h"
 #include "j1App.h"
 #include "j1Collision.h"
+#include "j1Map.h"
 
 #include "SDL/include/SDL.h"
 
@@ -20,13 +21,13 @@ public:
 	//Destructor
 	~j1Player();
 
-	bool Awake();
+	bool Awake(pugi::xml_node&, ObjLayer*);
 
 	bool Start();
 
 	bool PreUpdate();
 
-	bool Update(float dt);
+	bool Update(float dt, ObjLayer*);
 
 	bool CleanUp();
 
@@ -41,10 +42,12 @@ public:
 	Animation running;
 	Animation jump;
 
-	iPoint player_pos;
 	fPoint player_speed;
 
 	void SetSpeed();
+
+private:
+	
 
 };
 

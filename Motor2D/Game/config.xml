@@ -27,6 +27,7 @@
   </map>
   
   <player>
+    <sprite_path path = "Ramona.png"/>
   </player>	
 
   <scene>

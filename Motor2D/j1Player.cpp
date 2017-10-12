@@ -60,7 +60,7 @@ bool j1Player::Start(pugi::xml_node& object_layer)
 {
 	LOG("Loading player");
 
-	graphics = App->tex->Load("Motor2D/Game/images/Ramona.png");
+	graphics = App->tex->Load("images/Ramona.png");
 
 	position.x = object_layer.child("id").attribute("x").as_int();
 	position.y = object_layer.child("id").attribute("y").as_int();
@@ -100,7 +100,7 @@ void j1Player::SetSpeed()
 		speed_x = -4.0f;
 	}
 
-	LOG("Speed.x = %f", speed_x);
+	//LOG("Speed.x = %f", speed_x);
 
 	return;
 }

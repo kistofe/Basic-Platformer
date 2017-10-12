@@ -20,7 +20,7 @@ public:
 	//Destructor
 	~j1Player();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& object);
 
 	bool Start();
 
@@ -40,6 +40,8 @@ public:
 	Animation walking;
 	Animation running;
 	Animation jump;
+
+	bool facing_right = true;
 
 	iPoint player_pos;
 	fPoint player_speed;

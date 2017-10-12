@@ -8,7 +8,9 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "j1Collision.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 #include "j1Map.h"
 #include "j1App.h"
 
@@ -23,7 +25,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
+	collision = new j1Collision();
 	scene = new j1Scene();
+	player = new j1Player();
 	map = new j1Map();
 
 	// Ordered for awake / Start / Update
@@ -66,6 +70,9 @@ bool j1App::Awake()
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
+
+	save_game.create("save.xml");
+	load_game.create("save.xml");
 
 	bool ret = false;
 		

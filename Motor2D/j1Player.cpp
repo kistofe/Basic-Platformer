@@ -3,6 +3,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Input.h"
 
 
 j1Player::j1Player()
@@ -11,41 +12,41 @@ j1Player::j1Player()
 	current_animation = NULL;
 
 	//idle animation
-	idle->PushBack({ 0, 0, 50, 69 });
+	idle.PushBack({ 0, 0, 50, 69 });
 
 	//walking animation
-	walking->PushBack({ 0, 70, 50, 69 });
-	walking->PushBack({ 60, 70, 50, 69 });
-	walking->PushBack({ 120, 70, 50, 69 });
-	walking->PushBack({ 180, 70, 50, 69 });
-	walking->PushBack({ 240, 70, 50, 69 });
-	walking->PushBack({ 300, 70, 50, 69 });
-	walking->loop = true;
-	walking->speed = 1.0f;
+	walking.PushBack({ 0, 70, 50, 69 });
+	walking.PushBack({ 60, 70, 50, 69 });
+	walking.PushBack({ 120, 70, 50, 69 });
+	walking.PushBack({ 180, 70, 50, 69 });
+	walking.PushBack({ 240, 70, 50, 69 });
+	walking.PushBack({ 300, 70, 50, 69 });
+	walking.loop = true;
+	walking.speed = 1.0f;
 
 	//running animation
-	running->PushBack({ 0, 210, 50, 69 });
-	running->PushBack({ 60, 210, 50, 69 });
-	running->PushBack({ 120, 210, 50, 69 });
-	running->PushBack({ 180, 210, 50, 69 });
-	running->PushBack({ 180, 210, 50, 69 });
-	running->PushBack({ 240, 210, 50, 69 });
-	running->PushBack({ 300, 210, 50, 69 });
-	running->PushBack({ 360, 210, 50, 69 });
-	running->loop = true;
-	running->speed = 1.5f,
+	running.PushBack({ 0, 210, 50, 69 });
+	running.PushBack({ 60, 210, 50, 69 });
+	running.PushBack({ 120, 210, 50, 69 });
+	running.PushBack({ 180, 210, 50, 69 });
+	running.PushBack({ 180, 210, 50, 69 });
+	running.PushBack({ 240, 210, 50, 69 });
+	running.PushBack({ 300, 210, 50, 69 });
+	running.PushBack({ 360, 210, 50, 69 });
+	running.loop = true;
+	running.speed = 1.5f,
 
 	//jumping animation
-	jump->PushBack({ 0, 140, 50, 69 });
-	jump->PushBack({ 60, 140, 50, 69 });
-	jump->PushBack({ 120, 140, 50, 69 });
-	jump->PushBack({ 180, 140, 50, 69 });
-	jump->PushBack({ 180, 140, 50, 69 });
-	jump->PushBack({ 240, 140, 50, 69 });
-	jump->PushBack({ 300, 140, 50, 69 });
-	jump->PushBack({ 360, 140, 50, 69 });
-	jump->loop = false;
-	jump->speed = 1.5f;
+	jump.PushBack({ 0, 140, 50, 69 });
+	jump.PushBack({ 60, 140, 50, 69 });
+	jump.PushBack({ 120, 140, 50, 69 });
+	jump.PushBack({ 180, 140, 50, 69 });
+	jump.PushBack({ 180, 140, 50, 69 });
+	jump.PushBack({ 240, 140, 50, 69 });
+	jump.PushBack({ 300, 140, 50, 69 });
+	jump.PushBack({ 360, 140, 50, 69 });
+	jump.loop = false;
+	jump.speed = 1.5f;
 
 }
 
@@ -64,6 +65,17 @@ bool j1Player::Start()
 	return true;
 }
 
+bool j1Player::PreUpdate()
+{
+	SetSpeed();
+	return true;
+}
+
+bool j1Player::Update(float dt)
+{
+	return true;
+}
+
 bool j1Player::CleanUp()
 {
 	LOG("Unloading player");
@@ -73,4 +85,18 @@ bool j1Player::CleanUp()
 		return true;
 }
 
+void j1Player::SetSpeed()
+{
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+	{
+		speed_x = 4;
+		LOG("Speed.x = %d", &speed_x);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+	{
+		speed_x = -4;
+		LOG("Speed.x = %d", &speed_x);
+	}
 
+	return;
+}

@@ -8,6 +8,7 @@
 #include "j1Module.h"
 #include "Animation.h"
 #include "j1App.h"
+#include "j1Collision.h"
 
 #include "SDL/include/SDL.h"
 
@@ -22,9 +23,11 @@ public:
 
 	bool Start();
 
+	bool PreUpdate();
+
+	bool Update(float dt);
+
 	bool CleanUp();
-
-
 
 private:
 
@@ -32,10 +35,15 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
-	Animation* idle;
-	Animation* walking;
-	Animation* running;
-	Animation* jump;
+	Animation idle;
+	Animation walking;
+	Animation running;
+	Animation jump;
+
+	float speed_x = 0;
+	float speed_y = 0;
+
+	void SetSpeed();
 
 };
 

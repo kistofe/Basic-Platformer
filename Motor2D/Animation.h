@@ -3,7 +3,7 @@
 #include <assert.h>
 #include "SDL/include/SDL_rect.h"
 
-#define MAX_FRAMES 35
+#define MAX_FRAMES 100
 
 class Animation
 {
@@ -23,7 +23,7 @@ public:
 	{
 		if (last_frame < MAX_FRAMES)
 			frames[last_frame++] = rect;
-		assert(last_frame < MAX_FRAMES);
+			assert(last_frame < MAX_FRAMES);
 	}
 
 	SDL_Rect& GetCurrentFrame()

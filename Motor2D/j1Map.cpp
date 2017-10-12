@@ -325,7 +325,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 {
 	bool ret = true;
-
+	
 	pugi::xml_node sib_iterator = layer_node.child("data").child("tile");
 
 	layer->height		= layer_node.attribute("height").as_uint(0);

@@ -56,14 +56,14 @@ j1Player::~j1Player()
 }
 
 // Load assets
-bool j1Player::Start(pugi::xml_node& config)
+bool j1Player::Start(pugi::xml_node& object_layer)
 {
 	LOG("Loading player");
 
 	graphics = App->tex->Load("Motor2D/Game/images/Ramona.png");
 
-	position.x = config.child("player_pos").attribute("x").as_int();
-	position.y = config.child("player_pos").attribute("y").as_int();
+	position.x = object_layer.child("id").attribute("x").as_int();
+	position.y = object_layer.child("id").attribute("y").as_int();
 	
 	return true;
 }

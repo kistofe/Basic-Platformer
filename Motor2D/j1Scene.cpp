@@ -34,6 +34,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->map->Load(map_name.GetString());
+	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	return true;
 }
 

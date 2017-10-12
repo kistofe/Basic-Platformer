@@ -75,6 +75,9 @@ private:
 
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
+	fPoint velocity;
+	fPoint acceleration;
+
 	bool debug = false;
 };
 

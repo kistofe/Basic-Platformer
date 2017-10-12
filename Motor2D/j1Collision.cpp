@@ -37,6 +37,8 @@ bool j1Collision::PreUpdate()
 {
 	// Add method for destroying colliders here (and variable to_delete)
 	bool ret = true;
+	
+	//calculate the player's position in the next frame
 	return ret;
 }
 
@@ -44,13 +46,18 @@ bool j1Collision::Update()
 {
 	bool ret = true;
 	DebugDraw();
+
+	//if the player's position in the next frame is inside a wall collider, call OnCollision and calculate for how much will it collide
 	return ret;
 }
 
 bool j1Collision::PostUpdate()
 {
 	bool ret = true;
+
+	//adjust the player's position to avoid collider interesection
 	return ret;
+
 }
 
 bool j1Collision::CleanUp()

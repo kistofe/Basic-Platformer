@@ -27,6 +27,6 @@
   </map>
 	
   <scene>
-    <map_name name = "hello2.tmx"/>
+    <map_name name = "test.tmx"/>
   </scene>
 </config>

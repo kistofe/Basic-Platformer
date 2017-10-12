@@ -31,15 +31,26 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
 	
-	for (int y = 0; y < data.height; y++)
+	//layers loop
+	
+	
+	// TODO 5: Prepare the loop to draw all tilesets + Blit;
+	for (int i = 0; i < data.map_layers.count(); i++)
 	{
-		for (int x = 0; x < data.width; x++)
+		for (int j = 0; j < data.tilesets.count(); j++)
 		{
-			App->render->Blit(data.tilesets[0]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[0]->GetTileRect(data.map_layers[0]->layer_gid[data.map_layers[0]->Get(x, y)]));
+			for (int y = 0; y < data.height; y++)
+			{
+				for (int x = 0; x < data.width; x++)
+				{
+					App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]));
+				}
+			}
 		}
 	}
+	
+	
 	
 	// TODO 9: Complete the draw function
 

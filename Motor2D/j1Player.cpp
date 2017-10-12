@@ -67,12 +67,12 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
-	SetSpeed();
 	return true;
 }
 
 bool j1Player::Update(float dt)
 {
+	SetSpeed();
 	return true;
 }
 
@@ -87,16 +87,17 @@ bool j1Player::CleanUp()
 
 void j1Player::SetSpeed()
 {
+	speed_x = 0;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
-		speed_x = 4;
-		LOG("Speed.x = %d", &speed_x);
+		speed_x = 4.0f;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
-		speed_x = -4;
-		LOG("Speed.x = %d", &speed_x);
+		speed_x = -4.0f;
 	}
+
+	LOG("Speed.x = %f", speed_x);
 
 	return;
 }

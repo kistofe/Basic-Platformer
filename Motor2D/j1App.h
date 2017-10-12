@@ -73,7 +73,7 @@ private:
 	bool PostUpdate();
 
 	//Load the very first level
-	bool LoadFirstLevelNow();
+	bool LoadFromBegNow();
 
 	// Load / Save
 	bool LoadGameNow();
@@ -105,7 +105,7 @@ private:
 
 	mutable bool		want_to_save;
 	bool				want_to_load;
-	bool				want_to_load_first_level;
+	bool				want_to_load_from_beg;
 	p2SString			load_game;
 	mutable p2SString	save_game;
 };

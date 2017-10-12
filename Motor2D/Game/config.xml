@@ -32,5 +32,6 @@
 
   <scene>
     <map_name name = "test.tmx"/>
+    <map_name name = "test2.tmx"/>
   </scene>
 </config>

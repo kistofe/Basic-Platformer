@@ -28,8 +28,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load the very first level
-	bool LoadFirstLevel(pugi::xml_node&);
+	//Load from the beginning
+	bool Load_From_Beginning(pugi::xml_node&);
 
 	// Load / Save
 	bool Load(pugi::xml_node&);

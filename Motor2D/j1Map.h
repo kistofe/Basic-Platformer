@@ -92,6 +92,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
+	bool Update(float dt);
+
 	// Called each loop iteration
 	void Draw();
 
@@ -104,6 +106,10 @@ public:
 	// Change from map coordinates (tiles) to world coordinates (pixels)
 	iPoint MapToWorld(int x, int y) const;
 
+	// Method to darken screen while map switching takes place
+	bool FadeToBlack(float time = 1.0f);
+
+
 private:
 
 	bool LoadMap();
@@ -112,9 +118,17 @@ private:
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
+
+	bool MapSwitch(char* new_map);
+
+	bool UnloadCurrentMap();
+
 public:
 
 	MapData data;
+
+	// Variables for map switching
+	bool				fading			= false;
 
 private:
 
@@ -122,6 +136,19 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+
+	// Variables for map switching
+	enum fade_step
+	{
+		none,
+		fade_to_black,
+		fade_from_black
+	}					current_step	= fade_step::none;
+
+	Uint32				start_time		= 0;
+	Uint32				total_time		= 0;
+	SDL_Rect			screen;
+	bool				switching		= false;
 };
 
 #endif // __j1MAP_H__

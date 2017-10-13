@@ -83,7 +83,7 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
-bool j1Player::Update(float dt // Dont add more parameters or update wont be called)
+bool j1Player::Update(float dt /* Dont add more parameters or update wont be called */)
 {
 	SetSpeed();
 

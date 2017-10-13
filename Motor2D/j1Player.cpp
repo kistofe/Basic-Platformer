@@ -9,6 +9,7 @@
 
 j1Player::j1Player()
 {
+	name.create("player");
 	graphics = NULL;
 	current_animation = NULL;
 

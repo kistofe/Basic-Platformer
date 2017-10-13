@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Input.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -32,7 +33,7 @@ void j1Map::Draw()
 		return;
 
 
-	//loop through all layers and all tiles from each layer
+	//loop through all layers and all tiles 
 	for (int i = 0; i < data.map_layers.count(); i++)
 	{
 		for (int j = 0; j < data.tilesets.count(); j++)

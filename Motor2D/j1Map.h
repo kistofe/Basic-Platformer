@@ -110,6 +110,7 @@ private:
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjGroup_Layer(pugi::xml_node& obj_node, ObjLayer* obj);
 	bool Load_Obj_Layer(pugi::xml_node& obj_node, ObjLayer* obj);
+	
 public:
 
 	MapData data;

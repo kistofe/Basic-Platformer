@@ -58,11 +58,11 @@ j1Player::~j1Player()
 
 bool j1Player::Awake()
 {
-	pugi::xml_node object;
-	ObjLayer pos;
-	pos.x = object.child("object").attribute("x").as_int();
-	pos.y = object.child("object").attribute("y").as_int();
-
+	for (int i = 0; i < App->map->data.obj_groups.count(); i++)
+	{
+		// Loop for finding the object group where the player is, probably doesnt work
+	}
+	
 	return true;
 }
 
@@ -72,6 +72,8 @@ bool j1Player::Start()
 
 	graphics = App->tex->Load("images/Ramona.png");
 
+	player_pos.create(118, 473); // Hardcoded until object reading works, replace with player_pos.create(read_x, read_y) or smth
+
 	return true;
 }
 
@@ -80,18 +82,18 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
-bool j1Player::Update(float dt, ObjLayer* pos)
+bool j1Player::Update(float dt // Dont add more parameters or update wont be called)
 {
 	SetSpeed();
 
 	current_animation = &idle;
 
-	pos->x += player_speed.x;
-	pos->y += player_speed.y;
+	player_pos.x += player_speed.x;
+	player_pos.y += player_speed.y;
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		LOG("Player position: x = %i, y = %i", pos->x, pos->y );
+		LOG("Player position: x = %i, y = %i", player_pos.x, player_pos.y );
 		LOG("Speed.x = %f", player_speed.x);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -106,10 +108,10 @@ bool j1Player::Update(float dt, ObjLayer* pos)
 		current_animation = &running;
 
 	if (facing_right)
-		App->render->Blit(graphics, pos->x, pos->y, &(current_animation->GetCurrentFrame()));
+		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
 
 	if (!facing_right)
-		App->render->Blit(graphics, pos->x, pos->y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
 
 
 	return true;

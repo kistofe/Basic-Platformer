@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Input.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -37,22 +38,20 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
-
 	//loop through all layers and all tiles 
-	for (int i = 0; i < data.map_layers.count(); i++)
-	{
-		for (int j = 0; j < data.tilesets.count(); j++)
+		for (int i = 0; i < data.map_layers.count(); i++)
 		{
-			for (int y = 0; y < data.height; y++)
+			for (int j = 0; j < data.tilesets.count(); j++)
 			{
-				for (int x = 0; x < data.width; x++)
+				for (int y = 0; y < data.height; y++)
 				{
-					App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]));
+					for (int x = 0; x < data.width; x++)
+					{
+						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]));
+					}
 				}
 			}
 		}
-	}
-
 }
 
 
@@ -204,7 +203,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
-
+	
 	return ret;
 }
 
@@ -397,14 +396,15 @@ bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 	return ret;
 }
 
-<<<<<<< HEAD
-bool j1Map::MapSwitch(char * new_map)
+bool j1Map::MapSwitch(char* new_map)
 {
 	bool ret = true;
 
 	UnloadCurrentMap();
+	//ret = CleanUp();
 
-	Load(new_map);
+	if (ret == true)
+		Load(new_map);
 
 	return ret;
 }
@@ -457,8 +457,3 @@ bool j1Map::UnloadCurrentMap()
 	return ret;
 }
 
-
-
-
-=======
->>>>>>> origin/master

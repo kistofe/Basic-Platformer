@@ -86,8 +86,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
-		App->map->CleanUp();
-		App->map->Load("test2.tmx");
+		App->map->MapSwitch("test2.tmx");
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)

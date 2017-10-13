@@ -31,6 +31,12 @@ public:
 
 	bool CleanUp();
 
+	//Loads player pos
+	bool Load(pugi::xml_node&);
+
+	//Saves player pos
+	bool Save(pugi::xml_node&) const;
+	
 private:
 
 	void SetSpeed();

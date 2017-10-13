@@ -150,18 +150,23 @@ bool j1Map::Load(const char* file_name)
 		data.map_layers.add(set);
 	}
 
-	// Load Obj layer info --------------------------------------------
+	// Load Object info --------------------------------------------
 	pugi::xml_node obj_layers;
 	for (obj_layers = map_file.child("map").child("objectgroup"); obj_layers && ret; obj_layers = obj_layers.next_sibling("objectgroup"))
 	{
-		ObjGroup* set = new ObjGroup();
-
+		ObjGroup* set = new ObjGroup;
 		if (ret == true)
 		{
 			ret = Load_ObjectGroup(obj_layers, set);
+			Object* set2 = new Object;
+			for (pugi::xml_node obj = obj_layers.child("object"); obj && obj_layers; obj = obj.next_sibling("object"))
+			{
+				ret = Load_Object(obj, set2);
+				data.object.add(set2);
+			}
 		}
-
-		data.obj_groups.add(set);
+		data.objgroup.add(set);
+			
 	}
 
 	if(ret == true)
@@ -364,14 +369,10 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 {
 	bool ret = true;
+	Object obj;
+	pugi::xml_node sib_iterator = objgroup_node.child("data").child("objectgroup").child("object");
 
-	objgroup->layer_name.create(objgroup_node.attribute("name").as_string());
-
-
-	for (int i = 0; i < objgroup->size; i++)
-	{
-		objgroup->
-	}
+	objgroup->group_name.create(objgroup_node.attribute("name").as_string());
 	
 	return ret;
 }
@@ -380,25 +381,13 @@ bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 {
 	bool ret = true;
 	
-	pugi::xml_node sib_iterator = obj_node.child("data").child("objectgroup").child("object");
-
-	
-	obj->height			= obj_node.child("object").attribute("height").as_uint(0);
-	obj->width			= obj_node.child("object").attribute("width").as_uint(0);
-	obj->name.create(obj_node.child("object").attribute("name").as_string());
-	obj->x				= obj_node.child("object").attribute("x").as_uint(0);
-	obj->y				= obj_node.child("object").attribute("y").as_uint(0);
-	obj->object_id		= new uint[];
-
-	memset(obj->object_id, 0, (sizeof(uint)*obj->size));
-
-
-	for (int i = 0; i < obj->size; i++)
-	{
-		obj->object_id[i] = sib_iterator.attribute("id").as_uint();
-		sib_iterator = sib_iterator.next_sibling("object");
-	}
-
+	obj->height			= obj_node.attribute("height").as_uint(0);
+	obj->width			= obj_node.attribute("width").as_uint(0);
+	obj->size			= obj->width * obj->height;
+	obj->name.create(obj_node.attribute("name").as_string());
+	obj->x				= obj_node.attribute("x").as_uint(0);
+	obj->y				= obj_node.attribute("y").as_uint(0);
+	obj->object_id		= obj_node.attribute("id").as_uint(0);
 
 	return ret;
 }

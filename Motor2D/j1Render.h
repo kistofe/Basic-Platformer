@@ -28,9 +28,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load from the beginning
-	bool Load_From_Beginning(pugi::xml_node&);
-
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;

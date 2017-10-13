@@ -170,8 +170,6 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
-	if (want_to_load_from_beg == true)
-		LoadFromBegNow();
 }
 
 // Call modules before each loop iteration
@@ -282,11 +280,6 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
-void j1App::LoadFirstLevel()
-{
-	want_to_load_from_beg = true;
-}
-
 // Load / Save
 void j1App::LoadGame()
 {
@@ -309,44 +302,6 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
 }
-
-bool j1App::LoadFromBegNow()
-{
-	bool ret = false;
-
-	pugi::xml_document data;
-	pugi::xml_node root;
-
-	pugi::xml_parse_result result = data.load_file(load_game.GetString());
-
-	if (result != NULL)
-	{
-		LOG("Loading First Level from %s...", load_game.GetString());
-
-		root = data.child("id");
-
-		p2List_item<j1Module*>* item = modules.start;
-		ret = true;
-
-		while (item != NULL && ret == true)
-		{
-			ret = item->data->Load(root.child(item->data->name.GetString()));
-			item = item->next;
-		}
-				
-		data.reset();
-		if (ret == true)
-			LOG("...finished loading");
-		else
-			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
-	}
-	else
-		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
-
-	want_to_load_from_beg = false;
-	return ret;
-}
-
 
 bool j1App::LoadGameNow()
 {

@@ -40026,11 +40026,7 @@
   </data>
  </layer>
  <objectgroup color="#00ff00" name="main character">
-  <object id="7" name="mainPlayer" x="138" y="473" width="50" height="69">
-   <properties>
-    <property name="touching_ground" type="bool" value="true"/>
-   </properties>
-  </object>
+  <object id="7" name="mainPlayer" x="200" y="473" width="50" height="69"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="Collisions">
   <object id="9" x="35" y="544" width="891" height="15"/>

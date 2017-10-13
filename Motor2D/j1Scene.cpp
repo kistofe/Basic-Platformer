@@ -7,11 +7,12 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
+#include "j1Player.h"
 #include "j1Scene.h"
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("scene");
+	name.create("scene"); 
 }
 
 // Destructor
@@ -30,7 +31,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	for (pugi::xml_node map = config.child("map_name"); map && ret; map = map.next_sibling("map_name"))
 	{
 		p2SString* map_set = new p2SString;
-
+		
 		if (ret == true)
 		{
 			ret = LoadMapAtrib(map, map_set);
@@ -68,11 +69,11 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->LoadFirstLevel();
+		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->player_pos.y = App->map->data.object.start->data->y;
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		App->LoadFirstLevel();
-	
+	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 

@@ -25,16 +25,17 @@ struct MapLayer
 
 struct ObjGroup
 {
-	p2SString	layer_name;
-	uint*		object_id;
-	uint		size;
+	p2SString	group_name;
+
 };
 
 struct Object
 {
 	p2SString	name;
+	uint		object_id;
 	uint		width;
 	uint		height;
+	uint		size;
 	uint		x;
 	uint		y;
 };
@@ -76,7 +77,8 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	map_layers;
-	p2List<ObjGroup*>	obj_groups;
+	p2List<ObjGroup*>	objgroup;
+	p2List<Object*>		object;
 };
 
 // ----------------------------------------------------

@@ -12,6 +12,7 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
+class j1SceneSwitch;
 class j1Player;
 class j1Map;
 
@@ -83,6 +84,7 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
+	j1SceneSwitch*		sceneswitch;
 	j1Player*			player;
 	j1Map*				map;
 

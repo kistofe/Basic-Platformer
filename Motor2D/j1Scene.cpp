@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Scene.h"
+#include "j1SceneSwitch.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -69,8 +70,11 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
 		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
 		App->player->player_pos.y = App->map->data.object.start->data->y;
+		App->player->facing_right = true;
+	}
 
 	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		
@@ -81,7 +85,10 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	//	App->map->SwitchMap("test.tmx", "test2.tmx");
+	{
+		App->map->CleanUp();
+		App->map->Load("test2.tmx");
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;

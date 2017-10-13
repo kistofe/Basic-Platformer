@@ -123,16 +123,9 @@ private:
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
 
-	bool MapSwitch(char* new_map);
-
-	bool UnloadCurrentMap();
-
 public:
 
 	MapData data;
-
-	// Variables for map switching
-	bool				fading			= false;
 
 private:
 
@@ -140,19 +133,6 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-
-	// Variables for map switching
-	enum fade_step
-	{
-		none,
-		fade_to_black,
-		fade_from_black
-	}					current_step	= fade_step::none;
-
-	Uint32				start_time		= 0;
-	Uint32				total_time		= 0;
-	SDL_Rect			screen;
-	bool				switching		= false;
 };
 
 #endif // __j1MAP_H__

@@ -27,7 +27,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt, ObjLayer*);
+	bool Update(float dt);
 
 	bool CleanUp();
 
@@ -45,6 +45,8 @@ public:
 	Animation jump;
 
 	bool facing_right = true;
+
+	iPoint player_pos;
 	fPoint player_speed;
 
 private:

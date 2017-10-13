@@ -153,18 +153,14 @@ bool j1Map::Load(const char* file_name)
 	pugi::xml_node obj_layers;
 	for (obj_layers = map_file.child("map").child("objectgroup"); obj_layers && ret; obj_layers = obj_layers.next_sibling("objectgroup"))
 	{
-		ObjLayer* set = new ObjLayer();
+		ObjGroup* set = new ObjGroup();
 
 		if (ret == true)
 		{
-			ret = Load_ObjGroup_Layer(obj_layers, set);
+			ret = Load_ObjectGroup(obj_layers, set);
 		}
 
-		if (ret == true)
-		{
-			ret = Load_Obj_Layer(obj_layers, set);
-		}
-		data.obj_layers.add(set);
+		data.obj_groups.add(set);
 	}
 
 	if(ret == true)
@@ -364,15 +360,22 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	return ret;
 }
 
-bool j1Map::Load_ObjGroup_Layer(pugi::xml_node& obj_node, ObjLayer* obj)
+bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 {
 	bool ret = true;
-	obj->layer_name.create(obj_node.attribute("name").as_string());
+
+	objgroup->layer_name.create(objgroup_node.attribute("name").as_string());
+
+
+	for (int i = 0; i < objgroup->size; i++)
+	{
+		objgroup->
+	}
 	
 	return ret;
 }
 
-bool j1Map::Load_Obj_Layer(pugi::xml_node& obj_node, ObjLayer* obj)
+bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 {
 	bool ret = true;
 	
@@ -384,8 +387,7 @@ bool j1Map::Load_Obj_Layer(pugi::xml_node& obj_node, ObjLayer* obj)
 	obj->name.create(obj_node.child("object").attribute("name").as_string());
 	obj->x				= obj_node.child("object").attribute("x").as_uint(0);
 	obj->y				= obj_node.child("object").attribute("y").as_uint(0);
-	obj->size			= obj->height * obj->width;
-	obj->object_id		= new uint[obj->size];
+	obj->object_id		= new uint[];
 
 	memset(obj->object_id, 0, (sizeof(uint)*obj->size));
 

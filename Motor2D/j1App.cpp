@@ -170,8 +170,8 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
-	if (want_to_load_first_level == true)
-		LoadFirstLevelNow();
+	if (want_to_load_from_beg == true)
+		LoadFromBegNow();
 }
 
 // Call modules before each loop iteration
@@ -284,7 +284,7 @@ const char* j1App::GetOrganization() const
 
 void j1App::LoadFirstLevel()
 {
-	want_to_load_first_level = true;
+	want_to_load_from_beg = true;
 }
 
 // Load / Save
@@ -310,7 +310,7 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 	// need to add functionality to file_system module for this to work
 }
 
-bool j1App::LoadFirstLevelNow()
+bool j1App::LoadFromBegNow()
 {
 	bool ret = false;
 
@@ -343,7 +343,7 @@ bool j1App::LoadFirstLevelNow()
 	else
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
 
-	want_to_load_first_level = false;
+	want_to_load_from_beg = false;
 	return ret;
 }
 

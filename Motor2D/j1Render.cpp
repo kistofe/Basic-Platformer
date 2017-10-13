@@ -98,11 +98,20 @@ bool j1Render::Load(pugi::xml_node& data)
 	return true;
 }
 
-bool j1Render::LoadFirstLevel(pugi::xml_node& object)
+bool j1Render::Load_From_Beginning(pugi::xml_node& object)
 {
-	camera.x = object.child("id").attribute("x").as_int();
-	camera.y = object.child("id").attribute("y").as_int();
+	if ((SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		camera.x = object.child("id").attribute("x").as_int();
+		camera.y = object.child("id").attribute("y").as_int();
+	}
 
+	if ((SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		camera.x = object.child("id").attribute("x").as_int();
+		camera.y = object.child("id").attribute("y").as_int();
+	}
+	
 	return true;
 }
 

@@ -38,7 +38,12 @@ public:
 
 private:
 
-	p2SString map_name;
+	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
+
+public:
+
+private:
+	p2List<p2SString*> map_name;
 };
 
 #endif // __j1SCENE_H__

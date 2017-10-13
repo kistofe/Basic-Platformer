@@ -22,10 +22,30 @@ j1Scene::~j1Scene()
 bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
-	
-	map_name = config.child("map_name").attribute("name").as_string();
-
 	bool ret = true;
+
+	//MapData* map_set = new MapData;
+
+	//Loop to load all maps
+	for (pugi::xml_node map = config.child("map_name"); map && ret; map = map.next_sibling("map_name"))
+	{
+		p2SString* map_set = new p2SString;
+
+		if (ret == true)
+		{
+			ret = LoadMapAtrib(map, map_set);
+		}
+		map_name.add(map_set);
+	}
+	
+	return ret;
+}
+
+bool j1Scene::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
+{
+	bool ret = true;
+
+	map_set->create(config.attribute("name").as_string());
 
 	return ret;
 }
@@ -33,7 +53,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(map_name.GetString());
+	App->map->Load(map_name.start->data->GetString());
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	return true;
 }
@@ -49,12 +69,18 @@ bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->LoadFirstLevel();
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		App->LoadFirstLevel();
 	
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	//	App->map->SwitchMap("test.tmx", "test2.tmx");
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;
@@ -71,7 +97,7 @@ bool j1Scene::Update(float dt)
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
-	// TODO 7: Set the window title like
+	
 	// "Map:%dx%d Tiles:%dx%d Tilesets:%d"
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 					App->map->data.width, App->map->data.height,
@@ -97,6 +123,7 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	
 
 	return true;
 }

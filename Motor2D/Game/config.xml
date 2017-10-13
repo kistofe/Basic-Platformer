@@ -28,6 +28,9 @@
   
   <player>
     <sprite_path path = "Ramona.png"/>
+    <speed x = "2.5"/>
+    <speed y = "0"/>
+    <run_multiplier value = "1.75"/>
   </player>	
 
   <scene>

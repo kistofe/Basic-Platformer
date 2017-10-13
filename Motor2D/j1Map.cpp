@@ -502,7 +502,7 @@ bool j1Map::UnloadCurrentMap()
 
 	// Remove all obects
 	p2List_item<ObjGroup*>* objgroup;
-	objgroup = data.obj_groups.start;
+	objgroup = data.objgroup.start;
 
 	while (objgroup != NULL)
 	{
@@ -510,11 +510,11 @@ bool j1Map::UnloadCurrentMap()
 		objgroup = objgroup->next;
 	}
 
-	data.obj_groups.clear();
+	data.objgroup.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();
->>>>>>> origin/master
+
 
 	return ret;
 }

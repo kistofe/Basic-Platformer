@@ -8,7 +8,6 @@
 #include "j1Module.h"
 #include "Animation.h"
 #include "j1App.h"
-#include "j1Collision.h"
 #include "j1Map.h"
 
 #include "SDL/include/SDL.h"
@@ -37,6 +36,13 @@ public:
 	//Saves player pos
 	bool Save(pugi::xml_node&) const;
 	
+	//Raycast function to detect if player collides
+	bool PredictCollision(const SDL_Rect*, const SDL_Rect*);
+
+	void SetCorrectVel(const SDL_Rect*);
+
+	SDL_Rect TransformToRect(Object*);
+
 private:
 
 	void SetSpeed();

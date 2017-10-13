@@ -76,7 +76,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -84,7 +83,6 @@
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="j1Scene.cpp" />
-    <ClCompile Include="j1SceneSwitch.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
@@ -93,11 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Player.h" />
     <ClInclude Include="j1Scene.h" />
-    <ClInclude Include="j1SceneSwitch.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />

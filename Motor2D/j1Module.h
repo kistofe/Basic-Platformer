@@ -9,6 +9,7 @@
 #include "p2SString.h"
 #include "PugiXml\src\pugixml.hpp"
 
+
 class j1App;
 
 class j1Module
@@ -69,7 +70,7 @@ public:
 		return true;
 	}
 
-	
+		
 public:
 
 	p2SString	name;

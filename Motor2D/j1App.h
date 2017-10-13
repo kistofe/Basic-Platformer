@@ -11,7 +11,6 @@ class j1Input;
 class j1Render;
 class j1Textures;
 class j1Audio;
-class j1Collision;
 class j1Scene;
 class j1Player;
 class j1Map;
@@ -47,7 +46,6 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	void LoadFirstLevel();
 	void LoadGame();
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
@@ -72,9 +70,6 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
-	//Load the very first level
-	bool LoadFromBegNow();
-
 	// Load / Save
 	bool LoadGameNow();
 	bool SavegameNow() const;
@@ -87,7 +82,6 @@ public:
 	j1Render*			render;
 	j1Textures*			tex;
 	j1Audio*			audio;
-	j1Collision*		collision;
 	j1Scene*			scene;
 	j1Player*			player;
 	j1Map*				map;

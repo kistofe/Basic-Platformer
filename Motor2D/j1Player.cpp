@@ -4,6 +4,7 @@
 #include "j1Player.h"
 #include "j1Textures.h"
 #include "j1Input.h"
+#include "j1Render.h"
 #include "j1Map.h"
 
 
@@ -12,7 +13,7 @@ j1Player::j1Player()
 	name.create("player");
 	graphics = NULL;
 	current_animation = NULL;
-
+	
 	//idle animation
 	idle.PushBack({ 0, 0, 54, 69 });
 
@@ -85,10 +86,10 @@ bool j1Player::PreUpdate()
 }
 
 
-bool j1Player::Update(float dt /* Dont add more parameters or update wont be called */)
+bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
 {
 	SetSpeed();
-
+	
 	current_animation = &idle;
 
 	player_pos.x += player_speed.x;
@@ -99,6 +100,7 @@ bool j1Player::Update(float dt /* Dont add more parameters or update wont be cal
 		LOG("Player position: x = %i, y = %i", player_pos.x, player_pos.y );
 		LOG("Speed.x = %f", player_speed.x);
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		facing_right = true;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -129,7 +131,7 @@ bool j1Player::CleanUp()
 		return true;
 }
 
-//Load Player Pos and y speed
+//Load Player info
 bool j1Player::Load(pugi::xml_node& data)
 {
 	player_pos.x = data.child("position").attribute("x").as_int();
@@ -137,9 +139,12 @@ bool j1Player::Load(pugi::xml_node& data)
 
 	player_speed.y = data.child("velocity").attribute("y").as_float();
 
+	//facing_right = data.child("facing right").attribute("value").as_bool();
+
 	return true;
 }
 
+//Save Player info
 bool j1Player::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node pos = data.append_child("position");
@@ -150,6 +155,10 @@ bool j1Player::Save(pugi::xml_node& data) const
 	pugi::xml_node vel = data.append_child("velocity");
 
 	vel.append_attribute("y") = player_speed.y;
+
+	//pugi::xml_node side = data.append_child("facing right");
+
+	//side.append_attribute("value") = facing_right;
 
 	return true;
 }
@@ -166,7 +175,51 @@ void j1Player::SetSpeed()
 		player_speed.x = -2.5f;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-		player_speed.x = player_speed.x * 1.75;
+		player_speed.x = player_speed.x * 1.75f;
 
 	return;
+}
+
+bool j1Player::PredictCollision(const SDL_Rect* player, const SDL_Rect* collider)
+{
+	bool ret = true;
+	
+	//Loop through all colliders named
+	for (App->map->data.object; App->map->data.object.start->data; App->map->data.object.start = App->map->data.object.start->next)
+	{
+		if (App->map->data.object.start->data->name == "wall")
+			TransformToRect(App->map->data.object.start->data);
+	}
+	
+	if (SDL_HasIntersection(player, collider))
+	{
+		SetCorrectVel(player);
+	}
+	
+	return ret;
+}
+
+void j1Player::SetCorrectVel(const SDL_Rect* player)
+{
+	//this function modifies player velocity in order to avoid intersecting the collider
+	//First we calculate the intersection rectangle between the player and the collider
+	//player.x + player.w - collider.x + collider.w-> speed to reach this x
+	//Then adjust speed
+	SDL_Rect* collider;
+	SDL_Rect* intersection_collider;
+	
+	
+
+}
+
+SDL_Rect j1Player::TransformToRect(Object* r)
+{
+	SDL_Rect rect;
+	
+	rect.h = r->height;
+	rect.w = r->width;
+	rect.x = r->x;
+	rect.y = r->y;
+
+	return rect;
 }

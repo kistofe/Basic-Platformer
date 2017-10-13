@@ -6,17 +6,11 @@
 	<audio />
 	<map />
 	<scene />
-<<<<<<< HEAD
 	<player>
-		<position x="360" y="473" />
+		<position x="269" y="473" />
 		<velocity y="0" />
 	</player>
 	<renderer>
 		<camera x="0" y="0" />
-=======
-	<player />
-	<renderer>
-		<camera x="-155" y="0" />
->>>>>>> origin/master
 	</renderer>
 </game_state>

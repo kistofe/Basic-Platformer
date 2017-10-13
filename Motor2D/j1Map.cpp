@@ -27,6 +27,58 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+bool j1Map::Update(float dt)
+{
+	// Replace condition of if with what triggers scene switching (getting to the end of the level)
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		switching = true;
+		FadeToBlack(0.3f);
+	}
+		
+	if (switching)
+	{
+		if (current_step == fade_step::none)
+			return true;
+
+		Uint32 now = SDL_GetTicks() - start_time;
+		float normalized = MIN(1.0f, (float)now / (float)total_time);
+
+		switch (current_step)
+		{
+		case fade_step::fade_to_black:
+		{
+			if (now >= total_time)
+			{
+				MapSwitch("test2.tmx");
+				total_time += total_time;
+				start_time = SDL_GetTicks();
+				fading = false;
+				current_step = fade_step::fade_from_black;
+			}
+		} break;
+
+		case fade_step::fade_from_black:
+		{
+			normalized = 1.0f - normalized;
+
+			if (now >= total_time)
+			{
+				current_step = fade_step::none;
+			}
+
+
+		} break;
+		}
+
+		// Finally render the black square with alpha on the screen
+		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
+		SDL_RenderFillRect(App->render->renderer, &screen);
+	}
+
+	return true;
+}
+
 void j1Map::Draw()
 {
 	if (map_loaded == false)
@@ -213,6 +265,22 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
+bool j1Map::FadeToBlack(float time)
+{
+	bool ret = false;
+
+	if (current_step == fade_step::none)
+	{
+		current_step = fade_step::fade_to_black;
+		start_time = SDL_GetTicks();
+		total_time = (Uint32)(time * 0.5f * 1000.0f);
+		fading = true;
+		ret = true;
+	}
+
+	return ret;
+}
+
 
 
 // Load map general properties
@@ -370,9 +438,8 @@ bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 {
 	bool ret = true;
 	Object obj;
-	pugi::xml_node sib_iterator = objgroup_node.child("data").child("objectgroup").child("object");
-
 	objgroup->group_name.create(objgroup_node.attribute("name").as_string());
+
 	
 	return ret;
 }
@@ -388,6 +455,66 @@ bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 	obj->x				= obj_node.attribute("x").as_uint(0);
 	obj->y				= obj_node.attribute("y").as_uint(0);
 	obj->object_id		= obj_node.attribute("id").as_uint(0);
+
+
+	return ret;
+}
+
+bool j1Map::MapSwitch(char * new_map)
+{
+	bool ret = true;
+
+	UnloadCurrentMap();
+
+	Load(new_map);
+
+	return ret;
+}
+
+bool j1Map::UnloadCurrentMap()
+{
+	LOG("Unloading current map");
+	bool ret = true;
+
+	// Remove all tilesets
+	p2List_item<TileSet*>* item;
+	item = data.tilesets.start;
+
+	while (item != NULL)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
+	data.tilesets.clear();
+
+
+	// Remove all layers
+	p2List_item<MapLayer*>* layer;
+	layer = data.map_layers.start;
+
+	while (layer != NULL)
+	{
+		RELEASE(layer->data);
+		layer = layer->next;
+	}
+
+	data.map_layers.clear();
+
+	// Remove all obects
+	p2List_item<ObjGroup*>* objgroup;
+	objgroup = data.obj_groups.start;
+
+	while (objgroup != NULL)
+	{
+		RELEASE(objgroup->data);
+		objgroup = objgroup->next;
+	}
+
+	data.obj_groups.clear();
+
+	// Clean up the pugui tree
+	map_file.reset();
+>>>>>>> origin/master
 
 	return ret;
 }

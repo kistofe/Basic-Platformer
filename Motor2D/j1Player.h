@@ -6,6 +6,7 @@
 #include "p2Log.h"
 #include "p2Defs.h"
 #include "j1Module.h"
+#include "j1Collision.h"
 #include "Animation.h"
 #include "j1App.h"
 #include "j1Map.h"
@@ -58,8 +59,10 @@ public:
 
 	bool facing_right = true;
 
-	iPoint player_pos;
-	fPoint player_speed;
+	iPoint		player_pos;
+	fPoint		player_speed;
+
+	Collider*	player_collider;
 
 private:
 	

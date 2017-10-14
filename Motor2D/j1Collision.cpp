@@ -98,7 +98,7 @@ bool j1Collision::CleanUp()
 	return true;
 }
 
-Collider * j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
 {
 	Collider* ret = nullptr;
 

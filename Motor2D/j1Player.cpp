@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1Textures.h"
+#include "j1Collision.h"
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Map.h"
@@ -76,6 +77,8 @@ bool j1Player::Start()
 
 	player_pos.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
 
+	player_collider = App->collision->AddCollider({ player_pos.x + 7, player_pos.y + 4, 40, 65 }, COLLIDER_PLAYER);
+
 	return true;
 }
 
@@ -119,6 +122,8 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 
 	if (!facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+
+	player_collider->SetPos(player_pos.x + 7, player_pos.y + 4);
 
 
 	return true;

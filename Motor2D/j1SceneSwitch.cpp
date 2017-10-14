@@ -45,7 +45,7 @@ bool j1SceneSwitch::Update(float dt)
 				App->scene->NextLevel();
 			}
 
-			if (App->scene->current_lvl == 2)
+			else if (App->scene->current_lvl == 2)
 			{
 				SwitchMap("test.tmx");
 				App->scene->NextLevel();

@@ -1,8 +1,9 @@
 #include "j1App.h"
+#include "p2Log.h"
 #include "j1Collision.h"
 #include "j1Render.h"
 #include "j1Input.h"
-#include "p2Log.h"
+#include "j1Player.h"
 
 j1Collision::j1Collision()
 {
@@ -27,11 +28,6 @@ j1Collision::~j1Collision()
 {
 }
 
-bool Collider::CheckCollision(const SDL_Rect & r) const
-{
-	return (rect.x + rect.w >= r.x && rect.x <= r.x + r.w && rect.y + rect.h >= r.y && rect.y < r.y + r.h);
-}
-
 bool j1Collision::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion
@@ -44,11 +40,7 @@ bool j1Collision::PreUpdate()
 		}
 	}
 
-	return true;
-}
-
-bool j1Collision::Update(float dt)
-{
+	//Calculate future collisions
 	Collider* c1;
 	Collider* c2;
 
@@ -69,16 +61,26 @@ bool j1Collision::Update(float dt)
 
 			c2 = colliders[k];
 
-			if (c1->CheckCollision(c2->rect) == true)
+			if (SDL_HasIntersection(&c1->rect, &c2->rect))
 			{
-					// Do what collisions do
+				if (matrix[c1->type][c2->type])
+				{
+					will_collide(c1, c2);
+				}
+
 			}
 
 		}
 	}
+
+	
+	return true;
+}
+
+bool j1Collision::Update(float dt)
+{
 	DebugDraw();
-
-
+	
 	return true;
 }
 
@@ -150,4 +152,12 @@ void j1Collision::DebugDraw()
 			break;
 		}
 	}
+}
+
+bool j1Collision::will_collide(Collider* collider, Collider* player)
+{
+	bool ret = true;
+
+	
+	return ret;
 }

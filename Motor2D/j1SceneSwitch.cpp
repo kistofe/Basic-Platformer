@@ -41,7 +41,7 @@ bool j1SceneSwitch::Update(float dt)
 	{
 		if (now >= total_time)
 		{
-			if (App->scene->current_lvl == 1) //&& App->input->GetKey(!SDL_SCANCODE_F1) == KEY_DOWN)//The moment we set that to go to level 2 you have to "collide" with the EndLev collider, it should work
+			if ((App->scene->current_lvl == 1) && App->input->GetKey(!SDL_SCANCODE_F1) == KEY_DOWN)//The moment we set that to go to level 2 you have to "collide" with the EndLev collider, it should work
 			{
 				SwitchMap("test2.tmx");
 				App->scene->NextLevel();

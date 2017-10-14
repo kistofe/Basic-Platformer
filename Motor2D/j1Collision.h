@@ -32,7 +32,6 @@ struct Collider
 		rect.y = y;
 	}
 
-	bool CheckCollision(const SDL_Rect& r) const;
 };
 
 class j1Collision : public j1Module
@@ -49,6 +48,10 @@ public:
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
+
+private:
+
+	bool will_collide(Collider*, Collider*);
 
 private:
 

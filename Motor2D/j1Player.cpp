@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Player.h"
+#include "j1Scene.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
 #include "j1Input.h"
@@ -98,10 +99,6 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 	player_pos.y += player_speed.y;
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		LOG("Player position: x = %i, y = %i", player_pos.x, player_pos.y );
-		LOG("Speed.x = %f", player_speed.x);
-	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		facing_right = true;

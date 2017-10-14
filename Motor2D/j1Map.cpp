@@ -451,20 +451,30 @@ bool j1Map::MapSwitch(char* new_map)
 	return ret;
 }
 
+// Any objects that should become colliders do so here
 bool j1Map::SetWallColliders()
 {
 	p2List_item<Object*>* current_object = data.object.start;
 
 	while (current_object != NULL)
 	{
+		SDL_Rect collider_tocreate;
 		if (current_object->data->name == "wall")
 		{
-			SDL_Rect collider_tocreate;
 			collider_tocreate.x = current_object->data->x;
 			collider_tocreate.y = current_object->data->y;
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
 			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
+		}
+
+		if (current_object->data->name == "LevelEnd")
+		{
+			collider_tocreate.x = current_object->data->x;
+			collider_tocreate.y = current_object->data->y;
+			collider_tocreate.w = current_object->data->width;
+			collider_tocreate.h = current_object->data->height;
+			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
 		}
 		current_object = current_object->next;
 	}

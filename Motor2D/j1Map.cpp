@@ -175,12 +175,11 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 		{
 			ret = Load_ObjectGroup(obj_layers, set);
-			Object* set2 = new Object;
 			for (pugi::xml_node obj = obj_layers.child("object"); obj && obj_layers; obj = obj.next_sibling("object"))
 			{
+				Object* set2 = new Object;
 				ret = Load_Object(obj, set2);
 				data.object.add(set2);
-				set->my_objects.add(set2);
 			}
 		}
 		data.objgroup.add(set);
@@ -454,28 +453,20 @@ bool j1Map::MapSwitch(char* new_map)
 
 bool j1Map::SetWallColliders()
 {
-	p2List_item<ObjGroup*>* current_objgroup = data.objgroup.start;
+	p2List_item<Object*>* current_object = data.object.start;
 
-	while (current_objgroup != NULL)
+	while (current_object != NULL)
 	{
-		if (current_objgroup->data->group_name == "Colliders")
+		if (current_object->data->name == "wall")
 		{
-			p2List_item<Object*>* current_object = current_objgroup->data->my_objects.start;
-
-			while (current_object != NULL)
-			{
-				SDL_Rect collider_tocreate;
-				collider_tocreate.x = current_object->data->x;
-				collider_tocreate.y = current_object->data->y;
-				collider_tocreate.w = current_object->data->width;
-				collider_tocreate.h = current_object->data->height;
-				App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
-
-				current_object = current_object->next;
-			}
+			SDL_Rect collider_tocreate;
+			collider_tocreate.x = current_object->data->x;
+			collider_tocreate.y = current_object->data->y;
+			collider_tocreate.w = current_object->data->width;
+			collider_tocreate.h = current_object->data->height;
+			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
 		}
-
-		current_objgroup = current_objgroup->next;
+		current_object = current_object->next;
 	}
 
 

@@ -41,7 +41,6 @@ struct Object
 struct ObjGroup
 {
 	p2SString			group_name;
-	p2List<Object*>		my_objects;
 };
 
 // ----------------------------------------------------

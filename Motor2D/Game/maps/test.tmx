@@ -40029,20 +40029,11 @@
   <object id="7" name="mainPlayer" x="200" y="473" width="50" height="69"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="Collisions">
-  <object id="9" name="wall" x="35" y="544" width="891" height="15"/>
-  <object id="10" name="wall" x="930" y="477" width="12" height="82"/>
-  <object id="11" name="wall" x="930" y="477" width="91" height="10"/>
-  <object id="12" name="wall" x="1007" y="476" width="14" height="85"/>
-  <object id="13" name="wall" x="1020" y="542" width="70" height="15"/>
-  <object id="14" name="wall" x="1088" y="385" width="16" height="171"/>
-  <object id="15" name="wall" x="1088" y="384" width="94" height="15"/>
-  <object id="16" name="wall" x="1168" y="384" width="14" height="173"/>
-  <object id="19" name="wall" x="1313" y="386" width="15" height="172"/>
-  <object id="20" name="wall" x="1313" y="385" width="93" height="14"/>
-  <object id="21" name="wall" x="1392" y="386" width="13" height="173"/>
-  <object id="22" name="wall" x="1403" y="544" width="322" height="11"/>
-  <object id="25" name="wall" x="865" y="355" width="95" height="4"/>
-  <object id="26" name="wall" x="704" y="355" width="95" height="5"/>
+  <object id="9" name="wall" x="32" y="544" width="1152" height="96"/>
+  <object id="11" name="wall" x="927.998" y="480.001" width="95.9962" height="63.9989"/>
+  <object id="15" name="wall" x="1088" y="384" width="96" height="160"/>
+  <object id="20" name="wall" x="1312" y="384" width="96" height="160"/>
+  <object id="22" name="wall" x="1312" y="544" width="1856" height="95.9972"/>
   <object id="29" name="wall" x="1180" y="383" width="145" height="5"/>
  </objectgroup>
  <objectgroup color="#00aaff" name="Level end pos">

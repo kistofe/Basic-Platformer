@@ -95,6 +95,16 @@ bool j1Map::CleanUp()
 	
 	data.map_layers.clear();
 
+	// Remove all object groups
+	p2List_item<ObjGroup*>* obgroup;
+	obgroup = data.objgroup.start;
+
+	while (obgroup != NULL)
+	{
+		RELEASE(obgroup->data);
+		obgroup = obgroup->next;
+	}
+
 	// Clean up the pugui tree
 	map_file.reset();
 

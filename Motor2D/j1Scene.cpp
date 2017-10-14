@@ -86,7 +86,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
-		App->map->MapSwitch("test2.tmx");
+		App->sceneswitch->FadeToBlack();
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -133,4 +133,13 @@ bool j1Scene::CleanUp()
 	
 
 	return true;
+}
+
+void j1Scene::NextLevel()
+{
+	if (current_lvl != LAST_LVL)
+		current_lvl++;
+
+	else if (current_lvl == LAST_LVL)
+		current_lvl = 1;
 }

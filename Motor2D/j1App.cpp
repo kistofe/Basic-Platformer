@@ -26,7 +26,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
-	//sceneswitch = new j1SceneSwitch();
+	sceneswitch = new j1SceneSwitch();
 	player = new j1Player();
 	map = new j1Map();
 
@@ -38,7 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	//AddModule(sceneswitch);
+	AddModule(sceneswitch);
 	AddModule(player);
 
 	// render last to swap buffer

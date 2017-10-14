@@ -5,6 +5,8 @@
 #include "p2Point.h"
 #include <math.h>
 
+#define LAST_LVL 2
+
 struct SDL_Texture;
 
 class j1Scene : public j1Module
@@ -36,13 +38,18 @@ public:
 
 	float gravity = 9.88;
 
+	void NextLevel();
+
 private:
 
 	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
 
 public:
 
+	uint current_lvl = 1;
+
 private:
+
 	p2List<p2SString*> map_name;
 };
 

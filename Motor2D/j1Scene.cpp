@@ -26,20 +26,26 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	//MapData* map_set = new MapData;
-
 	//Loop to load all maps
 	for (pugi::xml_node map = config.child("map_name"); map && ret; map = map.next_sibling("map_name"))
 	{
 		p2SString* map_set = new p2SString;
-		
 		if (ret == true)
 		{
 			ret = LoadMapAtrib(map, map_set);
+			char* music_set = nullptr;
+			for (pugi::xml_node music = map.child("music"); music && map; music = music.next_sibling("music"))
+			{
+				if (ret == true)
+				{
+					ret = LoadMusicAtrib(music, music_set);
+				}
+				map_music.add(music_set);
+			}
 		}
 		map_name.add(map_set);
 	}
-	
+
 	return ret;
 }
 
@@ -48,7 +54,16 @@ bool j1Scene::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
 	bool ret = true;
 
 	map_set->create(config.attribute("name").as_string());
+	
+	return ret;
+}
 
+bool j1Scene::LoadMusicAtrib(pugi::xml_node& config, const char* music_set)
+{
+	bool ret = true;
+
+	music_set = config.attribute("name").as_string();
+	
 	return ret;
 }
 
@@ -56,7 +71,9 @@ bool j1Scene::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
 bool j1Scene::Start()
 {
 	App->map->Load(map_name.start->data->GetString());
+
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
+
 	return true;
 }
 
@@ -85,9 +102,10 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
 		App->map->MapSwitch("test2.tmx");
-	}
+		
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->map->MapSwitch("test.tmx");
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;

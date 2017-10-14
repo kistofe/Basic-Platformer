@@ -33,17 +33,18 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+	
 	float gravity = 9.88;
 
 private:
 
 	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
-
+	bool LoadMusicAtrib(pugi::xml_node&, const char*);
 public:
 
 private:
 	p2List<p2SString*> map_name;
+	p2List<char*> map_music;
 };
 
 #endif // __j1SCENE_H__

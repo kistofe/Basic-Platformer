@@ -75,7 +75,6 @@ bool j1Player::Start()
 	graphics = App->tex->Load("images/Ramona.png");
 
 	player_pos.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
- // Hardcoded until object reading works, replace with player_pos.create(read_x, read_y) or smth
 
 	return true;
 }

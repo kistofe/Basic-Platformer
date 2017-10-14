@@ -71,6 +71,9 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	camera.x = App->player->player_pos.x;
+	camera.y = App->player->player_pos.y - camera.h/2;	
+	
 	return true;
 }
 

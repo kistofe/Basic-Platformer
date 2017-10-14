@@ -10,6 +10,9 @@
   <image source="../images/Ramona.png" width="576" height="576"/>
  </tileset>
  <layer name="Background 1" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="0.5"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10014,6 +10017,9 @@
   </data>
  </layer>
  <layer name="Background 2" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="0.75"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -20018,6 +20024,9 @@
   </data>
  </layer>
  <layer name="Foreground (main)" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -30022,6 +30031,9 @@
   </data>
  </layer>
  <layer name="Foreground 2" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>

@@ -6,6 +6,8 @@
 #include "j1Window.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Audio.h"
+#include "j1Input.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 #include "p2Log.h"
@@ -39,18 +41,19 @@ bool j1SceneSwitch::Update(float dt)
 	{
 		if (now >= total_time)
 		{
-			if (App->scene->current_lvl == 1)
+			if (App->scene->current_lvl == 1) //&& App->input->GetKey(!SDL_SCANCODE_F1) == KEY_DOWN)//The moment we set that to go to level 2 you have to "collide" with the EndLev collider, it should work
 			{
 				SwitchMap("test2.tmx");
 				App->scene->NextLevel();
+				App->audio->PlayMusic("audio/music/Level_2.ogg");
 			}
 
 			else if (App->scene->current_lvl == 2)
 			{
 				SwitchMap("test.tmx");
 				App->scene->NextLevel();
+				App->audio->PlayMusic("audio/music/Level_1.ogg");
 			}
-
 			App->player->CleanUp();
 			App->player->Awake();
 			App->player->Start();
@@ -104,7 +107,10 @@ bool j1SceneSwitch::FadeToBlack(float time)
 
 bool j1SceneSwitch::SwitchMap(const char* map_on)
 {
+	//Unload current screen
 	App->map->CleanUp();
+
+	//Load Again
 	App->map->Load(map_on);
 	return true;
 }

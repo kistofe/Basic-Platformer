@@ -38,10 +38,13 @@ private:
 		fade_from_black
 	} current_step = fade_step::none;
 
+public:
+
+private:
+
 	uint start_time = 0;
 	uint total_time = 0;
 	SDL_Rect screen;
-
 };
 
 

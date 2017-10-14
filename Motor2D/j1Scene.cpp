@@ -26,8 +26,6 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	//MapData* map_set = new MapData;
-
 	//Loop to load all maps
 	for (pugi::xml_node map = config.child("map_name"); map && ret; map = map.next_sibling("map_name"))
 	{
@@ -57,6 +55,7 @@ bool j1Scene::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
 bool j1Scene::Start()
 {
 	App->map->Load(map_name.start->data->GetString());
+
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	return true;
 }
@@ -71,14 +70,11 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = App->map->data.object.start->data->y;
-		App->player->facing_right = true;
-	}
-
-	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		App->map->LoadBeginning();
 		
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		App->map->LoadBeginning();
+
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
@@ -86,10 +82,8 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
 		App->sceneswitch->FadeToBlack();
-	}
-
+	
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;
 

@@ -6,6 +6,8 @@
 #include "j1Map.h"
 #include "j1Input.h"
 #include "j1Scene.h"
+#include "j1Player.h"
+#include "j1SceneSwitch.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -214,6 +216,25 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
+	
+	return ret;
+}
+
+bool j1Map::LoadBeginning()
+{
+	bool ret = true;
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->player_pos.y = App->map->data.object.start->data->y;
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		App->sceneswitch->FadeToBlack();
+		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->player_pos.y = App->map->data.object.start->data->y;
+	}
 	
 	return ret;
 }

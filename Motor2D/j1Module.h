@@ -70,6 +70,11 @@ public:
 		return true;
 	}
 
+	virtual bool LoadBeginning(pugi::xml_node&)
+	{
+		return true;
+	}
+
 		
 public:
 

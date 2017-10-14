@@ -6,8 +6,9 @@
 	<audio />
 	<map />
 	<scene />
+	<:anonymous />
 	<player>
-		<position x="269" y="473" />
+		<position x="274" y="473" />
 		<velocity y="0" />
 	</player>
 	<renderer>

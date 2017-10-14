@@ -11,6 +11,7 @@ class j1Input;
 class j1Render;
 class j1Textures;
 class j1Audio;
+class j1Collision;
 class j1Scene;
 class j1SceneSwitch;
 class j1Player;
@@ -83,6 +84,7 @@ public:
 	j1Render*			render;
 	j1Textures*			tex;
 	j1Audio*			audio;
+	j1Collision*		collision;
 	j1Scene*			scene;
 	j1SceneSwitch*		sceneswitch;
 	j1Player*			player;

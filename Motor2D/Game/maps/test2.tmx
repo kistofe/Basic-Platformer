@@ -9,7 +9,10 @@
  <tileset firstgid="421" name="Ramona" tilewidth="32" tileheight="32" tilecount="324" columns="18">
   <image source="../images/Ramona.png" width="576" height="576"/>
  </tileset>
- <layer name="Layer 1" width="100" height="100">
+ <layer name="Background 1" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="0.35"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10013,7 +10016,10 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Layer 2" width="100" height="100">
+ <layer name="Background 2" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="0.5"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -20017,7 +20023,10 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Layer 3" width="100" height="100">
+ <layer name="Foreground (main)" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -30021,7 +30030,10 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Layer 4" width="100" height="100">
+ <layer name="Foreground 2" width="100" height="100">
+  <properties>
+   <property name="Parallax speed" type="float" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>

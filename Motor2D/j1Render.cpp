@@ -71,10 +71,10 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
-	camera.x = -(App->player->player_pos.x - camera.w/3     );
+	camera.x = -(App->player->player_pos.x - camera.w / 3);
 	if (camera.x > 0) { camera.x = 0; }
-	camera.y = -( App->player->player_pos.y - camera.h / 2);
-	//if (camera.y + App->win->height > App->map->data.height * App->map->data.tile_height) { camera.y = App->map->data.height * App->map->data.tile_height - App->win->height; }
+	camera.y = -( App->player->player_pos.y - camera.h / 1.35);
+	if (camera.y + App->win->height > App->map->data.height * App->map->data.tile_height) { camera.y = App->map->data.height * App->map->data.tile_height - App->win->height; }
 	
 	return true;
 }
@@ -138,7 +138,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.y = (int)(camera.y) + y * scale;
 
 	if(section != NULL)
 	{

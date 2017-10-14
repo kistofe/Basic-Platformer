@@ -6,6 +6,10 @@
     <organization>UPC</organization>
   </app>
 	
+  <audio>
+    <volume_default value = "96"/>
+  </audio>
+
   <renderer>
     <vsync value="false"/>
   </renderer>
@@ -28,16 +32,16 @@
   
   <player>
     <sprite_path path = "Ramona.png"/>
-    <speed x = "2.5"/>
+    <speed x = "3"/>
     <speed y = "0"/>
   </player>	
 
   <scene>
     <map_name name = "test.tmx">
-       <music name = "Level_1.ogg"/>
+      <music name = "Level_1.ogg"/>
     </map_name>
     <map_name name = "test2.tmx">
-       <music name = "Level_2.ogg"/>
+      <music name = "Level_2.ogg"/>
     </map_name>
   </scene>
 </config>

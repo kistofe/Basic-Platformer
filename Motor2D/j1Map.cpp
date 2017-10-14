@@ -49,7 +49,7 @@ void j1Map::Draw()
 				{
 					for (int x = 0; x < data.width; x++)
 					{
-						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]));
+						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->Parallax_speed);
 					}
 				}
 			}
@@ -158,7 +158,6 @@ bool j1Map::Load(const char* file_name)
 	for (layers = map_file.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
 	{
 		MapLayer* set = new MapLayer();
-
 		if (ret == true)
 		{
 			ret = LoadLayer(layers, set);
@@ -382,25 +381,27 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 {
 	bool ret = true;
 	
-	pugi::xml_node sib_iterator = layer_node.child("data").child("tile");
+	pugi::xml_node tile_iterator = layer_node.child("data").child("tile");
 
 	layer->height		= layer_node.attribute("height").as_uint(0);
 	layer->width		= layer_node.attribute("width").as_uint(0);
 	layer->name.create(layer_node.attribute("name").as_string());
 	layer->size			= layer->height * layer->width;
 	layer->layer_gid	= new uint[layer->size];
-	
+	layer->Parallax_speed = layer_node.child("properties").child("property").attribute("value").as_float();
+
 	memset(layer->layer_gid, 0, (sizeof(uint)*layer->size));
 
 	
 	for (int i = 0; i < layer->size; i++)
 	{
-		layer->layer_gid[i] = sib_iterator.attribute("gid").as_uint();
-		sib_iterator = sib_iterator.next_sibling("tile");
+		layer->layer_gid[i] = tile_iterator.attribute("gid").as_uint();
+		tile_iterator = tile_iterator.next_sibling("tile");
 	}
 	
 	return ret;
 }
+
 
 bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 {
@@ -408,7 +409,6 @@ bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 	Object obj;
 	objgroup->group_name.create(objgroup_node.attribute("name").as_string());
 
-	
 	return ret;
 }
 

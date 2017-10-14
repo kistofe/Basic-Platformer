@@ -12,12 +12,12 @@
 struct MapLayer
 {
 	p2SString	name;
+	float		Parallax_speed;
 	uint		width;
 	uint		height;
 	uint		size;
 	uint*		layer_gid;
 	~MapLayer() { delete layer_gid; };
-
 
 	inline uint Get(uint x, uint y)
 	{
@@ -71,16 +71,16 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
-	SDL_Color			background_color;
-	MapTypes			type;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	map_layers;
-	p2List<ObjGroup*>	objgroup;
-	p2List<Object*>		object;
+	int							width;
+	int							height;
+	int							tile_width;
+	int							tile_height;
+	SDL_Color					background_color;
+	MapTypes					type;
+	p2List<TileSet*>			tilesets;
+	p2List<MapLayer*>			map_layers;
+	p2List<ObjGroup*>			objgroup;
+	p2List<Object*>				object;
 };
 
 // ----------------------------------------------------

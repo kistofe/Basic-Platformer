@@ -1,6 +1,8 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1Audio.h"
+#include "j1App.h"
+#include "j1Input.h"
 #include "p2List.h"
 
 #include "SDL/include/SDL.h"
@@ -23,7 +25,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
-
+	
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -49,6 +51,9 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+	music_vol = config.child("volume_default").attribute("value").as_uint();
+
+	Mix_VolumeMusic(music_vol);
 
 	return ret;
 }
@@ -171,3 +176,53 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+bool j1Audio::VolumeControl()
+{
+	bool ret = true;
+
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+	{
+		if (music_vol <= 0)
+			music_vol = 0;
+		else
+			music_vol -= 30;
+		
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+	{
+		if (music_vol >= 128)
+			music_vol = 128;
+		else
+			music_vol += 30;
+	}
+
+	Mix_VolumeMusic(music_vol);
+	
+	return ret;
+}
+
+bool j1Audio::Load(pugi::xml_node & data)
+{
+	bool ret = true;
+
+	music_vol = data.child("volume").attribute("value").as_uint();
+
+	Mix_VolumeMusic(music_vol);
+	return ret;
+}
+
+bool j1Audio::Save(pugi::xml_node & data) const
+{
+	bool ret = true;
+	
+	pugi::xml_node vol = data.append_child("volume");
+
+	vol.append_attribute("value") = music_vol;
+
+	return ret;
+}
+
+

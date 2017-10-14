@@ -158,6 +158,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	vel.append_attribute("y") = player_speed.y;
 
+
 	//pugi::xml_node side = data.append_child("facing right");
 
 	//side.append_attribute("value") = facing_right;
@@ -170,11 +171,11 @@ void j1Player::SetSpeed()
 	player_speed.x = 0;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
-		player_speed.x = 2.5f;
+		player_speed.x = 3.0f;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
-		player_speed.x = -2.5f;
+		player_speed.x = -3.0f;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 		player_speed.x = player_speed.x * 1.75f;

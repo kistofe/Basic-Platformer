@@ -3,15 +3,18 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<audio>
+		<volume value="96" />
+	</audio>
+	<:anonymous />
 	<map />
 	<scene />
 	<:anonymous />
 	<player>
-		<position x="274" y="473" />
+		<position x="407" y="473" />
 		<velocity y="0" />
 	</player>
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-66" y="95" />
 	</renderer>
 </game_state>

@@ -35,7 +35,7 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+	
 	float gravity = 9.88;
 
 	void NextLevel();
@@ -43,7 +43,7 @@ public:
 private:
 
 	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
-
+	bool LoadMusicAtrib(pugi::xml_node&, const char*);
 public:
 
 	uint current_lvl = 1;
@@ -51,6 +51,7 @@ public:
 private:
 
 	p2List<p2SString*> map_name;
+	p2List<char*> map_music;
 };
 
 #endif // __j1SCENE_H__

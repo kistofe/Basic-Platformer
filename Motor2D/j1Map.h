@@ -124,7 +124,6 @@ private:
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
-	bool UnloadCurrentMap();
 
 public:
 

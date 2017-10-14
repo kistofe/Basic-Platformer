@@ -108,6 +108,7 @@ bool j1Map::CleanUp()
 	// Clean up the pugui tree
 	map_file.reset();
 
+	
 	return true;
 }
 
@@ -405,65 +406,22 @@ bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 
 	return ret;
 }
+bool j1Map::FadeToBlack(float time)
+{
+	return true;
+}
 
 bool j1Map::MapSwitch(char* new_map)
 {
 	bool ret = true;
 
-	UnloadCurrentMap();
-	//ret = CleanUp();
+	//calls cleanUp to unload current map
+	ret = CleanUp();
 
-	if (ret == true)
+	if (ret == true)//loads new map
+	{
 		Load(new_map);
+	}
 
 	return ret;
 }
-
-bool j1Map::UnloadCurrentMap()
-{
-	LOG("Unloading current map");
-	bool ret = true;
-
-	// Remove all tilesets
-	p2List_item<TileSet*>* item;
-	item = data.tilesets.start;
-
-	while (item != NULL)
-	{
-		RELEASE(item->data);
-		item = item->next;
-	}
-	data.tilesets.clear();
-
-
-	// Remove all layers
-	p2List_item<MapLayer*>* layer;
-	layer = data.map_layers.start;
-
-	while (layer != NULL)
-	{
-		RELEASE(layer->data);
-		layer = layer->next;
-	}
-
-	data.map_layers.clear();
-
-	// Remove all obects
-	p2List_item<ObjGroup*>* objgroup;
-	objgroup = data.objgroup.start;
-
-	while (objgroup != NULL)
-	{
-		RELEASE(objgroup->data);
-		objgroup = objgroup->next;
-	}
-
-	data.objgroup.clear();
-
-	// Clean up the pugui tree
-	map_file.reset();
-
-
-	return ret;
-}
-

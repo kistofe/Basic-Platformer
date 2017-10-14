@@ -25,11 +25,7 @@ struct MapLayer
 	}
 };
 
-struct ObjGroup
-{
-	p2SString	group_name;
 
-};
 
 struct Object
 {
@@ -41,6 +37,13 @@ struct Object
 	uint		x;
 	uint		y;
 };
+
+struct ObjGroup
+{
+	p2SString			group_name;
+	p2List<Object*>		my_objects;
+};
+
 // ----------------------------------------------------
 struct TileSet
 {
@@ -117,6 +120,8 @@ public:
 	bool FadeToBlack(float time = 1.0f);
 
 	bool MapSwitch(char*);
+
+	bool SetWallColliders();
 
 
 private:

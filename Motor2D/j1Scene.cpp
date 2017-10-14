@@ -52,6 +52,7 @@ bool j1Scene::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
 	return ret;
 }
 
+
 // Called before the first frame
 bool j1Scene::Start()
 {

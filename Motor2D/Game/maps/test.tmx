@@ -40025,10 +40025,10 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup color="#00ff00" name="main character">
+ <objectgroup color="#00ff00" name="PlayerPos">
   <object id="7" name="mainPlayer" x="200" y="473" width="50" height="69"/>
  </objectgroup>
- <objectgroup color="#ff0000" name="Collisions">
+ <objectgroup color="#ff0000" name="Colliders">
   <object id="9" name="wall" x="32" y="544" width="1152" height="96"/>
   <object id="11" name="wall" x="927.998" y="480.001" width="95.9962" height="63.9989"/>
   <object id="15" name="wall" x="1088" y="384" width="96" height="160"/>
@@ -40036,7 +40036,7 @@
   <object id="22" name="wall" x="1312" y="544" width="1856" height="95.9972"/>
   <object id="29" name="wall" x="1180" y="383" width="145" height="5"/>
  </objectgroup>
- <objectgroup color="#00aaff" name="Level end pos">
-  <object id="34" name="level end" x="1632" y="481" width="30" height="64"/>
+ <objectgroup color="#00aaff" name="EndPos">
+  <object id="34" name="LevelEnd" x="1632" y="481" width="30" height="64"/>
  </objectgroup>
 </map>

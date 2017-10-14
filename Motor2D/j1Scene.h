@@ -43,7 +43,6 @@ public:
 private:
 
 	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
-	bool LoadMusicAtrib(pugi::xml_node&, const char*);
 public:
 
 	uint current_lvl = 1;

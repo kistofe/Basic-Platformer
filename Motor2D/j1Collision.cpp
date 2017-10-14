@@ -100,7 +100,20 @@ bool j1Collision::CleanUp()
 
 Collider * j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
 {
-	return nullptr;
+	Collider* ret = nullptr;
+
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] == nullptr)
+		{
+			ret = colliders[i] = new Collider(rect, type);
+			break;
+		}
+	}
+
+	LOG("Collider created successfully. Attributes: x=%d, y=%d, w=%d; h=%d", ret->rect.x, ret->rect.y, ret->rect.w, ret->rect.h);
+
+	return ret;
 }
 
 bool j1Collision::EraseCollider(Collider * collider)
@@ -110,7 +123,7 @@ bool j1Collision::EraseCollider(Collider * collider)
 
 void j1Collision::DebugDraw()
 {
-	if ((App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN))
+	if ((App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN))
 		debug = !debug;
 
 	if (debug == false)

@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Collision.h"
 #include "j1Map.h"
 #include "j1Input.h"
 #include "j1Scene.h"
@@ -179,6 +180,7 @@ bool j1Map::Load(const char* file_name)
 			{
 				ret = Load_Object(obj, set2);
 				data.object.add(set2);
+				set->my_objects.add(set2);
 			}
 		}
 		data.objgroup.add(set);
@@ -214,6 +216,9 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
+	// Call function to convert objects to colliders
+	SetWallColliders();
+
 	map_loaded = ret;
 	
 	return ret;
@@ -224,15 +229,15 @@ bool j1Map::LoadBeginning()
 	bool ret = true;
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = App->map->data.object.start->data->y;
+		App->player->player_pos.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->player_pos.y = data.object.start->data->y;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		App->sceneswitch->FadeToBlack();
-		App->player->player_pos.x = App->map->data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = App->map->data.object.start->data->y;
+		App->player->player_pos.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->player_pos.y = data.object.start->data->y;
 	}
 	
 	return ret;
@@ -445,4 +450,34 @@ bool j1Map::MapSwitch(char* new_map)
 	}
 
 	return ret;
+}
+
+bool j1Map::SetWallColliders()
+{
+	p2List_item<ObjGroup*>* current_objgroup = data.objgroup.start;
+
+	while (current_objgroup != NULL)
+	{
+		if (current_objgroup->data->group_name == "Colliders")
+		{
+			p2List_item<Object*>* current_object = current_objgroup->data->my_objects.start;
+
+			while (current_object != NULL)
+			{
+				SDL_Rect collider_tocreate;
+				collider_tocreate.x = current_object->data->x;
+				collider_tocreate.y = current_object->data->y;
+				collider_tocreate.w = current_object->data->width;
+				collider_tocreate.h = current_object->data->height;
+				App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
+
+				current_object = current_object->next;
+			}
+		}
+
+		current_objgroup = current_objgroup->next;
+	}
+
+
+	return true;
 }

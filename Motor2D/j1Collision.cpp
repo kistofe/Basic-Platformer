@@ -40,9 +40,16 @@ bool j1Collision::PreUpdate()
 		}
 	}
 
+	//set future collider position
+	App->player->futur_player_col->SetPos(App->player->futur_player_col->rect.x + App->player->player_speed.x, App->player->futur_player_col->rect.y + App->player->player_speed.y);
+
+	return true;
+}
+
+bool j1Collision::Update(float dt)
+{
 	//Calculate future collisions
 	Collider* c1;
-	Collider* c2;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -52,33 +59,16 @@ bool j1Collision::PreUpdate()
 
 		c1 = colliders[i];
 
-		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
+		//check if a certain collider will collide with future player collider
+		if (SDL_HasIntersection(&c1->rect, &App->player->futur_player_col->rect))
 		{
-			// skip empty colliders
-			if (colliders[k] == nullptr)
-				continue;
-
-			c2 = colliders[k];
-
-			if (SDL_HasIntersection(&c1->rect, &c2->rect))
-			{
-				if (matrix[c1->type][c2->type])
-				{
-					will_collide(c1, c2);
-				}
-
-			}
-
+			//if does, call will_collide
+			if(matrix[c1->type][App->player->futur_player_col->type])
+				will_collide(c1, App->player->futur_player_col);
 		}
 	}
 
-	
-	return true;
-}
-
-bool j1Collision::Update(float dt)
-{
+	//check collisions with future collider
 	DebugDraw();
 	
 	return true;
@@ -154,10 +144,45 @@ void j1Collision::DebugDraw()
 	}
 }
 
-bool j1Collision::will_collide(Collider* collider, Collider* player)
+bool j1Collision::will_collide(Collider* c1, Collider* c2)
 {
 	bool ret = true;
 
+	if (c1->type == COLLIDER_WALL)
+	{
+		SDL_Rect intersect_col;
+		SDL_bool result = SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col);
+
+		if (result)//future player collider and a certain collider have collided
+		{
+			if (intersect_col.h == intersect_col.w)
+			{
+				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
+				App->player->player_pos.y = App->player->futur_player_col->rect.y - intersect_col.h;
+			}
+			else if (intersect_col.h >= intersect_col.w)
+			{
+				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
+				App->player->player_speed.x = 0;
+			}
+			else if (intersect_col.h < intersect_col.w)
+			{
+				App->player->player_pos.y = App->player->futur_player_col->rect.y - intersect_col.h;
+				App->player->player_speed.y = 0;
+			}
+
+		}
+		App->player->is_colliding = true;
+	}
+	
 	
 	return ret;
+}
+
+bool j1Collision::PostUpdate()
+{
+	//adjust player new position
+	App->player->player_collider->SetPos(App->player->player_pos.x, App->player->player_pos.y);
+	App->player->is_colliding = false;
+	return true;
 }

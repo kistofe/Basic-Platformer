@@ -4,17 +4,17 @@
 	<window />
 	<textures />
 	<audio>
-		<volume value="96" />
+		<volume value="4294967272" />
 	</audio>
 	<:anonymous />
 	<map />
 	<scene />
 	<:anonymous />
 	<player>
-		<position x="407" y="473" />
+		<position x="3371" y="473" />
 		<velocity y="0" />
 	</player>
 	<renderer>
-		<camera x="-66" y="95" />
+		<camera x="-3030" y="95" />
 	</renderer>
 </game_state>

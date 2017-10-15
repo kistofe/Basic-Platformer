@@ -43,6 +43,7 @@ public:
 
 	bool PreUpdate();
 	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type);

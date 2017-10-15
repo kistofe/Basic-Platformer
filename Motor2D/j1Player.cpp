@@ -27,7 +27,7 @@ j1Player::j1Player()
 	walking.PushBack({ 216, 69, 54, 69 });
 	walking.PushBack({ 270, 69, 54, 69 });
 	walking.loop = true;
-	walking.speed = 0.2f;
+	walking.speed = 0.3f;
 
 	//running animation
 	running.PushBack({ 0, 207, 54, 69 });
@@ -39,7 +39,7 @@ j1Player::j1Player()
 	running.PushBack({ 324, 207, 54, 69 });
 	running.PushBack({ 378, 207, 54, 69 });
 	running.loop = true;
-	running.speed = 0.3f,
+	running.speed = 0.5f,
 
 	//jumping animation
 	jump.PushBack({ 0, 140, 54, 69 });
@@ -80,6 +80,8 @@ bool j1Player::Start()
 
 	player_collider = App->collision->AddCollider({ player_pos.x + 7, player_pos.y + 4, 40, 65 }, COLLIDER_PLAYER);
 
+	futur_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y,40, 65 }, COLLIDER_PLAYER);
+
 	return true;
 }
 
@@ -91,8 +93,11 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
 {
-	SetSpeed();
-	
+	if (!is_colliding)
+	{
+		SetSpeed();
+	}
+		
 	current_animation = &idle;
 
 	player_pos.x += player_speed.x;
@@ -113,6 +118,23 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &idle;
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		current_animation = &jump;
+		if (player_pos.y < 473 && is_jumping)//player has gone up {hardcoded until collision with ground is done}
+		{
+			player_speed.y += App->scene->gravity;
+
+			if (player_pos.y - 69 >= 473)
+			{
+				player_pos.y = 473;
+				is_jumping = false;
+			}
+				
+		}
+
+	}
 
 	if (facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
@@ -175,56 +197,23 @@ void j1Player::SetSpeed()
 	{
 		player_speed.x = 3.0f;
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
 		player_speed.x = -3.0f;
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 		player_speed.x = player_speed.x * 1.75f;
 
+  	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		//When player hits space, its y vel "decreases" (it goes up)
+		//Then we apply gravity, which weakens y vel until reaching 0 and then until touching ground
+		//When touching ground, gravity disappears and y vel is set to 0
+		player_speed.y = -12.0f;
+		is_jumping = true;
+	}
+		
 	return;
-}
-
-bool j1Player::PredictCollision(const SDL_Rect* player, const SDL_Rect* collider)
-{
-	bool ret = true;
-	
-	//Loop through all colliders named
-	for (App->map->data.object; App->map->data.object.start->data; App->map->data.object.start = App->map->data.object.start->next)
-	{
-		if (App->map->data.object.start->data->name == "wall")
-			TransformToRect(App->map->data.object.start->data);
-	}
-	
-	if (SDL_HasIntersection(player, collider))
-	{
-		SetCorrectVel(player);
-	}
-	
-	return ret;
-}
-
-void j1Player::SetCorrectVel(const SDL_Rect* player)
-{
-	//this function modifies player velocity in order to avoid intersecting the collider
-	//First we calculate the intersection rectangle between the player and the collider
-	//player.x + player.w - collider.x + collider.w-> speed to reach this x
-	//Then adjust speed
-	SDL_Rect* collider;
-	SDL_Rect* intersection_collider;
-	
-	
-
-}
-
-SDL_Rect j1Player::TransformToRect(Object* r)
-{
-	SDL_Rect rect;
-	
-	rect.h = r->height;
-	rect.w = r->width;
-	rect.x = r->x;
-	rect.y = r->y;
-
-	return rect;
 }

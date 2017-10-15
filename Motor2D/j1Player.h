@@ -37,12 +37,6 @@ public:
 	//Saves player pos
 	bool Save(pugi::xml_node&) const;
 	
-	//Raycast function to detect if player collides
-	bool PredictCollision(const SDL_Rect*, const SDL_Rect*);
-
-	void SetCorrectVel(const SDL_Rect*);
-
-	SDL_Rect TransformToRect(Object*);
 
 private:
 
@@ -58,15 +52,17 @@ public:
 	Animation jump;
 
 	bool facing_right = true;
+	bool is_colliding = false;
 
 	iPoint		player_pos;
 	fPoint		player_speed;
 
 	Collider*	player_collider;
+	Collider*	futur_player_col;
 
 private:
+	bool is_jumping = false;
 	
-
 };
 
 #endif

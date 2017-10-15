@@ -27,7 +27,7 @@ j1Player::j1Player()
 	walking.PushBack({ 216, 69, 54, 69 });
 	walking.PushBack({ 270, 69, 54, 69 });
 	walking.loop = true;
-	walking.speed = 0.3f;
+	walking.speed = 0.7f;
 
 	//running animation
 	running.PushBack({ 0, 207, 54, 69 });
@@ -112,10 +112,9 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		facing_right = true;
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 		facing_right = false;
 
@@ -204,12 +203,12 @@ void j1Player::SetSpeed()
 	player_speed.x = 0;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
-		player_speed.x = 3.0f;
+		player_speed.x = 5.0f;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
-		player_speed.x = -3.0f;
+		player_speed.x = -5.0f;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)

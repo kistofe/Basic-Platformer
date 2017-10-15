@@ -191,8 +191,12 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 			{
 				if (App->player->player_collider->rect.x + App->player->player_collider->rect.w <= c1->rect.x && App->player->player_collider->rect.y + App->player->player_collider->rect.h <= c1->rect.y)//case +y/+x
 				{
-					if ()
+					App->player->player_pos.x = App->player->player_collider->rect.x - intersect_col.w;
+					App->player->player_pos.y = App->player->player_collider->rect.y - intersect_col.h;
 				}
+
+				App->player->player_speed.x = 0;
+				App->player->player_speed.y = 0;
 			}
 			//case +y/+x
 				//if (player collider.x + player collider.w < collider.x)-> player falls

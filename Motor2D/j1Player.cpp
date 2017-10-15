@@ -179,11 +179,13 @@ void j1Player::SetSpeed()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
 		player_speed.x = 3.0f;
+		facing_right = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
 		player_speed.x = -3.0f;
+		facing_right = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)

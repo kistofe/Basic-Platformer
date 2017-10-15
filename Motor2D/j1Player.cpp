@@ -80,13 +80,14 @@ bool j1Player::Start()
 
 	player_collider = App->collision->AddCollider({ player_pos.x + 7, player_pos.y + 4, 40, 65 }, COLLIDER_PLAYER);
 
-	futur_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y,40, 65 }, COLLIDER_PLAYER);
+	futur_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y,40, 65 }, COLLIDER_FPLAYER);
 
 	return true;
 }
 
 bool j1Player::PreUpdate()
 {
+	
 	return true;
 }
 

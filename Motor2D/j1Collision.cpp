@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Player.h"
+#include "j1SceneSwitch.h"
 
 j1Collision::j1Collision()
 {
@@ -14,14 +15,22 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENDOFLEVEL] = false;
+	matrix[COLLIDER_WALL][COLLIDER_FPLAYER] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENDOFLEVEL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_FPLAYER] = false;
 
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_ENDOFLEVEL] = true;
+	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_FPLAYER] = true;
+
+	matrix[COLLIDER_FPLAYER][COLLIDER_WALL] = true;
+	matrix[COLLIDER_FPLAYER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_FPLAYER][COLLIDER_ENDOFLEVEL] = true;
+	matrix[COLLIDER_FPLAYER][COLLIDER_FPLAYER] = false;
 }
 
 j1Collision::~j1Collision()
@@ -140,6 +149,8 @@ void j1Collision::DebugDraw()
 		case COLLIDER_ENDOFLEVEL: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
+		case COLLIDER_FPLAYER:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 		}
 	}
 }
@@ -155,12 +166,12 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 
 		if (result)//future player collider and a certain collider have collided
 		{
-			if (intersect_col.h == intersect_col.w)
+			/*if (intersect_col.h == intersect_col.w)
 			{
 				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
 				App->player->player_pos.y = App->player->futur_player_col->rect.y - intersect_col.h;
-			}
-			else if (intersect_col.h >= intersect_col.w)
+			}*/
+			if (intersect_col.h >= intersect_col.w)
 			{
 				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
 				App->player->player_speed.x = 0;
@@ -174,6 +185,11 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 		}
 		App->player->is_colliding = true;
 	}
+
+	if (c2->type == COLLIDER_ENDOFLEVEL)
+	{
+		App->sceneswitch->FadeToBlack();
+	}
 	
 	
 	return ret;
@@ -182,7 +198,8 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 bool j1Collision::PostUpdate()
 {
 	//adjust player new position
-	App->player->player_collider->SetPos(App->player->player_pos.x, App->player->player_pos.y);
 	App->player->is_colliding = false;
-	return true;
+	App->player->player_collider->SetPos(App->player->player_pos.x, App->player->player_pos.y);
+
+		return true;
 }

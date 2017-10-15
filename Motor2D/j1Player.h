@@ -58,10 +58,11 @@ public:
 	fPoint		player_speed;
 
 	Collider*	player_collider;
-	Collider*	futur_player_col;
+	Collider*	future_player_col;
 
 private:
 	bool is_jumping = false;
+	bool to_ground = false; //testing variable, remove it when completed
 	
 };
 

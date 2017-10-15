@@ -62,10 +62,6 @@ j1Player::~j1Player()
 
 bool j1Player::Awake()
 {
-	/*for (int i = 0; i < App->map->data.obj_layers.count(); i++)
-	{
-		// Loop for finding the object group where the player is, probably doesnt work
-	}*/
 	
 	return true;
 }
@@ -78,9 +74,9 @@ bool j1Player::Start()
 
 	player_pos.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
 
-	player_collider = App->collision->AddCollider({ player_pos.x + 7, player_pos.y + 4, 40, 65 }, COLLIDER_PLAYER);
+	player_collider = App->collision->AddCollider({ player_pos.x, player_pos.y, 40, 65 }, COLLIDER_PLAYER);
 
-	futur_player_col = App->collision->AddCollider({ player_collider->rect.x + 7, player_collider->rect.y, 40, 65 }, COLLIDER_FPLAYER);
+	future_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y, 40, 65 }, COLLIDER_FPLAYER);
 
 	return true;
 }
@@ -89,9 +85,9 @@ bool j1Player::PreUpdate()
 {
 	//set future collider position
 	//player_speed.x = 3.0f;
-
-	futur_player_col->SetPos(futur_player_col->rect.x + abs(player_speed.x), futur_player_col->rect.y + abs(player_speed.y));
-	LOG("Player x pos = %d/ FPlayer x pos = %d", player_collider->rect.x, futur_player_col->rect.x);
+	
+	future_player_col->SetPos(future_player_col->rect.x + player_speed.x, future_player_col->rect.y + player_speed.y);
+	LOG("Player x pos = %d/ FPlayer x pos = %d", player_collider->rect.x, future_player_col->rect.x);
 
 	return true;
 }
@@ -99,19 +95,16 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
 {
-	player_collider->SetPos(player_pos.x, player_pos.y);
-	futur_player_col->SetPos(player_collider->rect.x, player_collider->rect.y); 
-
 	if (!is_colliding)
 	{
 		SetSpeed();
 	}
-	
-	current_animation = &idle;
 
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
 
+	current_animation = &idle;
+	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -131,20 +124,15 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		current_animation = &jump;
-		if (player_pos.y < 473 && is_jumping)//player has gone up {hardcoded until collision with ground is done}
+		
+		if (player_pos.y <= 473 && is_jumping)//player has gone up {hardcoded until collision with ground is done}
 		{
 			player_speed.y += App->scene->gravity;
-
-			if (player_pos.y - 69 >= 473)
-			{
-				player_pos.y = 473;
-				is_jumping = false;
-			}
-				
+			to_ground = true;
 		}
-
+	
 	}
-
+	
 	if (facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
 
@@ -220,8 +208,13 @@ void j1Player::SetSpeed()
 		//When player hits space, its y vel "decreases" (it goes up)
 		//Then we apply gravity, which weakens y vel until reaching 0 and then until touching ground
 		//When touching ground, gravity disappears and y vel is set to 0
-		player_speed.y = -12.0f;
+		if (to_ground)
+			player_speed.y = 12.0f;
+		else
+			player_speed.y = -12.0f;
+
 		is_jumping = true;
+		to_ground = false;
 	}
 		
 	return;

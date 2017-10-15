@@ -35,8 +35,6 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	
-	float gravity = 9.88;
 
 	void NextLevel();
 
@@ -46,6 +44,7 @@ private:
 public:
 
 	uint current_lvl = 1;
+	float gravity = 1.0f;
 
 private:
 

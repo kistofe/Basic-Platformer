@@ -39,19 +39,19 @@ j1Player::j1Player()
 	running.PushBack({ 324, 207, 54, 69 });
 	running.PushBack({ 378, 207, 54, 69 });
 	running.loop = true;
-	running.speed = 0.5f,
+	running.speed = 0.4f,
 
 	//jumping animation
-	jump.PushBack({ 0, 140, 54, 69 });
-	jump.PushBack({ 60, 140, 54, 69 });
-	jump.PushBack({ 120, 140, 54, 69 });
-	jump.PushBack({ 180, 140, 54, 69 });
-	jump.PushBack({ 180, 140, 54, 69 });
-	jump.PushBack({ 240, 140, 54, 69 });
-	jump.PushBack({ 300, 140, 54, 69 });
-	jump.PushBack({ 360, 140, 54, 69 });
+	jump.PushBack({ 0, 138, 54, 69 });
+	jump.PushBack({ 54, 138, 54, 69 });
+	jump.PushBack({ 108, 138, 54, 69 });
+	jump.PushBack({ 162, 138, 54, 69 });
+	jump.PushBack({ 216, 138, 54, 69 });
+	jump.PushBack({ 270, 138, 54, 69 });
+	jump.PushBack({ 324, 138, 54, 69 });
+	jump.PushBack({ 378, 138, 54, 69 });
 	jump.loop = false;
-	jump.speed = 1.5f;
+	jump.speed = 0.4f;
 
 }
 
@@ -123,8 +123,6 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		current_animation = &jump;
-		
 		if (player_pos.y <= 473 && is_jumping)//player has gone up {hardcoded until collision with ground is done}
 		{
 			player_speed.y += App->scene->gravity;
@@ -132,6 +130,8 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 		}
 	
 	}
+	if (is_jumping)
+		current_animation = &jump;
 	
 	if (facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));

@@ -224,7 +224,7 @@ bool j1Collision::PostUpdate()
 {
 	//adjust player new position
 	App->player->is_colliding = false;
-	App->player->player_collider->SetPos(App->player->player_pos.x, App->player->player_pos.y);
+	App->player->player_collider->SetPos(App->player->player_pos.x + 7, App->player->player_pos.y + 4);
 	App->player->future_player_col->SetPos(App->player->player_collider->rect.x, App->player->player_collider->rect.y);
 
 		return true;

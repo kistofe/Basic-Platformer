@@ -52,10 +52,10 @@ public:
 	Animation jump;
 
 	bool facing_right = true;
-	bool is_colliding = false;
 
 	iPoint		player_pos;
 	fPoint		player_speed;
+	fPoint		original_speed;
 
 	Collider*	player_collider;
 	Collider*	future_player_col;

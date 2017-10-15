@@ -5,6 +5,7 @@
 #include "j1Input.h"
 #include "j1Player.h"
 #include "j1SceneSwitch.h"
+#include "j1Scene.h"
 
 j1Collision::j1Collision()
 {
@@ -162,53 +163,59 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 		if(SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
 		//future player collider and a certain collider have collided
 		{
-			/*if (intersect_col.h == intersect_col.w)
+			if (App->player->player_speed.y == 0)//case y = 0 
 			{
-				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
-				App->player->player_pos.y = App->player->futur_player_col->rect.y - intersect_col.h;
-			}*/
-			if (intersect_col.h >= intersect_col.w)//case y = 0 
-			{
-				if (App->player->player_collider->rect.x + App->player->player_collider->rect.w <= c1->rect.x)//case +x
-					App->player->player_pos.x = App->player->player_collider->rect.x - intersect_col.w;
-				
-				else//case -x
-					App->player->player_pos.x = App->player->future_player_col->rect.x + intersect_col.w;
-				
-				App->player->player_speed.x = 0;
-			}
-			else if (intersect_col.h < intersect_col.w)// case x = 0
-			{
-				if (App->player->player_collider->rect.y + App->player->player_collider->rect.h <= c1->rect.y)//case y+
-					App->player->player_pos.y = App->player->player_collider->rect.y - intersect_col.h;
-
-				else//case -y
-					App->player->player_pos.y = App->player->player_collider->rect.y + intersect_col.h;
-				
-				App->player->player_speed.y = 0;
-			}
-			else if (intersect_col.h == intersect_col.w)//case y != 0 && x != 0
-			{
-				if (App->player->player_collider->rect.x + App->player->player_collider->rect.w <= c1->rect.x && App->player->player_collider->rect.y + App->player->player_collider->rect.h <= c1->rect.y)//case +y/+x
+				if (App->player->player_speed.x > 0)//case +x
 				{
-					App->player->player_pos.x = App->player->player_collider->rect.x - intersect_col.w;
-					App->player->player_pos.y = App->player->player_collider->rect.y - intersect_col.h;
+					App->player->player_speed.x -= intersect_col.w;
 				}
 
-				App->player->player_speed.x = 0;
-				App->player->player_speed.y = 0;
+				else//case -x
+				{
+					App->player->player_speed.x += intersect_col.w;
+				}
+
 			}
-			//case +y/+x
-				//if (player collider.x + player collider.w < collider.x)-> player falls
-				//else ->player does not fall
-			//case +y/-x
-			//case -y/-x
-				//if (player collider.x > collider.x + collider.w)-> player falls
-				// else -> player does not fall
-			//case -y/+x
-			
+			else if (App->player->player_speed.x == 0)// case x = 0
+			{
+				if (App->player->player_speed.y > 0)//case y+
+				{
+					App->player->player_speed.y -= intersect_col.h;
+				}
+
+				else//case -y
+				{
+					App->player->player_speed.y += intersect_col.h;
+				}
+			}
+			else if (App->player->player_speed.x != 0 && App->player->player_speed.y != 0)//case y != 0 && x != 0
+			{
+				if (App->player->player_speed.x > 0 && App->player->player_speed.y > 0)//case +y/+x
+				{
+					App->player->player_speed.x -= intersect_col.w;
+					App->player->player_speed.y -= intersect_col.h;
+				}
+
+				else if (App->player->player_speed.x < 0 && App->player->player_speed.y < 0)//case -x/-y
+				{
+					App->player->player_speed.x += intersect_col.w;
+					App->player->player_speed.y += intersect_col.h;
+				}
+
+				else if (App->player->player_speed.x < 0 && App->player->player_speed.y > 0)//case -x/+y
+				{
+					App->player->player_speed.x += intersect_col.w;
+					App->player->player_speed.y -= intersect_col.h;
+				}
+
+				else if (App->player->player_speed.x > 0 && App->player->player_speed.y < 0)//case +x/-y
+				{
+					App->player->player_speed.x -= intersect_col.w;
+					App->player->player_speed.y += intersect_col.h;
+				}
+			}
 		}
-		App->player->is_colliding = true;
+		App->player->future_player_col->SetPos(App->player->future_player_col->rect.x - (App->player->original_speed.x - App->player->player_speed.x), App->player->future_player_col->rect.y - (App->player->original_speed.y - App->player->player_speed.y));
 	}
 
 	if (c2->type == COLLIDER_ENDOFLEVEL)
@@ -222,10 +229,6 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 
 bool j1Collision::PostUpdate()
 {
-	//adjust player new position
-	App->player->is_colliding = false;
-	App->player->player_collider->SetPos(App->player->player_pos.x, App->player->player_pos.y);
-	App->player->future_player_col->SetPos(App->player->player_collider->rect.x, App->player->player_collider->rect.y);
-
+	
 		return true;
 }

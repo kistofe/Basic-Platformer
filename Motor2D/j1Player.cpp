@@ -39,7 +39,7 @@ j1Player::j1Player()
 	running.PushBack({ 324, 207, 54, 69 });
 	running.PushBack({ 378, 207, 54, 69 });
 	running.loop = true;
-	running.speed = 0.5f,
+	running.speed = 0.4f,
 
 	//jumping animation
 	jump.PushBack({ 0, 140, 54, 69 });
@@ -83,22 +83,17 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
-	//set future collider position
-	//player_speed.x = 3.0f;
+	player_speed.x = original_speed.x;
+	player_speed.y = original_speed.y;
 	
-	future_player_col->SetPos(future_player_col->rect.x + player_speed.x, future_player_col->rect.y + player_speed.y);
-	LOG("Player x pos = %d/ FPlayer x pos = %d", player_collider->rect.x, future_player_col->rect.x);
-
 	return true;
 }
 
 
 bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
 {
-	if (!is_colliding)
-	{
-		SetSpeed();
-	}
+
+	SetSpeed();
 
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
@@ -111,6 +106,7 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 		facing_right = false;
+	if (!is_jumping)
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &walking;
@@ -122,17 +118,8 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 		current_animation = &idle;
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
 		current_animation = &jump;
 		
-		if (player_pos.y <= 473 && is_jumping)//player has gone up {hardcoded until collision with ground is done}
-		{
-			player_speed.y += App->scene->gravity;
-			to_ground = true;
-		}
-	
-	}
-	
 	if (facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
 
@@ -161,9 +148,7 @@ bool j1Player::Load(pugi::xml_node& data)
 	player_pos.y = data.child("position").attribute("y").as_int();
 
 	player_speed.y = data.child("velocity").attribute("y").as_float();
-
-	//facing_right = data.child("facing right").attribute("value").as_bool();
-
+	
 	return true;
 }
 
@@ -179,17 +164,14 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	vel.append_attribute("y") = player_speed.y;
 
-
-	//pugi::xml_node side = data.append_child("facing right");
-
-	//side.append_attribute("value") = facing_right;
-
 	return true;
 }
 
 void j1Player::SetSpeed()
 {
-	player_speed.x = 0;
+	original_speed.x = 0;
+	//original_speed.y = App->scene->gravity;
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
 		player_speed.x = 3.0f;
@@ -203,18 +185,11 @@ void j1Player::SetSpeed()
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 		player_speed.x = player_speed.x * 1.75f;
 
-  	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		//When player hits space, its y vel "decreases" (it goes up)
-		//Then we apply gravity, which weakens y vel until reaching 0 and then until touching ground
-		//When touching ground, gravity disappears and y vel is set to 0
-		if (to_ground)
-			player_speed.y = 12.0f;
-		else
-			player_speed.y = -12.0f;
+		player_speed.y = -12.0f;
 
 		is_jumping = true;
-		to_ground = false;
 	}
 		
 	return;

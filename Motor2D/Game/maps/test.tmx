@@ -40051,6 +40051,6 @@
   <object id="52" name="wall" x="159" y="319" width="94" height="66"/>
  </objectgroup>
  <objectgroup color="#00aaff" name="EndPos">
-  <object id="43" name="LevelEnd" x="1089" y="477" width="30" height="64"/>
+  <object id="43" name="LevelEnd" x="450" y="477" width="30" height="64"/>
  </objectgroup>
 </map>

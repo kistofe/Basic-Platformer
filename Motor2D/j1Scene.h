@@ -44,7 +44,7 @@ private:
 public:
 
 	uint current_lvl = 1;
-	float gravity = 10.0f;
+	float gravity = -10.0f;
 
 private:
 

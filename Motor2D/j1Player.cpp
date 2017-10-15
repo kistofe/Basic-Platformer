@@ -152,7 +152,7 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
 
 	player_collider->SetPos(player_pos.x + 7, player_pos.y + 4);
-
+	futur_player_col->SetPos(player_pos.x + 7 + player_speed.x, player_pos.y + 4 + player_speed.y);
 
 	return true;
 }

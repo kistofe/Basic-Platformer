@@ -84,10 +84,10 @@ public:
 	j1Render*			render;
 	j1Textures*			tex;
 	j1Audio*			audio;
-	j1Collision*		collision;
 	j1Scene*			scene;
 	j1SceneSwitch*		sceneswitch;
 	j1Player*			player;
+	j1Collision*		collision;
 	j1Map*				map;
 
 private:

@@ -80,25 +80,33 @@ bool j1Player::Start()
 
 	player_collider = App->collision->AddCollider({ player_pos.x + 7, player_pos.y + 4, 40, 65 }, COLLIDER_PLAYER);
 
-	futur_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y,40, 65 }, COLLIDER_FPLAYER);
+	futur_player_col = App->collision->AddCollider({ player_collider->rect.x + 7, player_collider->rect.y, 40, 65 }, COLLIDER_FPLAYER);
 
 	return true;
 }
 
 bool j1Player::PreUpdate()
 {
-	
+	//set future collider position
+	//player_speed.x = 3.0f;
+
+	futur_player_col->SetPos(futur_player_col->rect.x + abs(player_speed.x), futur_player_col->rect.y + abs(player_speed.y));
+	LOG("Player x pos = %d/ FPlayer x pos = %d", player_collider->rect.x, futur_player_col->rect.x);
+
 	return true;
 }
 
 
 bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
 {
+	player_collider->SetPos(player_pos.x, player_pos.y);
+	futur_player_col->SetPos(player_collider->rect.x, player_collider->rect.y); 
+
 	if (!is_colliding)
 	{
 		SetSpeed();
 	}
-		
+	
 	current_animation = &idle;
 
 	player_pos.x += player_speed.x;

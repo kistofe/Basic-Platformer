@@ -49,8 +49,7 @@ bool j1Collision::PreUpdate()
 		}
 	}
 
-	//set future collider position
-	App->player->futur_player_col->SetPos(App->player->futur_player_col->rect.x + App->player->player_speed.x, App->player->futur_player_col->rect.y + App->player->player_speed.y);
+	App->player->futur_player_col->SetPos(App->player->player_collider->rect.x, App->player->player_collider->rect.y);
 
 	return true;
 }
@@ -166,11 +165,11 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 
 		if (result)//future player collider and a certain collider have collided
 		{
-			/*if (intersect_col.h == intersect_col.w)
+			if (intersect_col.h == intersect_col.w)
 			{
 				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
 				App->player->player_pos.y = App->player->futur_player_col->rect.y - intersect_col.h;
-			}*/
+			}
 			if (intersect_col.h >= intersect_col.w)
 			{
 				App->player->player_pos.x = App->player->futur_player_col->rect.x - intersect_col.w;
@@ -200,6 +199,7 @@ bool j1Collision::PostUpdate()
 	//adjust player new position
 	App->player->is_colliding = false;
 	App->player->player_collider->SetPos(App->player->player_pos.x, App->player->player_pos.y);
+	//App->player->futur_player_col->SetPos(App->player->player_collider->rect.x, App->player->player_collider->rect.y);
 
 		return true;
 }

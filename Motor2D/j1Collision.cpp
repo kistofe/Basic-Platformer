@@ -229,6 +229,6 @@ bool j1Collision::will_collide(Collider* c1, Collider* c2)
 
 bool j1Collision::PostUpdate()
 {
-	
+
 		return true;
 }

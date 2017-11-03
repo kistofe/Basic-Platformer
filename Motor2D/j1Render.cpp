@@ -74,7 +74,7 @@ bool j1Render::Update(float dt)
 	camera.x = -(App->player->player_pos.x - camera.w / 3);
 	if (camera.x > 0) { camera.x = 0; }
 	camera.y = -( App->player->player_pos.y - camera.h / 1.35);
-	if (camera.y + App->win->height > App->map->data.height * App->map->data.tile_height) { camera.y = App->map->data.height * App->map->data.tile_height - App->win->height; }
+	//if (camera.y + App->win->height > App->map->data.height * App->map->data.tile_height) { camera.y = App->map->data.height * App->map->data.tile_height - App->win->height; }
 	
 	return true;
 }

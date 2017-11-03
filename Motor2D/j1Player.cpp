@@ -83,9 +83,6 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
-	player_speed.x = original_speed.x;
-	player_speed.y = original_speed.y;
-	
 	return true;
 }
 
@@ -96,7 +93,7 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 	SetSpeed();
 
 	player_pos.x += player_speed.x;
-	player_pos.y += player_speed.y;
+	player_pos.y += player_speed.y + App->scene->gravity;
 
 
 	current_animation = &idle;
@@ -173,9 +170,9 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 void j1Player::SetSpeed()
 {
-	original_speed.x = 0;
-	//original_speed.y = App->scene->gravity;
-
+	player_speed.x = 0;
+	player_speed.y += App->scene->gravity;
+	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
 		player_speed.x = 3.0f;

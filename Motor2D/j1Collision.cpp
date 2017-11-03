@@ -71,7 +71,7 @@ bool j1Collision::Update(float dt)
 		{
 			//if does, call will_collide
 			if(matrix[c1->type][App->player->future_player_col->type])
-				will_collide(c1, App->player->future_player_col);
+				Avoid_Collision(c1, App->player->future_player_col);
 		}
 	}
 
@@ -153,82 +153,32 @@ void j1Collision::DebugDraw()
 	}
 }
 
-bool j1Collision::will_collide(Collider* c1, Collider* c2)
+bool j1Collision::Avoid_Collision(Collider* c1, Collider* c2)
 {
 	bool ret = true;
 
 	if (c1->type == COLLIDER_WALL)
 	{
 		SDL_Rect intersect_col;
-		if(SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
+		if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
 		//future player collider and a certain collider have collided
 		{
-			if (App->player->player_speed.y == 0)//case y = 0 
-			{
-				if (App->player->player_speed.x > 0)//case +x
-				{
-					App->player->player_speed.x -= intersect_col.w;
-				}
+			
 
-				else//case -x
-				{
-					App->player->player_speed.x += intersect_col.w;
-				}
 
-			}
-			else if (App->player->player_speed.x == 0)// case x = 0
-			{
-				if (App->player->player_speed.y > 0)//case y+
-				{
-					App->player->player_speed.y -= intersect_col.h;
-				}
 
-				else//case -y
-				{
-					App->player->player_speed.y += intersect_col.h;
-				}
-			}
-			else if (App->player->player_speed.x != 0 && App->player->player_speed.y != 0)//case y != 0 && x != 0
-			{
-				if (App->player->player_speed.x > 0 && App->player->player_speed.y > 0)//case +y/+x
-				{
-					App->player->player_speed.x -= intersect_col.w;
-					App->player->player_speed.y -= intersect_col.h;
-				}
-
-				else if (App->player->player_speed.x < 0 && App->player->player_speed.y < 0)//case -x/-y
-				{
-					App->player->player_speed.x += intersect_col.w;
-					App->player->player_speed.y += intersect_col.h;
-				}
-
-				else if (App->player->player_speed.x < 0 && App->player->player_speed.y > 0)//case -x/+y
-				{
-					App->player->player_speed.x += intersect_col.w;
-					App->player->player_speed.y -= intersect_col.h;
-				}
-
-				else if (App->player->player_speed.x > 0 && App->player->player_speed.y < 0)//case +x/-y
-				{
-					App->player->player_speed.x -= intersect_col.w;
-					App->player->player_speed.y += intersect_col.h;
-				}
-			}
 		}
-		App->player->future_player_col->SetPos(App->player->future_player_col->rect.x - (App->player->original_speed.x - App->player->player_speed.x), App->player->future_player_col->rect.y - (App->player->original_speed.y - App->player->player_speed.y));
+
+
 	}
+	
 
 	if (c2->type == COLLIDER_ENDOFLEVEL)
 	{
 		App->sceneswitch->FadeToBlack();
 	}
-	
-	
+
 	return ret;
 }
 
-bool j1Collision::PostUpdate()
-{
 
-		return true;
-}

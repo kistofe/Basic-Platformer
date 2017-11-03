@@ -55,7 +55,6 @@ public:
 
 	iPoint		player_pos;
 	fPoint		player_speed;
-	fPoint		original_speed;
 
 	Collider*	player_collider;
 	Collider*	future_player_col;

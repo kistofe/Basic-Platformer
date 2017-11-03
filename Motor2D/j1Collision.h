@@ -53,7 +53,7 @@ public:
 
 private:
 
-	bool will_collide(Collider*, Collider*);
+	bool Avoid_Collision(Collider*, Collider*);
 
 private:
 

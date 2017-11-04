@@ -41,6 +41,7 @@ struct Object
 struct ObjGroup
 {
 	p2SString			group_name;
+	p2List<Object*>		object;
 };
 
 // ----------------------------------------------------
@@ -82,7 +83,6 @@ struct MapData
 	p2List<TileSet*>			tilesets;
 	p2List<MapLayer*>			map_layers;
 	p2List<ObjGroup*>			objgroup;
-	p2List<Object*>				object;
 };
 
 // ----------------------------------------------------
@@ -120,7 +120,7 @@ public:
 
 	bool MapSwitch(char*);
 
-	bool SetWallColliders();
+	bool ObjectToCollider();
 
 
 private:
@@ -130,7 +130,6 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
-	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
 
 public:
 

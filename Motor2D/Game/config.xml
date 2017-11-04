@@ -37,7 +37,7 @@
   </player>	
 
   <scene>
-    <map_name name = "Level1.tmx">
+    <map_name name = "test.tmx">
       <music name = "Level_1.ogg"/>
     </map_name>
     <map_name name = "Level2.tmx">

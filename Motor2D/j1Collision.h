@@ -53,7 +53,7 @@ public:
 
 private:
 
-	bool will_collide(Collider*, Collider*);
+	bool OnCollision(Collider* c1, Collider* c2, SDL_Rect* intersection);
 
 private:
 

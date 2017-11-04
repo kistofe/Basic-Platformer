@@ -50,13 +50,12 @@ bool j1Collision::PreUpdate()
 		}
 	}
 
-	return true;
-}
-
-bool j1Collision::Update(float dt)
-{
-	//Calculate future collisions
+	// Check collision between colliders, and call OnCollision if two are colliding
 	Collider* c1;
+	Collider* c2;
+
+	//Create a rectangle to store intersecion data
+	SDL_Rect intersection;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -65,17 +64,31 @@ bool j1Collision::Update(float dt)
 			continue;
 
 		c1 = colliders[i];
-
-		//check if a certain collider will collide with future player collider
-		if (SDL_HasIntersection(&c1->rect, &App->player->future_player_col->rect))
+		// avoid checking collisions already checked
+		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
 		{
-			//if does, call will_collide
-			if(matrix[c1->type][App->player->future_player_col->type])
-				will_collide(c1, App->player->future_player_col);
+			// skip empty colliders
+			if (colliders[k] == nullptr)
+				continue;
+
+			c2 = colliders[k];
+
+			//check if two colliders' rectangles are intersecting
+			if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersection))
+			{
+				//if the collision between the two collider types is allowed...
+				if (matrix[c1->type][c2->type])
+					OnCollision(c1, c2, &intersection); //...call method OnCollision
+			}
+
 		}
 	}
 
-	//check collisions with future collider
+	return true;
+}
+
+bool j1Collision::Update(float dt)
+{
 	DebugDraw();
 	
 	return true;
@@ -117,7 +130,8 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
 
 bool j1Collision::EraseCollider(Collider * collider)
 {
-	return false;
+	collider->to_delete = true;
+	return true;
 }
 
 void j1Collision::DebugDraw()
@@ -153,77 +167,17 @@ void j1Collision::DebugDraw()
 	}
 }
 
-bool j1Collision::will_collide(Collider* c1, Collider* c2)
+bool j1Collision::OnCollision(Collider* c1, Collider* c2, SDL_Rect* intersection)
 {
-	bool ret = true;
+	bool ret = false;
 
-	if (c1->type == COLLIDER_WALL)
+	// If player's future collider detected a collision with a wall, prevent the player's collision
+	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_WALL)
 	{
-		SDL_Rect intersect_col;
-		if(SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
-		//future player collider and a certain collider have collided
-		{
-			if (App->player->player_speed.y == 0)//case y = 0 
-			{
-				if (App->player->player_speed.x > 0)//case +x
-				{
-					App->player->player_speed.x -= intersect_col.w;
-				}
-
-				else//case -x
-				{
-					App->player->player_speed.x += intersect_col.w;
-				}
-
-			}
-			else if (App->player->player_speed.x == 0)// case x = 0
-			{
-				if (App->player->player_speed.y > 0)//case y+
-				{
-					App->player->player_speed.y -= intersect_col.h;
-				}
-
-				else//case -y
-				{
-					App->player->player_speed.y += intersect_col.h;
-				}
-			}
-			else if (App->player->player_speed.x != 0 && App->player->player_speed.y != 0)//case y != 0 && x != 0
-			{
-				if (App->player->player_speed.x > 0 && App->player->player_speed.y > 0)//case +y/+x
-				{
-					App->player->player_speed.x -= intersect_col.w;
-					App->player->player_speed.y -= intersect_col.h;
-				}
-
-				else if (App->player->player_speed.x < 0 && App->player->player_speed.y < 0)//case -x/-y
-				{
-					App->player->player_speed.x += intersect_col.w;
-					App->player->player_speed.y += intersect_col.h;
-				}
-
-				else if (App->player->player_speed.x < 0 && App->player->player_speed.y > 0)//case -x/+y
-				{
-					App->player->player_speed.x += intersect_col.w;
-					App->player->player_speed.y -= intersect_col.h;
-				}
-
-				else if (App->player->player_speed.x > 0 && App->player->player_speed.y < 0)//case +x/-y
-				{
-					App->player->player_speed.x -= intersect_col.w;
-					App->player->player_speed.y += intersect_col.h;
-				}
-			}
-		}
-		App->player->future_player_col->SetPos(App->player->future_player_col->rect.x - (App->player->original_speed.x - App->player->player_speed.x), App->player->future_player_col->rect.y - (App->player->original_speed.y - App->player->player_speed.y));
+		//if (c1->rect.x + c1->rect.w > c2->rect.x &&)
+		//App->player->player_speed.x -= intersection->w;
 	}
 
-	if (c2->type == COLLIDER_ENDOFLEVEL)
-	{
-		App->sceneswitch->FadeToBlack();
-	}
-	
-	
 	return ret;
 }
 

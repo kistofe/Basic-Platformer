@@ -41,20 +41,12 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	//loop through all layers and all tiles 
-		for (int i = 0; i < data.map_layers.count(); i++)
-		{
-			for (int j = 0; j < data.tilesets.count(); j++)
-			{
-				for (int y = 0; y < data.height; y++)
-				{
-					for (int x = 0; x < data.width; x++)
-					{
-						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->Parallax_speed);
-					}
-				}
-			}
-		}
+	//loop through all layers and all tiles
+	for (int i = 0; i < data.map_layers.count(); i++)
+		for (int j = 0; j < data.tilesets.count(); j++)
+			for (int y = 0; y < data.height; y++)
+				for (int x = 0; x < data.width; x++)
+					App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->Parallax_speed);
 }
 
 
@@ -175,12 +167,7 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 		{
 			ret = Load_ObjectGroup(obj_layers, set);
-			for (pugi::xml_node obj = obj_layers.child("object"); obj && obj_layers; obj = obj.next_sibling("object"))
-			{
-				Object* set2 = new Object;
-				ret = Load_Object(obj, set2);
-				data.object.add(set2);
-			}
+
 		}
 		data.objgroup.add(set);
 			
@@ -216,7 +203,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	// Call function to convert objects to colliders
-	SetWallColliders();
+	ObjectToCollider();
 
 	map_loaded = ret;
 	
@@ -228,15 +215,12 @@ bool j1Map::LoadBeginning()
 	bool ret = true;
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->player->player_pos.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = data.object.start->data->y;
+
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->sceneswitch->FadeToBlack();
-		App->player->player_pos.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = data.object.start->data->y;
+
 	}
 	
 	return ret;
@@ -412,25 +396,22 @@ bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 	bool ret = true;
 	Object obj;
 	objgroup->group_name.create(objgroup_node.attribute("name").as_string());
+	for (pugi::xml_node obj = objgroup_node.child("object"); obj && objgroup_node; obj = obj.next_sibling("object"))
+	{
+		Object* object_data = new Object;
+		
+		object_data->height = obj.attribute("height").as_uint();
+		object_data->width = obj.attribute("width").as_uint();
+		object_data->x = obj.attribute("x").as_uint();
+		object_data->y = obj.attribute("y").as_uint();
+		object_data->name = obj.attribute("name").as_string();
+		object_data->name = obj.attribute("id").as_uint(0);
+		
+	}
 
 	return ret;
 }
 
-bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
-{
-	bool ret = true;
-	
-	obj->height			= obj_node.attribute("height").as_uint(0);
-	obj->width			= obj_node.attribute("width").as_uint(0);
-	obj->size			= obj->width * obj->height;
-	obj->name.create(obj_node.attribute("name").as_string());
-	obj->x				= obj_node.attribute("x").as_uint(0);
-	obj->y				= obj_node.attribute("y").as_uint(0);
-	obj->object_id		= obj_node.attribute("id").as_uint(0);
-
-
-	return ret;
-}
 bool j1Map::FadeToBlack(float time)
 {
 	return true;
@@ -452,32 +433,37 @@ bool j1Map::MapSwitch(char* new_map)
 }
 
 // Any objects that should become colliders do so here
-bool j1Map::SetWallColliders()
+bool j1Map::ObjectToCollider()
 {
-	p2List_item<Object*>* current_object = data.object.start;
+	p2List_item<ObjGroup*>* current_objectlayer = data.objgroup.start;
 
-	while (current_object != NULL)
+	for (current_objectlayer; current_objectlayer; current_objectlayer = current_objectlayer->next)
 	{
-		SDL_Rect collider_tocreate;
-		if (current_object->data->name == "wall")
+		p2List_item<Object*>* current_object = current_objectlayer->data->object.start;
+		while (current_object != NULL)
 		{
-			collider_tocreate.x = current_object->data->x;
-			collider_tocreate.y = current_object->data->y;
-			collider_tocreate.w = current_object->data->width;
-			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
-		}
+			SDL_Rect collider_tocreate;
+			if (current_object->data->name == "wall")
+			{
+				collider_tocreate.x = current_object->data->x;
+				collider_tocreate.y = current_object->data->y;
+				collider_tocreate.w = current_object->data->width;
+				collider_tocreate.h = current_object->data->height;
+				App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
+			}
 
-		if (current_object->data->name == "LevelEnd")
-		{
-			collider_tocreate.x = current_object->data->x;
-			collider_tocreate.y = current_object->data->y;
-			collider_tocreate.w = current_object->data->width;
-			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
+			if (current_object->data->name == "LevelEnd")
+			{
+				collider_tocreate.x = current_object->data->x;
+				collider_tocreate.y = current_object->data->y;
+				collider_tocreate.w = current_object->data->width;
+				collider_tocreate.h = current_object->data->height;
+				App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
+			}
+			current_object = current_object->next;
 		}
-		current_object = current_object->next;
 	}
+	
 
 
 	return true;

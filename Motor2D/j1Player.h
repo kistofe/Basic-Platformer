@@ -40,6 +40,7 @@ public:
 
 private:
 
+	//Method to update player's speed in function of input or gravity
 	void SetSpeed();
 
 public:
@@ -55,7 +56,6 @@ public:
 
 	iPoint		player_pos;
 	fPoint		player_speed;
-	fPoint		original_speed;
 
 	Collider*	player_collider;
 	Collider*	future_player_col;

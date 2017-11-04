@@ -15,6 +15,8 @@ j1Player::j1Player()
 	name.create("player");
 	graphics = NULL;
 	current_animation = NULL;
+
+	// Character animations						------------------------------------------------
 	
 	//idle animation
 	idle.PushBack({ 0, 0, 54, 69 });
@@ -53,6 +55,8 @@ j1Player::j1Player()
 	jump.loop = false;
 	jump.speed = 0.4f;
 
+	// ------------------------------------------------------------------------------------------
+
 }
 
 
@@ -62,7 +66,6 @@ j1Player::~j1Player()
 
 bool j1Player::Awake()
 {
-	
 	return true;
 }
 
@@ -70,43 +73,38 @@ bool j1Player::Start()
 {
 	LOG("Loading player");
 
+	// Add player texture						 ------------------------------------------------
+
 	graphics = App->tex->Load("images/Ramona.png");
+	// ------------------------------------------------------------------------------------------
 
-	player_pos.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
+	// Initialize player attributes				 ------------------------------------------------
 
-	player_collider = App->collision->AddCollider({ player_pos.x, player_pos.y, 40, 65 }, COLLIDER_PLAYER);
+	//create player's collider
+	player_collider = App->collision->AddCollider({ player_pos.x + 7, player_pos.y + 4, 40, 65 }, COLLIDER_PLAYER);
 
-	future_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y, 40, 65 }, COLLIDER_FPLAYER);
+	//create a prediction collider to detect collision in advance
+	future_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y, 40, 65 }, COLLIDER_FPLAYER); //future collider's position will be copied from the player's collider one
+
+	//set player's starting animation to idle
+	current_animation = &idle;
+	// ------------------------------------------------------------------------------------------
 
 	return true;
 }
 
 bool j1Player::PreUpdate()
 {
-	player_speed.x = original_speed.x;
-	player_speed.y = original_speed.y;
-	
-	return true;
-}
-
-
-bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
-{
-
 	SetSpeed();
 
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
 
 
+	// Change character animations in base of input	------------------------------------------------
+
+	//set back to idle if no keys are pressed and character is not jumping
 	current_animation = &idle;
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-		facing_right = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-		facing_right = false;
-	if (!is_jumping)
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &walking;
@@ -119,19 +117,29 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		current_animation = &jump;
-		
+
+	//if the player is still in the air, make the animation still be "jump"
 	if (is_jumping)
 		current_animation = &jump;
-	
+	// ------------------------------------------------------------------------------------------
 
+
+	// Update player colliders' positions		 ------------------------------------------------
+
+	player_collider->SetPos(player_pos.x + 7, player_pos.y + 4);
+	future_player_col->SetPos(player_pos.x + 7 + player_speed.x, player_pos.y + 4 + player_speed.y);
+	// ------------------------------------------------------------------------------------------
+	return true;
+}
+
+
+bool j1Player::Update(float dt)
+{
 	if (facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
 
 	if (!facing_right)
 		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
-
-	player_collider->SetPos(player_pos.x + 7, player_pos.y + 4);
-	future_player_col->SetPos(player_pos.x + 7 + player_speed.x, player_pos.y + 4 + player_speed.y);
 
 	return true;
 }
@@ -150,8 +158,6 @@ bool j1Player::Load(pugi::xml_node& data)
 {
 	player_pos.x = data.child("position").attribute("x").as_int();
 	player_pos.y = data.child("position").attribute("y").as_int();
-
-	player_speed.y = data.child("velocity").attribute("y").as_float();
 	
 	return true;
 }
@@ -173,8 +179,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 void j1Player::SetSpeed()
 {
-	original_speed.x = 0;
-	//original_speed.y = App->scene->gravity;
+	player_speed.x = 0.0f;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{

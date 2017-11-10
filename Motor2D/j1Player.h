@@ -55,16 +55,20 @@ public:
 	Animation running;
 	Animation jump;
 	Animation double_jump;
+	Animation win;
+	Animation falling;
+	Animation death;
 
 	//Player Status
-	bool is_jumping = false;
-	bool facing_right = true;
-	bool is_grounded = true;
+	bool is_jumping			= false;
+	bool can_double_jump	= true;
+	bool facing_right		= true;
+	bool is_grounded		= true;
 
-	iPoint		position;
-	fPoint		speed;
-	float		running_accel = 1.75f; //adapt to be read from xml
-	iPoint		collider_offset;//adapt to be read from xml
+	iPoint		position		= { 0,0 };
+	fPoint		speed			= { 0,0 };
+	float		running_accel	= 1.75f; //adapt to be read from xml
+	iPoint		collider_offset = { 7,1 };//adapt to be read from xml
 	
 
 	//Player collider and Future Player Collider

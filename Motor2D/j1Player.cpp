@@ -33,9 +33,6 @@ bool j1Player::Start()
 {
 	LOG("Loading player");
 
-	collider_offset.x = 6;
-	collider_offset.y = 1;
-
 	player_tex = App->tex->Load("images/Ramona.png");
 
 	position.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
@@ -43,6 +40,8 @@ bool j1Player::Start()
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
 
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
+
+	current_animation = &idle;
 
 
 	return true;
@@ -62,9 +61,6 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt) 
 {
 
-	//Set Animation ------------------------------------------------------
-	SetAnimations();
-
 	//Check Horizontal Movement ----------------------------------------
 	//Right
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -79,6 +75,9 @@ bool j1Player::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		is_jumping = true; is_grounded = false;
 		
+	//Set Animation ------------------------------------------------------
+	SetAnimations();
+
 	//Update Player Flip -------------------------------------------------
 	if (facing_right)
 		App->render->Blit(player_tex, position.x, position.y, &(current_animation->GetCurrentFrame()));
@@ -170,10 +169,31 @@ void j1Player::CreateAnimationPushBacks()
 	jump.PushBack({ 270, 138, 54, 69 });
 	jump.PushBack({ 324, 138, 54, 69 });
 	jump.PushBack({ 378, 138, 54, 69 });
-	jump.PushBack({ 437, 155, 54, 69 });
+	jump.PushBack({ 437, 138, 54, 69 });
 	jump.PushBack({ 0, 0, 54, 69 });
 	jump.loop = false;
 	jump.speed = 0.4f;
+
+	//Double Jump animation
+	double_jump.PushBack({ 0, 280, 44, 47 });
+	double_jump.PushBack({ 0, 280, 44, 47 });
+	double_jump.PushBack({ 0, 280, 44, 47 });
+	double_jump.PushBack({ 0, 280, 44, 47 });
+	double_jump.PushBack({ 0, 280, 44, 47 });
+	double_jump.loop = true;
+	double_jump.speed = 0.4f;
+
+	//Win animation
+	win.PushBack({ 0, 490, 38, 67});
+	win.PushBack({ 60, 490, 38, 67 });
+	win.PushBack({ 120, 490, 38, 67 });
+	win.PushBack({ 180, 490, 38, 67 });
+	win.PushBack({ 240, 490, 38, 67 });
+	win.loop = false;
+	win.speed = 0.3f;
+
+	//Falling animation
+	falling.PushBack({ 378, 138, 54, 69 });
 }
 
 void j1Player::SetSpeed()
@@ -201,32 +221,38 @@ void j1Player::SetSpeed()
 	
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		speed.y = -16.0f;
+		speed.y = -14.5f;
 	
 }
 
 void j1Player::SetAnimations()
 {
-	if (current_animation == nullptr)
-		current_animation = &idle;
-	
+	//Walking animation
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &walking;
-
+	//Running animation
 	if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 		current_animation = &running;
-
+	//Idle when two keys are pressed simultaneously 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &idle;
-
+	//Jumping animation
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (!is_jumping)
+		//Single jump
+		if (is_jumping)
 			current_animation = &jump;
-
-		else
-			current_animation = &double_jump;		
+		
+		//	else //Double jump
+		//	current_animation = &double_jump;		
 	}
+	
+	
+	//Victory animation
+	//Death animation
+	//Falling animation
+	//Idle animation
+	
 }
 
 void j1Player::OnCollision(Collider * c1, Collider * c2)
@@ -240,8 +266,8 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 			if (speed.y > 0)
 			{
 				if (speed.x == 0 && c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w)//player is not moving
-					speed.y -= intersect_col.h;
-
+					speed.y -= intersect_col.h,	is_jumping = false;
+				
 				else if (speed.x < 0)
 				{
 					if (intersect_col.h >= intersect_col.w)

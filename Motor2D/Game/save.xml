@@ -10,11 +10,11 @@
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<position x="331" y="1568" />
+		<position x="400" y="1568" />
 		<velocity y="0" />
 	</player>
 	<map />
 	<renderer>
-		<camera x="0" y="-999" />
+		<camera x="-59" y="-999" />
 	</renderer>
 </game_state>

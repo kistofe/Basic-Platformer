@@ -54,9 +54,7 @@ bool j1SceneSwitch::Update(float d_time)
 				App->scene->NextLevel();
 				App->audio->PlayMusic("audio/music/Level_1.ogg");
 			}
-			App->player->CleanUp();
-			App->player->Awake();
-			App->player->Start();
+			App->player->Start(); //A function should be created to recolocate the player to its initial pos "SetToStart"-> resets pos and vel
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			fading = false;

@@ -214,21 +214,21 @@ void j1Player::SetSpeed()
 		
 	//Set value for Horizontal Speed
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-		speed.x = 3.0f;
+		speed.x = (3.0f);
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-		speed.x = -3.0f;
+		speed.x = (-3.0f);
 		
 	else
 		speed.x = 0;
 
 	// Set Running speed
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-		speed.x = speed.x * running_accel;
+		speed.x = (speed.x * running_accel);
 	
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		speed.y = -14.5f;
+		speed.y = (-14.5f);
 	
 }
 

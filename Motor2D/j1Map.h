@@ -9,23 +9,50 @@
 #include "SDL/include/SDL.h"
 
 // ----------------------------------------------------
+struct Properties
+{
+	struct Property
+	{
+		p2SString name;
+		float value;
+	};
+
+	~Properties()
+	{
+		p2List_item<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	float Get(const char* name, float default_value = 0) const;
+
+	p2List<Property*>	list;
+};
+// ----------------------------------------------------
 struct MapLayer
 {
 	p2SString	name;
-	float		Parallax_speed;
+	//float		Parallax_speed;
 	uint		width;
 	uint		height;
 	uint		size;
 	uint*		layer_gid;
-	~MapLayer() { delete layer_gid; };
+	Properties properties;
+	MapLayer() : layer_gid(nullptr) {}
+	~MapLayer() { RELEASE(layer_gid); };
 
 	inline uint Get(uint x, uint y)
 	{
 		return x + y*width;
 	}
 };
-
-
 
 struct Object
 {
@@ -36,11 +63,13 @@ struct Object
 	uint		size;
 	uint		x;
 	uint		y;
+	Properties properties;
 };
 
 struct ObjGroup
 {
 	p2SString			group_name;
+	Properties			properties;
 };
 
 // ----------------------------------------------------
@@ -114,6 +143,8 @@ public:
 
 	// Change from map coordinates (tiles) to world coordinates (pixels)
 	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 	// Method to darken screen while map switching takes place
 	bool FadeToBlack(float time = 1.0f);
@@ -131,6 +162,9 @@ private:
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
+	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+
+	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 

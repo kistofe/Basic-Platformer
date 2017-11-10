@@ -45,13 +45,14 @@ private:
 public:
 
 	uint current_lvl = 1;
-	fPoint gravity;
-	fPoint max_gravity;
+	fPoint gravity = { 0, -1 };
+	fPoint max_gravity = { 0, 10 };
 
 private:
 
 	p2List<p2SString*> map_name;
 	p2List<char*> map_music;
+	SDL_Texture* debug_tex;
 };
 
 #endif // __j1SCENE_H__

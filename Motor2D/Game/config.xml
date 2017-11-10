@@ -2,6 +2,7 @@
 
 <config>
   <app>
+    <framerate framerate_cap="30"/>
     <title>Ramona Flowers vs The Code</title>
     <organization>UPC</organization>
   </app>

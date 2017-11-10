@@ -27,7 +27,7 @@ bool j1SceneSwitch::Start()
 	return true;
 }
 
-bool j1SceneSwitch::Update(float dt)
+bool j1SceneSwitch::Update(float d_time)
 {
 	if (current_step == fade_step::none)
 		return true;

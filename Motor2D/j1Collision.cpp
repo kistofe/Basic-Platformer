@@ -53,7 +53,7 @@ bool j1Collision::PreUpdate()
 	return true;
 }
 
-bool j1Collision::Update(float dt)
+bool j1Collision::Update(float d_time)
 {
 	//Calculate future collisions
 	Collider* c1;

@@ -47,7 +47,7 @@ public:
 	~j1Collision();
 
 	bool PreUpdate();
-	bool Update(float dt);
+	bool Update(float d_time);
 	bool PostUpdate();
 	bool CleanUp();
 

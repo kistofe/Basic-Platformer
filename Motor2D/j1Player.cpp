@@ -58,7 +58,7 @@ bool j1Player::PreUpdate()
 }
 
 
-bool j1Player::Update(float dt) 
+bool j1Player::Update(float d_time) 
 {
 
 	//Check Horizontal Movement ----------------------------------------
@@ -175,25 +175,32 @@ void j1Player::CreateAnimationPushBacks()
 	jump.speed = 0.4f;
 
 	//Double Jump animation
-	double_jump.PushBack({ 0, 280, 44, 47 });
-	double_jump.PushBack({ 0, 280, 44, 47 });
-	double_jump.PushBack({ 0, 280, 44, 47 });
-	double_jump.PushBack({ 0, 280, 44, 47 });
-	double_jump.PushBack({ 0, 280, 44, 47 });
+	double_jump.PushBack({ 0, 280, 54, 69 });
+	double_jump.PushBack({ 0, 280, 54, 69 });
+	double_jump.PushBack({ 0, 280, 54, 69 });
+	double_jump.PushBack({ 0, 280, 54, 69 });
+	double_jump.PushBack({ 0, 280, 54, 69 });
 	double_jump.loop = true;
 	double_jump.speed = 0.4f;
 
 	//Win animation
-	win.PushBack({ 0, 490, 38, 67});
-	win.PushBack({ 60, 490, 38, 67 });
-	win.PushBack({ 120, 490, 38, 67 });
-	win.PushBack({ 180, 490, 38, 67 });
-	win.PushBack({ 240, 490, 38, 67 });
+	win.PushBack({  0,  490, 54, 69});
+	win.PushBack({ 60,  490, 54, 69});
+	win.PushBack({ 120, 490, 54, 69 });
+	win.PushBack({ 180, 490, 54, 69 });
+	win.PushBack({ 240, 490, 54, 69 });
 	win.loop = false;
 	win.speed = 0.3f;
 
 	//Falling animation
 	falling.PushBack({ 378, 138, 54, 69 });
+
+	//Damaged animation
+	damaged.PushBack({ 0, 420, 54, 69 });
+	damaged.PushBack({ 60, 420, 54, 69 });
+	damaged.loop = false;
+	damaged.speed = 0.2f;
+
 }
 
 void j1Player::SetSpeed()

@@ -69,7 +69,7 @@ bool j1Render::PreUpdate()
 	return true;
 }
 
-bool j1Render::Update(float dt)
+bool j1Render::Update(float d_time)
 {
 	camera.x = -(App->player->position.x - camera.w / 3);
 	if (camera.x > 0) { camera.x = 0; }

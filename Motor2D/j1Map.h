@@ -98,7 +98,7 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
-	bool Update(float dt);
+	bool Update();
 
 	// Called each loop iteration
 	void Draw();

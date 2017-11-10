@@ -27,7 +27,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt);
+	bool Update(float d_time);
 
 	bool CleanUp();
 
@@ -57,6 +57,7 @@ public:
 	Animation double_jump;
 	Animation win;
 	Animation falling;
+	Animation damaged;
 	Animation death;
 
 	//Player Status

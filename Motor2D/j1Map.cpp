@@ -31,7 +31,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool j1Map::Update(float dt)
+bool j1Map::Update()
 {
 	return true;
 }

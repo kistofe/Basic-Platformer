@@ -22,7 +22,7 @@ public:
 
 	// Called each loop iteration
 	bool PreUpdate();
-	bool Update(float dt);
+	bool Update(float d_time);
 	bool PostUpdate();
 
 	// Called before quitting

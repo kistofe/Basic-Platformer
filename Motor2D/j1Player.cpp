@@ -268,7 +268,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 	{
 		SDL_Rect intersect_col;
 		if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
-		//future player collider and a certain collider have collided
+		//future player collider and a certain collider have collided666
 		{
 			if (speed.y > 0)
 			{

@@ -16,6 +16,9 @@
 #include "j1Pathfinding.h"
 #include "j1App.h"
 
+#include "Brofiler\Brofiler.h"
+
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -147,15 +150,24 @@ bool j1App::Update()
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
-	if(ret == true)
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PreUpdate", Profiler::Color::Maroon); 
 		ret = PreUpdate();
-
-	if(ret == true)
+	}
+		
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("Update", Profiler::Color::GoldenRod)
 		ret = DoUpdate();
-
-	if(ret == true)
+	}
+		
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PostUpdate", Profiler::Color::LightSeaGreen)
 		ret = PostUpdate();
-
+	}
+		
 	FinishUpdate();
 	return ret;
 }

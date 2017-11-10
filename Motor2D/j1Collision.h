@@ -21,10 +21,12 @@ struct Collider
 	SDL_Rect rect;
 	bool to_delete = false;
 	COLLIDER_TYPE type;
+	j1Module* callback = nullptr;
 
-	Collider(SDL_Rect rectangle, COLLIDER_TYPE type) :
+	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr) :
 		rect(rectangle),
-		type(type)
+		type(type),
+		callback(callback)
 	{}
 
 	void SetPos(int x, int y)
@@ -32,6 +34,8 @@ struct Collider
 		rect.x = x;
 		rect.y = y;
 	}
+
+	bool CheckCollision(const SDL_Rect & r) const;
 
 };
 
@@ -47,13 +51,11 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
 
 private:
-
-	bool Avoid_Collision(Collider*, Collider*);
 
 private:
 

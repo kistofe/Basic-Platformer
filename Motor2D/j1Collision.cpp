@@ -57,6 +57,7 @@ bool j1Collision::Update(float dt)
 {
 	//Calculate future collisions
 	Collider* c1;
+	Collider* c2;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -65,15 +66,27 @@ bool j1Collision::Update(float dt)
 			continue;
 
 		c1 = colliders[i];
-
-		//check if a certain collider will collide with future player collider
-		if (SDL_HasIntersection(&c1->rect, &App->player->future_player_col->rect))
+		// avoid checking collisions already checked
+		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
 		{
-			//if does, call will_collide
-			if(matrix[c1->type][App->player->future_player_col->type])
-				Avoid_Collision(c1, App->player->future_player_col);
+			// skip empty colliders
+			if (colliders[k] == nullptr)
+				continue;
+
+			c2 = colliders[k];
+
+			//check if a certain collider will collide with future player collider
+			if (c1->CheckCollision(c2->rect) == true)
+			{
+				if (matrix[c1->type][c2->type] && c1->callback)
+					c1->callback->OnCollision(c1, c2);
+
+				if (matrix[c2->type][c1->type] && c2->callback)
+					c2->callback->OnCollision(c2, c1);
+			}
 		}
 	}
+	
 
 	//check collisions with future collider
 	DebugDraw();
@@ -93,11 +106,11 @@ bool j1Collision::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
-
+	
 	return true;
 }
 
-Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
 	Collider* ret = nullptr;
 
@@ -105,7 +118,7 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type);
+			ret = colliders[i] = new Collider(rect, type, callback);
 			break;
 		}
 	}
@@ -138,14 +151,14 @@ void j1Collision::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, 0);
 			break;
-		case COLLIDER_WALL: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+		case COLLIDER_WALL: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-		case COLLIDER_ENDOFLEVEL: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+		case COLLIDER_ENDOFLEVEL: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		case COLLIDER_FPLAYER:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
@@ -153,32 +166,14 @@ void j1Collision::DebugDraw()
 	}
 }
 
-bool j1Collision::Avoid_Collision(Collider* c1, Collider* c2)
+bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	bool ret = true;
-
-	if (c1->type == COLLIDER_WALL)
-	{
-		SDL_Rect intersect_col;
-		if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
-		//future player collider and a certain collider have collided
-		{
-			
-
-
-
-		}
-
-
-	}
-	
-
-	if (c2->type == COLLIDER_ENDOFLEVEL)
-	{
-		App->sceneswitch->FadeToBlack();
-	}
-
-	return ret;
+	return (rect.x + rect.w >= r.x && rect.x <= r.x + r.w && rect.y + rect.h >= r.y && rect.y <= r.y + r.h);
 }
 
+
+bool j1Collision::PostUpdate()
+{
+	return true;
+}
 

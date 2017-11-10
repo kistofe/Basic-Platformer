@@ -228,15 +228,15 @@ bool j1Map::LoadBeginning()
 	bool ret = true;
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->player->player_pos.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = data.object.start->data->y;
+		App->player->position.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->position.y = data.object.start->data->y;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		App->sceneswitch->FadeToBlack();
-		App->player->player_pos.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->player_pos.y = data.object.start->data->y;
+		App->player->position.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
+		App->player->position.y = data.object.start->data->y;
 	}
 	
 	return ret;
@@ -465,7 +465,7 @@ bool j1Map::SetWallColliders()
 			collider_tocreate.y = current_object->data->y;
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
+			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL, this);
 		}
 
 		if (current_object->data->name == "LevelEnd")
@@ -474,7 +474,7 @@ bool j1Map::SetWallColliders()
 			collider_tocreate.y = current_object->data->y;
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
+			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL, this);
 		}
 		current_object = current_object->next;
 	}

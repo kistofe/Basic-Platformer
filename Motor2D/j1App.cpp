@@ -28,8 +28,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	sceneswitch = new j1SceneSwitch();
-	player = new j1Player();
 	collision = new j1Collision();
+	player = new j1Player();
 	map = new j1Map();
 
 	// Ordered for awake / Start / Update

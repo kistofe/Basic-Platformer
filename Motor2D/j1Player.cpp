@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1Scene.h"
+#include "j1SceneSwitch.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
 #include "j1Input.h"
@@ -13,9 +14,128 @@
 j1Player::j1Player()
 {
 	name.create("player");
-	graphics = NULL;
-	current_animation = NULL;
 	
+	CreateAnimationPushBacks();
+}
+
+
+j1Player::~j1Player()
+{
+}
+
+bool j1Player::Awake()
+{
+	
+	return true;
+}
+
+bool j1Player::Start()
+{
+	LOG("Loading player");
+
+	collider_offset.x = 6;
+	collider_offset.y = 1;
+
+	player_tex = App->tex->Load("images/Ramona.png");
+
+	position.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
+
+	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
+
+	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
+
+
+	return true;
+}
+
+bool j1Player::PreUpdate()
+{
+	SetSpeed();
+
+	//Update Future Player Collider with new speed
+	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
+
+	return true;
+}
+
+
+bool j1Player::Update(float dt) 
+{
+
+	//Set Animation ------------------------------------------------------
+	SetAnimations();
+
+	//Check Horizontal Movement ----------------------------------------
+	//Right
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		facing_right = true;
+			
+	//Left
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		facing_right = false;
+	//--------------------------------------------------------------------
+	
+	//Check Jump ---------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		is_jumping = true; is_grounded = false;
+		
+	//Update Player Flip -------------------------------------------------
+	if (facing_right)
+		App->render->Blit(player_tex, position.x, position.y, &(current_animation->GetCurrentFrame()));
+
+	if (!facing_right)
+		App->render->Blit(player_tex, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+	
+	//Update Player Position ---------------------------------------------
+	position.x += speed.x;
+	position.y += speed.y;
+
+	//Update Player Collider ---------------------------------------------
+	collider->SetPos((position.x + collider_offset.x),( position.y + collider_offset.y));
+
+	return true;
+}
+
+bool j1Player::CleanUp()
+{
+	LOG("Unloading player");
+	
+	App->tex->UnLoad(player_tex);
+	
+		return true;
+}
+
+//Load Player info
+bool j1Player::Load(pugi::xml_node& data)
+{
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+
+	speed.y = data.child("velocity").attribute("y").as_float();
+	
+	return true;
+}
+
+//Save Player info
+bool j1Player::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node pos = data.append_child("position");
+
+	pos.append_attribute("x") = position.x;
+	pos.append_attribute("y") = position.y;
+
+	pugi::xml_node vel = data.append_child("velocity");
+
+	vel.append_attribute("y") = speed.y;
+
+	return true;
+}
+
+void j1Player::CreateAnimationPushBacks()
+{
+	player_tex = NULL;
+	current_animation = NULL;
+
 	//idle animation
 	idle.PushBack({ 0, 0, 54, 69 });
 
@@ -40,7 +160,7 @@ j1Player::j1Player()
 	running.PushBack({ 378, 207, 54, 69 });
 	running.loop = true;
 	running.speed = 0.4f,
-
+	
 	//jumping animation
 	jump.PushBack({ 0, 138, 54, 69 });
 	jump.PushBack({ 54, 138, 54, 69 });
@@ -50,61 +170,46 @@ j1Player::j1Player()
 	jump.PushBack({ 270, 138, 54, 69 });
 	jump.PushBack({ 324, 138, 54, 69 });
 	jump.PushBack({ 378, 138, 54, 69 });
+	jump.PushBack({ 437, 155, 54, 69 });
+	jump.PushBack({ 0, 0, 54, 69 });
 	jump.loop = false;
 	jump.speed = 0.4f;
-
 }
 
-
-j1Player::~j1Player()
+void j1Player::SetSpeed()
 {
-}
+	//Set maximum value for gravity
+	if (speed.y < App->scene->max_gravity.y)
+		speed.y -= App->scene->gravity.y;
 
-bool j1Player::Awake()
-{
+	else
+		speed.y = App->scene->max_gravity.y;
+		
+	//Set value for Horizontal Speed
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+		speed.x = 3.0f;
+
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+		speed.x = -3.0f;
+		
+	else
+		speed.x = 0;
+
+	// Set Running speed
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+		speed.x = speed.x * running_accel;
 	
-	return true;
+	//Set Jumping Speed
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		speed.y = -16.0f;
+	
 }
 
-bool j1Player::Start()
+void j1Player::SetAnimations()
 {
-	LOG("Loading player");
-
-	graphics = App->tex->Load("images/Ramona.png");
-
-	player_pos.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
-
-	player_collider = App->collision->AddCollider({ player_pos.x, player_pos.y, 40, 65 }, COLLIDER_PLAYER);
-
-	future_player_col = App->collision->AddCollider({ player_collider->rect.x, player_collider->rect.y, 40, 65 }, COLLIDER_FPLAYER);
-
-	return true;
-}
-
-bool j1Player::PreUpdate()
-{
-	return true;
-}
-
-
-bool j1Player::Update(float dt) /* Dont add more parameters or update wont be called */
-{
-
-	SetSpeed();
-
-	player_pos.x += player_speed.x;
-	player_pos.y += player_speed.y + App->scene->gravity;
-
-
-	current_animation = &idle;
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-		facing_right = true;
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-		facing_right = false;
-	if (!is_jumping)
-
+	if (current_animation == nullptr)
+		current_animation = &idle;
+	
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &walking;
 
@@ -115,83 +220,102 @@ bool j1Player::Update(float dt) /* Dont add more parameters or update wont be ca
 		current_animation = &idle;
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		current_animation = &jump;
-		
-	if (is_jumping)
-		current_animation = &jump;
-	
-
-	if (facing_right)
-		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()));
-
-	if (!facing_right)
-		App->render->Blit(graphics, player_pos.x, player_pos.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
-
-	player_collider->SetPos(player_pos.x + 7, player_pos.y + 4);
-	future_player_col->SetPos(player_pos.x + 7 + player_speed.x, player_pos.y + 4 + player_speed.y);
-
-	return true;
-}
-
-bool j1Player::CleanUp()
-{
-	LOG("Unloading player");
-	
-	App->tex->UnLoad(graphics);
-	
-		return true;
-}
-
-//Load Player info
-bool j1Player::Load(pugi::xml_node& data)
-{
-	player_pos.x = data.child("position").attribute("x").as_int();
-	player_pos.y = data.child("position").attribute("y").as_int();
-
-	player_speed.y = data.child("velocity").attribute("y").as_float();
-	
-	return true;
-}
-
-//Save Player info
-bool j1Player::Save(pugi::xml_node& data) const
-{
-	pugi::xml_node pos = data.append_child("position");
-
-	pos.append_attribute("x") = player_pos.x;
-	pos.append_attribute("y") = player_pos.y;
-
-	pugi::xml_node vel = data.append_child("velocity");
-
-	vel.append_attribute("y") = player_speed.y;
-
-	return true;
-}
-
-void j1Player::SetSpeed()
-{
-	player_speed.x = 0;
-	player_speed.y += App->scene->gravity;
-	
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
-		player_speed.x = 3.0f;
+		if (!is_jumping)
+			current_animation = &jump;
+
+		else
+			current_animation = &double_jump;		
+	}
+}
+
+void j1Player::OnCollision(Collider * c1, Collider * c2)
+{
+	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_WALL)
+	{
+		SDL_Rect intersect_col;
+		if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
+		//future player collider and a certain collider have collided
+		{
+			if (speed.y > 0)
+			{
+				if (speed.x == 0 && c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w)//player is not moving
+					speed.y -= intersect_col.h;
+
+				else if (speed.x < 0)
+				{
+					if (intersect_col.h >= intersect_col.w)
+					{
+						if (c1->rect.x <= c2->rect.x + c2->rect.w)
+							speed.x += intersect_col.w;
+						else
+							speed.y -= intersect_col.h;
+					}
+					else
+						speed.y -= intersect_col.h;
+				}
+				else if (speed.x > 0)
+				{
+					if (intersect_col.h >= intersect_col.w)
+					{
+						if (c1->rect.x + c1->rect.w >= c2->rect.x)
+							speed.x -= intersect_col.w;
+						else
+							speed.y -= intersect_col.h;
+					}
+					else
+						speed.y -= intersect_col.h;
+				}
+			}
+
+			else if (speed.y < 0)
+			{
+				if (speed.x == 0 && c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w)//player is not moving
+					speed.y += intersect_col.h;
+
+				else if (speed.x < 0)
+				{
+					if (intersect_col.h >= intersect_col.w)
+					{
+						if (c1->rect.x <= c2->rect.x + c2->rect.w)
+							speed.x += intersect_col.w;
+						else
+							speed.y += intersect_col.h;
+					}
+					else
+						speed.y += intersect_col.h;
+				}
+				else if (speed.x > 0)
+				{
+					if (intersect_col.h >= intersect_col.w)
+					{
+						if (c1->rect.x + c1->rect.w >= c2->rect.x)
+							speed.x -= intersect_col.w;
+						else
+							speed.y += intersect_col.h;
+					}
+					else
+						speed.y += intersect_col.h;
+				}
+			}
+			
+			else
+			{
+				if (speed.x < 0)
+					speed.x += intersect_col.w;
+
+				else if (speed.x > 0)
+					speed.x -= intersect_col.w;
+			}
+
+		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+
+	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_ENDOFLEVEL)
 	{
-		player_speed.x = -3.0f;
+		App->sceneswitch->FadeToBlack();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-		player_speed.x = player_speed.x * 1.75f;
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		player_speed.y = -12.0f;
-
-		is_jumping = true;
-	}
-		
-	return;
 }
+

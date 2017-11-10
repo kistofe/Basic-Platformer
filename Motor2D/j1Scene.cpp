@@ -57,6 +57,12 @@ bool j1Scene::Start()
 	App->map->Load(map_name.start->data->GetString());
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
+
+	gravity.x = 0;
+	gravity.y = -1;
+
+	max_gravity.x = 0;
+	max_gravity.y = 10;
 	return true;
 }
 

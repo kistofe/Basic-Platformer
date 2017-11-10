@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
+#include "p2Defs.h"
 #include <math.h>
 
 #define LAST_LVL 2
@@ -44,7 +45,8 @@ private:
 public:
 
 	uint current_lvl = 1;
-	float gravity = -10.0f;
+	fPoint gravity;
+	fPoint max_gravity;
 
 private:
 

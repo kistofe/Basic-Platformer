@@ -109,12 +109,12 @@ bool j1Scene::Update(float d_time)
 		
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->map->LoadBeginning();
-
-	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
-
+	
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->LoadGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 		App->sceneswitch->FadeToBlack();

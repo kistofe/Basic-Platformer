@@ -7,11 +7,18 @@
 		<volume value="96" />
 	</audio>
 	<scene />
+	<pathfinding />
 	<:anonymous />
 	<:anonymous />
 	<player>
 		<position x="400" y="1568" />
-		<velocity y="0" />
+		<velocity x="0" y="0" />
+		<status>
+			<is_jumping value="false" />
+			<is_grounded value="false" />
+			<facing_right value="true" />
+			<can_double_jump value="true" />
+		</status>
 	</player>
 	<map />
 	<renderer>

@@ -21,7 +21,7 @@ public:
 	//Destructor
 	~j1Player();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& data);
 
 	bool Start();
 
@@ -68,8 +68,8 @@ public:
 
 	iPoint		position		= { 0,0 };
 	fPoint		speed			= { 0,0 };
-	float		running_accel	= 1.75f; //adapt to be read from xml
-	iPoint		collider_offset = { 7,1 };//adapt to be read from xml
+	float		running_accel;
+	iPoint		collider_offset;
 	
 
 	//Player collider and Future Player Collider

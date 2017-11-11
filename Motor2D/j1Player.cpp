@@ -23,9 +23,16 @@ j1Player::~j1Player()
 {
 }
 
-bool j1Player::Awake()
+bool j1Player::Awake(pugi::xml_node& data)
 {
+
+	//Reading Collider offsets
+	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 	
+	//Reading speed multiplier when running
+	running_accel = data.child("running_accel").attribute("value").as_float();
+
 	return true;
 }
 
@@ -35,10 +42,9 @@ bool j1Player::Start()
 
 	player_tex = App->tex->Load("images/Ramona.png");
 
+	//Reading Player initial position from Object layer
 	position.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
-
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
-
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
 
 	current_animation = &idle;
@@ -109,9 +115,13 @@ bool j1Player::Load(pugi::xml_node& data)
 {
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
-
+	speed.x = data.child("velocity").attribute("x").as_float();
 	speed.y = data.child("velocity").attribute("y").as_float();
-	
+	is_jumping = data.child("status").child("is_jumping").attribute("value").as_bool();
+	is_grounded = data.child("status").child("is_grounded").attribute("value").as_bool();
+	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
+	can_double_jump = data.child("status").child("can_double_jump").attribute("value").as_bool();
+
 	return true;
 }
 
@@ -125,7 +135,15 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	pugi::xml_node vel = data.append_child("velocity");
 
+	vel.append_attribute("x") = speed.x;
 	vel.append_attribute("y") = speed.y;
+
+	pugi::xml_node status = data.append_child("status");
+
+	status.append_child("is_jumping").append_attribute("value") = is_jumping;
+	status.append_child("is_grounded").append_attribute("value") = is_grounded;
+	status.append_child("facing_right").append_attribute("value") = facing_right;
+	status.append_child("can_double_jump").append_attribute("value") = can_double_jump;
 
 	return true;
 }

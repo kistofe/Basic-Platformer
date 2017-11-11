@@ -33,6 +33,9 @@
   
   <player>
     <sprite_path path = "Ramona.png"/>
+    <running_accel value = "1.75"/>
+    <collider_offset_x value = "7"/>
+    <collider_offset_y value = "1"/>
   </player>	
 
   <scene>

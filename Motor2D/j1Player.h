@@ -51,7 +51,7 @@ public:
 	//Player Animations
 	Animation* current_animation = nullptr;
 	Animation idle;
-	Animation running;
+	Animation run;
 	Animation jump;
 	Animation double_jump;
 	Animation win;
@@ -60,8 +60,7 @@ public:
 	Animation death;
 
 	//Player Status
-	bool is_jumping			= false;
-	bool can_double_jump	= true;
+	int jumps_left			= 2;
 	bool facing_right		= true;
 	bool is_grounded		= true;
 

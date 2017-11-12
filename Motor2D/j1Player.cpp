@@ -76,10 +76,6 @@ bool j1Player::Update(float d_time)
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 		facing_right = false;
 	//--------------------------------------------------------------------
-	
-	//Check Jump ---------------------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		is_jumping = true; is_grounded = false;
 		
 	//Set Animation ------------------------------------------------------
 	SetAnimations();
@@ -117,10 +113,9 @@ bool j1Player::Load(pugi::xml_node& data)
 	position.y = data.child("position").attribute("y").as_int();
 	speed.x = data.child("velocity").attribute("x").as_float();
 	speed.y = data.child("velocity").attribute("y").as_float();
-	is_jumping = data.child("status").child("is_jumping").attribute("value").as_bool();
 	is_grounded = data.child("status").child("is_grounded").attribute("value").as_bool();
 	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
-	can_double_jump = data.child("status").child("can_double_jump").attribute("value").as_bool();
+	//add code to read jumps_left from saved game
 
 	return true;
 }
@@ -140,10 +135,9 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	pugi::xml_node status = data.append_child("status");
 
-	status.append_child("is_jumping").append_attribute("value") = is_jumping;
+	//add code to save jumps_left
 	status.append_child("is_grounded").append_attribute("value") = is_grounded;
 	status.append_child("facing_right").append_attribute("value") = facing_right;
-	status.append_child("can_double_jump").append_attribute("value") = can_double_jump;
 
 	return true;
 }
@@ -157,16 +151,16 @@ void j1Player::CreateAnimationPushBacks()
 	idle.PushBack({ 0, 0, 54, 69 });
 	
 	//running animation
-	running.PushBack({ 0, 207, 54, 69 });
-	running.PushBack({ 54, 207, 54, 69 });
-	running.PushBack({ 108, 207, 54, 69 });
-	running.PushBack({ 162, 207, 54, 69 });
-	running.PushBack({ 216, 207, 54, 69 });
-	running.PushBack({ 270, 207, 54, 69 });
-	running.PushBack({ 324, 207, 54, 69 });
-	running.PushBack({ 378, 207, 54, 69 });
-	running.loop = true;
-	running.speed = 0.4f,
+	run.PushBack({ 0, 207, 54, 69 });
+	run.PushBack({ 54, 207, 54, 69 });
+	run.PushBack({ 108, 207, 54, 69 });
+	run.PushBack({ 162, 207, 54, 69 });
+	run.PushBack({ 216, 207, 54, 69 });
+	run.PushBack({ 270, 207, 54, 69 });
+	run.PushBack({ 324, 207, 54, 69 });
+	run.PushBack({ 378, 207, 54, 69 });
+	run.loop = true;
+	run.speed = 0.4f,
 	
 	//jumping animation
 	jump.PushBack({ 0, 138, 54, 69 });
@@ -232,28 +226,29 @@ void j1Player::SetSpeed()
 		
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
 		speed.y = (-14.5f);
+		jumps_left--;
+	}
+
 	
 }
 
 void j1Player::SetAnimations()
 {
+	//Reset animation to idle if no keys are pressed
+	current_animation = &idle;
 	//Running animation
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		current_animation = &running;
+		current_animation = &run;
 	//Idle when two keys are pressed simultaneously 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &idle;
 	//Jumping animation
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		//Single jump
-		if (is_jumping)
-			current_animation = &jump;
-		
-		//	else //Double jump
-		//	current_animation = &double_jump;		
-	}
+	if (jumps_left == 1)
+		current_animation = &jump;
+	if (jumps_left == 0)
+		current_animation = &double_jump;
 		
 	//Victory animation
 	//Death animation
@@ -273,7 +268,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 			if (speed.y > 0)
 			{
 				if (speed.x == 0 && c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w)//player is not moving
-					speed.y -= intersect_col.h,	is_jumping = false;
+					speed.y -= intersect_col.h,	jumps_left = 2;
 				
 				else if (speed.x < 0)
 				{

@@ -57,7 +57,7 @@ public:
 	Animation jump;
 	Animation double_jump;
 	Animation win;
-	Animation falling;
+	Animation fall;
 	Animation damaged;
 	Animation death;
 

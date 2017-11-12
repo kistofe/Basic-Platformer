@@ -192,19 +192,17 @@ void j1Player::CreateAnimationPushBacks()
 	jump.PushBack({ 270, 138, 54, 69 });
 	jump.PushBack({ 324, 138, 54, 69 });
 	jump.PushBack({ 378, 138, 54, 69 });
-	jump.PushBack({ 437, 138, 54, 69 });
-	jump.PushBack({ 0, 0, 54, 69 });
-	jump.loop = false;
-	jump.speed = 0.4f;
+	jump.loop = true;
+	jump.speed = 0.5f;
 
 	//Double Jump animation
-	double_jump.PushBack({ 0, 280, 54, 69 });
-	double_jump.PushBack({ 0, 280, 54, 69 });
-	double_jump.PushBack({ 0, 280, 54, 69 });
-	double_jump.PushBack({ 0, 280, 54, 69 });
-	double_jump.PushBack({ 0, 280, 54, 69 });
+	double_jump.PushBack({ 0, 276, 54, 69 });
+	double_jump.PushBack({ 54, 276, 54, 69 });
+	double_jump.PushBack({ 108, 276, 54, 69 });
+	double_jump.PushBack({ 162, 276, 54, 69 });
+	double_jump.PushBack({ 216, 276, 54, 69 });
 	double_jump.loop = true;
-	double_jump.speed = 0.4f;
+	double_jump.speed = 0.9f;
 
 	//Win animation
 	win.PushBack({  0,  490, 54, 69});
@@ -216,7 +214,7 @@ void j1Player::CreateAnimationPushBacks()
 	win.speed = 0.3f;
 
 	//Falling animation
-	falling.PushBack({ 378, 138, 54, 69 });
+	fall.PushBack({ 378, 138, 54, 69 });
 
 	//Damaged animation
 	damaged.PushBack({ 0, 420, 54, 69 });
@@ -262,9 +260,13 @@ void j1Player::SetAnimations()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &idle;
 	//Jumping animation
-	if (jumps_left == 1)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left == 1) //reset the jump animation each time a regular (not double) jump is performed
+		jump.Reset();
+	if (jumps_left == 1 && speed.y < 0) //set animation to regular jump if only a jump has been depleted
 		current_animation = &jump;
-	if (jumps_left == 0)
+	if (jumps_left == 1 && speed.y > 0) //set animation to fall if the player is still in a regular jump, and is moving downwards
+		current_animation = &fall;
+	if (jumps_left == 0) // set animation to double jump if there's no jumps left
 		current_animation = &double_jump;
 		
 	//Victory animation

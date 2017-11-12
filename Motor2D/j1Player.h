@@ -60,7 +60,7 @@ public:
 	Animation death;
 
 	//Player Status
-	int jumps_left			= 2;
+	uint jumps_left			= 2;
 	bool facing_right		= true;
 	bool is_grounded		= true;
 

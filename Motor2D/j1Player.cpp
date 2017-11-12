@@ -88,7 +88,7 @@ bool j1Player::Update(float d_time)
 	//--------------------------------------------------------------------
 	
 	//Check Jump ---------------------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
 	{
 		jumps_left--;
 		is_grounded = false; 
@@ -243,7 +243,7 @@ void j1Player::SetSpeed()
 		speed.x = 0;
 		
 	//Set Jumping Speed
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
 	{
 		speed.y = (-14.5f);
 	}

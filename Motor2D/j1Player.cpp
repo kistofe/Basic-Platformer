@@ -248,7 +248,7 @@ void j1Player::SetSpeed()
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
 		speed.y = jumping_speed;
-	
+		
 }
 
 void j1Player::SetAnimations()

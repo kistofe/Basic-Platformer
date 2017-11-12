@@ -8,7 +8,7 @@
   </app>
 	
   <audio>
-    <volume_default value = "96"/>
+    <volume_default value = "86"/>
   </audio>
 
   <renderer>
@@ -36,6 +36,8 @@
     <moving_speed value = "5"/>
     <collider_offset_x value = "7"/>
     <collider_offset_y value = "1"/>
+    <jump_sfx source = "audio/sfx/Jumping.wav"/>
+    <landing_sfx source = "audio/sfx/Landing.wav"/>
   </player>	
 
   <scene>

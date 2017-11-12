@@ -77,6 +77,12 @@ public:
 	//Player Texture
 	SDL_Texture* player_tex = nullptr;
 
+	//Player SFX
+	p2SString jumping_sfx_source;
+	p2SString landing_sfx_source;
+	uint jumping_sfx;
+	uint landing_sfx;
+
 private:
 
 	

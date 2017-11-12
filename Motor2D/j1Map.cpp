@@ -27,6 +27,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
+	max_map_x = config.child("max_map_x").attribute("value").as_uint();
+	max_map_y = config.child("max_map_y").attribute("value").as_uint();
 
 	return ret;
 }

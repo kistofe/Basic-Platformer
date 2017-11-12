@@ -71,9 +71,16 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float d_time)
 {
-	camera.x = -(App->player->position.x - (camera.w / 3));
-	if (camera.x > 0) { camera.x = 0; }
+	camera.x = camera.w / 3 - App->player->position.x;
+	if (camera.x > 0)
+		camera.x = 0;
+	else if (camera.x <= App->map->max_map_x)
+		camera.x = App->map->max_map_x;
 	camera.y = -( App->player->position.y - camera.h / 1.35);
+	if (camera.y > 0)
+		camera.y = 0;
+	else if (camera.y <= App->map->max_map_y)
+		camera.y = App->map->max_map_y;
 	//if (camera.y + App->win->height > App->map->data.height * App->map->data.tile_height) { camera.y = App->map->data.height * App->map->data.tile_height - App->win->height; }
 	
 	return true;

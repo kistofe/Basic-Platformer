@@ -169,6 +169,8 @@ private:
 public:
 
 	MapData data;
+	uint max_map_x;
+	uint max_map_y;
 
 private:
 

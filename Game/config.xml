@@ -8,7 +8,8 @@
   </app>
 	
   <audio>
-    <volume_default value = "86"/>
+    <volume_default value = "80"/>
+    <volume_modifier value = "30"/>
   </audio>
 
   <renderer>
@@ -34,10 +35,12 @@
   <player>
     <sprite_path path = "Ramona.png"/>
     <moving_speed value = "5"/>
+    <jumping_speed value = "-14.5"/>
     <collider_offset_x value = "7"/>
     <collider_offset_y value = "1"/>
     <jump_sfx source = "audio/sfx/Jumping.wav"/>
     <landing_sfx source = "audio/sfx/Landing.wav"/>
+    <death_sfx source = "audio/sfx/Death.wav"/>
   </player>	
 
   <scene>

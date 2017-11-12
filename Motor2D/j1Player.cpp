@@ -30,12 +30,14 @@ bool j1Player::Awake(pugi::xml_node& data)
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 	
-	//Reading speed multiplier when running
+	//Reading player velocities
 	moving_speed = data.child("moving_speed").attribute("value").as_float();
+	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
 
 	//Reading player sfx source
 	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
 	landing_sfx_source = data.child("landing_sfx").attribute("source").as_string();
+	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
 
 	return true;
 }
@@ -56,6 +58,7 @@ bool j1Player::Start()
 	//Loading Player's Sfx
 	jumping_sfx = App->audio->LoadFx(jumping_sfx_source.GetString());
 	landing_sfx = App->audio->LoadFx(landing_sfx_source.GetString());
+	death_sfx = App->audio->LoadFx(death_sfx_source.GetString());
 
 	current_animation = &idle;
 
@@ -88,11 +91,11 @@ bool j1Player::Update(float d_time)
 	//--------------------------------------------------------------------
 	
 	//Check Jump ---------------------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
 	{
-		jumps_left--;
+ 		jumps_left--;
 		is_grounded = false; 
-		App->audio->PlayFx(jumping_sfx, 0);
+		App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
 	}
 		
 	//Set Animation ------------------------------------------------------
@@ -133,8 +136,8 @@ bool j1Player::Load(pugi::xml_node& data)
 	speed.y = data.child("velocity").attribute("y").as_float();
 	is_grounded = data.child("status").child("is_grounded").attribute("value").as_bool();
 	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
-	//add code to read jumps_left from saved game
-
+	jumps_left = data.child("status").child("jumps_left").attribute("value").as_uint();
+	
 	return true;
 }
 
@@ -153,9 +156,9 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	pugi::xml_node status = data.append_child("status");
 
-	//add code to save jumps_left
 	status.append_child("is_grounded").append_attribute("value") = is_grounded;
 	status.append_child("facing_right").append_attribute("value") = facing_right;
+	status.append_child("jumps_left").append_attribute("value") = jumps_left;
 
 	return true;
 }
@@ -240,14 +243,11 @@ void j1Player::SetSpeed()
 		speed.x = -moving_speed;
 		
 	else
-		speed.x = 0;
+		speed.x = 0; 
 		
 	//Set Jumping Speed
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		speed.y = (-14.5f);
-	}
-
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
+		speed.y = jumping_speed;
 	
 }
 
@@ -280,67 +280,91 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 	{
 		SDL_Rect intersect_col;
 		if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
-		//future player collider and a certain collider have collided666
+		//future player collider and a certain collider have collided
 		{
 			if (speed.y > 0)
 			{
-				if (speed.x == 0 && c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w)//player is not moving
-					speed.y -= intersect_col.h,	jumps_left = 2;
-				
-				else if (speed.x < 0)
+				if (collider->rect.y + collider->rect.h <= c2->rect.y)//Checking player is above the collider
 				{
-					if (intersect_col.h >= intersect_col.w)
-					{
-						if (c1->rect.x <= c2->rect.x + c2->rect.w)
-							speed.x += intersect_col.w;
-						else
-							speed.y -= intersect_col.h;
-					}
-					else
-						speed.y -= intersect_col.h;
-				}
-				else if (speed.x > 0)
-				{
-					if (intersect_col.h >= intersect_col.w)
-					{
-						if (c1->rect.x + c1->rect.w >= c2->rect.x)
-							speed.x -= intersect_col.w;
-						else
-							speed.y -= intersect_col.h;
-					}
-					else
-						speed.y -= intersect_col.h;
-				}
-			}
+					if (speed.x == 0)
+						speed.y -= intersect_col.h, jumps_left = 2;
 
+					else if (speed.x < 0)
+					{
+						if (intersect_col.h >= intersect_col.w)
+						{
+							if (c1->rect.x <= c2->rect.x + c2->rect.w)
+								speed.x += intersect_col.w;
+							else
+								speed.y -= intersect_col.h;
+						}
+						else
+							speed.y -= intersect_col.h, jumps_left = 2;
+					}
+					else if (speed.x > 0)
+					{
+						if (intersect_col.h >= intersect_col.w)
+						{
+							if (c1->rect.x + c1->rect.w >= c2->rect.x)
+								speed.x -= intersect_col.w;
+							else
+								speed.y -= intersect_col.h;
+						}
+						else
+							speed.y -= intersect_col.h, jumps_left = 2;
+					}
+				}
+				else
+				{
+					if (speed.x < 0)
+						speed.x += intersect_col.w;
+
+					else if (speed.x > 0)
+						speed.x -= intersect_col.w;
+				}
+
+			}
 			else if (speed.y < 0)
 			{
-				if (speed.x == 0 && c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w)//player is not moving
-					speed.y += intersect_col.h;
+				if (collider->rect.y >= c2->rect.y + c2->rect.h)
+				{
+					if (speed.x == 0)
+						speed.y += intersect_col.h, jumps_left = 2;
 
-				else if (speed.x < 0)
-				{
-					if (intersect_col.h >= intersect_col.w)
+					else if (speed.x < 0)
 					{
-						if (c1->rect.x <= c2->rect.x + c2->rect.w)
-							speed.x += intersect_col.w;
+						if (intersect_col.h >= intersect_col.w)
+						{
+							if (c1->rect.x <= c2->rect.x + c2->rect.w)
+								speed.x += intersect_col.w;
+							else
+								speed.y += intersect_col.h;
+						}
 						else
-							speed.y += intersect_col.h;
+							speed.y += intersect_col.h, jumps_left = 2;
 					}
-					else
-						speed.y += intersect_col.h;
+					else if (speed.x > 0)
+					{
+						if (intersect_col.h >= intersect_col.w)
+						{
+							if (c1->rect.x + c1->rect.w >= c2->rect.x)
+								speed.x -= intersect_col.w;
+							else
+								speed.y += intersect_col.h;
+						}
+						else
+							speed.y += intersect_col.h, jumps_left = 2;
+					}
+
 				}
-				else if (speed.x > 0)
+				
+				else
 				{
-					if (intersect_col.h >= intersect_col.w)
-					{
-						if (c1->rect.x + c1->rect.w >= c2->rect.x)
-							speed.x -= intersect_col.w;
-						else
-							speed.y += intersect_col.h;
-					}
-					else
-						speed.y += intersect_col.h;
+					if (speed.x < 0)
+						speed.x += intersect_col.w;
+
+					else if (speed.x > 0)
+						speed.x -= intersect_col.w;
 				}
 			}
 			
@@ -358,9 +382,26 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 
 
 	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_ENDOFLEVEL)
-	{
 		App->sceneswitch->FadeToBlack();
+	
+
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
+	{
+		App->audio->PlayFx(death_sfx, 0, App->audio->music_vol);
+		SetToStart();
 	}
 
+}
+
+void j1Player::SetToStart()
+{//Loop should be done maybe?
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->sceneswitch->FadeToBlack();
+
+	position.x = App->map->data.object.start->data->x;
+	position.y = App->map->data.object.start->data->y;
+	speed.x = 0;
+	speed.y = 0;
+	current_animation = &idle;
 }
 

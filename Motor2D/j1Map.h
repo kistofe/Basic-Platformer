@@ -151,7 +151,7 @@ public:
 
 	bool MapSwitch(char*);
 
-	bool SetWallColliders();
+	bool SetColliders();
 
 
 private:

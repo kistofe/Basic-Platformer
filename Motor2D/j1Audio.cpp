@@ -51,7 +51,9 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
-	music_vol = config.child("volume_default").attribute("value").as_uint();
+
+	music_vol = config.child("volume_default").attribute("value").as_int();
+	volume_modifier = config.child("volume_modifier").attribute("value").as_int();
 
 	Mix_VolumeMusic(music_vol);
 
@@ -162,7 +164,7 @@ unsigned int j1Audio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool j1Audio::PlayFx(unsigned int id, int repeat)
+bool j1Audio::PlayFx(unsigned int id, int repeat, int volume)
 {
 	bool ret = false;
 
@@ -172,6 +174,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.count())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_VolumeChunk(fx[id -1], volume);
 	}
 
 	return ret;
@@ -181,22 +184,21 @@ bool j1Audio::VolumeControl()
 {
 	bool ret = true;
 
-
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
 	{
-		if (music_vol <= 0)
+		if (music_vol - volume_modifier <= 0)
 			music_vol = 0;
 		else
-			music_vol -= 30;
+			music_vol -= volume_modifier;
 		
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 	{
-		if (music_vol >= 128)
-			music_vol = 128;
+		if (music_vol + volume_modifier >= MIX_MAX_VOLUME)
+			music_vol = MIX_MAX_VOLUME;
 		else
-			music_vol += 30;
+			music_vol += volume_modifier;
 	}
 
 	Mix_VolumeMusic(music_vol);
@@ -208,7 +210,7 @@ bool j1Audio::Load(pugi::xml_node & data)
 {
 	bool ret = true;
 
-	music_vol = data.child("volume").attribute("value").as_uint();
+	music_vol = data.child("volume_default").attribute("value").as_uint();
 
 	Mix_VolumeMusic(music_vol);
 	return ret;

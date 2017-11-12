@@ -41,20 +41,20 @@ bool j1SceneSwitch::Update(float d_time)
 	{
 		if (now >= total_time)
 		{
-			if ((App->scene->current_lvl == 1) && App->input->GetKey(!SDL_SCANCODE_F1) == KEY_DOWN)//The moment we set that to go to level 2 you have to "collide" with the EndLev collider, it should work
+			if (App->scene->current_lvl == 1) //&& App->input->GetKey(!SDL_SCANCODE_F1) == KEY_DOWN)
 			{
-				SwitchMap("test2.tmx");
+				SwitchMap("Level2.tmx");
 				App->scene->NextLevel();
 				App->audio->PlayMusic("audio/music/Level_2.ogg");
 			}
 
 			else if (App->scene->current_lvl == 2)
 			{
-				SwitchMap("test.tmx");
+				SwitchMap("Level1finalinprogress.tmx");
 				App->scene->NextLevel();
 				App->audio->PlayMusic("audio/music/Level_1.ogg");
 			}
-			App->player->Start(); //A function should be created to recolocate the player to its initial pos "SetToStart"-> resets pos and vel
+			App->player->SetToStart(); //A function should be created to recolocate the player to its initial pos "SetToStart"-> resets pos and vel
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			fading = false;

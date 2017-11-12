@@ -38,6 +38,8 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
+
+	void SetToStart();
 	
 
 private:
@@ -60,13 +62,14 @@ public:
 	Animation death;
 
 	//Player Status
-	int jumps_left			= 2;
+	uint jumps_left			= 2;
 	bool facing_right		= true;
 	bool is_grounded		= true;
 
 	iPoint		position		= { 0,0 };
 	fPoint		speed			= { 0,0 };
 	float		moving_speed;
+	float		jumping_speed;
 	iPoint		collider_offset;
 	
 
@@ -80,8 +83,10 @@ public:
 	//Player SFX
 	p2SString jumping_sfx_source;
 	p2SString landing_sfx_source;
+	p2SString death_sfx_source;
 	uint jumping_sfx;
 	uint landing_sfx;
+	uint death_sfx;
 
 private:
 

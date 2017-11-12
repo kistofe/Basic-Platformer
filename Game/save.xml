@@ -4,24 +4,23 @@
 	<window />
 	<textures />
 	<audio>
-		<volume value="96" />
+		<volume value="4294967256" />
 	</audio>
 	<scene />
 	<pathfinding />
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<position x="400" y="1568" />
+		<position x="225" y="1568" />
 		<velocity x="0" y="0" />
 		<status>
-			<is_jumping value="false" />
-			<is_grounded value="false" />
+			<is_grounded value="true" />
 			<facing_right value="true" />
-			<can_double_jump value="true" />
+			<jumps_left value="2" />
 		</status>
 	</player>
 	<map />
 	<renderer>
-		<camera x="-59" y="-999" />
+		<camera x="0" y="-999" />
 	</renderer>
 </game_state>

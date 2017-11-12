@@ -229,7 +229,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	// Call function to convert objects to colliders
-	SetWallColliders();
+	SetColliders();
 
 	map_loaded = ret;
 	
@@ -578,7 +578,7 @@ bool j1Map::MapSwitch(char* new_map)
 }
 
 // Any objects that should become colliders do so here
-bool j1Map::SetWallColliders()
+bool j1Map::SetColliders()
 {
 	p2List_item<Object*>* current_object = data.object.start;
 
@@ -601,6 +601,15 @@ bool j1Map::SetWallColliders()
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
 			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL, this);
+		}
+
+		if (current_object->data->name == "death")
+		{
+			collider_tocreate.x = current_object->data->x;
+			collider_tocreate.y = current_object->data->y;
+			collider_tocreate.w = current_object->data->width;
+			collider_tocreate.h = current_object->data->height;
+			App->collision->AddCollider(collider_tocreate, COLLIDER_DEATH, this);
 		}
 		current_object = current_object->next;
 	}

@@ -17,21 +17,43 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENDOFLEVEL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_FPLAYER] = true;
+	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENDOFLEVEL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_FPLAYER] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_ENDOFLEVEL] = true;
 	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_FPLAYER] = true;
+	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_ENDOFLEVEL][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_FPLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_FPLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_FPLAYER][COLLIDER_ENDOFLEVEL] = true;
 	matrix[COLLIDER_FPLAYER][COLLIDER_FPLAYER] = false;
+	matrix[COLLIDER_FPLAYER][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_FPLAYER][COLLIDER_ENEMY] = false;
+
+	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_DEATH][COLLIDER_ENDOFLEVEL] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_FPLAYER] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_ENEMY] = false;
+
+	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_ENDOFLEVEL] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_FPLAYER] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = true;
 }
 
 j1Collision::~j1Collision()
@@ -160,8 +182,16 @@ void j1Collision::DebugDraw()
 		case COLLIDER_ENDOFLEVEL: // blue
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-		case COLLIDER_FPLAYER:
+		case COLLIDER_FPLAYER: 
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_DEATH: // gray
+			App->render->DrawQuad(colliders[i]->rect, 136, 136, 136, alpha);
+			break;
+		case COLLIDER_ENEMY:
+			App->render->DrawQuad(colliders[i]->rect, 170, 0, 255, alpha);
+			break;
+
 		}
 	}
 }

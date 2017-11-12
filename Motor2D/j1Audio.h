@@ -32,11 +32,10 @@ public:
 	unsigned int LoadFx(const char* path);
 
 	// Play a previously loaded WAV
-	bool PlayFx(unsigned int fx, int repeat = 0);
+	bool PlayFx(unsigned int fx, int repeat = 0, int volume = 64);
 	
 	// Adjust Music Volume 
 	bool VolumeControl();
-
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
@@ -45,7 +44,8 @@ private:
 	
 public:
 
-	uint music_vol;
+	int music_vol;
+	int volume_modifier;
 
 private:
 

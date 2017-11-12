@@ -31,7 +31,7 @@ bool j1Player::Awake(pugi::xml_node& data)
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 	
 	//Reading speed multiplier when running
-	running_accel = data.child("running_accel").attribute("value").as_float();
+	moving_speed = data.child("moving_speed").attribute("value").as_float();
 
 	return true;
 }
@@ -155,17 +155,7 @@ void j1Player::CreateAnimationPushBacks()
 
 	//idle animation
 	idle.PushBack({ 0, 0, 54, 69 });
-
-	//walking animation
-	walking.PushBack({ 0, 69, 54, 69 });
-	walking.PushBack({ 54, 69, 54, 69 });
-	walking.PushBack({ 108, 69, 54, 69 });
-	walking.PushBack({ 162, 69, 54, 69 });
-	walking.PushBack({ 216, 69, 54, 69 });
-	walking.PushBack({ 270, 69, 54, 69 });
-	walking.loop = true;
-	walking.speed = 0.3f;
-
+	
 	//running animation
 	running.PushBack({ 0, 207, 54, 69 });
 	running.PushBack({ 54, 207, 54, 69 });
@@ -232,18 +222,14 @@ void j1Player::SetSpeed()
 		
 	//Set value for Horizontal Speed
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-		speed.x = (3.0f);
+		speed.x = moving_speed;
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-		speed.x = (-3.0f);
+		speed.x = -moving_speed;
 		
 	else
 		speed.x = 0;
-
-	// Set Running speed
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-		speed.x = (speed.x * running_accel);
-	
+		
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		speed.y = (-14.5f);
@@ -252,11 +238,8 @@ void j1Player::SetSpeed()
 
 void j1Player::SetAnimations()
 {
-	//Walking animation
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		current_animation = &walking;
 	//Running animation
-	if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		current_animation = &running;
 	//Idle when two keys are pressed simultaneously 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -271,8 +254,7 @@ void j1Player::SetAnimations()
 		//	else //Double jump
 		//	current_animation = &double_jump;		
 	}
-	
-	
+		
 	//Victory animation
 	//Death animation
 	//Falling animation
@@ -358,7 +340,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 				else if (speed.x > 0)
 					speed.x -= intersect_col.w;
 			}
-
+			
 		}
 	}
 

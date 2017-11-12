@@ -33,13 +33,13 @@
   
   <player>
     <sprite_path path = "Ramona.png"/>
-    <running_accel value = "1.75"/>
+    <moving_speed value = "5"/>
     <collider_offset_x value = "7"/>
     <collider_offset_y value = "1"/>
   </player>	
 
   <scene>
-    <map_name name = "Level1.tmx">
+    <map_name name = "Level1finalinprogress.tmx">
       <music name = "Level_1.ogg"/>
     </map_name>
     <map_name name = "Level2.tmx">

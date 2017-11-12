@@ -51,7 +51,6 @@ public:
 	//Player Animations
 	Animation* current_animation = nullptr;
 	Animation idle;
-	Animation walking;
 	Animation running;
 	Animation jump;
 	Animation double_jump;
@@ -68,7 +67,7 @@ public:
 
 	iPoint		position		= { 0,0 };
 	fPoint		speed			= { 0,0 };
-	float		running_accel;
+	float		moving_speed;
 	iPoint		collider_offset;
 	
 

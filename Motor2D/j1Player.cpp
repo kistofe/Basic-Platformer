@@ -9,7 +9,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Map.h"
-
+#include "j1Audio.h"
 
 j1Player::j1Player()
 {
@@ -33,6 +33,10 @@ bool j1Player::Awake(pugi::xml_node& data)
 	//Reading speed multiplier when running
 	moving_speed = data.child("moving_speed").attribute("value").as_float();
 
+	//Reading player sfx source
+	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
+	landing_sfx_source = data.child("landing_sfx").attribute("source").as_string();
+
 	return true;
 }
 
@@ -41,11 +45,17 @@ bool j1Player::Start()
 	LOG("Loading player");
 
 	player_tex = App->tex->Load("images/Ramona.png");
-
+	
 	//Reading Player initial position from Object layer
 	position.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
+
+	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
+
+	//Loading Player's Sfx
+	jumping_sfx = App->audio->LoadFx(jumping_sfx_source.GetString());
+	landing_sfx = App->audio->LoadFx(landing_sfx_source.GetString());
 
 	current_animation = &idle;
 
@@ -79,7 +89,11 @@ bool j1Player::Update(float d_time)
 	
 	//Check Jump ---------------------------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		is_jumping = true; is_grounded = false;
+	{
+		is_jumping = true; 
+		is_grounded = false; 
+		App->audio->PlayFx(jumping_sfx, 0);
+	}
 		
 	//Set Animation ------------------------------------------------------
 	SetAnimations();

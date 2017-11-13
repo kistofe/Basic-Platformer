@@ -13,7 +13,7 @@
   </audio>
 
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
   <window>
@@ -52,5 +52,9 @@
     <map_name name = "Level2.tmx">
       <music name = "Level_2.ogg"/>
     </map_name>
+    <gravity_x value = "0"/>
+    <gravity_y value = "-1"/>
+    <max_gravity_x value = "0"/>
+    <max_gravity_y value = "10"/>
   </scene>
 </config>

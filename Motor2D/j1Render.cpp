@@ -4,7 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Input.h"
-#include "j1Player.h"
+
 
 #define VSYNC true
 
@@ -71,17 +71,6 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float d_time)
 {
-	camera.x = camera.w / 3 - App->player->position.x;
-	if (camera.x > 0)
-		camera.x = 0;
-	else if (camera.x <= App->map->max_map_x)
-		camera.x = App->map->max_map_x;
-	camera.y = -( App->player->position.y - camera.h / 1.35);
-	if (camera.y > 0)
-		camera.y = 0;
-	else if (camera.y <= App->map->max_map_y)
-		camera.y = App->map->max_map_y;
-	
 	return true;
 }
 

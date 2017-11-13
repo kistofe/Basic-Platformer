@@ -77,7 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="j1Collision.cpp" />
-    <ClCompile Include="j1Entity.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -86,7 +86,7 @@
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
-    <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1SceneSwitch.cpp" />
     <ClCompile Include="j1Timer.cpp" />
@@ -99,12 +99,12 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="j1Collision.h" />
-    <ClInclude Include="j1Entity.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
-    <ClInclude Include="j1Player.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1SceneSwitch.h" />
     <ClInclude Include="j1Timer.h" />
@@ -123,11 +123,6 @@
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Game\maps\test.tmx">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

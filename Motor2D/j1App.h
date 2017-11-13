@@ -16,9 +16,9 @@ class j1Audio;
 class j1Collision;
 class j1Scene;
 class j1SceneSwitch;
-class j1Player;
 class j1Map;
 class j1PathFinding;
+class j1EntityManager;
 
 class j1App
 {
@@ -89,10 +89,10 @@ public:
 	j1Audio*			audio = NULL;
 	j1Scene*			scene = NULL;
 	j1SceneSwitch*		sceneswitch = NULL;
-	j1Player*			player = NULL;
 	j1Collision*		collision = NULL;
 	j1Map*				map = NULL;
 	j1PathFinding*		pathfinding = NULL;
+	j1EntityManager*	entities = NULL;
 
 private:
 

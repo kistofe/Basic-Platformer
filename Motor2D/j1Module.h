@@ -11,7 +11,6 @@
 
 
 class j1App;
-struct Collider;
 
 class j1Module
 {
@@ -71,15 +70,7 @@ public:
 		return true;
 	}
 
-	virtual bool LoadBeginning(pugi::xml_node&)
-	{
-		return true;
-	}
-
-	virtual void OnCollision(Collider*, Collider*) {};
-	
-
-		
+				
 public:
 
 	p2SString	name;

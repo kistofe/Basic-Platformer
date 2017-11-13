@@ -45,8 +45,8 @@ private:
 public:
 
 	uint current_lvl = 1;
-	fPoint gravity = { 0, -1 };
-	fPoint max_gravity = { 0, 10 };
+	fPoint gravity;
+	fPoint max_gravity;
 
 private:
 

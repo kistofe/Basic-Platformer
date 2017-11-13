@@ -1,7 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
-#include "j1Player.h"
+#include "Player.h"
 #include "j1Scene.h"
 #include "j1SceneSwitch.h"
 #include "j1Textures.h"
@@ -11,21 +11,19 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-j1Player::j1Player()
+Player::Player() : Entity(Entity::EntityType::PLAYER)
 {
-	name.create("player");
-	
 	CreateAnimationPushBacks();
 }
 
 
-j1Player::~j1Player()
+Player::~Player()
 {
 }
 
-bool j1Player::Awake(pugi::xml_node& data)
+bool Player::Awake(pugi::xml_node& data)
 {
-
+	
 	//Reading Collider offsets
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
@@ -42,15 +40,17 @@ bool j1Player::Awake(pugi::xml_node& data)
 	return true;
 }
 
-bool j1Player::Start()
+bool Player::Start()
 {
 	LOG("Loading player");
 
-	player_tex = App->tex->Load("images/Ramona.png");
+//	Player* player = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
+
+	texture = App->tex->Load("images/Ramona.png");
 	
 	//Reading Player initial position from Object layer
 	position.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
-
+	
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
@@ -66,7 +66,7 @@ bool j1Player::Start()
 	return true;
 }
 
-bool j1Player::PreUpdate()
+bool Player::PreUpdate()
 {
 	SetSpeed();
 
@@ -77,9 +77,9 @@ bool j1Player::PreUpdate()
 }
 
 
-bool j1Player::Update(float d_time) 
+bool Player::Update(float d_time) 
 {
-
+	SetCameraToPlayer();
 	//Check Horizontal Movement ----------------------------------------
 	//Right
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -103,10 +103,10 @@ bool j1Player::Update(float d_time)
 
 	//Update Player Flip -------------------------------------------------
 	if (facing_right)
-		App->render->Blit(player_tex, position.x, position.y, &(current_animation->GetCurrentFrame()));
+		App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
 	if (!facing_right)
-		App->render->Blit(player_tex, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+		App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
 	
 	//Update Player Position ---------------------------------------------
 	position.x += speed.x;
@@ -118,17 +118,17 @@ bool j1Player::Update(float d_time)
 	return true;
 }
 
-bool j1Player::CleanUp()
+bool Player::CleanUp()
 {
 	LOG("Unloading player");
 	
-	App->tex->UnLoad(player_tex);
+	App->tex->UnLoad(texture);
 	
 		return true;
 }
 
 //Load Player info
-bool j1Player::Load(pugi::xml_node& data)
+bool Player::Load(pugi::xml_node& data)
 {
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
@@ -142,7 +142,7 @@ bool j1Player::Load(pugi::xml_node& data)
 }
 
 //Save Player info
-bool j1Player::Save(pugi::xml_node& data) const
+bool Player::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node pos = data.append_child("position");
 
@@ -163,9 +163,9 @@ bool j1Player::Save(pugi::xml_node& data) const
 	return true;
 }
 
-void j1Player::CreateAnimationPushBacks()
+void Player::CreateAnimationPushBacks()
 {
-	player_tex = NULL;
+	texture = NULL;
 	current_animation = NULL;
 
 	//idle animation
@@ -224,7 +224,22 @@ void j1Player::CreateAnimationPushBacks()
 
 }
 
-void j1Player::SetSpeed()
+void Player::SetCameraToPlayer()
+{
+	App->render->camera.x = App->render->camera.w / 3 - position.x;
+	if (App->render->camera.x < 0)
+		App->render->camera.x = 0;
+	else if (App->render->camera.x <= App->map->max_map_x)
+		App->render->camera.x = App->map->max_map_x;
+	App->render->camera.y = App->render->camera.h / 1.35 - position.y;
+	if (App->render->camera.y < 0)
+		App->render->camera.y = 0;
+	else if (App->render->camera.y <= App->map->max_map_y)
+		App->render->camera.y = App->map->max_map_y;
+		
+}
+
+void Player::SetSpeed()
 {
 	//Set maximum value for gravity
 	if (speed.y < App->scene->max_gravity.y)
@@ -249,7 +264,7 @@ void j1Player::SetSpeed()
 		
 }
 
-void j1Player::SetAnimations()
+void Player::SetAnimations()
 {
 	//Reset animation to idle if no keys are pressed
 	current_animation = &idle;
@@ -271,12 +286,10 @@ void j1Player::SetAnimations()
 		
 	//Victory animation
 	//Death animation
-	//Falling animation
-	//Idle animation
 	
 }
 
-void j1Player::OnCollision(Collider * c1, Collider * c2)
+void Player::OnCollision(Collider * c1, Collider * c2)
 {
 	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_WALL)
 	{
@@ -298,7 +311,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 							if (c1->rect.x <= c2->rect.x + c2->rect.w)
 								speed.x += intersect_col.w;
 							else
-								speed.y -= intersect_col.h;
+								speed.y -= intersect_col.h, jumps_left = 2;
 						}
 						else
 							speed.y -= intersect_col.h, jumps_left = 2;
@@ -310,7 +323,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 							if (c1->rect.x + c1->rect.w >= c2->rect.x)
 								speed.x -= intersect_col.w;
 							else
-								speed.y -= intersect_col.h;
+								speed.y -= intersect_col.h, jumps_left = 2;
 						}
 						else
 							speed.y -= intersect_col.h, jumps_left = 2;
@@ -331,7 +344,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 				if (collider->rect.y >= c2->rect.y + c2->rect.h)
 				{
 					if (speed.x == 0)
-						speed.y += intersect_col.h, jumps_left = 2;
+						speed.y += intersect_col.h;
 
 					else if (speed.x < 0)
 					{
@@ -343,7 +356,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 								speed.y += intersect_col.h;
 						}
 						else
-							speed.y += intersect_col.h, jumps_left = 2;
+							speed.y += intersect_col.h;
 					}
 					else if (speed.x > 0)
 					{
@@ -355,7 +368,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 								speed.y += intersect_col.h;
 						}
 						else
-							speed.y += intersect_col.h, jumps_left = 2;
+							speed.y += intersect_col.h;
 					}
 
 				}
@@ -395,7 +408,7 @@ void j1Player::OnCollision(Collider * c1, Collider * c2)
 
 }
 
-void j1Player::SetToStart()
+void Player::SetToStart()
 {//Loop should be done maybe?
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->sceneswitch->FadeToBlack();

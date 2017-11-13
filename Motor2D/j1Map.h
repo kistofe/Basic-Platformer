@@ -137,10 +137,7 @@ public:
 
 	// Load new map
 	bool Load(const char* path);
-
-	//Load from the beginning of the current level
-	bool LoadBeginning();
-
+	
 	// Change from map coordinates (tiles) to world coordinates (pixels)
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;

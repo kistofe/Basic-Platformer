@@ -7,7 +7,7 @@
 #include "j1Map.h"
 #include "j1Input.h"
 #include "j1Scene.h"
-#include "j1Player.h"
+#include "Player.h"
 #include "j1SceneSwitch.h"
 #include <math.h>
 
@@ -234,25 +234,6 @@ bool j1Map::Load(const char* file_name)
 	SetColliders();
 
 	map_loaded = ret;
-	
-	return ret;
-}
-
-bool j1Map::LoadBeginning()
-{
-	bool ret = true;
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		App->player->position.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->position.y = data.object.start->data->y;
-	}
-
-	else if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		App->sceneswitch->FadeToBlack();
-		App->player->position.x = data.object.start->data->x;//When the second map is loaded successfully, this method will need to be revised and probably added to a function
-		App->player->position.y = data.object.start->data->y;
-	}
 	
 	return ret;
 }
@@ -593,7 +574,7 @@ bool j1Map::SetColliders()
 			collider_tocreate.y = current_object->data->y;
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL, this);
+			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
 		}
 
 		if (current_object->data->name == "LevelEnd")
@@ -602,7 +583,7 @@ bool j1Map::SetColliders()
 			collider_tocreate.y = current_object->data->y;
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL, this);
+			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
 		}
 
 		if (current_object->data->name == "death")
@@ -611,7 +592,7 @@ bool j1Map::SetColliders()
 			collider_tocreate.y = current_object->data->y;
 			collider_tocreate.w = current_object->data->width;
 			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_DEATH, this);
+			App->collision->AddCollider(collider_tocreate, COLLIDER_DEATH);
 		}
 		current_object = current_object->next;
 	}

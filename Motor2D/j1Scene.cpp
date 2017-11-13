@@ -8,7 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
-#include "j1Player.h"
+#include "Player.h"
 #include "j1Scene.h"
 #include "j1SceneSwitch.h"
 
@@ -38,6 +38,11 @@ bool j1Scene::Awake(pugi::xml_node& config)
 		}
 		map_name.add(map_set);
 	}
+
+	gravity.x = config.child("gravity_x").attribute("value").as_float();
+	gravity.y = config.child("gravity_y").attribute("value").as_float();
+	max_gravity.x = config.child("max_gravity_x").attribute("value").as_float();
+	max_gravity.y = config.child("max_gravity_y").attribute("value").as_float();
 	
 	return ret;
 }
@@ -105,10 +110,10 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float d_time)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->map->LoadBeginning();
+//App->map->LoadBeginning();
 		
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		App->map->LoadBeginning();
+	//	App->map->LoadBeginning();
 	
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();

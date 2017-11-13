@@ -5,7 +5,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Scene.h"
-#include "j1Player.h"
+#include "Player.h"
 #include "j1Audio.h"
 #include "j1Input.h"
 #include "SDL/include/SDL_render.h"
@@ -54,7 +54,7 @@ bool j1SceneSwitch::Update(float d_time)
 				App->scene->NextLevel();
 				App->audio->PlayMusic("audio/music/Level_1.ogg");
 			}
-			App->player->SetToStart(); //A function should be created to recolocate the player to its initial pos "SetToStart"-> resets pos and vel
+			//App->player->SetToStart(); 
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			fading = false;

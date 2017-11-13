@@ -3,7 +3,7 @@
 #include "j1Collision.h"
 #include "j1Render.h"
 #include "j1Input.h"
-#include "j1Player.h"
+#include "Player.h"
 #include "j1SceneSwitch.h"
 #include "j1Scene.h"
 
@@ -132,7 +132,7 @@ bool j1Collision::CleanUp()
 	return true;
 }
 
-Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Entity* callback)
 {
 	Collider* ret = nullptr;
 

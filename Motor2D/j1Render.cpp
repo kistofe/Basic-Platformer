@@ -81,7 +81,6 @@ bool j1Render::Update(float d_time)
 		camera.y = 0;
 	else if (camera.y <= App->map->max_map_y)
 		camera.y = App->map->max_map_y;
-	//if (camera.y + App->win->height > App->map->data.height * App->map->data.tile_height) { camera.y = App->map->data.height * App->map->data.tile_height - App->win->height; }
 	
 	return true;
 }

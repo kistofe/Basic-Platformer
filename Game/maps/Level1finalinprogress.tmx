@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="60" tilewidth="32" tileheight="32" nextobjectid="56">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="60" tilewidth="32" tileheight="32" nextobjectid="58">
  <tileset firstgid="1" name="Scenario" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
  </tileset>
@@ -45068,7 +45068,7 @@
   <object id="34" name="wall" x="3456.66" y="830.667" width="575.334" height="861.333"/>
   <object id="35" name="wall" x="4192" y="766.667" width="96" height="94.6667"/>
   <object id="36" name="wall" x="4381.33" y="672" width="97.3333" height="93.3333"/>
-  <object id="37" name="wall" x="4738.67" y="234.667" width="60" height="1458.67"/>
+  <object id="37" name="wall" x="4738" y="234.667" width="60" height="1458.67"/>
   <object id="38" name="wall" x="4641.33" y="575.833" width="96" height="20"/>
   <object id="39" name="wall" x="3490" y="192" width="92" height="62"/>
   <object id="40" name="wall" x="3076" y="354" width="1402" height="88"/>

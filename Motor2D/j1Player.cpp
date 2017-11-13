@@ -202,7 +202,7 @@ void j1Player::CreateAnimationPushBacks()
 	double_jump.PushBack({ 162, 276, 54, 69 });
 	double_jump.PushBack({ 216, 276, 54, 69 });
 	double_jump.loop = true;
-	double_jump.speed = 0.9f;
+	double_jump.speed = 0.4f;
 
 	//Win animation
 	win.PushBack({  0,  490, 54, 69});

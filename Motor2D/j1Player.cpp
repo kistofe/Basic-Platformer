@@ -192,7 +192,7 @@ void j1Player::CreateAnimationPushBacks()
 	jump.PushBack({ 270, 138, 54, 69 });
 	jump.PushBack({ 324, 138, 54, 69 });
 	jump.PushBack({ 378, 138, 54, 69 });
-	jump.loop = true;
+	jump.loop = false;
 	jump.speed = 0.5f;
 
 	//Double Jump animation
@@ -262,9 +262,9 @@ void j1Player::SetAnimations()
 	//Jumping animation
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left == 1) //reset the jump animation each time a regular (not double) jump is performed
 		jump.Reset();
-	if (jumps_left == 1 && speed.y < 0) //set animation to regular jump if only a jump has been depleted
+	if (jumps_left == 1 && speed.y < 2) //set animation to regular jump if only a jump has been depleted
 		current_animation = &jump;
-	if (jumps_left == 1 && speed.y > 0) //set animation to fall if the player is still in a regular jump, and is moving downwards
+	if (speed.y > 2 && (jumps_left == 2 || jumps_left == 1)) //set animation to fall if the player is still in a regular jump, and is moving downwards, or is falling
 		current_animation = &fall;
 	if (jumps_left == 0) // set animation to double jump if there's no jumps left
 		current_animation = &double_jump;

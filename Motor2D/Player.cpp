@@ -67,9 +67,9 @@ bool Player::Start()
 	return true;
 }
 
-bool Player::PreUpdate()
+bool Player::PreUpdate(float d_time)
 {
-	SetSpeed();
+	SetSpeed(d_time);
 
 	//Update Future Player Collider with new speed
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
@@ -240,28 +240,28 @@ void Player::SetCameraToPlayer()
 		
 }
 
-void Player::SetSpeed()
+void Player::SetSpeed(float d_time)
 {
 	//Set maximum value for gravity
 	if (speed.y < App->scene->max_gravity.y)
-		speed.y -= App->scene->gravity.y;
+		speed.y -= App->scene->gravity.y * d_time;
 
 	else
-		speed.y = App->scene->max_gravity.y;
+		speed.y = App->scene->max_gravity.y * d_time;
 		
 	//Set value for Horizontal Speed
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-		speed.x = moving_speed;
+		speed.x = moving_speed * d_time;
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-		speed.x = -moving_speed;
+		speed.x = -moving_speed * d_time;
 		
 	else
 		speed.x = 0; 
 		
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
-		speed.y = jumping_speed;
+		speed.y = jumping_speed * d_time;
 		
 }
 

@@ -24,7 +24,7 @@ public:
 
 	bool Start();
 
-	bool PreUpdate();
+	bool PreUpdate(float d_time);
 
 	bool Update(float d_time);
 
@@ -43,7 +43,7 @@ public:
 
 private:
 
-	void SetSpeed();
+	void SetSpeed(float d_time);
 	void SetAnimations();
 	void CreateAnimationPushBacks();
 	void SetCameraToPlayer();

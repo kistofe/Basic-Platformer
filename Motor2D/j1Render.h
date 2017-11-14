@@ -21,7 +21,7 @@ public:
 	bool Start();
 
 	// Called each loop iteration
-	bool PreUpdate();
+	bool PreUpdate(float d_time);
 	bool Update(float d_time);
 	bool PostUpdate();
 

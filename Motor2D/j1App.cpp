@@ -247,7 +247,7 @@ bool j1App::PreUpdate()
 			continue;
 		}
 
-		ret = item->data->PreUpdate();
+		ret = item->data->PreUpdate(d_time);
 	}
 
 	return ret;

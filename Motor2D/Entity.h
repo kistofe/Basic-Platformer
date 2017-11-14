@@ -24,7 +24,7 @@ enum EntityType
 
 	virtual bool Awake(pugi::xml_node& data) {};
 	virtual bool Start() {};
-	virtual bool PreUpdate() {};
+	virtual bool PreUpdate(float d_time) {};
 	virtual bool Update(float d_time) {};
 	virtual bool PostUpdate() {};
 	virtual bool CleanUp() {};

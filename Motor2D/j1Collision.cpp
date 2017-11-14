@@ -60,7 +60,7 @@ j1Collision::~j1Collision()
 {
 }
 
-bool j1Collision::PreUpdate()
+bool j1Collision::PreUpdate(float d_time)
 {
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)

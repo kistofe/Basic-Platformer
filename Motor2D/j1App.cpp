@@ -1,7 +1,9 @@
 #include <iostream> 
+#include <sstream>
 
 #include "p2Defs.h"
 #include "p2Log.h"
+
 #include "j1Window.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -11,7 +13,6 @@
 #include "j1Collision.h"
 #include "j1SceneSwitch.h"
 #include "j1Map.h"
-#include "j1Pathfinding.h"
 #include "j1EntityManager.h"
 #include "j1App.h"
 
@@ -35,7 +36,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	sceneswitch = new j1SceneSwitch();
 	collision = new j1Collision();
 	map = new j1Map();
-	pathfinding = new j1PathFinding();
 	entities = new j1EntityManager();
 
 	// Ordered for awake / Start / Update
@@ -46,7 +46,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(entities);
-	AddModule(pathfinding);
 	AddModule(sceneswitch);
 	AddModule(collision);
 	AddModule(map);

@@ -13,7 +13,7 @@
 
 Player::Player() : Entity(Entity::EntityType::PLAYER)
 {
-	CreateAnimationPushBacks();
+	
 }
 
 
@@ -23,7 +23,8 @@ Player::~Player()
 
 bool Player::Awake(pugi::xml_node& data)
 {
-	
+	CreateAnimationPushBacks();
+
 	//Reading Collider offsets
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
@@ -44,7 +45,7 @@ bool Player::Start()
 {
 	LOG("Loading player");
 
-//	Player* player = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
+
 
 	texture = App->tex->Load("images/Ramona.png");
 	

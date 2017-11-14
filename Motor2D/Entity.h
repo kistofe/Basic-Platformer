@@ -22,9 +22,17 @@ enum EntityType
 	Entity(EntityType type);
 	~Entity();
 
-	virtual void Update() {};
+	virtual bool Awake(pugi::xml_node& data) {};
+	virtual bool Start() {};
+	virtual bool PreUpdate() {};
+	virtual bool Update(float d_time) {};
+	virtual bool PostUpdate() {};
+	virtual bool CleanUp() {};
+
 	virtual void Draw() {};
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
+	virtual bool Save(pugi::xml_node&) {};
+	virtual bool Load(pugi::xml_node&) const {};
 
 protected:
 

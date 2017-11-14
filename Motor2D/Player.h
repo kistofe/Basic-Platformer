@@ -9,7 +9,6 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include "Entity.h"
-#include "j1EntityManager.h"
 
 #include "SDL/include/SDL.h"
 

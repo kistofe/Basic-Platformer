@@ -12,21 +12,21 @@ public:
 	j1EntityManager();
 	~j1EntityManager();
 
+	bool Awake(pugi::xml_node& data);
+	bool Start();
+	bool PreUpdate(float d_time);
 	bool Update(float d_time);
+	bool PostUpdate();
+	bool CleanUp();
 
 	Entity* CreateEntity(Entity::EntityType type);
 	bool DestroyEntity(Entity* entity);
 	
 private:
 	
-	float accumulated_time = 0;
-	float update_ms_cycle = 0;
-
-	bool do_logic = false; //bool? or other class?
-	
 public:
 
-	p2List<Entity*> entities;
+	p2List<Entity*> entity_list;
 
 private:
 };

@@ -13,7 +13,7 @@
 
 Player::Player() : Entity(Entity::EntityType::PLAYER)
 {
-	
+	name.create("player");
 }
 
 
@@ -44,8 +44,6 @@ bool Player::Awake(pugi::xml_node& data)
 bool Player::Start()
 {
 	LOG("Loading player");
-
-
 
 	texture = App->tex->Load("images/Ramona.png");
 	
@@ -115,7 +113,7 @@ bool Player::Update(float d_time)
 
 	//Update Player Collider ---------------------------------------------
 	collider->SetPos((position.x + collider_offset.x),( position.y + collider_offset.y));
-
+	LOG("d_time: %f", d_time);
 	return true;
 }
 
@@ -182,7 +180,7 @@ void Player::CreateAnimationPushBacks()
 	run.PushBack({ 324, 207, 54, 69 });
 	run.PushBack({ 378, 207, 54, 69 });
 	run.loop = true;
-	run.speed = 0.4f,
+	run.speed = 0.4f;
 	
 	//jumping animation
 	jump.PushBack({ 0, 138, 54, 69 });
@@ -228,12 +226,12 @@ void Player::CreateAnimationPushBacks()
 void Player::SetCameraToPlayer()
 {
 	App->render->camera.x = App->render->camera.w / 3 - position.x;
-	if (App->render->camera.x < 0)
+	if (App->render->camera.x > 0)
 		App->render->camera.x = 0;
 	else if (App->render->camera.x <= App->map->max_map_x)
 		App->render->camera.x = App->map->max_map_x;
 	App->render->camera.y = App->render->camera.h / 1.35 - position.y;
-	if (App->render->camera.y < 0)
+	if (App->render->camera.y > 0)
 		App->render->camera.y = 0;
 	else if (App->render->camera.y <= App->map->max_map_y)
 		App->render->camera.y = App->map->max_map_y;
@@ -315,7 +313,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 								speed.y -= intersect_col.h, jumps_left = 2;
 						}
 						else
-							speed.y -= intersect_col.h, jumps_left = 2;
+							speed.y -= intersect_col.h;
 					}
 					else if (speed.x > 0)
 					{
@@ -392,7 +390,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 				else if (speed.x > 0)
 					speed.x -= intersect_col.w;
 			}
-			
+			LOG("speed x: %d, speed y: %d", speed.x, speed.y);
 		}
 	}
 

@@ -2,7 +2,7 @@
 
 <config>
   <app>
-    <framerate framerate_cap="60"/>
+    <framerate framerate_cap="30"/>
     <title>Ramona Flowers vs The Code</title>
     <organization>UPC</organization>
   </app>
@@ -13,7 +13,7 @@
   </audio>
 
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -33,18 +33,18 @@
     <max_map_x value = "4200"/>
     <max_map_y value = "1888"/>
   </map>
-  
-  <player>
-    <sprite_path path = "Ramona.png"/>
-    <moving_speed value = "5"/>
-    <jumping_speed value = "-14.5"/>
-    <collider_offset_x value = "7"/>
-    <collider_offset_y value = "1"/>
-    <jump_sfx source = "audio/sfx/Jumping.wav"/>
-    <landing_sfx source = "audio/sfx/Landing.wav"/>
-    <death_sfx source = "audio/sfx/Death.wav"/>
-  </player>	
-
+  <entity_manager>
+    <player>
+      <sprite_path path = "Ramona.png"/>
+      <moving_speed value = "250"/>
+      <jumping_speed value = "-600"/>
+      <collider_offset_x value = "7"/>
+      <collider_offset_y value = "1"/>
+      <jump_sfx source = "audio/sfx/Jumping.wav"/>
+      <landing_sfx source = "audio/sfx/Landing.wav"/>
+      <death_sfx source = "audio/sfx/Death.wav"/>
+    </player>	
+  </entity_manager>
   <scene>
     <map_name name = "Level1finalinprogress.tmx">
       <music name = "Level_1.ogg"/>
@@ -53,8 +53,8 @@
       <music name = "Level_2.ogg"/>
     </map_name>
     <gravity_x value = "0"/>
-    <gravity_y value = "-1"/>
+    <gravity_y value = "-50"/>
     <max_gravity_x value = "0"/>
-    <max_gravity_y value = "10"/>
+    <max_gravity_y value = "700"/>
   </scene>
 </config>

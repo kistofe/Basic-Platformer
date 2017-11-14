@@ -45049,7 +45049,7 @@
  </objectgroup>
  <objectgroup color="#ff0000" name="Colliders">
   <object id="3" name="wall" x="642" y="1536" width="94" height="97"/>
-  <object id="7" name="wall" x="1" y="1634" width="1088" height="59"/>
+  <object id="7" name="wall" x="0" y="1634" width="1088" height="59"/>
   <object id="17" name="wall" x="1344.33" y="1632.33" width="95.3333" height="59.3333"/>
   <object id="20" name="wall" x="1760.33" y="1632.67" width="479" height="58.6667"/>
   <object id="21" name="wall" x="2336.33" y="1664.67" width="95" height="28.3333"/>

@@ -141,7 +141,6 @@ public:
 	// Change from map coordinates (tiles) to world coordinates (pixels)
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 	// Method to darken screen while map switching takes place
 	bool FadeToBlack(float time = 1.0f);

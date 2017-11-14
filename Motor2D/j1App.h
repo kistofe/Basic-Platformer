@@ -18,6 +18,7 @@ class j1Scene;
 class j1SceneSwitch;
 class j1Map;
 class j1EntityManager;
+class j1Pathfinding;
 
 class j1App
 {
@@ -91,6 +92,7 @@ public:
 	j1Collision*		collision = NULL;
 	j1Map*				map = NULL;
 	j1EntityManager*	entities = NULL;
+	j1Pathfinding*		pathfinding = NULL;
 
 private:
 

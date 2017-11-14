@@ -14,6 +14,7 @@
 #include "j1SceneSwitch.h"
 #include "j1Map.h"
 #include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 #include "j1App.h"
 
 #include "Brofiler\Brofiler.h"
@@ -37,6 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1Collision();
 	map = new j1Map();
 	entities = new j1EntityManager();
+	pathfinding = new j1Pathfinding();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp

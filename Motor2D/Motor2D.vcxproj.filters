@@ -55,6 +55,15 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Flying_Enemy.cpp">
+      <Filter>Desenvolupament  ========\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground_Enemy.cpp">
+      <Filter>Desenvolupament  ========\Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -132,6 +141,15 @@
     <ClInclude Include="Entity.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Flying_Enemy.h">
+      <Filter>Desenvolupament  ========\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground_Enemy.h">
+      <Filter>Desenvolupament  ========\Entities\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -157,6 +175,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities">
       <UniqueIdentifier>{ae32edfe-e850-4856-bb56-e52709a77bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities\Enemies">
+      <UniqueIdentifier>{74ab8363-bee6-4dec-a442-132117407c9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -5,7 +5,8 @@
 
 #include "j1Module.h"
 #include "j1Render.h"
-#include "Entity.h"
+
+class Entity;
 
 enum COLLIDER_TYPE
 {

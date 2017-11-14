@@ -116,7 +116,7 @@ Entity* j1EntityManager::CreateEntity(Entity::EntityType type)
 	switch (type)
 	{
 		case Entity::EntityType::PLAYER:	ret = new Player();	break;
-	//	case Entity::EntityType::ENEMY:	ret = new Enemy();	break;
+		case Entity::EntityType::ENEMY:		ret = new Enemy(); break;
 	}
 	   
 	if (ret != nullptr)

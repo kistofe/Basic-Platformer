@@ -32,25 +32,37 @@ enum EntityType
 
 	virtual void Draw() { return; };
 	virtual void OnCollision(Collider* c1, Collider* c2) { return; };
+	virtual void Move() { return; }
 	virtual bool Save(pugi::xml_node&) { return true; };
 	virtual bool Load(pugi::xml_node&) const { return true; };
-
-protected:
+	virtual void SetToStart() { return; };
+	virtual void SetSpeed(float d_time) { return; };
+	virtual void SetAnimations() { return; };
+	virtual void CreateAnimationPushBacks() { return; };
+	
 
 public:
 
 	p2SString name;
+
 protected:
 
-	iPoint position = { 0, 0 };
-	fPoint speed = { 0, 0 };
-	EntityType type;
-	SDL_Texture* texture;
-	Collider* collider;
-	Animation* current_animation = nullptr;
+	Collider*	collider;
+	Collider*	future_collider;
+		
+	iPoint		position = { 0, 0 };
+	fPoint		speed = { 0, 0 };
+	iPoint		collider_offset;
 
-	bool facing_right = true;
+	EntityType	type;
+	SDL_Texture* texture = NULL;
+	Animation*	current_animation = nullptr;
+
+	p2SString	death_sfx_source;
+
+	bool		facing_right = true;
 	float		moving_speed;
+	uint		death_sfx;
 
 };
 #endif

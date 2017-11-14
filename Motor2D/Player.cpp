@@ -78,41 +78,44 @@ bool Player::PreUpdate(float d_time)
 
 bool Player::Update(float d_time) 
 {
-	SetCameraToPlayer();
-	//Check Horizontal Movement ----------------------------------------
-	//Right
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-		facing_right = true;
-			
-	//Left
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-		facing_right = false;
-	//--------------------------------------------------------------------
-	
-	//Check Jump ---------------------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
+	if (d_time < 1)
 	{
- 		jumps_left--;
-		is_grounded = false; 
-		App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
+		SetCameraToPlayer();
+		//Check Horizontal Movement ----------------------------------------
+		//Right
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			facing_right = true;
+
+		//Left
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			facing_right = false;
+		//--------------------------------------------------------------------
+
+		//Check Jump ---------------------------------------------------------
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
+		{
+			jumps_left--;
+			is_grounded = false;
+			App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
+		}
+
+		//Set Animation ------------------------------------------------------
+		SetAnimations();
+
+		//Update Player Position ---------------------------------------------	
+		Move();
+
+		//Update Player Collider ---------------------------------------------
+		collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
+
+		//Update Player Flip -------------------------------------------------
+		if (facing_right)
+			App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()));
+
+		if (!facing_right)
+			App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+
 	}
-		
-	//Set Animation ------------------------------------------------------
-	SetAnimations();
-
-	//Update Player Flip -------------------------------------------------
-	if (facing_right)
-		App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()));
-
-	if (!facing_right)
-		App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
-	
-	//Update Player Position ---------------------------------------------
-	position.x += speed.x;
-	position.y += speed.y;
-
-	//Update Player Collider ---------------------------------------------
-	collider->SetPos((position.x + collider_offset.x),( position.y + collider_offset.y));
 	LOG("d_time: %f", d_time);
 	return true;
 }
@@ -220,6 +223,13 @@ void Player::CreateAnimationPushBacks()
 	damaged.PushBack({ 60, 420, 54, 69 });
 	damaged.loop = false;
 	damaged.speed = 0.2f;
+
+}
+
+void Player::Move()
+{
+	position.x += speed.x;
+	position.y += speed.y;
 
 }
 

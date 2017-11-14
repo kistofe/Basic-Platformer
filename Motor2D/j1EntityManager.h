@@ -5,6 +5,7 @@
 #include "j1Module.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class j1EntityManager : public j1Module
 {

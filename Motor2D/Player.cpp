@@ -400,8 +400,13 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 				else if (speed.x > 0)
 					speed.x -= intersect_col.w;
 			}
-			LOG("speed x: %f, speed y: %f", speed.x, speed.y);
+		
 		}
+		if (speed.y < 1 && speed.y > -1)
+			speed.y = 0;
+		if (speed.x < 1 && speed.x > -1)
+			speed.x = 0;
+		LOG("speed x: %f, speed y: %f", speed.x, speed.y);
 	}
 
 

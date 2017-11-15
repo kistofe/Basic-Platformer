@@ -1,8 +1,43 @@
-#pragma once
-class Flying_Enemy
+#ifndef _FLYING_ENEMY_
+#define _FLYING_ENEMY_
+
+#include "Animation.h"
+#include "p2List.h"
+#include "p2Point.h"
+#include "p2Log.h"
+#include "p2Defs.h"
+#include "j1Collision.h"
+#include "Enemy.h"
+
+class Flying_Enemy : public Enemy
 {
 public:
+
 	Flying_Enemy();
 	~Flying_Enemy();
-};
 
+	bool Awake(pugi::xml_node& data);
+	bool Start();
+	bool PreUpdate(float d_time);
+	bool Update(float d_time);
+	bool CleanUp();
+
+	//Loads player pos
+	bool Load(pugi::xml_node&);
+
+	//Saves player pos
+	bool Save(pugi::xml_node&) const;
+
+	void OnCollision(Collider* c1, Collider* c2);
+
+	void SetAnimations();
+
+	void CreateAnimationPushBacks();
+
+private:
+
+	Animation fly;
+	Animation bite;
+
+};
+#endif 

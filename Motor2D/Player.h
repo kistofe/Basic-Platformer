@@ -36,19 +36,13 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
-
-	void SetToStart();
-	
-	void SetSpeed(float d_time);
-
+		
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
 
-	void Move();
-
 private:
-
+	void SetSpeed(float d_time);
 	void SetCameraToPlayer();
 
 public:

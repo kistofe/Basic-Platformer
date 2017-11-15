@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Flying_Enemy.h"
 
 class j1EntityManager : public j1Module
 {
@@ -22,6 +23,8 @@ public:
 
 	Entity* CreateEntity(Entity::EntityType type);
 	bool DestroyEntity(Entity* entity);
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 	
 private:
 	

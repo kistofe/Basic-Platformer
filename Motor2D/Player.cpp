@@ -7,7 +7,6 @@
 #include "j1Textures.h"
 #include "j1Collision.h"
 #include "j1Input.h"
-#include "j1Render.h"
 #include "j1Map.h"
 #include "j1Audio.h"
 
@@ -68,7 +67,6 @@ bool Player::Start()
 bool Player::PreUpdate(float d_time)
 {
 	SetSpeed(d_time);
-
 	//Update Future Player Collider with new speed
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 
@@ -78,44 +76,34 @@ bool Player::PreUpdate(float d_time)
 
 bool Player::Update(float d_time) 
 {
-	if (d_time < 1)
+	SetCameraToPlayer();
+	//Check Horizontal Movement ----------------------------------------
+	//Right
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		facing_right = true;
+	
+	//Left
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		facing_right = false;
+	//--------------------------------------------------------------------
+
+	//Check Jump ---------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
 	{
-		SetCameraToPlayer();
-		//Check Horizontal Movement ----------------------------------------
-		//Right
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-			facing_right = true;
-
-		//Left
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-			facing_right = false;
-		//--------------------------------------------------------------------
-
-		//Check Jump ---------------------------------------------------------
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
-		{
-			jumps_left--;
-			is_grounded = false;
-			App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
-		}
-
-		//Set Animation ------------------------------------------------------
-		SetAnimations();
-
-		//Update Player Position ---------------------------------------------	
-		Move();
-
-		//Update Player Collider ---------------------------------------------
-		collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
-
-		//Update Player Flip -------------------------------------------------
-		if (facing_right)
-			App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()));
-
-		if (!facing_right)
-			App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
-
+		jumps_left--;
+		is_grounded = false;
+		App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
 	}
+
+	//Set Animation ------------------------------------------------------
+	SetAnimations();
+	//Update Player Position ---------------------------------------------	
+	Move();
+	//Update Player Collider ---------------------------------------------
+	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
+	//Update Player's Blit ----------------------------------------------
+	Draw();
+	
 	LOG("d_time: %f", d_time);
 	return true;
 }
@@ -167,7 +155,6 @@ bool Player::Save(pugi::xml_node& data) const
 
 void Player::CreateAnimationPushBacks()
 {
-	texture = NULL;
 	current_animation = NULL;
 
 	//idle animation
@@ -226,12 +213,6 @@ void Player::CreateAnimationPushBacks()
 
 }
 
-void Player::Move()
-{
-	position.x += speed.x;
-	position.y += speed.y;
-
-}
 
 void Player::SetCameraToPlayer()
 {
@@ -402,6 +383,8 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 			}
 		
 		}
+
+		//Rounding off speed value
 		if (speed.y < 1 && speed.y > -1)
 			speed.y = 0;
 		if (speed.x < 1 && speed.x > -1)
@@ -422,15 +405,4 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 
 }
 
-void Player::SetToStart()
-{//Loop should be done maybe?
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->sceneswitch->FadeToBlack();
-
-	position.x = App->map->data.object.start->data->x;
-	position.y = App->map->data.object.start->data->y;
-	speed.x = 0;
-	speed.y = 0;
-	current_animation = &idle;
-}
 

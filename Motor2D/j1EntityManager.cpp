@@ -15,7 +15,8 @@ bool j1EntityManager::Awake(pugi::xml_node& data)
 {
 	bool ret = true;
 
-	Player* player = (Player*) CreateEntity(Entity::EntityType::PLAYER);
+	Player* player = (Player*)CreateEntity(Entity::EntityType::PLAYER);
+	Enemy* enemy = (Enemy*)CreateEntity(Entity::EntityType::ENEMY);
 		
 	p2List_item<Entity*>* entity_iterator;
 	entity_iterator = entity_list.start;
@@ -115,8 +116,10 @@ Entity* j1EntityManager::CreateEntity(Entity::EntityType type)
 
 	switch (type)
 	{
-		case Entity::EntityType::PLAYER:	ret = new Player();	break;
-		case Entity::EntityType::ENEMY:		ret = new Enemy(); break;
+		case Entity::EntityType::PLAYER:	ret = new Player();
+			break;
+		case Entity::EntityType::ENEMY:		ret = new Enemy();
+			break;
 	}
 	   
 	if (ret != nullptr)
@@ -128,5 +131,47 @@ Entity* j1EntityManager::CreateEntity(Entity::EntityType type)
 
 bool j1EntityManager::DestroyEntity(Entity * entity)
 {
-	return true;
+	bool ret = true;
+
+	if (entity != nullptr)
+		delete entity;
+
+	else
+		ret = false;
+
+	return ret;
+}
+
+bool j1EntityManager::Load(pugi::xml_node & data) 
+{
+
+	bool ret = true;
+
+	p2List_item<Entity*>* entity_iterator;
+	entity_iterator = entity_list.start;
+
+	while (entity_iterator != NULL && ret == true)
+	{
+		ret = entity_iterator->data->Load(data.child(entity_iterator->data->name.GetString()));
+		entity_iterator = entity_iterator->next;
+	}
+
+	return ret;
+}
+
+bool j1EntityManager::Save(pugi::xml_node & data) const
+{
+
+	bool ret = true;
+
+	p2List_item<Entity*>* entity_iterator;
+	entity_iterator = entity_list.start;
+
+	while (entity_iterator != NULL && ret == true)
+	{
+		ret = entity_iterator->data->Save(data.child(entity_iterator->data->name.GetString()));
+		entity_iterator = entity_iterator->next;
+	}
+
+	return ret;
 }

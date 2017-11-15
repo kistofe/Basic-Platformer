@@ -12,12 +12,13 @@ struct Collider;
 
 class Entity 
 {
+
 public:
 
 enum EntityType
 {
 	PLAYER,
-	ENEMY
+	ENEMY,
 };
 
 	Entity(EntityType type);
@@ -30,13 +31,13 @@ enum EntityType
 	virtual bool PostUpdate() { return true; };
 	virtual bool CleanUp() { return true; };
 
-	virtual void Draw() { return; };
+	void Draw();
+	void Move();
+	void SetToStart();
+
 	virtual void OnCollision(Collider* c1, Collider* c2) { return; };
-	virtual void Move() { return; }
 	virtual bool Save(pugi::xml_node&) { return true; };
 	virtual bool Load(pugi::xml_node&) const { return true; };
-	virtual void SetToStart() { return; };
-	virtual void SetSpeed(float d_time) { return; };
 	virtual void SetAnimations() { return; };
 	virtual void CreateAnimationPushBacks() { return; };
 	

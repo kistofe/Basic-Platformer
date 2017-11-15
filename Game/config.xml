@@ -43,7 +43,7 @@
       <jump_sfx source = "audio/sfx/Jumping.wav"/>
       <landing_sfx source = "audio/sfx/Landing.wav"/>
       <death_sfx source = "audio/sfx/Death.wav"/>
-    </player>	
+    </player>
   </entity_manager>
   <scene>
     <map_name name = "Level1finalinprogress.tmx">

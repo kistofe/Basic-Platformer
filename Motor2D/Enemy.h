@@ -35,14 +35,17 @@ enum EnemyType
 
 	bool CleanUp();
 
+	void ChangeSpeed(iPoint newspeed, float d_time);
+	//Something like a Path Function to apply Pathfinding?
 	
-private:
-
 
 public:
-
+	//Maybe an enemy list?
 	
-private:
+protected:
+
+	bool alive = true;
+	
 
 
 };

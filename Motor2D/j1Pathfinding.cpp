@@ -13,7 +13,9 @@ j1Pathfinding::~j1Pathfinding()
 
 iPoint j1Pathfinding::FindNextTile(iPoint origin, iPoint destination)
 {
-	iPoint ret;
+	p2List<iPoint> path_tiles;
+	p2List<iPoint> breadcrumbs;
+
 	//Find adjacent tiles
 	iPoint neighbors[4];
 	neighbors[0].create(origin.x - 1, origin.y); //left neighbor
@@ -27,10 +29,14 @@ iPoint j1Pathfinding::FindNextTile(iPoint origin, iPoint destination)
 	{
 		if (neighbors[i].DistanceManhattan(destination) < lowest_distance)
 		{
-			ret = neighbors[i];
 			lowest_distance = neighbors[i].DistanceManhattan(destination);
+			path_tiles.add(neighbors[i]);
 		}
 	}
 
-	return ret;
+	return { 0,0 };
+}
+
+PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent)
+{
 }

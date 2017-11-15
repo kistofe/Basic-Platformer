@@ -1,7 +1,7 @@
 #include "j1Pathfinding.h"
 
 
-
+// Module Pathfinding methods
 j1Pathfinding::j1Pathfinding()
 {
 }
@@ -37,6 +37,12 @@ iPoint j1Pathfinding::FindNextTile(iPoint origin, iPoint destination)
 	return { 0,0 };
 }
 
+// PathNode methods
 PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent)
 {
+}
+
+int PathNode::Score() const
+{
+	return 0;
 }

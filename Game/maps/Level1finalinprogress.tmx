@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="60" tilewidth="32" tileheight="32" nextobjectid="58">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="60" tilewidth="32" tileheight="32" nextobjectid="58">
  <tileset firstgid="1" name="Scenario" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
  </tileset>
@@ -45048,10 +45048,10 @@
   <object id="5" name="PlayerPos" x="200" y="1568" width="35" height="65"/>
  </objectgroup>
  <objectgroup color="#ff0000" name="Colliders">
-  <object id="3" name="wall" x="642" y="1536" width="94" height="97"/>
+  <object id="3" name="wall" x="640" y="1536" width="96.0039" height="98"/>
   <object id="7" name="wall" x="0" y="1634" width="1088" height="59"/>
-  <object id="17" name="wall" x="1344.33" y="1632.33" width="95.3333" height="59.3333"/>
-  <object id="20" name="wall" x="1760.33" y="1632.67" width="479" height="58.6667"/>
+  <object id="17" name="wall" x="1344" y="1634" width="96" height="59"/>
+  <object id="20" name="wall" x="1760.33" y="1634" width="479" height="59"/>
   <object id="21" name="wall" x="2336.33" y="1664.67" width="95" height="28.3333"/>
   <object id="22" name="wall" x="2560.67" y="1600.33" width="95" height="20"/>
   <object id="23" name="wall" x="2654" y="809.333" width="64" height="882.667"/>
@@ -45061,8 +45061,8 @@
   <object id="27" name="wall" x="2366.67" y="1247.33" width="97.3333" height="64"/>
   <object id="28" name="wall" x="2367.33" y="960" width="161.333" height="62.6667"/>
   <object id="29" name="wall" x="2241" y="768" width="126" height="669"/>
-  <object id="30" name="wall" x="1634" y="767" width="607" height="193"/>
-  <object id="31" name="wall" x="1634" y="0" width="509" height="765"/>
+  <object id="30" name="wall" x="1634" y="768" width="607" height="193"/>
+  <object id="31" name="wall" x="1635" y="0" width="509" height="768"/>
   <object id="32" name="wall" x="0" y="3.0303" width="1633.33" height="472.727"/>
   <object id="33" name="wall" x="2720" y="830.667" width="413.333" height="861.333"/>
   <object id="34" name="wall" x="3456.66" y="830.667" width="575.334" height="861.333"/>
@@ -45074,9 +45074,9 @@
   <object id="40" name="wall" x="3076" y="354" width="1402" height="88"/>
   <object id="41" name="wall" x="3076" y="0" width="282" height="352"/>
   <object id="42" name="wall" x="3680" y="96" width="1120" height="64"/>
-  <object id="48" name="wall" x="960.5" y="1472.5" width="382.5" height="31"/>
-  <object id="49" name="wall" x="960" y="1503" width="127.5" height="131"/>
-  <object id="50" name="wall" x="1216" y="1504" width="128" height="187.5"/>
+  <object id="48" name="wall" x="960" y="1472" width="384" height="32"/>
+  <object id="49" name="wall" x="960" y="1504" width="127.484" height="130.016"/>
+  <object id="50" name="wall" x="1216" y="1504" width="128" height="188"/>
   <object id="51" name="wall" x="1699" y="1568.5" width="89" height="19"/>
  </objectgroup>
  <objectgroup color="#0000ff" name="LevelEnd">

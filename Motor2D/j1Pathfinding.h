@@ -7,6 +7,18 @@
 #include "p2Defs.h"
 #include "j1Module.h"
 
+struct PathNode
+{
+	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	
+	int Score() const;
+	
+	iPoint position;
+	PathNode* parent;
+	int g;
+	int h;
+};
+
 class j1Pathfinding : public j1Module
 {
 public:

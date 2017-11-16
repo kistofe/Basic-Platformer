@@ -3,21 +3,9 @@
 
 #include "p2List.h"
 #include "p2Point.h"
+#include "p2DynArray.h"
 #include "p2Log.h"
-#include "p2Defs.h"
 #include "j1Module.h"
-
-struct PathNode
-{
-	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
-	
-	int Score() const;
-	
-	iPoint position;
-	PathNode* parent;
-	int g;
-	int h;
-};
 
 class j1Pathfinding : public j1Module
 {
@@ -25,8 +13,42 @@ public:
 	j1Pathfinding();
 	~j1Pathfinding();
 	
-	iPoint FindNextTile(iPoint origin, iPoint destination); //this method returns the coordinates that the entity has to go to in order to get to its destination
-	
+	iPoint GetNextTile(const iPoint& origin, const iPoint& destination); // method that gives the next tile in the path from origin to destination
+
+private:
+	p2DynArray<iPoint> last_path;
 };
+
+// forward declaration
+struct PathList;
+
+struct PathNode
+{
+	PathNode(); //default constructor
+	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	PathNode(const PathNode& node); //copy constructor
+
+	// Fills a PathList of all walkable adjacent pathnodes
+	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	// Computes the score of the tile
+	int Score() const;
+	// Compute the F for a given destination tile
+	int CalculateF(const iPoint& destination);
+	
+	iPoint position;
+	const PathNode* parent;
+	int g;
+	int h;
+};
+
+struct PathList
+{
+	p2List_item<PathNode>* Find(const iPoint& point) const;
+
+	p2List_item<PathNode>* GetNodeLowestScore() const;
+
+	p2List<PathNode> list;
+};
+
 
 #endif // __j1Pathfinding_H__

@@ -40,6 +40,6 @@ bool Enemy::CleanUp()
 
 void Enemy::ChangeSpeed(iPoint newspeed, float d_time)
 {
-	speed.x = newspeed.x * d_time;
-	speed.y = newspeed.y * d_time;
+	speed.x = newspeed.x * d_time * 100;
+	speed.y = newspeed.y * d_time * 100;
 }

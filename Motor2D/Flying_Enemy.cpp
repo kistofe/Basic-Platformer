@@ -1,6 +1,10 @@
 #include "Flying_Enemy.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Pathfinding.h"
+#include "j1EntityManager.h"
+#include "j1Scene.h"
+#include "j1Map.h"
 
 
 Flying_Enemy::Flying_Enemy() : Enemy(Entity::EntityType::FLYING_ENEMY)
@@ -49,6 +53,7 @@ bool Flying_Enemy::Update(float d_time)
 {
 	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
+	MoveTowardsPlayer(d_time);
 
 	//Update Position ---------------------------------------------	
 	Move();
@@ -94,6 +99,21 @@ bool Flying_Enemy::Save(pugi::xml_node& data) const
 	status.append_child("facing_right").append_attribute("value") = facing_right;
 
 	return true;
+}
+
+void Flying_Enemy::MoveTowardsPlayer(float d_time)
+{
+	iPoint tile_to_go = App->pathfinding->GetNextTile(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y));
+	iPoint position_in_world = App->map->WorldToMap(position.x, position.y);
+	// create a vector from the current position to the tile that it has to go to
+	fPoint distance;
+	distance.create(tile_to_go.x - position_in_world.x, tile_to_go.y - position_in_world.y);
+
+	// create a speed vector
+	iPoint speed_to_go;
+	speed_to_go.create(distance.x, distance.y);
+
+	ChangeSpeed(speed_to_go, d_time);
 }
 
 void Flying_Enemy::OnCollision(Collider * c1, Collider * c2)

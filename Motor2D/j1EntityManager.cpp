@@ -15,7 +15,6 @@ bool j1EntityManager::Awake(pugi::xml_node& data)
 {
 	bool ret = true;
 
-	
 	p2List_item<Entity*>* entity_iterator;
 	entity_iterator = entity_list.start;
 

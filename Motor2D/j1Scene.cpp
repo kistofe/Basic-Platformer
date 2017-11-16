@@ -61,7 +61,8 @@ bool j1Scene::Update(float d_time)
 		App->entities->SetToStart();
 		
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	//	App->map->LoadBeginning();
+	{
+	}
 	
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();

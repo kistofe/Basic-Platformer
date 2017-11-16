@@ -14,14 +14,18 @@ j1Pathfinding::~j1Pathfinding()
 
 iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination)
 {
-	// check if origion or destination are not walkable and return origin if that's the case
+	// check if origin or destination are not walkable and return origin if that's the case
+
+	// check if origin is the same as destination
+	if (origin == destination)
+		return origin;
 
 	PathList open;
 	PathList close;
 	PathList adjacents;
 
 	// create a node for the origin and add it to the open list
-	PathNode path_origin(0, origin.DistanceManhattan(destination), origin, NULL);
+	PathNode path_origin(0, origin.DistanceManhattan(destination), origin, nullptr);
 	open.list.add(path_origin);
 
 	// iterate while there exist tiles in the open list
@@ -37,7 +41,7 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 			break;
 
 		// fill adjacents list with the adjacents of the node that is currently being checked
-		temp.FindWalkableAdjacents(adjacents);
+		temp.FindWalkableAdjacents(adjacents, &close.Find(temp.position)->data);
 		for (p2List_item<PathNode>* iterator = adjacents.list.start; iterator; iterator = iterator->next) // loop that iterates the adjacents found (max loops: 4)
 		{
 			if (close.Find(iterator->data.position))
@@ -48,20 +52,21 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 				if (iterator->data.g < open.Find(iterator->data.position)->data.g)
 					open.Find(iterator->data.position)->data.parent = iterator->data.parent;
 		}
+		adjacents.list.clear();
 	}
 
 	p2DynArray<iPoint> path;
 	p2List_item<PathNode>* path_backtracker = close.list.end;
 
-	while (path_backtracker)
+	while (path_backtracker && path_backtracker->data.parent != NULL)
 	{
 		path.PushBack(path_backtracker->data.position);
-		path_backtracker = close.Find(path_backtracker->data.parent->position);
+		path_backtracker->data = *path_backtracker->data.parent;
 	}
 
 	path.Flip();
 
-	return *path.At(1);
+	return *path.At(0);
 }
 
 // PathNode methods
@@ -76,25 +81,25 @@ PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : 
 PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), position(node.position), parent(node.parent)
 {}
 
-uint PathNode::FindWalkableAdjacents(PathList & list_to_fill) const
+uint PathNode::FindWalkableAdjacents(PathList & list_to_fill, const PathNode* parent) const
 {
 	iPoint cell;
 
 	// north
 	cell.create(position.x, position.y - 1);
-	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
 
 	// south
 	cell.create(position.x, position.y + 1);
-	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
 
 	// east
 	cell.create(position.x + 1, position.y);
-	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
 
 	// west
 	cell.create(position.x - 1, position.y);
-	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
 
 	return uint();
 }

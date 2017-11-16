@@ -29,7 +29,7 @@ struct PathNode
 	PathNode(const PathNode& node); //copy constructor
 
 	// Fills a PathList of all walkable adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	uint FindWalkableAdjacents(PathList& list_to_fill, const PathNode* parent) const;
 	// Computes the score of the tile
 	int Score() const;
 	// Compute the F for a given destination tile

@@ -15,7 +15,7 @@ bool j1EntityManager::Awake(pugi::xml_node& data)
 {
 	bool ret = true;
 
-	Player* player = (Player*)CreateEntity(Entity::EntityType::PLAYER);
+	player1 = (Player*)CreateEntity(Entity::EntityType::PLAYER);
 	Enemy* enemy = (Enemy*)CreateEntity(Entity::EntityType::FLYING_ENEMY);
 		
 	p2List_item<Entity*>* entity_iterator;

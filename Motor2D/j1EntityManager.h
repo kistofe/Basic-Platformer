@@ -31,6 +31,7 @@ private:
 public:
 
 	p2List<Entity*> entity_list;
+	Player* player1;
 
 private:
 };

@@ -48,13 +48,13 @@ enum EntityType
 public:
 
 	p2SString name;
+	iPoint		position = { 0, 0 };
 
 protected:
 
 	Collider*	collider;
 	Collider*	future_collider;
 		
-	iPoint		position = { 0, 0 };
 	fPoint		speed = { 0, 0 };
 	iPoint		collider_offset;
 

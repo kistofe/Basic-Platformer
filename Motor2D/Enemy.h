@@ -33,6 +33,7 @@ public:
 	void ChangeSpeed(iPoint newspeed, float d_time);
 	//Something like a Path Function to apply Pathfinding?
 	
+	virtual void MoveTowardsPlayer() { return; };
 
 public:
 	//Maybe an enemy list?

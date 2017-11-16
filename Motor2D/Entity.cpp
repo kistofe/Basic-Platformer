@@ -39,5 +39,3 @@ void Entity::Move()
 	position.x += speed.x;
 	position.y += speed.y;
 }
-
-

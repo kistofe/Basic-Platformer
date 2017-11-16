@@ -28,6 +28,8 @@ public:
 	//Saves player pos
 	bool Save(pugi::xml_node&) const;
 
+	void MoveTowardsPlayer(float d_time);
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 	void SetAnimations();

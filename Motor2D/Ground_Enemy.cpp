@@ -1,5 +1,6 @@
 #include "Ground_Enemy.h"
-
+#include "j1App.h"
+#include "j1Textures.h"
 
 
 Ground_Enemy::Ground_Enemy() : Enemy(Entity::EntityType::GROUND_ENEMY)

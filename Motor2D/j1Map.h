@@ -157,6 +157,8 @@ public:
 
 	bool SetColliders();
 
+	bool SetEntities();
+
 
 private:
 

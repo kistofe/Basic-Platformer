@@ -14,6 +14,7 @@
 
 j1SceneSwitch::j1SceneSwitch()
 {
+	name.create("scene_switch");
 	screen = { 0, 0, 1920, 1080};
 }
 

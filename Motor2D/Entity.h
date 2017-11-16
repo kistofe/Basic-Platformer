@@ -33,8 +33,8 @@ enum EntityType
 	virtual bool CleanUp() { return true; };
 
 	virtual void OnCollision(Collider* c1, Collider* c2) { return; };
-	virtual bool Save(pugi::xml_node&) { return true; };
-	virtual bool Load(pugi::xml_node&) const { return true; };
+	virtual bool Save(pugi::xml_node&) const { return true; };
+	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual void SetAnimations() { return; };
 	virtual void CreateAnimationPushBacks() { return; };
 	void SetToStart();

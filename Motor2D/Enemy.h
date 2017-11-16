@@ -39,10 +39,6 @@ public:
 	
 protected:
 
-	bool alive = true;
-	
-
-
 };
 
 #endif

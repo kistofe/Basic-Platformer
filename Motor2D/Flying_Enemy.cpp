@@ -29,7 +29,7 @@ bool Flying_Enemy::Start()
 
 	texture = App->tex->Load("images/Flying Enemy.png");
 
-	position.create( 384, 1505);
+	//position.create( 384, 1505);
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
 
 	current_animation = &fly;
@@ -66,7 +66,7 @@ bool Flying_Enemy::CleanUp()
 	return true;
 }
 
-bool Flying_Enemy::Load(pugi::xml_node &)
+bool Flying_Enemy::Load(pugi::xml_node& data)
 {
 	//Load position
 	//Load velocity
@@ -74,11 +74,25 @@ bool Flying_Enemy::Load(pugi::xml_node &)
 	return true;
 }
 
-bool Flying_Enemy::Save(pugi::xml_node &) const
+bool Flying_Enemy::Save(pugi::xml_node& data) const
 {
 	//Save position
 	//Save velocity
 	//Save status
+	pugi::xml_node flying_enemy = data.append_child("flying_enemy");
+	pugi::xml_node pos = flying_enemy.append_child("position");
+
+	pos.append_attribute("x") = position.x;
+	pos.append_attribute("y") = position.y;
+
+	pugi::xml_node vel = flying_enemy.append_child("velocity");
+
+	vel.append_attribute("x") = speed.x;
+	vel.append_attribute("y") = speed.y;
+
+	pugi::xml_node status = flying_enemy.append_child("status");
+	status.append_child("facing_right").append_attribute("value") = facing_right;
+
 	return true;
 }
 

@@ -9,6 +9,8 @@
 #include "j1Scene.h"
 #include "Player.h"
 #include "j1SceneSwitch.h"
+#include "j1EntityManager.h"
+
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -244,6 +246,7 @@ bool j1Map::Load(const char* file_name)
 
 	// Call function to convert objects to colliders
 	SetColliders();
+	SetEntities();
 
 	map_loaded = ret;
 	
@@ -561,7 +564,7 @@ bool j1Map::SetColliders()
 {
 	p2List_item<Object*>* current_object = data.object.start;
 
-	while (current_object != NULL)
+	while (current_object)
 	{
 		SDL_Rect collider_tocreate;
 		if (current_object->data->name == "wall")
@@ -590,9 +593,32 @@ bool j1Map::SetColliders()
 			collider_tocreate.h = current_object->data->height;
 			App->collision->AddCollider(collider_tocreate, COLLIDER_DEATH);
 		}
+
 		current_object = current_object->next;
 	}
 
+
+	return true;
+}
+
+bool j1Map::SetEntities()
+{
+	//Read from object layer in tiled where enemies are
+	p2List_item<Object*>* current_entity = data.object.start;
+
+	while (current_entity)
+	{
+		if (current_entity->data->name == "PlayerPos")
+			Player* player = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
+		
+		if (current_entity->data->name == "Flying_Enemy")
+			Enemy* f_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY);
+		
+		if (current_entity->data->name == "Ground_Enemy")
+			Enemy*  g_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY);
+		
+		current_entity = current_entity->next;
+	}
 
 	return true;
 }

@@ -155,17 +155,18 @@ bool Player::Load(pugi::xml_node& data)
 //Save Player info
 bool Player::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node pos = data.append_child("position");
+	pugi::xml_node player = data.append_child("player");
+	pugi::xml_node pos = player.append_child("position");
 
 	pos.append_attribute("x") = position.x;
 	pos.append_attribute("y") = position.y;
 
-	pugi::xml_node vel = data.append_child("velocity");
+	pugi::xml_node vel = player.append_child("velocity");
 
 	vel.append_attribute("x") = speed.x;
 	vel.append_attribute("y") = speed.y;
 
-	pugi::xml_node status = data.append_child("status");
+	pugi::xml_node status = player.append_child("status");
 
 	status.append_child("is_grounded").append_attribute("value") = is_grounded;
 	status.append_child("facing_right").append_attribute("value") = facing_right;

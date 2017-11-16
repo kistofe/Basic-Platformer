@@ -21,7 +21,10 @@ Entity::~Entity()
 void Entity::SetToStart()
 {
 	//Loop to check current map
-
+	position.x = App->map->data.object.start->data->x;
+	position.y = App->map->data.object.start->data->y;
+	speed.x = 0;
+	speed.y = 0;
 	
 }
 

@@ -25,7 +25,7 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 	PathList adjacents;
 
 	// create a node for the origin and add it to the open list
-	PathNode path_origin(0, origin.DistanceNoSqrt(destination), origin, nullptr);
+	PathNode path_origin(0, origin.DistanceManhattan(destination), origin, nullptr);
 	open.list.add(path_origin);
 
 	// iterate while there exist tiles in the open list
@@ -113,7 +113,7 @@ int PathNode::Score() const
 int PathNode::CalculateF(const iPoint & destination)
 {
 	g = parent->g + 1;
-	h = position.DistanceNoSqrt(destination);
+	h = position.DistanceManhattan(destination);
 
 	return g + h;
 }

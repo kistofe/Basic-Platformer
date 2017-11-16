@@ -21,7 +21,7 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 	PathList adjacents;
 
 	// create a node for the origin and add it to the open list
-	PathNode path_origin(0, origin.DistanceNoSqrt(destination), origin, NULL);
+	PathNode path_origin(0, origin.DistanceManhattan(destination), origin, NULL);
 	open.list.add(path_origin);
 
 	// iterate while there exist tiles in the open list
@@ -42,9 +42,9 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 		{
 			if (close.Find(iterator->data.position))
 				continue;
-			else if (close.Find(iterator->data.position) == NULL)
+			if (close.Find(iterator->data.position) == NULL)
 				iterator->data.CalculateF(destination), open.list.add(iterator->data);
-			if (open.Find(iterator->data.position) != NULL)
+			else if (open.Find(iterator->data.position) != NULL)
 				if (iterator->data.g < open.Find(iterator->data.position)->data.g)
 					open.Find(iterator->data.position)->data.parent = iterator->data.parent;
 		}

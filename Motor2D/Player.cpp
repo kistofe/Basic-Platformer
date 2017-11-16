@@ -6,6 +6,7 @@
 #include "j1SceneSwitch.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
+#include "j1Pathfinding.h"
 #include "j1Input.h"
 #include "j1Map.h"
 #include "j1Audio.h"
@@ -103,8 +104,28 @@ bool Player::Update(float d_time)
 	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
 	//Update Player's Blit ----------------------------------------------
 	Draw();
-	
-	LOG("d_time: %f", d_time);
+
+	// PATHFINDING DEBUG	 --------------------------------------------
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		LOG("Current Player Position: %i, %i", App->map->WorldToMap(position.x, position.y));
+
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint mousepos = App->render->ScreenToWorld(x, y);
+		mousepos = App->map->WorldToMap(mousepos.x, mousepos.y);
+
+		LOG("Clicked Position: %i, %i", mousepos.x, mousepos.y);
+
+		iPoint next_tile = App->pathfinding->GetNextTile(mousepos, App->map->WorldToMap(position.x, position.y));
+		LOG("Next tile: %i, %i", next_tile.x, next_tile.y);
+
+	}
+
+
+	//--------------------------------------------------------------------
+
 	return true;
 }
 
@@ -389,7 +410,6 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 			speed.y = 0;
 		if (speed.x < 1 && speed.x > -1)
 			speed.x = 0;
-		LOG("speed x: %f, speed y: %f", speed.x, speed.y);
 	}
 
 

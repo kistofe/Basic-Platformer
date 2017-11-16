@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "j1Scene.h"
 #include "j1SceneSwitch.h"
+#include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -110,8 +111,6 @@ bool j1Scene::Update(float d_time)
 		map_coordinates.x, map_coordinates.y);
 
 	//App->win->SetTitle(title.GetString());
-
-	App->pathfinding->FindNextTile({ 3, 1 }, { 0, 3 });
 
 	
 	return true;

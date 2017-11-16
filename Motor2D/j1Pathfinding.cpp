@@ -4,6 +4,7 @@
 // Module Pathfinding methods
 j1Pathfinding::j1Pathfinding()
 {
+	name.create("pathfinding");
 }
 
 
@@ -11,38 +12,136 @@ j1Pathfinding::~j1Pathfinding()
 {
 }
 
-iPoint j1Pathfinding::FindNextTile(iPoint origin, iPoint destination)
+iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination)
 {
-	p2List<iPoint> path_tiles;
-	p2List<iPoint> breadcrumbs;
+	// check if origion or destination are not walkable and return origin if that's the case
 
-	//Find adjacent tiles
-	iPoint neighbors[4];
-	neighbors[0].create(origin.x - 1, origin.y); //left neighbor
-	neighbors[1].create(origin.x + 1, origin.y); //right neighbor
-	neighbors[2].create(origin.x, origin.y - 1); //upper neighbor
-	neighbors[3].create(origin.x, origin.y + 1); //down neighbor
+	PathList open;
+	PathList close;
+	PathList adjacents;
 
-	int lowest_distance = 10000000; //set the lowest distance to an absurdly high value which will never be reached, so any distance checked later will be lower than this
+	// create a node for the origin and add it to the open list
+	PathNode path_origin(0, origin.DistanceNoSqrt(destination), origin, NULL);
+	open.list.add(path_origin);
 
-	for (int i = 0; i < 4; i++)
+	// iterate while there exist tiles in the open list
+
+	while (open.list.start)
 	{
-		if (neighbors[i].DistanceManhattan(destination) < lowest_distance)
+		// pass the node in the open list with the lowest score to the closed list
+		PathNode temp = open.GetNodeLowestScore()->data;
+		close.list.add(temp);
+		open.list.del(open.GetNodeLowestScore());
+
+		if (temp.position == destination)
+			break;
+
+		// fill adjacents list with the adjacents of the node that is currently being checked
+		temp.FindWalkableAdjacents(adjacents);
+		for (p2List_item<PathNode>* iterator = adjacents.list.start; iterator; iterator = iterator->next) // loop that iterates the adjacents found (max loops: 4)
 		{
-			lowest_distance = neighbors[i].DistanceManhattan(destination);
-			path_tiles.add(neighbors[i]);
+			if (close.Find(iterator->data.position))
+				continue;
+			else if (close.Find(iterator->data.position) == NULL)
+				iterator->data.CalculateF(destination), open.list.add(iterator->data);
+			if (open.Find(iterator->data.position) != NULL)
+				if (iterator->data.g < open.Find(iterator->data.position)->data.g)
+					open.Find(iterator->data.position)->data.parent = iterator->data.parent;
 		}
 	}
 
-	return { 0,0 };
+	p2DynArray<iPoint> path;
+	p2List_item<PathNode>* path_backtracker = close.list.end;
+
+	while (path_backtracker)
+	{
+		path.PushBack(path_backtracker->data.position);
+		path_backtracker = close.Find(path_backtracker->data.parent->position);
+	}
+
+	path.Flip();
+
+	return *path.At(1);
 }
 
 // PathNode methods
-PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent)
+
+//Constructors
+PathNode::PathNode()
+{}
+
+PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : g(g), h(h), position(pos), parent(parent)
+{}
+
+PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), position(node.position), parent(node.parent)
+{}
+
+uint PathNode::FindWalkableAdjacents(PathList & list_to_fill) const
 {
+	iPoint cell;
+
+	// north
+	cell.create(position.x, position.y - 1);
+	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// south
+	cell.create(position.x, position.y + 1);
+	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// east
+	cell.create(position.x + 1, position.y);
+	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	// west
+	cell.create(position.x - 1, position.y);
+	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	return uint();
 }
 
+//Calculates the score (F) of a node
 int PathNode::Score() const
 {
-	return 0;
+	return g + h;
+}
+
+int PathNode::CalculateF(const iPoint & destination)
+{
+	g = parent->g + 1;
+	h = position.DistanceManhattan(destination);
+
+	return g + h;
+}
+
+
+// PathList methods
+p2List_item<PathNode>* PathList::Find(const iPoint & point) const
+{
+	p2List_item<PathNode>* item = list.start;
+	while (item)
+	{
+		if (item->data.position == point)
+			return item;
+		item = item->next;
+	}
+
+	return NULL;
+}
+
+p2List_item<PathNode>* PathList::GetNodeLowestScore() const
+{
+	p2List_item<PathNode>* ret = NULL;
+	int min = 65535;
+
+	p2List_item<PathNode>* item = list.end;
+	while (item)
+	{
+		if (item->data.Score() < min)
+		{
+			min = item->data.Score();
+			ret = item;
+		}
+		item = item->prev;
+	}
+	return ret;
 }

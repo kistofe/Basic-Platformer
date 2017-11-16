@@ -11,16 +11,22 @@
 // ----------------------------------------------------
 struct Properties
 {
-	struct Property
+	struct Layer_property
 	{
 		p2SString name;
 		float value;
 	};
 
+	struct Map_name
+	{
+		p2SString name;
+		p2SString value;
+	};
+
 	~Properties()
 	{
-		p2List_item<Property*>* item;
-		item = list.start;
+		p2List_item<Layer_property*>* item;
+		item = layer_property_list.start;
 
 		while (item != NULL)
 		{
@@ -28,12 +34,13 @@ struct Properties
 			item = item->next;
 		}
 
-		list.clear();
+		layer_property_list.clear();
 	}
 
 	float Get(const char* name, float default_value = 0) const;
 
-	p2List<Property*>	list;
+	p2List<Layer_property*>	layer_property_list;
+	p2List<Map_name*> map_name_list;
 };
 // ----------------------------------------------------
 struct MapLayer
@@ -102,6 +109,7 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
+	Properties					properties;
 	int							width;
 	int							height;
 	int							tile_width;
@@ -153,18 +161,19 @@ public:
 private:
 
 	bool LoadMap();
+	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
-
-	TileSet* GetTilesetFromTileId(int id) const;
+	bool LoadMapName(pugi::xml_node&, Properties& properties);
 
 public:
 
 	MapData data;
+	p2List<p2SString*> map_name;
 	uint max_map_x;
 	uint max_map_y;
 
@@ -174,6 +183,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+	
 };
 
 #endif // __j1MAP_H__

@@ -4,7 +4,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy() : Entity(Entity::EntityType::ENEMY)
+Enemy::Enemy(EntityType type) : Entity(type)
 {
 	name.create("enemy");
 }

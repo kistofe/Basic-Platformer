@@ -16,7 +16,7 @@ bool j1EntityManager::Awake(pugi::xml_node& data)
 	bool ret = true;
 
 	Player* player = (Player*)CreateEntity(Entity::EntityType::PLAYER);
-	Enemy* enemy = (Enemy*)CreateEntity(Entity::EntityType::ENEMY);
+	Enemy* enemy = (Enemy*)CreateEntity(Entity::EntityType::FLYING_ENEMY);
 		
 	p2List_item<Entity*>* entity_iterator;
 	entity_iterator = entity_list.start;
@@ -118,7 +118,7 @@ Entity* j1EntityManager::CreateEntity(Entity::EntityType type)
 	{
 		case Entity::EntityType::PLAYER:	ret = new Player();
 			break;
-		case Entity::EntityType::ENEMY:		ret = new Enemy();
+		case Entity::EntityType::FLYING_ENEMY:		ret = new Flying_Enemy();
 			break;
 	}
 	   
@@ -174,4 +174,18 @@ bool j1EntityManager::Save(pugi::xml_node & data) const
 	}
 
 	return ret;
+}
+
+//Calls all entities' SetToStart Function
+void j1EntityManager::SetToStart()
+{
+	p2List_item<Entity*>* entity_iterator;
+	entity_iterator = entity_list.start;
+
+	while (entity_iterator != NULL)
+	{
+		entity_iterator->data->SetToStart();
+		entity_iterator = entity_iterator->next;
+	}
+
 }

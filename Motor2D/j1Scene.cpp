@@ -11,6 +11,7 @@
 #include "j1Scene.h"
 #include "j1SceneSwitch.h"
 #include "j1Pathfinding.h"
+#include "j1EntityManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -27,18 +28,6 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	//Loop to load all maps
-	for (pugi::xml_node map = config.child("map_name"); map && ret; map = map.next_sibling("map_name"))
-	{
-		p2SString* map_set = new p2SString;
-		
-		if (ret == true)
-		{
-			ret = LoadMapAtrib(map, map_set);
-		}
-		map_name.add(map_set);
-	}
-
 	gravity.x = config.child("gravity_x").attribute("value").as_float();
 	gravity.y = config.child("gravity_y").attribute("value").as_float();
 	max_gravity.x = config.child("max_gravity_x").attribute("value").as_float();
@@ -47,20 +36,11 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool j1Scene::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
-{
-	bool ret = true;
-
-	map_set->create(config.attribute("name").as_string());
-
-	return ret;
-}
-
 
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(map_name.start->data->GetString());
+	App->map->Load(App->map->map_name.start->data->GetString());
 	
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	
@@ -77,7 +57,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float d_time)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-//App->map->LoadBeginning();
+		App->entities->SetToStart();
 		
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	//	App->map->LoadBeginning();
@@ -97,7 +77,6 @@ bool j1Scene::Update(float d_time)
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 		App->audio->VolumeControl();
 
-	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
 	int x, y;

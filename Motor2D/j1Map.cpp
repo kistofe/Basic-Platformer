@@ -26,6 +26,18 @@ bool j1Map::Awake(pugi::xml_node& config)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
+	//Loop to load all maps
+	for (pugi::xml_node map = config.child("map_name"); map && ret; map = map.next_sibling("map_name"))
+	{
+		p2SString* map_set = new p2SString;
+
+		if (ret == true)
+		{
+			ret = LoadMapAtrib(map, map_set);
+		}
+		map_name.add(map_set);
+	}
+
 	folder.create(config.child("folder").child_value());
 	max_map_x = config.child("max_map_x").attribute("value").as_uint();
 	max_map_y = config.child("max_map_y").attribute("value").as_uint();
@@ -61,7 +73,7 @@ void j1Map::Draw()
 
 float Properties::Get(const char* value, float default_value) const
 {
-	p2List_item<Property*>* item = list.start;
+	p2List_item<Layer_property*>* item = layer_property_list.start;
 
 	while (item)
 	{
@@ -302,6 +314,7 @@ bool j1Map::LoadMap()
 	}
 	else
 	{
+		LoadMapName(map, data.properties);
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
@@ -351,6 +364,15 @@ bool j1Map::LoadMap()
 			data.type = MAPTYPE_UNKNOWN;
 		}
 	}
+
+	return ret;
+}
+
+bool j1Map::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
+{
+	bool ret = true;
+
+	map_set->create(config.attribute("name").as_string());
 
 	return ret;
 }
@@ -480,12 +502,34 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
 		{
-			Properties::Property* p = new Properties::Property();
-
+			Properties::Layer_property* p = new Properties::Layer_property();
 			p->name = prop.attribute("name").as_string();
 			p->value = prop.attribute("value").as_float();
 
-			properties.list.add(p);
+			properties.layer_property_list.add(p);
+		}
+	}
+
+	return ret;
+}
+
+bool j1Map::LoadMapName(pugi::xml_node& node, Properties & properties)
+{
+	bool ret = true;
+
+	pugi::xml_node data = node.child("properties");
+
+	if (data != NULL)
+	{
+		pugi::xml_node prop;
+
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		{
+			Properties::Map_name* p2 = new Properties::Map_name();
+			p2->name = prop.attribute("name").as_string();
+			p2->value = prop.attribute("value").as_string();
+
+			properties.map_name_list.add(p2);
 		}
 	}
 

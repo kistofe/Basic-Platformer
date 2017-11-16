@@ -13,7 +13,7 @@
   </audio>
 
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
   <window>
@@ -32,6 +32,12 @@
     <folder>maps/</folder>
     <max_map_x value = "4200"/>
     <max_map_y value = "1888"/>
+    <map_name name = "Level1finalinprogress.tmx">
+      <music name = "Level_1.ogg"/>
+    </map_name>
+    <map_name name = "Level2.tmx">
+      <music name = "Level_2.ogg"/>
+    </map_name>
   </map>
   <entity_manager>
     <player>
@@ -44,15 +50,13 @@
       <landing_sfx source = "audio/sfx/Landing.wav"/>
       <death_sfx source = "audio/sfx/Death.wav"/>
     </player>
+    <flying_enemy>
+      <collider_offset_x value = "17"/>
+      <collider_offset_y value = "10"/>
+    </flying_enemy>
   </entity_manager>
   <scene>
-    <map_name name = "Level1finalinprogress.tmx">
-      <music name = "Level_1.ogg"/>
-    </map_name>
-    <map_name name = "Level2.tmx">
-      <music name = "Level_2.ogg"/>
-    </map_name>
-    <gravity_x value = "0"/>
+     <gravity_x value = "0"/>
     <gravity_y value = "-50"/>
     <max_gravity_x value = "0"/>
     <max_gravity_y value = "700"/>

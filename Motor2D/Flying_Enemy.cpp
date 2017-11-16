@@ -3,7 +3,7 @@
 #include "j1Textures.h"
 
 
-Flying_Enemy::Flying_Enemy()
+Flying_Enemy::Flying_Enemy() : Enemy(Entity::EntityType::FLYING_ENEMY)
 {
 	name.create("flying_enemy");
 }
@@ -17,7 +17,10 @@ bool Flying_Enemy::Awake(pugi::xml_node& data)
 {
 	CreateAnimationPushBacks();
 
-	return false;
+	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
+
+	return true;
 }
 
 bool Flying_Enemy::Start()
@@ -26,8 +29,8 @@ bool Flying_Enemy::Start()
 
 	texture = App->tex->Load("images/Flying Enemy.png");
 
-	position.create(384, 1505);
-	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 64, 55 }, COLLIDER_ENEMY, this);
+	position.create( 384, 1505);
+	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
 
 	current_animation = &fly;
 
@@ -50,7 +53,7 @@ bool Flying_Enemy::Update(float d_time)
 	//Update Position ---------------------------------------------	
 	Move();
 	//Update Collider Position-------------------------------------
-	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
+	collider->SetPos(position.x + collider_offset.x, position.y + collider_offset.y);
 	//Update Blit -------------------------------------------------
 	Draw();
 	return true;
@@ -101,7 +104,7 @@ void Flying_Enemy::CreateAnimationPushBacks()
 	fly.PushBack({ 64, 0, 64, 55 });
 	fly.PushBack({ 128, 0, 64, 55 });
 	fly.loop = true;
-	fly.speed = 0.5f;
+	fly.speed = 0.35f;
 
 	//Animation when enemy gets close to the player
 	bite.PushBack({ 0, 55, 64, 55 });

@@ -14,13 +14,8 @@ class Enemy : public Entity
 {
 public:
 
-enum EnemyType
-{
-	GROUNDED,
-	FLYING
-};
 
-	Enemy();
+	Enemy(EntityType type);
 
 	//Destructor
 	~Enemy();

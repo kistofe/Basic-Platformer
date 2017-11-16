@@ -4,6 +4,8 @@
 #include "j1Input.h"
 #include "j1Map.h"
 #include "j1SceneSwitch.h"
+#include "j1Scene.h"
+
 
 
 Entity::Entity(EntityType type) : type(type)
@@ -14,6 +16,13 @@ Entity::Entity(EntityType type) : type(type)
 
 Entity::~Entity()
 {
+}
+
+void Entity::SetToStart()
+{
+	//Loop to check current map
+
+	
 }
 
 void Entity::Draw()
@@ -31,15 +40,4 @@ void Entity::Move()
 	position.y += speed.y;
 }
 
-void Entity::SetToStart()
-{
-	//Loop should be done maybe?
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->sceneswitch->FadeToBlack();
 
-	position.x = App->map->data.object.start->data->x;
-	position.y = App->map->data.object.start->data->y;
-	speed.x = 0;
-	speed.y = 0;
-	//current_animation = &idle; ///Not all entities have idle animation :S
-}

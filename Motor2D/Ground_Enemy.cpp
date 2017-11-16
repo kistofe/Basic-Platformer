@@ -2,7 +2,7 @@
 
 
 
-Ground_Enemy::Ground_Enemy()
+Ground_Enemy::Ground_Enemy() : Enemy(Entity::EntityType::GROUND_ENEMY)
 {
 }
 

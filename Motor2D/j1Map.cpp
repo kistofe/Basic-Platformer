@@ -66,14 +66,14 @@ void j1Map::Draw()
 				{
 					for (int x = 0; x < data.width; x++)
 					{
-						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
+						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.GetLayerParallax("Parallax speed"));
 					}
 				}
 			}
 		}
 }
 
-float Properties::Get(const char* value, float default_value) const
+float Properties::GetLayerParallax(const char* value, float default_value) const
 {
 	p2List_item<Layer_property*>* item = layer_property_list.start;
 
@@ -85,6 +85,23 @@ float Properties::Get(const char* value, float default_value) const
 	}
 
 	return default_value;
+}
+
+Object* j1Map::GetObj(const char* value) const
+{
+	p2List_item<ObjGroup*>* objgroup_iterator = data.objgroup.start;
+	while (objgroup_iterator)
+	{
+		p2List_item<Object*>* obj_iterator = objgroup_iterator->data->object.start;
+		while (obj_iterator)
+		{
+			if (obj_iterator->data->name == value)
+				return obj_iterator->data;
+			obj_iterator = obj_iterator->next;
+		}
+		objgroup_iterator = objgroup_iterator->next;
+	}
+	return 0;
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
@@ -208,7 +225,7 @@ bool j1Map::Load(const char* file_name)
 			{
 				Object* set2 = new Object;
 				ret = Load_Object(obj, set2);
-				data.object.add(set2);
+				set->object.add(set2);
 			}
 		}
 		data.objgroup.add(set);
@@ -246,7 +263,6 @@ bool j1Map::Load(const char* file_name)
 
 	// Call function to convert objects to colliders
 	SetColliders();
-	SetEntities();
 
 	map_loaded = ret;
 	
@@ -452,7 +468,7 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	layer->name.create(layer_node.attribute("name").as_string());
 	layer->size			= layer->height * layer->width;
 	layer->layer_gid	= new uint[layer->size];
-	LoadProperties(layer_node, layer->properties);
+	LoadLayerProperties(layer_node, layer->properties);
 
 	memset(layer->layer_gid, 0, (sizeof(uint)*layer->size));
 
@@ -472,7 +488,6 @@ bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 	bool ret = true;
 	Object obj;
 	objgroup->group_name.create(objgroup_node.attribute("name").as_string());
-	LoadProperties(objgroup_node, objgroup->properties);
 
 	return ret;
 }
@@ -488,12 +503,12 @@ bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 	obj->x				= obj_node.attribute("x").as_uint(0);
 	obj->y				= obj_node.attribute("y").as_uint(0);
 	obj->object_id		= obj_node.attribute("id").as_uint(0);
-	LoadProperties(obj_node, obj->properties);
+	LoadObjectProperties(obj_node, obj->properties);
 
 	return ret;
 }
 
-bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+bool j1Map::LoadLayerProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = true;
 
@@ -539,10 +554,43 @@ bool j1Map::LoadMapName(pugi::xml_node& node, Properties & properties)
 	return ret;
 }
 
-bool j1Map::FadeToBlack(float time)
+bool j1Map::LoadObjectProperties(pugi::xml_node & node, Properties & properties)
 {
-	return true;
+	bool ret = true;
+	
+	pugi::xml_node data = node.child("properties");
+
+	if (data != NULL)
+	{
+		pugi::xml_node prop;
+
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		{
+			Properties::Object_property* p2 = new Properties::Object_property();
+			p2SString temp_name = prop.attribute("name").as_string(); //Temporary string to store the name of the current property and compare
+
+			if (temp_name == "collider_offset_x")
+				p2->collider_offset.x = prop.attribute("value").as_int();
+			if (temp_name == "collider_offset_y")
+				p2->collider_offset.y = prop.attribute("value").as_int();
+			if (temp_name == "moving_speed")
+				p2->moving_speed = prop.attribute("value").as_float();
+			if (temp_name == "jumping_speed")
+				p2->jumping_speed = prop.attribute("value").as_float();
+			if (temp_name == "death_sfx_source")
+				p2->death_sfx_source = prop.attribute("value").as_string();
+			if (temp_name == "jumping_sfx_source")
+				p2->jump_sfx_source = prop.attribute("value").as_string();
+			if (temp_name == "landing_sfx_source")
+				p2->land_sfx_source = prop.attribute("value").as_string();
+			
+			properties.obj_property_list.add(p2);
+		}
+	}
+
+	return ret;
 }
+
 
 bool j1Map::MapSwitch(char* new_map)
 {
@@ -562,39 +610,43 @@ bool j1Map::MapSwitch(char* new_map)
 // Any objects that should become colliders do so here
 bool j1Map::SetColliders()
 {
-	p2List_item<Object*>* current_object = data.object.start;
+	p2List_item<ObjGroup*>* current_objgroup = data.objgroup.start;
 
-	while (current_object)
+	while (current_objgroup)
 	{
-		SDL_Rect collider_tocreate;
-		if (current_object->data->name == "wall")
+		p2List_item<Object*>* current_object = current_objgroup->data->object.start;
+		while (current_object)
 		{
-			collider_tocreate.x = current_object->data->x;
-			collider_tocreate.y = current_object->data->y;
-			collider_tocreate.w = current_object->data->width;
-			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
-		}
+			SDL_Rect collider_tocreate;
+			if (current_object->data->name == "wall")
+			{
+				collider_tocreate.x = current_object->data->x;
+				collider_tocreate.y = current_object->data->y;
+				collider_tocreate.w = current_object->data->width;
+				collider_tocreate.h = current_object->data->height;
+				App->collision->AddCollider(collider_tocreate, COLLIDER_WALL);
+			}
 
-		if (current_object->data->name == "LevelEnd")
-		{
-			collider_tocreate.x = current_object->data->x;
-			collider_tocreate.y = current_object->data->y;
-			collider_tocreate.w = current_object->data->width;
-			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
-		}
+			if (current_object->data->name == "LevelEnd")
+			{
+				collider_tocreate.x = current_object->data->x;
+				collider_tocreate.y = current_object->data->y;
+				collider_tocreate.w = current_object->data->width;
+				collider_tocreate.h = current_object->data->height;
+				App->collision->AddCollider(collider_tocreate, COLLIDER_ENDOFLEVEL);
+			}
 
-		if (current_object->data->name == "death")
-		{
-			collider_tocreate.x = current_object->data->x;
-			collider_tocreate.y = current_object->data->y;
-			collider_tocreate.w = current_object->data->width;
-			collider_tocreate.h = current_object->data->height;
-			App->collision->AddCollider(collider_tocreate, COLLIDER_DEATH);
+			if (current_object->data->name == "death")
+			{
+				collider_tocreate.x = current_object->data->x;
+				collider_tocreate.y = current_object->data->y;
+				collider_tocreate.w = current_object->data->width;
+				collider_tocreate.h = current_object->data->height;
+				App->collision->AddCollider(collider_tocreate, COLLIDER_DEATH);
+			}
+			current_object = current_object->next;
 		}
-
-		current_object = current_object->next;
+		current_objgroup = current_objgroup->next;
 	}
 
 
@@ -604,21 +656,25 @@ bool j1Map::SetColliders()
 bool j1Map::SetEntities()
 {
 	//Read from object layer in tiled where enemies are
-	p2List_item<Object*>* current_entity = data.object.start;
-
-	while (current_entity)
+	p2List_item<ObjGroup*>* current_objgroup = data.objgroup.start;
+	while (current_objgroup)
 	{
-		if (current_entity->data->name == "PlayerPos")
-			Player* player = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
-		
-		if (current_entity->data->name == "Flying_Enemy")
-			Enemy* f_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY);
-		
-		if (current_entity->data->name == "Ground_Enemy")
-			Enemy*  g_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY);
-		
-		current_entity = current_entity->next;
-	}
+		p2List_item<Object*>* current_entity = current_objgroup->data->object.start;
+		while (current_entity)
+		{
+			if (current_entity->data->name == "Player")
+				Player* player = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
 
+			if (current_entity->data->name == "Flying_Enemy")
+				Enemy* f_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY);
+
+			if (current_entity->data->name == "Ground_Enemy")
+				Enemy*  g_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY);
+
+			current_entity = current_entity->next;
+		}
+		current_objgroup = current_objgroup->next;
+	}
+	
 	return true;
 }

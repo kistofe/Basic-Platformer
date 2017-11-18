@@ -20,8 +20,7 @@ public:
 	//Destructor
 	~Enemy();
 
-	bool Awake(pugi::xml_node& data);
-
+	
 	bool Start();
 
 	bool PreUpdate(float d_time);

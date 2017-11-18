@@ -23,6 +23,16 @@ struct Properties
 		p2SString value;
 	};
 
+	struct Object_property
+	{
+		iPoint collider_offset;
+		float moving_speed;
+		float jumping_speed;
+		p2SString jump_sfx_source;
+		p2SString death_sfx_source;
+		p2SString land_sfx_source;
+	};
+
 	~Properties()
 	{
 		p2List_item<Layer_property*>* item;
@@ -35,18 +45,43 @@ struct Properties
 		}
 
 		layer_property_list.clear();
+
+
+		p2List_item<Map_name*>* item2;
+		item2 = map_name_list.start;
+
+		while (item2 != NULL)
+		{
+			RELEASE(item2->data);
+			item2 = item2->next;
+		}
+
+		map_name_list.clear();
+
+
+		p2List_item<Object_property*>* item3;
+		item3 = obj_property_list.start;
+
+		while (item3 != NULL)
+		{
+			RELEASE(item3->data);
+			item3 = item3->next;
+		}
+
+		obj_property_list.clear();
 	}
 
-	float Get(const char* name, float default_value = 0) const;
+	float GetLayerParallax(const char* name, float default_value = 0) const; 
 
 	p2List<Layer_property*>	layer_property_list;
 	p2List<Map_name*> map_name_list;
+	p2List<Object_property*> obj_property_list;
+
 };
 // ----------------------------------------------------
 struct MapLayer
 {
 	p2SString	name;
-	//float		Parallax_speed;
 	uint		width;
 	uint		height;
 	uint		size;
@@ -71,12 +106,26 @@ struct Object
 	uint		x;
 	uint		y;
 	Properties properties;
+
 };
 
 struct ObjGroup
 {
 	p2SString			group_name;
 	Properties			properties;
+	p2List<Object*>		object;
+	
+	~ObjGroup()
+	{
+		p2List_item<Object*>* item = object.start;
+
+		while (item)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+		object.clear();
+	}
 };
 
 // ----------------------------------------------------
@@ -119,7 +168,6 @@ struct MapData
 	p2List<TileSet*>			tilesets;
 	p2List<MapLayer*>			map_layers;
 	p2List<ObjGroup*>			objgroup;
-	p2List<Object*>				object;
 };
 
 // ----------------------------------------------------
@@ -159,6 +207,7 @@ public:
 
 	bool SetEntities();
 
+	Object* GetObj(const char* value) const;
 
 private:
 
@@ -169,8 +218,9 @@ private:
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool Load_ObjectGroup(pugi::xml_node& obj_node, ObjGroup* obj);
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
-	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	bool LoadLayerProperties(pugi::xml_node& node, Properties& properties);
 	bool LoadMapName(pugi::xml_node&, Properties& properties);
+	bool LoadObjectProperties(pugi::xml_node& node, Properties& properties);
 
 public:
 

@@ -9,6 +9,8 @@
 #include "j1Collision.h"
 #include "Enemy.h"
 
+struct Object;
+
 class Ground_Enemy : public Enemy
 {
 public:
@@ -33,8 +35,13 @@ public:
 
 	void CreateAnimationPushBacks();
 
+	void SetProperties(Object* entity);
+
+private:
+public:
 private:
 
+	Object* ground_enemy;
 	
 };
 #endif 

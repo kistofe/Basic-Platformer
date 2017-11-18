@@ -4,11 +4,13 @@
 #include "Animation.h"
 #include "p2Defs.h"
 #include "p2Point.h"
+#include "p2List.h"
 #include "p2SString.h"
 
 #include "SDL\include\SDL.h"
 
 struct Collider;
+struct Object;
 
 class Entity 
 {
@@ -25,7 +27,6 @@ enum EntityType
 	Entity(EntityType type);
 	~Entity();
 
-	virtual bool Awake(pugi::xml_node&) { return true; };
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
@@ -37,8 +38,9 @@ enum EntityType
 	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual void SetAnimations() { return; };
 	virtual void CreateAnimationPushBacks() { return; };
-	void SetToStart();
+	virtual void SetProperties(Object* entity) { return; };
 
+	void SetToStart();
 	void Draw();
 	void Move();
 	
@@ -47,7 +49,7 @@ enum EntityType
 
 public:
 
-	p2SString name;
+	p2SString	name;
 	iPoint		position = { 0, 0 };
 
 protected:

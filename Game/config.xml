@@ -41,18 +41,8 @@
   </map>
   <entity_manager>
     <player>
-      <sprite_path path = "Ramona.png"/>
-      <moving_speed value = "250"/>
-      <jumping_speed value = "-600"/>
-      <collider_offset_x value = "7"/>
-      <collider_offset_y value = "1"/>
-      <jump_sfx source = "audio/sfx/Jumping.wav"/>
-      <landing_sfx source = "audio/sfx/Landing.wav"/>
-      <death_sfx source = "audio/sfx/Death.wav"/>
     </player>
     <flying_enemy>
-      <collider_offset_x value = "17"/>
-      <collider_offset_y value = "10"/>
     </flying_enemy>
   </entity_manager>
   <scene>

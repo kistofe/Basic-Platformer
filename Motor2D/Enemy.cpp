@@ -13,11 +13,6 @@ Enemy::~Enemy()
 {
 }
 
-bool Enemy::Awake(pugi::xml_node& data)
-{
-	return true;
-}
-
 bool Enemy::Start()
 {
 	return true;

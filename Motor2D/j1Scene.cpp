@@ -42,7 +42,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->map->Load(App->map->map_name.start->data->GetString());
-	
+
+	App->map->SetEntities();
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	
 	return true;
@@ -61,15 +62,9 @@ bool j1Scene::Update(float d_time)
 		App->entities->SetToStart();
 		
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-<<<<<<< HEAD
-		//	App->map->LoadBeginning();
 	{
-	}
-=======
-	{
-	}
-	
->>>>>>> 040199638d07f1a53da3106ee4a09cd2f5c301bc
+	};
+
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 

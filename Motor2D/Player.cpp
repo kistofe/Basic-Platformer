@@ -14,50 +14,26 @@
 Player::Player() : Entity(Entity::EntityType::PLAYER)
 {
 	name.create("player");
+	CreateAnimationPushBacks();
 }
-
 
 Player::~Player()
 {
 }
 
-bool Player::Awake(pugi::xml_node& data)
-{
-	CreateAnimationPushBacks();
-
-	//Reading Collider offsets
-	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
-	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
-	
-	//Reading player velocities
-	moving_speed = data.child("moving_speed").attribute("value").as_float();
-	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
-
-	//Reading player sfx source
-	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
-	landing_sfx_source = data.child("landing_sfx").attribute("source").as_string();
-	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
-
-	return true;
-}
 
 bool Player::Start()
 {
 	LOG("Loading player");
-
+	
 	texture = App->tex->Load("images/Ramona.png");
-	
-	//Reading Player initial position from Object layer
-	position.create(App->map->data.object.start->data->x, App->map->data.object.start->data->y);
-	
+	player = App->map->GetObj("Player");
+	position.create(player->x, player->y);
+	SetProperties(player);
+
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
-
-	//Loading Player's Sfx
-	jumping_sfx = App->audio->LoadFx(jumping_sfx_source.GetString());
-	landing_sfx = App->audio->LoadFx(landing_sfx_source.GetString());
-	death_sfx = App->audio->LoadFx(death_sfx_source.GetString());
 
 	current_animation = &idle;
 
@@ -424,6 +400,30 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		SetToStart();
 	}
 
+}
+
+void Player::SetProperties(Object* entity)
+{
+	p2List_item<Properties::Object_property*>* iterator = entity->properties.obj_property_list.start;
+	while (iterator)
+	{
+		if(moving_speed == 0)
+			moving_speed = iterator->data->moving_speed;
+		if (jumping_speed == 0)
+			jumping_speed = iterator->data->jumping_speed;
+		if (collider_offset.x == 0)
+			collider_offset.x = iterator->data->collider_offset.x;
+		if (collider_offset.y == 0)
+			collider_offset.y = iterator->data->collider_offset.y;
+		if (death_sfx_source.Length() == 0)
+			death_sfx_source = iterator->data->death_sfx_source;
+		if (landing_sfx_source.Length() == 0)
+			landing_sfx_source = iterator->data->land_sfx_source;
+		if (jumping_sfx_source.Length() == 0)
+			jumping_sfx_source = iterator->data->jump_sfx_source;
+
+		iterator = iterator->next;
+	}
 }
 
 

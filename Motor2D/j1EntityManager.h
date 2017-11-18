@@ -15,7 +15,6 @@ public:
 	j1EntityManager();
 	~j1EntityManager();
 
-	bool Awake(pugi::xml_node& data);
 	bool Start();
 	bool PreUpdate(float d_time);
 	bool Update(float d_time);

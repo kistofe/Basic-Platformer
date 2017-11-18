@@ -11,6 +11,8 @@
 
 #include "SDL/include/SDL.h"
 
+struct Object;
+
 class Player : public Entity
 {
 public:
@@ -18,9 +20,7 @@ public:
 
 	//Destructor
 	~Player();
-
-	bool Awake(pugi::xml_node& data);
-
+	
 	bool Start();
 
 	bool PreUpdate(float d_time);
@@ -40,6 +40,8 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
+
+	void SetProperties(Object* entity);
 
 private:
 	void SetSpeed(float d_time);
@@ -71,7 +73,7 @@ public:
 	uint landing_sfx;
 
 private:
-
+	Object* player;
 	
 };
 

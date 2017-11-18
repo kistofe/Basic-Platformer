@@ -9,6 +9,8 @@
 #include "j1Collision.h"
 #include "Enemy.h"
 
+struct Object;
+
 class Flying_Enemy : public Enemy
 {
 public:
@@ -16,7 +18,6 @@ public:
 	Flying_Enemy();
 	~Flying_Enemy();
 
-	bool Awake(pugi::xml_node& data);
 	bool Start();
 	bool PreUpdate(float d_time);
 	bool Update(float d_time);
@@ -36,10 +37,14 @@ public:
 
 	void CreateAnimationPushBacks();
 
+	void SetProperties(Object* entity);
+
 private:
 
 	Animation fly;
 	Animation bite;
+
+	Object* flying_enemy;
 
 };
 #endif 

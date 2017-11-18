@@ -1,9 +1,11 @@
 #include "j1EntityManager.h"
+#include "j1App.h"
 
 
 j1EntityManager::j1EntityManager()
 {
 	name.create("entity_manager");
+
 }
 
 
@@ -92,19 +94,21 @@ bool j1EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* j1EntityManager::CreateEntity(Entity::EntityType type)
+Entity* j1EntityManager::CreateEntity(Entity::EntityType type, uint x, uint y)
 {
 	Entity* ret = nullptr;
 
+
 	switch (type)
 	{
-		case Entity::EntityType::PLAYER:			ret = new Player(); 
+		case Entity::EntityType::PLAYER:			ret = new Player(x, y); 
 			break;
-		case Entity::EntityType::FLYING_ENEMY:		ret = new Flying_Enemy();
+		case Entity::EntityType::FLYING_ENEMY:		ret = new Flying_Enemy(x, y);
 			break;
-		case Entity::EntityType::GROUND_ENEMY:		ret = new Ground_Enemy();
+		case Entity::EntityType::GROUND_ENEMY:		ret = new Ground_Enemy(x, y);
 	}
-	   
+
+
 	if (ret != nullptr)
 		entity_list.add(ret);
 

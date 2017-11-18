@@ -23,16 +23,6 @@ struct Properties
 		p2SString value;
 	};
 
-	struct Object_property
-	{
-		iPoint collider_offset;
-		float moving_speed;
-		float jumping_speed;
-		p2SString jump_sfx_source;
-		p2SString death_sfx_source;
-		p2SString land_sfx_source;
-	};
-
 	~Properties()
 	{
 		p2List_item<Layer_property*>* item;
@@ -59,23 +49,12 @@ struct Properties
 		map_name_list.clear();
 
 
-		p2List_item<Object_property*>* item3;
-		item3 = obj_property_list.start;
-
-		while (item3 != NULL)
-		{
-			RELEASE(item3->data);
-			item3 = item3->next;
-		}
-
-		obj_property_list.clear();
 	}
 
 	float GetLayerParallax(const char* name, float default_value = 0) const; 
 
 	p2List<Layer_property*>	layer_property_list;
 	p2List<Map_name*> map_name_list;
-	p2List<Object_property*> obj_property_list;
 
 };
 // ----------------------------------------------------
@@ -198,17 +177,13 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
-	// Method to darken screen while map switching takes place
-	bool FadeToBlack(float time = 1.0f);
-
 	bool MapSwitch(char*);
 
 	bool SetColliders();
 
 	bool SetEntities();
 
-	Object* GetObj(const char* value) const;
-
+	
 private:
 
 	bool LoadMap();
@@ -220,7 +195,6 @@ private:
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
 	bool LoadLayerProperties(pugi::xml_node& node, Properties& properties);
 	bool LoadMapName(pugi::xml_node&, Properties& properties);
-	bool LoadObjectProperties(pugi::xml_node& node, Properties& properties);
 
 public:
 

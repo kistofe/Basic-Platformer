@@ -11,11 +11,12 @@
 
 struct Object;
 
+
 class Flying_Enemy : public Enemy
 {
 public:
 
-	Flying_Enemy();
+	Flying_Enemy(uint x, uint y);
 	~Flying_Enemy();
 
 	bool Start();
@@ -37,7 +38,6 @@ public:
 
 	void CreateAnimationPushBacks();
 
-	void SetProperties(Object* entity);
 
 private:
 

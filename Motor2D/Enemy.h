@@ -35,7 +35,6 @@ public:
 	virtual void MoveTowardsPlayer() { return; };
 
 public:
-	//Maybe an enemy list?
 	
 protected:
 

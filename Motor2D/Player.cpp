@@ -11,10 +11,28 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Player::Player() : Entity(Entity::EntityType::PLAYER)
+Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 {
 	name.create("player");
 	CreateAnimationPushBacks();
+
+	pugi::xml_document config_file;
+	pugi::xml_node config;
+	pugi::xml_node data;
+
+	config = App->LoadConfig(config_file);
+	data = config.child("entity_manager").child("player");
+
+	position.x = x;
+	position.y = y;
+
+	moving_speed = data.child("moving_speed").attribute("value").as_float();
+	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
+	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
+	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
+	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
+	landing_sfx_source = data.child("land_sfx").attribute("source").as_string();
 }
 
 Player::~Player()
@@ -27,10 +45,7 @@ bool Player::Start()
 	LOG("Loading player");
 	
 	texture = App->tex->Load("images/Ramona.png");
-	player = App->map->GetObj("Player");
-	position.create(player->x, player->y);
-	SetProperties(player);
-
+	
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
@@ -44,6 +59,7 @@ bool Player::Start()
 bool Player::PreUpdate(float d_time)
 {
 	SetSpeed(d_time);
+
 	//Update Future Player Collider with new speed
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 
@@ -400,30 +416,6 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		SetToStart();
 	}
 
-}
-
-void Player::SetProperties(Object* entity)
-{
-	p2List_item<Properties::Object_property*>* iterator = entity->properties.obj_property_list.start;
-	while (iterator)
-	{
-		if(moving_speed == 0)
-			moving_speed = iterator->data->moving_speed;
-		if (jumping_speed == 0)
-			jumping_speed = iterator->data->jumping_speed;
-		if (collider_offset.x == 0)
-			collider_offset.x = iterator->data->collider_offset.x;
-		if (collider_offset.y == 0)
-			collider_offset.y = iterator->data->collider_offset.y;
-		if (death_sfx_source.Length() == 0)
-			death_sfx_source = iterator->data->death_sfx_source;
-		if (landing_sfx_source.Length() == 0)
-			landing_sfx_source = iterator->data->land_sfx_source;
-		if (jumping_sfx_source.Length() == 0)
-			jumping_sfx_source = iterator->data->jump_sfx_source;
-
-		iterator = iterator->next;
-	}
 }
 
 

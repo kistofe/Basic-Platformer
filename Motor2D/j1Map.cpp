@@ -663,7 +663,7 @@ bool j1Map::SetEntities()
 		while (current_entity)
 		{
 			if (current_entity->data->name == "Player")
-				Player* player = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
+				App->scene->player1 = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
 
 			if (current_entity->data->name == "Flying_Enemy")
 				Enemy* f_enemy = (Enemy*)App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY);

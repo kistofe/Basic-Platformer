@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2Defs.h"
+#include "j1EntityManager.h"
 #include <math.h>
 
 #define LAST_LVL 2

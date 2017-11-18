@@ -61,7 +61,7 @@ bool Flying_Enemy::Update(float d_time)
 {
 	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
-	//MoveTowardsPlayer(d_time);
+//	MoveTowardsPlayer(d_time);
 
 	//Update Position ---------------------------------------------	
 	Move();

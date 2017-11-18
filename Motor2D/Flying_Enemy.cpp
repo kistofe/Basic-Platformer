@@ -99,7 +99,7 @@ bool Flying_Enemy::Save(pugi::xml_node& data) const
 
 void Flying_Enemy::MoveTowardsPlayer(float d_time)
 {
-	iPoint tile_to_go = App->pathfinding->GetNextTile(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->scene->player1->position.x, App->scene->player1->position.y));
+	iPoint tile_to_go = App->pathfinding->GetNextTile(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y));
 	iPoint position_in_world = App->map->WorldToMap(position.x, position.y);
 	// create a vector from the current position to the tile that it has to go to
 	fPoint distance;

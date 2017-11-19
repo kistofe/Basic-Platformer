@@ -40,6 +40,8 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
+
+	void SetToStart();
 	
 private:
 	void SetSpeed(float d_time);

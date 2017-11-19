@@ -38,17 +38,12 @@ enum EntityType
 	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual void SetAnimations() { return; };
 	virtual void CreateAnimationPushBacks() { return; };
+	virtual void SetToStart() {return;};
 
 	bool AddEntity(EntityType type, int x, int y);
-
-
-	void SetToStart();
 	void Draw();
 	void Move();
 	
-
-	
-
 public:
 
 	p2SString	name;
@@ -58,7 +53,8 @@ protected:
 
 	Collider*	collider;
 	Collider*	future_collider;
-		
+	
+	iPoint		original_position;
 	fPoint		speed = { 0, 0 };
 	iPoint		collider_offset;
 

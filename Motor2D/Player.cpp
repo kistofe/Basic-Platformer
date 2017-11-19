@@ -26,6 +26,10 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	position.x = x;
 	position.y = y;
 
+	//Saving original position to later restart it
+	original_position.x = x;
+	original_position.y = y;
+
 	moving_speed = data.child("moving_speed").attribute("value").as_float();
 	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
@@ -227,20 +231,28 @@ void Player::CreateAnimationPushBacks()
 
 }
 
+void Player::SetToStart()
+{
+	position.x = original_position.x;
+	position.y = original_position.y;
+	speed.x = 0;
+	speed.y = 0;
+}
+
 
 void Player::SetCameraToPlayer()
 {
 	App->render->camera.x = App->render->camera.w / 3 - position.x;
 	if (App->render->camera.x > 0)
 		App->render->camera.x = 0;
-	else if (App->render->camera.x <= App->map->max_map_x)
-		App->render->camera.x = App->map->max_map_x;
+//	else if (App->render->camera.x <= App->map->max_map_x)
+	//	App->render->camera.x = App->map->max_map_x;
 	App->render->camera.y = App->render->camera.h / 1.35 - position.y;
 	if (App->render->camera.y > 0)
 		App->render->camera.y = 0;
-	else if (App->render->camera.y <= App->map->max_map_y)
-		App->render->camera.y = App->map->max_map_y;
-		
+	//else if (App->render->camera.y <= App->map->max_map_y)
+	//	App->render->camera.y = App->map->max_map_y;
+			
 }
 
 void Player::SetSpeed(float d_time)
@@ -415,7 +427,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		App->audio->PlayFx(death_sfx, 0, App->audio->music_vol);
 		SetToStart();
 	}
-
+	
 }
 
 

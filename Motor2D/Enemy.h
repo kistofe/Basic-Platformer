@@ -30,8 +30,9 @@ public:
 	bool CleanUp();
 
 	void ChangeSpeed(iPoint newspeed, float d_time);
-	//Something like a Path Function to apply Pathfinding?
 	
+	//void SetToStart();
+
 	virtual void MoveTowardsPlayer() { return; };
 
 public:

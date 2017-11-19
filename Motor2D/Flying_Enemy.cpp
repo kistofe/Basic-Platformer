@@ -22,6 +22,10 @@ Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_EN
 	position.x = x;
 	position.y = y;
 
+	//Saving original position to later restart it
+	original_position.x = x;
+	original_position.y = y;
+
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 
@@ -83,17 +87,16 @@ bool Flying_Enemy::CleanUp()
 
 bool Flying_Enemy::Load(pugi::xml_node& data)
 {
-	//Load position
-	//Load velocity
-	//Load status (dead or alive)
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+	speed.x = data.child("velocity").attribute("x").as_float();
+	speed.y = data.child("velocity").attribute("y").as_float();
+	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
 	return true;
 }
 
 bool Flying_Enemy::Save(pugi::xml_node& data) const
 {
-	//Save position
-	//Save velocity
-	//Save status
 	pugi::xml_node flying_enemy = data.append_child("flying_enemy");
 	pugi::xml_node pos = flying_enemy.append_child("position");
 
@@ -159,4 +162,12 @@ void Flying_Enemy::CreateAnimationPushBacks()
 	bite.PushBack({ 320, 55, 64, 55 });
 	bite.loop = false;
 	bite.speed = 0.3f;
+}
+
+void Flying_Enemy::SetToStart()
+{
+	position.x = original_position.x;
+	position.y = original_position.y;
+	speed.x = 0;
+	speed.y = 0;
 }

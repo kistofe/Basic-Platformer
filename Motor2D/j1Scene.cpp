@@ -62,8 +62,7 @@ bool j1Scene::Update(float d_time)
 		App->entities->SetToStart();
 		
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-	};
+		App->entities->SetToStart();
 
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
@@ -92,7 +91,6 @@ bool j1Scene::Update(float d_time)
 		map_coordinates.x, map_coordinates.y);
 
 	//App->win->SetTitle(title.GetString());
-
 	
 	return true;
 }

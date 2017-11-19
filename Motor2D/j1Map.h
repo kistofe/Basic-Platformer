@@ -142,6 +142,7 @@ enum MapTypes
 struct MapData
 {
 	Properties					properties;
+	p2SString					name;
 	int							width;
 	int							height;
 	int							tile_width;
@@ -195,7 +196,7 @@ public:
 private:
 
 	bool LoadMap();
-	bool LoadMapAtrib(pugi::xml_node&, p2SString*);
+	p2SString LoadMapAtrib(pugi::xml_node&, p2SString*);
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);

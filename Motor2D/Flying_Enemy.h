@@ -38,6 +38,7 @@ public:
 
 	void CreateAnimationPushBacks();
 
+	void SetToStart();
 
 private:
 

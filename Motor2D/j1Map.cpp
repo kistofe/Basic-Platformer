@@ -36,10 +36,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 	{
 		p2SString* map_set = new p2SString;
 
-		if (ret == true)
-		{
-			ret = LoadMapAtrib(map, map_set);
-		}
+		LoadMapAtrib(map, map_set);
+		
 		map_name.add(map_set);
 	}
 
@@ -321,7 +319,7 @@ bool j1Map::LoadMap()
 	}
 	else
 	{
-		LoadMapName(map, data.properties);
+		data.name = LoadMapName(map, data.properties);
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
@@ -375,11 +373,11 @@ bool j1Map::LoadMap()
 	return ret;
 }
 
-bool j1Map::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
+p2SString j1Map::LoadMapAtrib(pugi::xml_node& config, p2SString* map_set)
 {
-	bool ret = true;
+	p2SString ret = nullptr;
 
-	map_set->create(config.attribute("name").as_string());
+	ret = map_set->create(config.attribute("name").as_string());
 
 	return ret;
 }

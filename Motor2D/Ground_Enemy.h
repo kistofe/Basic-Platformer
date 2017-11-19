@@ -19,8 +19,8 @@ public:
 	~Ground_Enemy();
 
 	bool Start();
-	bool PreUpdate();
-	bool Update();
+	bool PreUpdate(float d_time);
+	bool Update(float d_time);
 	bool CleanUp();
 
 	//Loads player pos
@@ -34,10 +34,15 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
+
+	void SetToStart();
 	
 private:
 public:
 private:
+	Animation idle;
+	Animation run;
+	Animation bite;
 
 	Object* ground_enemy;
 	

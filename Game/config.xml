@@ -54,8 +54,8 @@
       <collider_offset_y value = "10"/>
     </flying_enemy>
     <ground_enemy>
-      <collider_offset_x value = "10"/>
-      <collider_offset_y value = "10"/>
+      <collider_offset_x value = "0"/>
+      <collider_offset_y value = "0"/>
     </ground_enemy>
   </entity_manager>
   <scene>

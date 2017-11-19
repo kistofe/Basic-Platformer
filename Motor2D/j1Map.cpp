@@ -12,6 +12,8 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
+#include "Brofiler\Brofiler.h"
+
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -55,6 +57,7 @@ bool j1Map::Update()
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("j1Map - Draw", Profiler::Color::PaleVioletRed);
 	if (map_loaded == false)
 		return;
 
@@ -67,7 +70,7 @@ void j1Map::Draw()
 				{
 					for (int x = 0; x < data.width; x++)
 					{
-						if (data.map_layers[i]->properties.Get("Navigation") != 1)
+						//if (data.map_layers[i]->properties.Get("Navigation") != 1)
 						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
 					}
 				}

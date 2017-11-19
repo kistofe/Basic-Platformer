@@ -5,6 +5,7 @@
 
 #include "SDL/include/SDL.h"
 
+#include "Brofiler\Brofiler.h"
 
 j1Window::j1Window() : j1Module()
 {

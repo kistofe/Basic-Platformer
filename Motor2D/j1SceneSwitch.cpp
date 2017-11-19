@@ -12,6 +12,8 @@
 #include "SDL/include/SDL_timer.h"
 #include "p2Log.h"
 
+#include "Brofiler\Brofiler.h"
+
 j1SceneSwitch::j1SceneSwitch()
 {
 	name.create("scene_switch");
@@ -30,6 +32,7 @@ bool j1SceneSwitch::Start()
 
 bool j1SceneSwitch::Update(float d_time)
 {
+	BROFILER_CATEGORY("j1SceneSwitch - Update", Profiler::Color::CadetBlue);
 	if (current_step == fade_step::none)
 		return true;
 

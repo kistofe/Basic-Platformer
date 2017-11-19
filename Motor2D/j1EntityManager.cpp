@@ -1,6 +1,8 @@
 #include "j1EntityManager.h"
 #include "j1App.h"
 
+#include "Brofiler\Brofiler.h"
+
 
 j1EntityManager::j1EntityManager()
 {
@@ -32,6 +34,7 @@ bool j1EntityManager::Start()
 
 bool j1EntityManager::PreUpdate(float d_time)
 {
+	BROFILER_CATEGORY("j1EntityManager - PreUpdate", Profiler::Color::Blue);
 	bool ret = true;
 
 	p2List_item<Entity*>* entity_iterator;
@@ -48,6 +51,7 @@ bool j1EntityManager::PreUpdate(float d_time)
 
 bool j1EntityManager::Update(float d_time)
 {
+	BROFILER_CATEGORY("j1EntityManager - Update", Profiler::Color::CadetBlue);
 	bool ret = true;
 
 	p2List_item<Entity*>* entity_iterator;
@@ -64,6 +68,7 @@ bool j1EntityManager::Update(float d_time)
 
 bool j1EntityManager::PostUpdate()
 {
+	BROFILER_CATEGORY("j1EntityManager - PostUpdate", Profiler::Color::Aquamarine);
 	bool ret = true;
 
 	p2List_item<Entity*>* entity_iterator;

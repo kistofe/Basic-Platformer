@@ -3,6 +3,8 @@
 #include "j1App.h"
 #include "j1Pathfinding.h"
 
+#include "Brofiler\Brofiler.h"
+
 
 // Module Pathfinding methods
 j1Pathfinding::j1Pathfinding()

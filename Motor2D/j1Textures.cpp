@@ -7,6 +7,8 @@
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
+#include "Brofiler\Brofiler.h"
+
 j1Textures::j1Textures() : j1Module()
 {
 	name.create("textures");

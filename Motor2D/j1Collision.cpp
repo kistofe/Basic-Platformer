@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "j1SceneSwitch.h"
 #include "j1Scene.h"
+#include "Brofiler\Brofiler.h"
 
 j1Collision::j1Collision()
 {
@@ -63,6 +64,7 @@ j1Collision::~j1Collision()
 
 bool j1Collision::PreUpdate(float d_time)
 {
+	BROFILER_CATEGORY("j1Collision - PreUpdate", Profiler::Color::Blue);
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -78,6 +80,7 @@ bool j1Collision::PreUpdate(float d_time)
 
 bool j1Collision::Update(float d_time)
 {
+	BROFILER_CATEGORY("j1Collision - Update", Profiler::Color::CadetBlue);
 	//Calculate future collisions
 	Collider* c1;
 	Collider* c2;

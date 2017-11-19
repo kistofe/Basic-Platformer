@@ -33,77 +33,12 @@ bool j1SceneSwitch::Start()
 bool j1SceneSwitch::Update(float d_time)
 {
 	BROFILER_CATEGORY("j1SceneSwitch - Update", Profiler::Color::CadetBlue);
-	if (current_step == fade_step::none)
-		return true;
-
-	Uint32 now = SDL_GetTicks() - start_time;
-	float normalized = MIN(1.0f, (float)now / (float)total_time);
-
-	switch (current_step)
-	{
-	case fade_step::fade_to_black:
-	{
-		if (now >= total_time)
-		{
-			if (App->scene->current_lvl == 1) //&& App->input->GetKey(!SDL_SCANCODE_F1) == KEY_DOWN)
-			{
-				SwitchMap("Level2.tmx");
-				App->scene->NextLevel();
-				App->audio->PlayMusic("audio/music/Level_2.ogg");
-			}
-
-			else if (App->scene->current_lvl == 2)
-			{
-				SwitchMap("Level1.tmx");
-				App->scene->NextLevel();
-				App->audio->PlayMusic("audio/music/Level_1.ogg");
-			}
-			//App->player->SetToStart(); 
-			total_time += total_time;
-			start_time = SDL_GetTicks();
-			fading = false;
-			current_step = fade_step::fade_from_black;
-		}
-	} break;
-
-	case fade_step::fade_from_black:
-	{
-		normalized = 1.0f - normalized;
-
-		if (now >= total_time)
-		{
-			current_step = fade_step::none;
-		}
-
-
-	} break;
-	}
-
-	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
-	SDL_RenderFillRect(App->render->renderer, &screen);
+	
 	return true;
 }
 
 bool j1SceneSwitch::CleanUp()
 {
-	return false;
-}
-
-bool j1SceneSwitch::FadeToBlack(float time)
-{
-	bool ret = false;
-
-	if (current_step == fade_step::none)
-	{
-		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
-		total_time = (uint)(time * 0.5f * 1000.0f);
-		fading = true;
-		ret = true;
-	}
-
-	return ret;
 	return false;
 }
 
@@ -113,11 +48,7 @@ bool j1SceneSwitch::SwitchMap(const char* map_on)
 	App->map->CleanUp();
 
 	//Load Again
-	App->map->Load(map_on);
-	return true;
-}
+	App->scene->Initialize(map_on);
 
-bool j1SceneSwitch::IsFading()
-{
-	return current_step != fade_step::none;
+	return true;
 }

@@ -136,9 +136,30 @@ bool j1Map::CleanUp()
 
 	while (obgroup != NULL)
 	{
+		// Remove all objects
+		p2List_item<Object*>* obj;
+		obj = obgroup->data->object.start;
+		while (obj)
+		{
+			RELEASE(obj->data);
+			obj = obj->next;
+		}
+		obgroup->data->object.clear();
 		RELEASE(obgroup->data);
 		obgroup = obgroup->next;
 	}
+	data.objgroup.clear();
+
+	// Remove all entities
+	p2List_item<Entity*>* entity;
+	entity = App->entities->entity_list.start;
+	
+	while (entity)
+	{
+		RELEASE(entity->data);
+		entity = entity->next;
+	}
+	App->entities->entity_list.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -473,7 +494,6 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 bool j1Map::Load_ObjectGroup(pugi::xml_node& objgroup_node, ObjGroup* objgroup)
 {
 	bool ret = true;
-	Object obj;
 	objgroup->group_name.create(objgroup_node.attribute("name").as_string());
 
 	return ret;

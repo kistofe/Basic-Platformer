@@ -93,9 +93,9 @@ bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
 bool j1Pathfinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
-	if (t == 0)
+	if (t != 0)
 		return true;
-	else if (t != 0)
+	else if (t == 0)
 		return false;
 }
 

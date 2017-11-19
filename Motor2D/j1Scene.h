@@ -40,6 +40,8 @@ public:
 
 	void NextLevel();
 
+	void Initialize(const char* map_initialized);
+
 private:
 
 

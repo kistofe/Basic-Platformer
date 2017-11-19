@@ -71,9 +71,6 @@ public:
 	
 	uint jumping_sfx;
 	uint landing_sfx;
-
-private:
-	Object* player;
 };
 
 #endif

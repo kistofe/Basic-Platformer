@@ -41,15 +41,9 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(App->map->map_name.start->data->GetString());
-	int w, h;
-	uchar* data = NULL;
-	if (App->map->CreateWalkabilityMap(w, h, &data))
-		App->pathfinding->SetMap(w, h, data);
+	
+	Initialize(App->map->map_name.start->data->GetString());
 
-	RELEASE_ARRAY(data);
-
-	App->map->SetEntities();
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	
 	return true;
@@ -77,7 +71,9 @@ bool j1Scene::Update(float d_time)
 		App->LoadGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-		App->sceneswitch->FadeToBlack();
+	{
+		//App->sceneswitch->SwitchMap("Level2inprogress.tmx");
+	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
 		App->audio->VolumeControl();
@@ -128,4 +124,19 @@ void j1Scene::NextLevel()
 
 	else if (current_lvl == LAST_LVL)
 		current_lvl = 1;
+}
+
+void j1Scene::Initialize(const char* map_initialized)
+{
+	App->map->Load(map_initialized);
+	App->map->SetEntities();
+
+
+	App->entities->SetToStart();
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+
+	RELEASE_ARRAY(data);
 }

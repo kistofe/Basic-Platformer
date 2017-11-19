@@ -23,27 +23,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool FadeToBlack(float time = 1.0f);
-
 	bool SwitchMap(const char* map_on);
-	bool IsFading();
-	bool fading = false;
-
-private:
-
-	enum fade_step
-	{
-		none,
-		fade_to_black,
-		fade_from_black
-	} current_step = fade_step::none;
 
 public:
 
 private:
 
-	uint start_time = 0;
-	uint total_time = 0;
 	SDL_Rect screen;
 };
 

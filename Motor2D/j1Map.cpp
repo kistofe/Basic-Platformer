@@ -500,7 +500,7 @@ bool j1Map::LoadLayerProperties(pugi::xml_node& node, Properties& properties)
 	{
 		pugi::xml_node prop;
 
-		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		for (prop = data.child("property"); prop && ret; prop = prop.next_sibling("property"))
 		{
 			Properties::Layer_property* p = new Properties::Layer_property();
 			p->name = prop.attribute("name").as_string();

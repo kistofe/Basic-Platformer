@@ -691,9 +691,8 @@ bool j1Map::SetEntities()
 
 				current_entity = current_entity->next;
 			}
-			current_objgroup = current_objgroup->next;
 		}
-
+		current_objgroup = current_objgroup->next;
 	}
 	
 	return true;

@@ -51,11 +51,10 @@ struct Properties
 
 	}
 
-	float GetLayerParallax(const char* name, float default_value = 0) const; 
+	float Get(const char* name, float default_value = 0) const; 
 
 	p2List<Layer_property*>	layer_property_list;
 	p2List<Map_name*> map_name_list;
-
 };
 // ----------------------------------------------------
 struct MapLayer
@@ -65,13 +64,18 @@ struct MapLayer
 	uint		height;
 	uint		size;
 	uint*		layer_gid;
-	Properties properties;
+	Properties	properties;
 	MapLayer() : layer_gid(nullptr) {}
 	~MapLayer() { RELEASE(layer_gid); };
 
 	inline uint Get(uint x, uint y)
 	{
 		return x + y*width;
+	}
+
+	inline uint GetID(uint x, uint y) const
+	{
+		return layer_gid[(y*width) + x];
 	}
 };
 
@@ -177,13 +181,17 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
+	// Method to darken screen while map switching takes place
+
 	bool MapSwitch(char*);
 
 	bool SetColliders();
 
 	bool SetEntities();
 
-	
+	Object* GetObj(const char* value) const;
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+
 private:
 
 	bool LoadMap();
@@ -195,6 +203,8 @@ private:
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
 	bool LoadLayerProperties(pugi::xml_node& node, Properties& properties);
 	bool LoadMapName(pugi::xml_node&, Properties& properties);
+	bool LoadObjectProperties(pugi::xml_node& node, Properties& properties);
+	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 

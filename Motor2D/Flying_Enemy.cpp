@@ -26,7 +26,7 @@ Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_EN
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FPLAYER, this);
+	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
 	
 }
 
@@ -52,7 +52,9 @@ bool Flying_Enemy::Start()
 bool Flying_Enemy::PreUpdate(float d_time)
 {
 	//Call ChangeSpeed()
-	//Update Future collider
+
+	//Update Future Collider with new speed
+	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 
 	return true;
 }
@@ -123,6 +125,7 @@ void Flying_Enemy::MoveTowardsPlayer(float d_time)
 
 	ChangeSpeed(speed_to_go, d_time);
 }
+
 void Flying_Enemy::OnCollision(Collider * c1, Collider * c2)
 {
 	//Maybe flying enemy does not collide with scenario

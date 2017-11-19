@@ -48,7 +48,7 @@ bool Player::Start()
 	
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FPLAYER, this);
+	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FUTURE, this);
 
 	current_animation = &idle;
 
@@ -295,7 +295,7 @@ void Player::SetAnimations()
 
 void Player::OnCollision(Collider * c1, Collider * c2)
 {
-	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_WALL)
+	if (c1->type == COLLIDER_FUTURE && c2->type == COLLIDER_WALL)
 	{
 		SDL_Rect intersect_col;
 		if (SDL_IntersectRect(&c1->rect, &c2->rect, &intersect_col));
@@ -406,7 +406,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 	}
 
 
-	if (c1->type == COLLIDER_FPLAYER && c2->type == COLLIDER_ENDOFLEVEL)
+	if (c1->type == COLLIDER_FUTURE && c2->type == COLLIDER_ENDOFLEVEL)
 		App->sceneswitch->FadeToBlack();
 	
 

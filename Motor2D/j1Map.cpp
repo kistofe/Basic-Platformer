@@ -572,7 +572,7 @@ bool j1Map::CreateWalkabilityMap(int & width, int & height, uchar ** buffer) con
 					if(ts != NULL)
 					{
 					map[i] = ts->properties.Get("walkable", 1);
-					}*/
+					}--------*/
 				}
 			}
 		}

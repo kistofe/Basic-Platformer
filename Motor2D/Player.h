@@ -56,7 +56,7 @@ private:
 	Animation run;
 	Animation jump;
 	Animation double_jump;
-	//Animation win;
+	Animation win;
 	Animation fall;
 
 	//Player Status
@@ -72,6 +72,8 @@ private:
 	//Player SFX
 	p2SString jumping_sfx_source;
 	p2SString landing_sfx_source;
+
+	bool has_reached_end = false;
 
 };
 

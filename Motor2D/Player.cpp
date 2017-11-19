@@ -100,28 +100,6 @@ bool Player::Update(float d_time)
 	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
 	//Update Player's Blit ----------------------------------------------
 	Draw();
-
-	// PATHFINDING DEBUG	 --------------------------------------------
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		LOG("Current Player Position: %i, %i", App->map->WorldToMap(position.x, position.y));
-
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint mousepos = App->render->ScreenToWorld(x, y);
-		mousepos = App->map->WorldToMap(mousepos.x, mousepos.y);
-
-		LOG("Clicked Position: %i, %i", mousepos.x, mousepos.y);
-
-		iPoint next_tile = App->pathfinding->GetNextTile(mousepos, App->map->WorldToMap(position.x, position.y));
-		LOG("Next tile: %i, %i", next_tile.x, next_tile.y);
-
-	}
-
-
-	//--------------------------------------------------------------------
-
 	return true;
 }
 
@@ -211,6 +189,14 @@ void Player::CreateAnimationPushBacks()
 	double_jump.loop = true;
 	double_jump.speed = 0.4f;
 
+	win.PushBack({ 0, 483, 54, 69 });
+	win.PushBack({ 54, 483, 54, 69 });
+	win.PushBack({ 108, 483, 54, 69 });
+	win.PushBack({ 162, 483, 54, 69 });
+	win.PushBack({ 216, 483, 54, 69 });
+	win.loop = true;
+	win.speed = 0.4f;
+
 	//Falling animation
 	fall.PushBack({ 378, 138, 54, 69 });
 
@@ -284,7 +270,9 @@ void Player::SetAnimations()
 		current_animation = &fall;
 	if (jumps_left == 0) // set animation to double jump if there's no jumps left
 		current_animation = &double_jump;
-			
+	
+	if (has_reached_end)
+		current_animation = &win, has_reached_end = false;
 }
 
 void Player::OnCollision(Collider * c1, Collider * c2)
@@ -401,9 +389,12 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 
 
 
-	/*if (c1->type == COLLIDER_FUTURE && c2->type == COLLIDER_ENDOFLEVEL)
-		App->sceneswitch->FadeToBlack();
-	*/
+	if (c1->type == COLLIDER_FUTURE && c2->type == COLLIDER_ENDOFLEVEL)
+	{
+		has_reached_end = true;
+		SetToStart();
+	}
+	
 
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)

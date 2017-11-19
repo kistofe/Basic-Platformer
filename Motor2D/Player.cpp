@@ -400,9 +400,11 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 	}
 
 
+
 	/*if (c1->type == COLLIDER_FUTURE && c2->type == COLLIDER_ENDOFLEVEL)
 		App->sceneswitch->FadeToBlack();
 	*/
+
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{

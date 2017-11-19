@@ -18,7 +18,7 @@ public:
 	void SetMap(uint width, uint height, uint* data);
 	bool CheckBoundaries(const iPoint& pos) const;
 	bool IsWalkable(const iPoint& pos) const; // checks walkability of the tile in given position
-	uchar GetTileAt(const iPoint& pos) const;
+	uint GetTileAt(const iPoint& pos) const;
 
 private:
 

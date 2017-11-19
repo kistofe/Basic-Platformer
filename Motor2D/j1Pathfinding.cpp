@@ -90,12 +90,15 @@ bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
 // Utility: returns true is the tile is walkable
 bool j1Pathfinding::IsWalkable(const iPoint& pos) const
 {
-	uchar t = GetTileAt(pos);
-	return t > 0;
+	uint t = GetTileAt(pos);
+	if (t == 0)
+		return true;
+	else if (t != 0)
+		return false;
 }
 
 // Utility: return the walkability value of a tile
-uchar j1Pathfinding::GetTileAt(const iPoint& pos) const
+uint j1Pathfinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
 		return map[(pos.y*width) + pos.x];

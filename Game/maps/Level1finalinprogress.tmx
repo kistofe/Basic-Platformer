@@ -45088,13 +45088,6 @@
  <objectgroup color="#0000ff" name="LevelEnd">
   <object id="9" name="LevelEnd" x="4764" y="28" width="32" height="64.5"/>
  </objectgroup>
- <objectgroup color="#aa00ff" name="Enemies">
-  <object id="59" name="Flying_Enemy" x="801" y="1376" width="30" height="32"/>
-  <object id="60" name="Ground_Enemy" x="2079" y="1601" width="32" height="32"/>
-  <object id="61" name="Flying_Enemy" x="2272" y="512" width="32" height="32"/>
-  <object id="62" name="Ground_Enemy" x="3904" y="801" width="31" height="30"/>
-  <object id="63" name="Ground_Enemy" x="3871" y="64" width="32" height="31"/>
- </objectgroup>
  <objectgroup color="#888888" name="Death colliders">
   <object id="52" name="death" x="1441.33" y="1696" width="318.667" height="96"/>
   <object id="53" name="death" x="2240" y="1694.67" width="413.333" height="98.6667"/>

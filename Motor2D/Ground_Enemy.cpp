@@ -12,6 +12,10 @@ Ground_Enemy::Ground_Enemy(uint x, uint y) : Enemy(Entity::EntityType::GROUND_EN
 	position.x = x;
 	position.y = y;
 
+
+	//Creating Colliders
+	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
+	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
 }
 
 
@@ -25,9 +29,6 @@ bool Ground_Enemy::Start()
 
 	texture = App->tex->Load("images/Ground Enemy.png");
 	
-	//Creating Colliders
-	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FPLAYER, this);
 
 	//current_animation = &fly;
 
@@ -38,6 +39,7 @@ bool Ground_Enemy::PreUpdate()
 {
 	//Call ChangeSpeed()
 	//Update Future collider
+	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 
 	return true;
 }

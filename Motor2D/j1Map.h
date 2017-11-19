@@ -203,7 +203,6 @@ private:
 	bool Load_Object(pugi::xml_node& obj_node, Object* obj);
 	bool LoadLayerProperties(pugi::xml_node& node, Properties& properties);
 	bool LoadMapName(pugi::xml_node&, Properties& properties);
-	bool LoadObjectProperties(pugi::xml_node& node, Properties& properties);
 	TileSet* GetTilesetFromTileId(int id) const;
 
 public:

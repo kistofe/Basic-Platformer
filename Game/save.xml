@@ -4,14 +4,16 @@
 	<window />
 	<textures />
 	<audio>
-		<volume value="80" />
+		<volume value="0" />
 	</audio>
 	<scene />
 	<collisions />
+	<scene_switch />
+	<map />
 	<entity_manager>
 		<player>
-			<position x="200" y="25990" />
-			<velocity x="0" y="334.350159" />
+			<position x="200" y="1568" />
+			<velocity x="0" y="0" />
 			<status>
 				<is_grounded value="true" />
 				<facing_right value="true" />
@@ -19,23 +21,21 @@
 			</status>
 		</player>
 		<flying_enemy>
-			<position x="384" y="1505" />
+			<position x="801" y="1376" />
 			<velocity x="0" y="0" />
 			<status>
 				<facing_right value="true" />
 			</status>
 		</flying_enemy>
 		<flying_enemy>
-			<position x="384" y="1505" />
+			<position x="2272" y="512" />
 			<velocity x="0" y="0" />
 			<status>
 				<facing_right value="true" />
 			</status>
 		</flying_enemy>
 	</entity_manager>
-	<scene_switch />
-	<map />
 	<renderer>
-		<camera x="0" y="-25087" />
+		<camera x="0" y="-999" />
 	</renderer>
 </game_state>

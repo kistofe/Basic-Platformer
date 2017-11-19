@@ -51,7 +51,7 @@ bool j1SceneSwitch::Update(float d_time)
 
 			else if (App->scene->current_lvl == 2)
 			{
-				SwitchMap("Level1finalinprogress.tmx");
+				SwitchMap("Level1.tmx");
 				App->scene->NextLevel();
 				App->audio->PlayMusic("audio/music/Level_1.ogg");
 			}

@@ -540,7 +540,7 @@ bool j1Map::LoadMapName(pugi::xml_node& node, Properties & properties)
 	return ret;
 }
 
-bool j1Map::CreateWalkabilityMap(int & width, int & height, uchar ** buffer) const
+bool j1Map::CreateWalkabilityMap(int & width, int & height, uint ** buffer) const
 {
 	bool ret = false;
 	p2List_item<MapLayer*>* item;
@@ -553,7 +553,7 @@ bool j1Map::CreateWalkabilityMap(int & width, int & height, uchar ** buffer) con
 		if (layer->properties.Get("Navigation", 0) == 0)
 			continue;
 
-		uchar* map = new uchar[layer->width*layer->height];
+		uint* map = new uint[layer->width*layer->height];
 		memset(map, 1, layer->width*layer->height);
 
 		for (int y = 0; y < data.height; ++y)

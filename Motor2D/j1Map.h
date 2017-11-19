@@ -190,7 +190,7 @@ public:
 	bool SetEntities();
 
 	Object* GetObj(const char* value) const;
-	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+	bool CreateWalkabilityMap(int& width, int& height, uint** buffer) const;
 
 private:
 

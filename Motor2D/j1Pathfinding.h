@@ -7,8 +7,6 @@
 #include "p2Log.h"
 #include "j1Module.h"
 
-#define INVALID_WALK_CODE 255
-
 class j1Pathfinding : public j1Module
 {
 public:

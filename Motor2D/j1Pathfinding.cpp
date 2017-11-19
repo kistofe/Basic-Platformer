@@ -46,7 +46,6 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 
 		// fill adjacents list with the adjacents of the node that is currently being checked
 		close.list.end->data.FindWalkableAdjacents(adjacents);
-
 		for (p2List_item<PathNode>* iterator = adjacents.list.start; iterator; iterator = iterator->next) // loop that iterates the adjacents found (max loops: 4)
 		{
 			if (close.Find(iterator->data.position))
@@ -94,9 +93,9 @@ bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
 bool j1Pathfinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
-	if (t > 0 && t != INVALID_WALK_CODE)
+	if (t == 0)
 		return true;
-	else if (t == 0)
+	else if (t != 0)
 		return false;
 }
 

@@ -11,8 +11,6 @@
 
 #include "SDL/include/SDL.h"
 
-struct Object;
-
 class Player : public Entity
 {
 public:
@@ -49,22 +47,28 @@ private:
 
 public:
 
+	bool god_mode = false;
+
+private:
+
 	//Player Animations
 	Animation idle;
 	Animation run;
 	Animation jump;
 	Animation double_jump;
-	Animation win;
+	//Animation win;
 	Animation fall;
-	Animation damaged;
-	Animation death;
 
 	//Player Status
 	uint jumps_left			= 2;
 	bool is_grounded		= true;
 
 	float		jumping_speed;
-		
+	float	moving_speed;
+
+	uint jumping_sfx;
+	uint landing_sfx;
+
 	//Player SFX
 	p2SString jumping_sfx_source;
 	p2SString landing_sfx_source;

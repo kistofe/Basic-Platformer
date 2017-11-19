@@ -1,6 +1,8 @@
 #include "Ground_Enemy.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 #include "j1Map.h"
 
 
@@ -64,6 +66,7 @@ bool Ground_Enemy::Update(float d_time)
 	//Call Draw()
 	//Call Move()
 	//Call SetAnimations()
+	
 	//Update Collider Position-------------------------------------
 	collider->SetPos(position.x + collider_offset.x, position.y + collider_offset.y);
 	//Update Blit -------------------------------------------------
@@ -81,11 +84,12 @@ bool Ground_Enemy::CleanUp()
 
 bool Ground_Enemy::Load(pugi::xml_node& data)
 {
-	position.x = data.child("position").attribute("x").as_int();
-	position.y = data.child("position").attribute("y").as_int();
-	speed.x = data.child("velocity").attribute("x").as_float();
-	speed.y = data.child("velocity").attribute("y").as_float();
-	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
+	pugi::xml_node ground_enemy = data.child("ground_enemy");
+	position.x = ground_enemy.child("position").attribute("x").as_int();
+	position.y = ground_enemy.child("position").attribute("y").as_int();
+	speed.x = ground_enemy.child("velocity").attribute("x").as_float();
+	speed.y = ground_enemy.child("velocity").attribute("y").as_float();
+	facing_right = ground_enemy.child("status").child("facing_right").attribute("value").as_bool();
 	return true;
 }
 
@@ -155,6 +159,11 @@ void Ground_Enemy::SetToStart()
 	position.y = original_position.y;
 	speed.x = 0;
 	speed.y = 0;
+}
+
+void Ground_Enemy::MoveTowardsPlayer(float d_time)
+{
+	
 }
 
 

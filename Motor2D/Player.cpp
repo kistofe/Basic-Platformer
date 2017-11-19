@@ -211,23 +211,8 @@ void Player::CreateAnimationPushBacks()
 	double_jump.loop = true;
 	double_jump.speed = 0.4f;
 
-	//Win animation
-	win.PushBack({  0,  490, 54, 69});
-	win.PushBack({ 60,  490, 54, 69});
-	win.PushBack({ 120, 490, 54, 69 });
-	win.PushBack({ 180, 490, 54, 69 });
-	win.PushBack({ 240, 490, 54, 69 });
-	win.loop = false;
-	win.speed = 0.3f;
-
 	//Falling animation
 	fall.PushBack({ 378, 138, 54, 69 });
-
-	//Damaged animation
-	damaged.PushBack({ 0, 420, 54, 69 });
-	damaged.PushBack({ 60, 420, 54, 69 });
-	damaged.loop = false;
-	damaged.speed = 0.2f;
 
 }
 
@@ -299,10 +284,7 @@ void Player::SetAnimations()
 		current_animation = &fall;
 	if (jumps_left == 0) // set animation to double jump if there's no jumps left
 		current_animation = &double_jump;
-		
-	//Victory animation
-	//Death animation
-	
+			
 }
 
 void Player::OnCollision(Collider * c1, Collider * c2)
@@ -427,7 +409,10 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		App->audio->PlayFx(death_sfx, 0, App->audio->music_vol);
 		SetToStart();
 	}
-	
+
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && god_mode == false)
+		App->entities->SetToStart();
+
 }
 
 

@@ -63,7 +63,14 @@ bool Flying_Enemy::Update(float d_time)
 {
 	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
-	MoveTowardsPlayer(d_time);
+	iPoint position_world = App->map->WorldToMap(position.x, position.y);
+	int distance_to_player = (position_world.DistanceNoSqrt(App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y)));
+
+	if (distance_to_player < 230)
+		MoveTowardsPlayer(d_time);
+	else if (distance_to_player >= 230)
+		ChangeSpeed({ 0,0 }, d_time);
+	
 
 	//Update Position ---------------------------------------------	
 	Move();

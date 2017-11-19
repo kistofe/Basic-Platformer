@@ -44,6 +44,7 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 
 		// fill adjacents list with the adjacents of the node that is currently being checked
 		close.list.end->data.FindWalkableAdjacents(adjacents);
+
 		for (p2List_item<PathNode>* iterator = adjacents.list.start; iterator; iterator = iterator->next) // loop that iterates the adjacents found (max loops: 4)
 		{
 			if (close.Find(iterator->data.position))
@@ -71,13 +72,13 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 	return *path.At(0);
 }
 
-void j1Pathfinding::SetMap(uint width, uint height, uint* data)
+void j1Pathfinding::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
 	this->height = height;
 
 	RELEASE_ARRAY(map);
-	map = new uint[width*height];
+	map = new uchar[width*height];
 	memcpy(map, data, width*height);
 }
 
@@ -90,10 +91,10 @@ bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
 // Utility: returns true is the tile is walkable
 bool j1Pathfinding::IsWalkable(const iPoint& pos) const
 {
-	uint t = GetTileAt(pos);
-	if (t == 0)
+	uchar t = GetTileAt(pos);
+	if (t > 0 && t != INVALID_WALK_CODE)
 		return true;
-	else if (t != 0)
+	else if (t == 0)
 		return false;
 }
 

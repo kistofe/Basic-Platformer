@@ -7,6 +7,8 @@
 #include "p2Log.h"
 #include "j1Module.h"
 
+#define INVALID_WALK_CODE 255
+
 class j1Pathfinding : public j1Module
 {
 public:
@@ -15,7 +17,7 @@ public:
 	
 	iPoint GetNextTile(const iPoint& origin, const iPoint& destination); // method that gives the next tile in the path from origin to destination
 
-	void SetMap(uint width, uint height, uint* data);
+	void SetMap(uint width, uint height, uchar* data);
 	bool CheckBoundaries(const iPoint& pos) const;
 	bool IsWalkable(const iPoint& pos) const; // checks walkability of the tile in given position
 	uint GetTileAt(const iPoint& pos) const;
@@ -26,7 +28,7 @@ private:
 	uint width;
 	uint height;
 	// all map walkability values [0..255]
-	uint* map;
+	uchar* map;
 	// we store the created path here
 	p2DynArray<iPoint> last_path;
 };

@@ -540,42 +540,6 @@ bool j1Map::LoadMapName(pugi::xml_node& node, Properties & properties)
 	return ret;
 }
 
-bool j1Map::LoadObjectProperties(pugi::xml_node & node, Properties & properties)
-{
-	bool ret = true;
-	
-	pugi::xml_node data = node.child("properties");
-
-	if (data != NULL)
-	{
-		pugi::xml_node prop;
-
-		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
-		{
-			Properties::Object_property* p2 = new Properties::Object_property();
-			p2SString temp_name = prop.attribute("name").as_string(); //Temporary string to store the name of the current property and compare
-
-			if (temp_name == "collider_offset_x")
-				p2->collider_offset.x = prop.attribute("value").as_int();
-			if (temp_name == "collider_offset_y")
-				p2->collider_offset.y = prop.attribute("value").as_int();
-			if (temp_name == "moving_speed")
-				p2->moving_speed = prop.attribute("value").as_float();
-			if (temp_name == "jumping_speed")
-				p2->jumping_speed = prop.attribute("value").as_float();
-			if (temp_name == "death_sfx_source")
-				p2->death_sfx_source = prop.attribute("value").as_string();
-			if (temp_name == "jumping_sfx_source")
-				p2->jump_sfx_source = prop.attribute("value").as_string();
-			if (temp_name == "landing_sfx_source")
-				p2->land_sfx_source = prop.attribute("value").as_string();
-			
-			properties.obj_property_list.add(p2);
-		}
-	}
-
-	return ret;
-}
 bool j1Map::CreateWalkabilityMap(int & width, int & height, uchar ** buffer) const
 {
 	bool ret = false;
@@ -711,21 +675,25 @@ bool j1Map::SetEntities()
 	p2List_item<ObjGroup*>* current_objgroup = data.objgroup.start;
 	while (current_objgroup)
 	{
-		p2List_item<Object*>* current_entity = current_objgroup->data->object.start;
-		while (current_entity)
+		if (current_objgroup->data->group_name == "Entities")
 		{
-			if (current_entity->data->name == "Player")
-				App->entities->CreateEntity(Entity::EntityType::PLAYER,  current_entity->data->x, current_entity->data->y );
-					
-			if (current_entity->data->name == "Flying_Enemy")
-				App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY,  current_entity->data->x, current_entity->data->y );
+			p2List_item<Object*>* current_entity = current_objgroup->data->object.start;
+			while (current_entity)
+			{
+				if (current_entity->data->name == "Player")
+					App->entities->player1 = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER, current_entity->data->x, current_entity->data->y);
 
-			if (current_entity->data->name == "Ground_Enemy")
-				App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY,  current_entity->data->x, current_entity->data->y );
+				if (current_entity->data->name == "Flying_Enemy")
+					App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY, current_entity->data->x, current_entity->data->y);
 
-			current_entity = current_entity->next;
+				if (current_entity->data->name == "Ground_Enemy")
+					App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY, current_entity->data->x, current_entity->data->y);
+
+				current_entity = current_entity->next;
+			}
+			current_objgroup = current_objgroup->next;
 		}
-		current_objgroup = current_objgroup->next;
+
 	}
 	
 	return true;

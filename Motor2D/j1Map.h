@@ -55,7 +55,6 @@ struct Properties
 
 	p2List<Layer_property*>	layer_property_list;
 	p2List<Map_name*> map_name_list;
-	p2List<Object_property*> obj_property_list;
 };
 // ----------------------------------------------------
 struct MapLayer

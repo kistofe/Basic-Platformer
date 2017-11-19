@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "j1SceneSwitch.h"
 #include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 
 #include <math.h>
 
@@ -66,14 +67,14 @@ void j1Map::Draw()
 				{
 					for (int x = 0; x < data.width; x++)
 					{
-						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.GetLayerParallax("Parallax speed"));
+						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
 					}
 				}
 			}
 		}
 }
 
-float Properties::GetLayerParallax(const char* value, float default_value) const
+float Properties::Get(const char* value, float default_value) const
 {
 	p2List_item<Layer_property*>* item = layer_property_list.start;
 
@@ -478,6 +479,9 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 		layer->layer_gid[i] = tile_iterator.attribute("gid").as_uint();
 		tile_iterator = tile_iterator.next_sibling("tile");
 	}
+
+	if (layer->properties.Get("Navigation") == 1)
+		App->pathfinding->SetMap(layer->width, layer->height, layer->layer_gid);
 	
 	return ret;
 }
@@ -589,6 +593,72 @@ bool j1Map::LoadObjectProperties(pugi::xml_node & node, Properties & properties)
 	}
 
 	return ret;
+}
+bool j1Map::CreateWalkabilityMap(int & width, int & height, uchar ** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.map_layers.start;
+
+	for (item = data.map_layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->GetID(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					/*TileType* ts = tileset->GetTileType(tile_id);
+					if(ts != NULL)
+					{
+					map[i] = ts->properties.Get("walkable", 1);
+					}*/
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
+}
+
+TileSet * j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+
+	return set;
 }
 
 

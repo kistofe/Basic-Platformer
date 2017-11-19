@@ -1,3 +1,6 @@
+#include "p2Defs.h"
+#include "p2Log.h"
+#include "j1App.h"
 #include "j1Pathfinding.h"
 
 
@@ -33,15 +36,14 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 	while (open.list.start)
 	{
 		// pass the node in the open list with the lowest score to the closed list
-		PathNode temp = open.GetNodeLowestScore()->data;
-		close.list.add(temp);
+		close.list.add(open.GetNodeLowestScore()->data);
 		open.list.del(open.GetNodeLowestScore());
 
-		if (temp.position == destination)
+		if (close.list.end->data.position == destination)
 			break;
 
 		// fill adjacents list with the adjacents of the node that is currently being checked
-		temp.FindWalkableAdjacents(adjacents, &close.Find(temp.position)->data);
+		close.list.end->data.FindWalkableAdjacents(adjacents);
 		for (p2List_item<PathNode>* iterator = adjacents.list.start; iterator; iterator = iterator->next) // loop that iterates the adjacents found (max loops: 4)
 		{
 			if (close.Find(iterator->data.position))
@@ -69,6 +71,38 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 	return *path.At(0);
 }
 
+void j1Pathfinding::SetMap(uint width, uint height, uint* data)
+{
+	this->width = width;
+	this->height = height;
+
+	RELEASE_ARRAY(map);
+	map = new uint[width*height];
+	memcpy(map, data, width*height);
+}
+
+bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
+{
+	return (pos.x >= 0 && pos.x <= (int)width &&
+		pos.y >= 0 && pos.y <= (int)height);
+}
+
+// Utility: returns true is the tile is walkable
+bool j1Pathfinding::IsWalkable(const iPoint& pos) const
+{
+	uchar t = GetTileAt(pos);
+	return t > 0;
+}
+
+// Utility: return the walkability value of a tile
+uchar j1Pathfinding::GetTileAt(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+		return map[(pos.y*width) + pos.x];
+
+	return 0;
+}
+
 // PathNode methods
 
 //Constructors
@@ -81,27 +115,31 @@ PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : 
 PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), position(node.position), parent(node.parent)
 {}
 
-uint PathNode::FindWalkableAdjacents(PathList & list_to_fill, const PathNode* parent) const
+uint PathNode::FindWalkableAdjacents(PathList & list_to_fill) const
 {
 	iPoint cell;
 
 	// north
 	cell.create(position.x, position.y - 1);
-	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(position.x, position.y + 1);
-	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(position.x + 1, position.y);
-	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(position.x - 1, position.y);
-	list_to_fill.list.add(PathNode(-1, -1, cell, parent));
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	return uint();
+	return list_to_fill.list.count();
 }
 
 //Calculates the score (F) of a node

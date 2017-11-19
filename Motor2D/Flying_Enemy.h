@@ -34,9 +34,7 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
-
-	void SetToStart();
-
+	
 private:
 
 	Animation fly;

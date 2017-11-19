@@ -31,8 +31,6 @@ public:
 
 	void ChangeSpeed(iPoint newspeed, float d_time);
 	
-	//void SetToStart();
-
 	virtual void MoveTowardsPlayer() { return; };
 
 public:

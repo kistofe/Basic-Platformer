@@ -42,7 +42,7 @@
   <entity_manager>
     <player>
       <moving_speed value = "250"/>
-      <jumping_speed value = "-600"/>
+      <jumping_speed value = "-550"/>
       <collider_offset_x value = "7"/>
       <collider_offset_y value = "1"/>
       <death_sfx source = "audio/sfx/Death.wav"/>

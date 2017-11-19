@@ -38,8 +38,8 @@ enum EntityType
 	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual void SetAnimations() { return; };
 	virtual void CreateAnimationPushBacks() { return; };
-	virtual void SetToStart() {return;};
-
+	
+	void SetToStart();
 	void Draw();
 	void Move();
 	
@@ -60,6 +60,7 @@ protected:
 	EntityType	type;
 	SDL_Texture* texture = NULL;
 	Animation*	current_animation = nullptr;
+	Animation* default_animation = nullptr;
 
 	p2SString	death_sfx_source;
 

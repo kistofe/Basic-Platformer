@@ -25,8 +25,6 @@ Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_EN
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 
-	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
 	
 }
 
@@ -42,10 +40,12 @@ bool Flying_Enemy::Start()
 
 	texture = App->tex->Load("images/Flying Enemy.png");
 
+	//Creating Colliders
+	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
+	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
+
 	current_animation = &fly;
 	
-	//Creating Colliders
-
 	return true;
 }
 

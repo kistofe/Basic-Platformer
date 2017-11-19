@@ -41,9 +41,22 @@
   </map>
   <entity_manager>
     <player>
+      <moving_speed value = "250"/>
+      <jumping_speed value = "-600"/>
+      <collider_offset_x value = "7"/>
+      <collider_offset_y value = "1"/>
+      <death_sfx source = "audio/sfx/Death.wav"/>
+      <jump_sfx source = "audio/sfx/Jumping.wav"/>
+      <land_sfx source = "audio/sfx/Landing.wav"/>
     </player>
     <flying_enemy>
+      <collider_offset_x value = "17"/>
+      <collider_offset_y value = "10"/>
     </flying_enemy>
+    <ground_enemy>
+      <collider_offset_x value = "10"/>
+      <collider_offset_y value = "10"/>
+    </ground_enemy>
   </entity_manager>
   <scene>
      <gravity_x value = "0"/>

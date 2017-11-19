@@ -88,23 +88,6 @@ float Properties::Get(const char* value, float default_value) const
 	return default_value;
 }
 
-Object* j1Map::GetObj(const char* value) const
-{
-	p2List_item<ObjGroup*>* objgroup_iterator = data.objgroup.start;
-	while (objgroup_iterator)
-	{
-		p2List_item<Object*>* obj_iterator = objgroup_iterator->data->object.start;
-		while (obj_iterator)
-		{
-			if (obj_iterator->data->name == value)
-				return obj_iterator->data;
-			obj_iterator = obj_iterator->next;
-		}
-		objgroup_iterator = objgroup_iterator->next;
-	}
-	return 0;
-}
-
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
@@ -507,7 +490,6 @@ bool j1Map::Load_Object(pugi::xml_node& obj_node, Object* obj)
 	obj->x				= obj_node.attribute("x").as_uint(0);
 	obj->y				= obj_node.attribute("y").as_uint(0);
 	obj->object_id		= obj_node.attribute("id").as_uint(0);
-	LoadObjectProperties(obj_node, obj->properties);
 
 	return ret;
 }
@@ -733,13 +715,13 @@ bool j1Map::SetEntities()
 		while (current_entity)
 		{
 			if (current_entity->data->name == "Player")
-				App->entities->player1 = (Player*)App->entities->CreateEntity(Entity::EntityType::PLAYER);
-
+				App->entities->CreateEntity(Entity::EntityType::PLAYER,  current_entity->data->x, current_entity->data->y );
+					
 			if (current_entity->data->name == "Flying_Enemy")
-				App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY);
+				App->entities->CreateEntity(Entity::EntityType::FLYING_ENEMY,  current_entity->data->x, current_entity->data->y );
 
 			if (current_entity->data->name == "Ground_Enemy")
-				App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY);
+				App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY,  current_entity->data->x, current_entity->data->y );
 
 			current_entity = current_entity->next;
 		}

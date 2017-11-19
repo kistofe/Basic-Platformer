@@ -21,7 +21,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateEntity(Entity::EntityType type);
+	Entity* CreateEntity(Entity::EntityType type, uint x, uint y);
 	bool DestroyEntity(Entity* entity);
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;

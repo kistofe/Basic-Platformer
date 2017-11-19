@@ -16,6 +16,24 @@ Entity::~Entity()
 {
 }
 
+bool Entity::AddEntity(EntityType type, int x, int y)
+{
+	bool ret = false;
+	
+	p2List_item<ObjGroup*>* objgroup_iterator = App->map->data.objgroup.start;
+	while (objgroup_iterator)
+	{
+		p2List_item<Object*>* obj_iterator = objgroup_iterator->data->object.start;
+		while (obj_iterator)
+		{
+			
+		}
+		objgroup_iterator = objgroup_iterator->next;
+	}
+
+	return ret;
+}
+
 void Entity::SetToStart()
 {
 	//Loop to check current map

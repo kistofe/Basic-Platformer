@@ -4,10 +4,14 @@
 #include "j1Map.h"
 
 
-Ground_Enemy::Ground_Enemy() : Enemy(Entity::EntityType::GROUND_ENEMY)
+Ground_Enemy::Ground_Enemy(uint x, uint y) : Enemy(Entity::EntityType::GROUND_ENEMY)
 {
 	name.create("ground_enemy");
 	CreateAnimationPushBacks();
+
+	position.x = x;
+	position.y = y;
+
 }
 
 
@@ -20,10 +24,7 @@ bool Ground_Enemy::Start()
 	LOG("Loading Ground Enemy");
 
 	texture = App->tex->Load("images/Ground Enemy.png");
-	ground_enemy = App->map->GetObj("Ground_Enemy");
-	position.create(ground_enemy->x, ground_enemy->y);
-	SetProperties(ground_enemy);
-
+	
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FPLAYER, this);
@@ -91,21 +92,4 @@ void Ground_Enemy::CreateAnimationPushBacks()
 
 }
 
-void Ground_Enemy::SetProperties(Object * entity)
-{
-	p2List_item<Properties::Object_property*>* iterator = entity->properties.obj_property_list.start;
-	while (iterator)
-	{
-		if (moving_speed == 0)
-			moving_speed = iterator->data->moving_speed;
-		if (collider_offset.x == 0)
-			collider_offset.x = iterator->data->collider_offset.x;
-		if (collider_offset.y == 0)
-			collider_offset.y = iterator->data->collider_offset.y;
-		if (death_sfx_source.Length() == 0)
-			death_sfx_source = iterator->data->death_sfx_source;
-
-		iterator = iterator->next;
-	}
-}
 

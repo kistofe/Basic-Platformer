@@ -23,16 +23,6 @@ struct Properties
 		p2SString value;
 	};
 
-	struct Object_property
-	{
-		iPoint collider_offset;
-		float moving_speed;
-		float jumping_speed;
-		p2SString jump_sfx_source;
-		p2SString death_sfx_source;
-		p2SString land_sfx_source;
-	};
-
 	~Properties()
 	{
 		p2List_item<Layer_property*>* item;
@@ -59,16 +49,6 @@ struct Properties
 		map_name_list.clear();
 
 
-		p2List_item<Object_property*>* item3;
-		item3 = obj_property_list.start;
-
-		while (item3 != NULL)
-		{
-			RELEASE(item3->data);
-			item3 = item3->next;
-		}
-
-		obj_property_list.clear();
 	}
 
 	float Get(const char* name, float default_value = 0) const; 

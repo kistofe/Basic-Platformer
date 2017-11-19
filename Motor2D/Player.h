@@ -16,7 +16,7 @@ struct Object;
 class Player : public Entity
 {
 public:
-	Player();
+	Player(uint x, uint y);
 
 	//Destructor
 	~Player();
@@ -40,9 +40,7 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
-
-	void SetProperties(Object* entity);
-
+	
 private:
 	void SetSpeed(float d_time);
 	void SetCameraToPlayer();
@@ -74,7 +72,6 @@ public:
 
 private:
 	Object* player;
-	
 };
 
 #endif

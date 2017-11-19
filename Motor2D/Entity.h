@@ -38,7 +38,9 @@ enum EntityType
 	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual void SetAnimations() { return; };
 	virtual void CreateAnimationPushBacks() { return; };
-	virtual void SetProperties(Object* entity) { return; };
+
+	bool AddEntity(EntityType type, int x, int y);
+
 
 	void SetToStart();
 	void Draw();
@@ -70,5 +72,6 @@ protected:
 	float		moving_speed;
 	uint		death_sfx;
 
+	
 };
 #endif

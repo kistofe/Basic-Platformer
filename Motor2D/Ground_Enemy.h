@@ -15,7 +15,7 @@ class Ground_Enemy : public Enemy
 {
 public:
 
-	Ground_Enemy();
+	Ground_Enemy(uint x, uint y);
 	~Ground_Enemy();
 
 	bool Start();
@@ -34,9 +34,7 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
-
-	void SetProperties(Object* entity);
-
+	
 private:
 public:
 private:

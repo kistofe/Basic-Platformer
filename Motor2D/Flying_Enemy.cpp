@@ -7,10 +7,27 @@
 #include "j1Map.h"
 
 
-Flying_Enemy::Flying_Enemy() : Enemy(Entity::EntityType::FLYING_ENEMY)
+Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_ENEMY)
 {
 	name.create("flying_enemy");
 	CreateAnimationPushBacks();
+
+	pugi::xml_document config_file;
+	pugi::xml_node config;
+	pugi::xml_node data;
+
+	config = App->LoadConfig(config_file);
+	data = config.child("entity_manager").child("flying_enemy");
+
+	position.x = x;
+	position.y = y;
+
+	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
+
+	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
+	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FPLAYER, this);
+	
 }
 
 
@@ -24,15 +41,10 @@ bool Flying_Enemy::Start()
 	LOG("Loading Flying Enemy");
 
 	texture = App->tex->Load("images/Flying Enemy.png");
-	flying_enemy = App->map->GetObj("Flying_Enemy");
-	position.create(flying_enemy->x, flying_enemy->y);
-	SetProperties(flying_enemy);
-
-	//Creating Colliders
-	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FPLAYER, this);
 
 	current_animation = &fly;
+	
+	//Creating Colliders
 
 	return true;
 }
@@ -49,7 +61,7 @@ bool Flying_Enemy::Update(float d_time)
 {
 	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
-	MoveTowardsPlayer(d_time);
+//	MoveTowardsPlayer(d_time);
 
 	//Update Position ---------------------------------------------	
 	Move();
@@ -97,7 +109,7 @@ bool Flying_Enemy::Save(pugi::xml_node& data) const
 	return true;
 }
 
-void Flying_Enemy::MoveTowardsPlayer(float d_time)
+/*void Flying_Enemy::MoveTowardsPlayer(float d_time)
 {
 	iPoint tile_to_go = App->pathfinding->GetNextTile(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y));
 	iPoint position_in_world = App->map->WorldToMap(position.x, position.y);
@@ -111,7 +123,7 @@ void Flying_Enemy::MoveTowardsPlayer(float d_time)
 
 	ChangeSpeed(speed_to_go, d_time);
 }
-
+*/
 void Flying_Enemy::OnCollision(Collider * c1, Collider * c2)
 {
 	//Maybe flying enemy does not collide with scenario
@@ -145,22 +157,4 @@ void Flying_Enemy::CreateAnimationPushBacks()
 	bite.PushBack({ 320, 55, 64, 55 });
 	bite.loop = false;
 	bite.speed = 0.3f;
-}
-
-void Flying_Enemy::SetProperties(Object* entity)
-{
-	p2List_item<Properties::Object_property*>* iterator = entity->properties.obj_property_list.start;
-	while (iterator)
-	{
-		if (moving_speed == 0)
-			moving_speed = iterator->data->moving_speed;
-		if (collider_offset.x == 0)
-			collider_offset.x = iterator->data->collider_offset.x;
-		if (collider_offset.y == 0)
-			collider_offset.y = iterator->data->collider_offset.y;
-		if (death_sfx_source.Length() == 0)
-			death_sfx_source = iterator->data->death_sfx_source;
-		
-		iterator = iterator->next;
-	}
 }

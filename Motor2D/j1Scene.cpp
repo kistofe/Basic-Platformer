@@ -42,6 +42,12 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	App->map->Load(App->map->map_name.start->data->GetString());
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+
+	RELEASE_ARRAY(data);
 
 	App->map->SetEntities();
 	App->audio->PlayMusic("audio/music/Level_1.ogg");

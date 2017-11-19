@@ -73,13 +73,13 @@ iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destinat
 	return *path.At(0);
 }
 
-void j1Pathfinding::SetMap(uint width, uint height, uint* data)
+void j1Pathfinding::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
 	this->height = height;
 
 	RELEASE_ARRAY(map);
-	map = new uint[width*height];
+	map = new uchar[width*height];
 	memcpy(map, data, width*height);
 }
 
@@ -92,7 +92,7 @@ bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
 // Utility: returns true is the tile is walkable
 bool j1Pathfinding::IsWalkable(const iPoint& pos) const
 {
-	uint t = GetTileAt(pos);
+	uchar t = GetTileAt(pos);
 	if (t == 0)
 		return true;
 	else if (t != 0)

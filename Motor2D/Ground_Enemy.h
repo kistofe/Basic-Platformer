@@ -32,9 +32,7 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
-
-	void SetToStart();
-
+	
 	void MoveTowardsPlayer(float d_time);
 	
 private:

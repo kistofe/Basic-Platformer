@@ -25,6 +25,8 @@ Ground_Enemy::Ground_Enemy(uint x, uint y) : Enemy(Entity::EntityType::GROUND_EN
 	original_position.x = x;
 	original_position.y = y;
 
+	default_animation = &idle;
+
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 
@@ -151,14 +153,6 @@ void Ground_Enemy::CreateAnimationPushBacks()
 	bite.PushBack({ 288, 104, 96, 52 });
 	bite.loop = false;
 	bite.speed = 0.4f;
-}
-
-void Ground_Enemy::SetToStart()
-{
-	position.x = original_position.x;
-	position.y = original_position.y;
-	speed.x = 0;
-	speed.y = 0;
 }
 
 void Ground_Enemy::MoveTowardsPlayer(float d_time)

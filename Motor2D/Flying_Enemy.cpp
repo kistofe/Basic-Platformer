@@ -26,6 +26,8 @@ Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_EN
 	original_position.x = x;
 	original_position.y = y;
 
+	default_animation = &fly;
+
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
 
@@ -171,10 +173,3 @@ void Flying_Enemy::CreateAnimationPushBacks()
 	bite.speed = 0.3f;
 }
 
-void Flying_Enemy::SetToStart()
-{
-	position.x = original_position.x;
-	position.y = original_position.y;
-	speed.x = 0;
-	speed.y = 0;
-}

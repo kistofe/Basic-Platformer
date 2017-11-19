@@ -16,6 +16,15 @@ Entity::~Entity()
 {
 }
 
+void Entity::SetToStart()
+{
+	position.x = original_position.x;
+	position.y = original_position.y;
+	speed.x = 0;
+	speed.y = 0;
+	current_animation = default_animation;
+}
+
 void Entity::Draw()
 {
 	if (facing_right)

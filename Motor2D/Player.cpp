@@ -30,6 +30,8 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	original_position.x = x;
 	original_position.y = y;
 
+	default_animation = &idle;
+
 	moving_speed = data.child("moving_speed").attribute("value").as_float();
 	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
@@ -202,15 +204,6 @@ void Player::CreateAnimationPushBacks()
 
 }
 
-void Player::SetToStart()
-{
-	position.x = original_position.x;
-	position.y = original_position.y;
-	speed.x = 0;
-	speed.y = 0;
-}
-
-
 void Player::SetCameraToPlayer()
 {
 	App->render->camera.x = App->render->camera.w / 3 - position.x;
@@ -256,10 +249,10 @@ void Player::SetAnimations()
 	//Reset animation to idle if no keys are pressed
 	current_animation = &idle;
 	//Running animation
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (speed.x != 0)
 		current_animation = &run;
 	//Idle when two keys are pressed simultaneously 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (speed.x == 0)
 		current_animation = &idle;
 	//Jumping animation
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left == 1) //reset the jump animation each time a regular (not double) jump is performed
@@ -300,7 +293,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 								speed.y -= intersect_col.h, jumps_left = 2;
 						}
 						else
-							speed.y -= intersect_col.h;
+							speed.y -= intersect_col.h, jumps_left = 2;
 					}
 					else if (speed.x > 0)
 					{

@@ -72,9 +72,6 @@ private:
 	//Player SFX
 	p2SString jumping_sfx_source;
 	p2SString landing_sfx_source;
-	
-	uint jumping_sfx;
-	uint landing_sfx;
 };
 
 #endif

@@ -94,11 +94,12 @@ bool Flying_Enemy::CleanUp()
 
 bool Flying_Enemy::Load(pugi::xml_node& data)
 {
-	position.x = data.child("position").attribute("x").as_int();
-	position.y = data.child("position").attribute("y").as_int();
-	speed.x = data.child("velocity").attribute("x").as_float();
-	speed.y = data.child("velocity").attribute("y").as_float();
-	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
+	pugi::xml_node flying_enemy = data.child("flying_enemy");
+	position.x = flying_enemy.child("position").attribute("x").as_int();
+	position.y = flying_enemy.child("position").attribute("y").as_int();
+	speed.x = flying_enemy.child("velocity").attribute("x").as_float();
+	speed.y = flying_enemy.child("velocity").attribute("y").as_float();
+	facing_right = flying_enemy.child("status").child("facing_right").attribute("value").as_bool();
 	return true;
 }
 

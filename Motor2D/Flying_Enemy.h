@@ -9,9 +9,6 @@
 #include "j1Collision.h"
 #include "Enemy.h"
 
-struct Object;
-
-
 class Flying_Enemy : public Enemy
 {
 public:
@@ -44,8 +41,6 @@ private:
 
 	Animation fly;
 	Animation bite;
-
-	Object* flying_enemy;
-
+	
 };
 #endif 

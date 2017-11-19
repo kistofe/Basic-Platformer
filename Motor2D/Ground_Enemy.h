@@ -9,8 +9,6 @@
 #include "j1Collision.h"
 #include "Enemy.h"
 
-struct Object;
-
 class Ground_Enemy : public Enemy
 {
 public:
@@ -36,6 +34,8 @@ public:
 	void CreateAnimationPushBacks();
 
 	void SetToStart();
+
+	void MoveTowardsPlayer(float d_time);
 	
 private:
 public:
@@ -43,8 +43,6 @@ private:
 	Animation idle;
 	Animation run;
 	Animation bite;
-
-	Object* ground_enemy;
-	
+		
 };
 #endif 

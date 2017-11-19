@@ -72,7 +72,15 @@ bool j1Scene::Update(float d_time)
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 		App->sceneswitch->FadeToBlack();
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		if (App->entities->player1->god_mode)
+			App->entities->player1->god_mode = false;
+		else
+			App->entities->player1->god_mode = true;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
 		App->audio->VolumeControl();
 

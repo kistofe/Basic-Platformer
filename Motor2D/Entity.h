@@ -40,7 +40,6 @@ enum EntityType
 	virtual void CreateAnimationPushBacks() { return; };
 	virtual void SetToStart() {return;};
 
-	bool AddEntity(EntityType type, int x, int y);
 	void Draw();
 	void Move();
 	
@@ -65,7 +64,6 @@ protected:
 	p2SString	death_sfx_source;
 
 	bool		facing_right = true;
-	float		moving_speed;
 	uint		death_sfx;
 
 	

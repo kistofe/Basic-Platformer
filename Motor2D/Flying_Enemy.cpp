@@ -76,7 +76,7 @@ bool Flying_Enemy::Update(float d_time)
 		MoveTowardsPlayer(d_time);
 	else if (distance_to_player >= 230)
 		ChangeSpeed({ 0,0 }, d_time);
-
+		
 	//Update Position ---------------------------------------------	
 	Move();
 	//Update Collider Position-------------------------------------

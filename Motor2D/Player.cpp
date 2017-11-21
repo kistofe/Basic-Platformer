@@ -102,6 +102,8 @@ bool Player::Update(float d_time)
 	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
 	//Update Player's Blit ----------------------------------------------
 	Draw();
+
+	LOG("dt: %f", d_time);
 	return true;
 }
 
@@ -288,9 +290,9 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 						if (intersect_col.h >= intersect_col.w)
 						{
 							if (c1->rect.x <= c2->rect.x + c2->rect.w)
-								speed.x += intersect_col.w;
-							else
 								speed.y -= intersect_col.h, jumps_left = 2;
+							else
+								speed.x += intersect_col.w; 
 						}
 						else
 							speed.y -= intersect_col.h, jumps_left = 2;
@@ -300,9 +302,9 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 						if (intersect_col.h >= intersect_col.w)
 						{
 							if (c1->rect.x + c1->rect.w >= c2->rect.x)
-								speed.x -= intersect_col.w;
-							else
 								speed.y -= intersect_col.h, jumps_left = 2;
+							else
+								speed.x -= intersect_col.w;
 						}
 						else
 							speed.y -= intersect_col.h, jumps_left = 2;
@@ -330,9 +332,9 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 						if (intersect_col.h >= intersect_col.w)
 						{
 							if (c1->rect.x <= c2->rect.x + c2->rect.w)
-								speed.x += intersect_col.w;
-							else
 								speed.y += intersect_col.h;
+							else
+								speed.x += intersect_col.w;
 						}
 						else
 							speed.y += intersect_col.h;
@@ -342,9 +344,9 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 						if (intersect_col.h >= intersect_col.w)
 						{
 							if (c1->rect.x + c1->rect.w >= c2->rect.x)
-								speed.x -= intersect_col.w;
-							else
 								speed.y += intersect_col.h;
+							else
+								speed.x -= intersect_col.w;
 						}
 						else
 							speed.y += intersect_col.h;
@@ -372,7 +374,6 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 			}
 		
 		}
-
 		//Rounding off speed value
 		if (speed.y < 1 && speed.y > -1)
 			speed.y = 0;

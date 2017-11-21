@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="60" tilewidth="32" tileheight="32" nextobjectid="76">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="60" tilewidth="32" tileheight="32" nextobjectid="77">
  <properties>
   <property name="Name" value="Level1"/>
  </properties>
@@ -72081,43 +72081,42 @@
   </data>
  </layer>
  <objectgroup color="#ff0000" name="Colliders">
-  <object id="3" name="wall" x="640" y="1536" width="96.0039" height="98"/>
-  <object id="7" name="wall" x="0" y="1634" width="1087" height="59"/>
-  <object id="17" name="wall" x="1344" y="1634" width="96" height="59"/>
+  <object id="3" name="wall" x="640" y="1536" width="96.0039" height="96"/>
+  <object id="7" name="wall" x="0" y="1632" width="1088" height="64"/>
+  <object id="17" name="wall" x="1344" y="1632" width="96" height="64"/>
   <object id="20" name="wall" x="1760.33" y="1634" width="479" height="59"/>
-  <object id="21" name="wall" x="2336.33" y="1664.67" width="95" height="28.3333"/>
-  <object id="22" name="wall" x="2560" y="1600" width="95" height="30"/>
-  <object id="23" name="wall" x="2654" y="809" width="64" height="883"/>
-  <object id="24" name="wall" x="2560" y="1375" width="94" height="30"/>
-  <object id="25" name="wall" x="2560" y="1120" width="93" height="30"/>
-  <object id="26" name="wall" x="2144" y="1438.67" width="191.333" height="65.3333"/>
+  <object id="21" name="wall" x="2336" y="1664" width="96" height="32"/>
+  <object id="22" name="wall" x="2560" y="1600" width="96" height="32"/>
+  <object id="23" name="wall" x="2656" y="800" width="64" height="896"/>
+  <object id="24" name="wall" x="2560" y="1376" width="96" height="32"/>
+  <object id="25" name="wall" x="2560" y="1120" width="96" height="32"/>
+  <object id="26" name="wall" x="2144" y="1440" width="192" height="64"/>
   <object id="27" name="wall" x="2270" y="1215" width="97" height="64"/>
-  <object id="28" name="wall" x="2270" y="960" width="161" height="62.6667"/>
-  <object id="29" name="wall" x="2144" y="768" width="126" height="669"/>
-  <object id="30" name="wall" x="1634" y="768" width="510" height="193"/>
-  <object id="31" name="wall" x="1635" y="0" width="509" height="768"/>
-  <object id="32" name="wall" x="0" y="3.0303" width="1633.33" height="472.727"/>
-  <object id="33" name="wall" x="2718" y="830.667" width="413.333" height="861.333"/>
-  <object id="34" name="wall" x="3456.66" y="831" width="575.334" height="861.333"/>
-  <object id="35" name="wall" x="4192" y="766.667" width="96" height="94.6667"/>
-  <object id="36" name="wall" x="4381.33" y="672" width="97.3333" height="93.3333"/>
-  <object id="37" name="wall" x="4738" y="234.667" width="60" height="1458.67"/>
-  <object id="38" name="wall" x="4641" y="576" width="96" height="30"/>
-  <object id="39" name="wall" x="3490" y="192" width="92" height="62"/>
-  <object id="40" name="wall" x="3076" y="354" width="1402" height="88"/>
-  <object id="41" name="wall" x="3076" y="0" width="282" height="352"/>
+  <object id="28" name="wall" x="2272" y="960" width="160" height="64"/>
+  <object id="29" name="wall" x="2144" y="768" width="128" height="672"/>
+  <object id="31" name="wall" x="1632" y="0" width="512" height="960"/>
+  <object id="32" name="wall" x="0" y="0" width="1632" height="480"/>
+  <object id="33" name="wall" x="2720" y="832" width="416" height="864"/>
+  <object id="34" name="wall" x="3456" y="832" width="576" height="864"/>
+  <object id="36" name="wall" x="4384" y="672" width="96" height="96"/>
+  <object id="37" name="wall" x="4736" y="224" width="64" height="1472"/>
+  <object id="38" name="wall" x="4640" y="576" width="96" height="32"/>
+  <object id="39" name="wall" x="3488" y="192" width="96" height="64"/>
+  <object id="40" name="wall" x="3072" y="352" width="1408" height="96"/>
+  <object id="41" name="wall" x="3072" y="0" width="288" height="352"/>
   <object id="42" name="wall" x="3680" y="96" width="1120" height="64"/>
-  <object id="49" name="wall" x="960" y="1472" width="127" height="162"/>
-  <object id="50" name="wall" x="1216" y="1472" width="128" height="221.333"/>
+  <object id="49" name="wall" x="960" y="1472" width="128" height="160"/>
+  <object id="50" name="wall" x="1216" y="1472" width="128" height="224"/>
   <object id="51" name="wall" x="1699" y="1570" width="89" height="64"/>
   <object id="74" name="wall" x="-116.665" y="475.637" width="113.33" height="1196.73"/>
   <object id="75" name="wall" x="4809.15" y="-227.092" width="113.33" height="1196.73"/>
+  <object id="76" name="wall" x="4192" y="768" width="96" height="96"/>
  </objectgroup>
  <objectgroup color="#0000ff" name="LevelEnd">
   <object id="9" name="LevelEnd" x="4764" y="28" width="32" height="64.5"/>
  </objectgroup>
  <objectgroup color="#888888" name="Death colliders">
-  <object id="55" name="death" x="650.121" y="1744" width="4098" height="96"/>
+  <object id="55" name="death" x="650.121" y="1744" width="4148.67" height="96"/>
  </objectgroup>
  <objectgroup color="#00ff00" name="Entities">
   <object id="64" name="Player" type="Player" x="200" y="1568" width="35" height="65"/>
@@ -72127,7 +72126,7 @@
   <object id="68" name="Ground_Enemy" type="Enemy" x="3904" y="781" width="70" height="40"/>
   <object id="69" name="Ground_Enemy" type="Enemy" x="3871" y="46" width="70" height="40"/>
  </objectgroup>
- <layer name="Walkability" width="150" height="60">
+ <layer name="Walkability" width="150" height="60" visible="0">
   <properties>
    <property name="Navigation" type="int" value="1"/>
   </properties>

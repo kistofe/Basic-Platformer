@@ -61,7 +61,7 @@ private:
 	uint jumps_left			= 2;
 	bool is_grounded		= true;
 
-	float		jumping_speed;
+	float	jumping_speed;
 	float	moving_speed;
 
 	uint jumping_sfx;

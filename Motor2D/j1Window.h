@@ -15,6 +15,8 @@ public:
 	// Destructor
 	virtual ~j1Window();
 
+	bool Start();
+
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 

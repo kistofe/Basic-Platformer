@@ -4,6 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1Collision.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -50,6 +51,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.h = App->win->screen_surface->h;
 		camera.x = 0;
 		camera.y = 0;
+		App->collision->AddCollider({ camera.x, camera.y, camera.w, camera.h }, COLLIDER_NONE);
 	}
 
 	return ret;
@@ -99,7 +101,6 @@ bool j1Render::Load(pugi::xml_node& data)
 	camera.x = data.child("camera").attribute("x").as_int();
 	camera.y = data.child("camera").attribute("y").as_int();
 
-	
 	return true;
 }
 

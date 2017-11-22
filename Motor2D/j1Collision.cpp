@@ -175,7 +175,7 @@ void j1Collision::DebugDraw()
 		switch (colliders[i]->type)
 		{
 		case COLLIDER_NONE: // white
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, 0);
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		case COLLIDER_WALL: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);

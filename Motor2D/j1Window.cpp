@@ -4,6 +4,7 @@
 #include "j1Window.h"
 
 #include "SDL/include/SDL.h"
+#include "SDL_image\include\SDL_image.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -17,6 +18,15 @@ j1Window::j1Window() : j1Module()
 // Destructor
 j1Window::~j1Window()
 {
+}
+
+bool j1Window::Start()
+{
+	SDL_Surface* app_icon = IMG_Load("images/icon.png");
+	SDL_SetWindowIcon(window, app_icon);
+
+	SDL_FreeSurface(app_icon);
+	return true;
 }
 
 // Called before render is available
@@ -84,7 +94,7 @@ bool j1Window::Awake(pugi::xml_node& config)
 bool j1Window::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
-
+	
 	//Destroy window
 	if(window != NULL)
 	{

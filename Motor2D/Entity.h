@@ -47,6 +47,7 @@ public:
 
 	p2SString	name;
 	iPoint		position = { 0, 0 };
+	iPoint		collider_offset;
 
 protected:
 
@@ -55,7 +56,6 @@ protected:
 	
 	iPoint		original_position;
 	fPoint		speed = { 0, 0 };
-	iPoint		collider_offset;
 
 	EntityType	type;
 	SDL_Texture* texture = NULL;

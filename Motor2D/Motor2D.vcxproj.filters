@@ -148,6 +148,7 @@
     <ClInclude Include="j1Window.h">
       <Filter>Desenvolupament ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -177,5 +178,12 @@
     <Filter Include="Desenvolupament ========\Entities\Enemies">
       <UniqueIdentifier>{f53df9de-c6e7-4675-8029-d3faa8a057e0}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Motor 2D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\bb8ec0e2f6418610a63f9b5f3d1db892--scott-pilgrim-comic-scot-pilgrim.ico" />
+    <Image Include="..\..\..\..\downloads\icon2.ico" />
   </ItemGroup>
 </Project>

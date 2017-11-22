@@ -20,6 +20,8 @@ j1Pathfinding::~j1Pathfinding()
 iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination)
 {
 	// check if origin or destination are not walkable and return origin if that's the case
+	if (!IsWalkable(origin) || !IsWalkable(destination))
+		return origin;
 
 	// check if origin is the same as destination
 	if (origin == destination)

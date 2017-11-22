@@ -6,6 +6,8 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 
+#include "Brofiler\Brofiler.h"
+
 
 Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_ENEMY)
 {
@@ -67,6 +69,7 @@ bool Flying_Enemy::PreUpdate(float d_time)
 
 bool Flying_Enemy::Update(float d_time)
 {
+	BROFILER_CATEGORY("Flying_Enemy - Update", Profiler::Color::GoldenRod);
 	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
 	iPoint position_world = App->map->WorldToMap(position.x, position.y);

@@ -20,30 +20,30 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	pugi::xml_node config;
 	pugi::xml_node data;
 
-	config = App->LoadConfig(config_file);
-	data = config.child("entity_manager").child("player");
+	config				= App->LoadConfig(config_file);
+	data				= config.child("entity_manager").child("player");
 
-	position.x = x;
-	position.y = y;
+	position.x			= x;
+	position.y			= y;
 
 	//Saving original position to later restart it
-	original_position.x = x;
+	original_position.x	= x;
 	original_position.y = y;
 
 	default_animation = &idle;
 
 	//Setting textures
-	default_tex = App->tex->Load("images/Ramona.png");
-	god_mode_tex = App->tex->Load("images/Ramona_godmode.png");
-	current_tex = default_tex;
+	default_tex			= App->tex->Load("images/Ramona.png");
+	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png");
+	current_tex			= default_tex;
 
-	moving_speed = data.child("moving_speed").attribute("value").as_float();
-	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
-	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
-	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
-	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
-	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
-	landing_sfx_source = data.child("land_sfx").attribute("source").as_string();
+	moving_speed		= data.child("moving_speed").attribute("value").as_float();
+	jumping_speed		= data.child("jumping_speed").attribute("value").as_float();
+	collider_offset.x	= data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y	= data.child("collider_offset_y").attribute("value").as_int();
+	death_sfx_source	= data.child("death_sfx").attribute("source").as_string();
+	jumping_sfx_source	= data.child("jump_sfx").attribute("source").as_string();
+	landing_sfx_source	= data.child("land_sfx").attribute("source").as_string();
 }
 
 Player::~Player()
@@ -127,13 +127,14 @@ bool Player::CleanUp()
 bool Player::Load(pugi::xml_node& data)
 {
 	pugi::xml_node player = data.child("player");
-	position.x = player.child("position").attribute("x").as_int();
-	position.y = player.child("position").attribute("y").as_int();
-	speed.x = player.child("velocity").attribute("x").as_float();
-	speed.y = player.child("velocity").attribute("y").as_float();
-	is_grounded = player.child("status").child("is_grounded").attribute("value").as_bool();
-	facing_right = player.child("status").child("facing_right").attribute("value").as_bool();
-	jumps_left = player.child("status").child("jumps_left").attribute("value").as_uint();
+	position.x		= player.child("position").attribute("x").as_int();
+	position.y		= player.child("position").attribute("y").as_int();
+	speed.x			= player.child("velocity").attribute("x").as_float();
+	speed.y			= player.child("velocity").attribute("y").as_float();
+	is_grounded		= player.child("status").child("is_grounded").attribute("value").as_bool();
+	facing_right	= player.child("status").child("facing_right").attribute("value").as_bool();
+	jumps_left		= player.child("status").child("jumps_left").attribute("value").as_uint();
+	god_mode		= player.child("status").child("god_mode").attribute("value").as_bool();
 	
 	return true;
 }
@@ -157,6 +158,7 @@ bool Player::Save(pugi::xml_node& data) const
 	status.append_child("is_grounded").append_attribute("value") = is_grounded;
 	status.append_child("facing_right").append_attribute("value") = facing_right;
 	status.append_child("jumps_left").append_attribute("value") = jumps_left;
+	status.append_child("god_mode").append_attribute("value") = god_mode;
 
 	return true;
 }

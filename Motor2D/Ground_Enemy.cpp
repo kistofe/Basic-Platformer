@@ -18,8 +18,8 @@ Ground_Enemy::Ground_Enemy(uint x, uint y) : Enemy(Entity::EntityType::GROUND_EN
 	config = App->LoadConfig(config_file);
 	data = config.child("entity_manager").child("flying_enemy");
 
-	position.x = x;
-	position.y = y;
+	position.x			= x;
+	position.y			= y;
 
 	//Saving original position to later restart it
 	original_position.x = x;
@@ -27,8 +27,10 @@ Ground_Enemy::Ground_Enemy(uint x, uint y) : Enemy(Entity::EntityType::GROUND_EN
 
 	default_animation = &idle;
 
-	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
-	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
+	current_tex			= App->tex->Load("images/Ground Enemy.png");
+
+	collider_offset.x	= data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y	= data.child("collider_offset_y").attribute("value").as_int();
 
 
 }
@@ -41,14 +43,12 @@ Ground_Enemy::~Ground_Enemy()
 bool Ground_Enemy::Start()
 {
 	LOG("Loading Ground Enemy");
-
-	current_tex = App->tex->Load("images/Ground Enemy.png");
-
+	
 	//Creating Colliders
-	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 70, 40 }, COLLIDER_ENEMY, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 70, 40 }, COLLIDER_FUTURE, this);
+	collider			= App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 70, 40 }, COLLIDER_ENEMY, this);
+	future_collider		= App->collision->AddCollider({ collider->rect.x, collider->rect.y, 70, 40 }, COLLIDER_FUTURE, this);
 
-	current_animation = &idle;
+	current_animation	= &idle;
 
 	return true;
 }
@@ -87,13 +87,13 @@ bool Ground_Enemy::CleanUp()
 bool Ground_Enemy::Load(pugi::xml_node& data)
 {
 	static pugi::xml_node ground_enemy = data.child("ground_enemy");
-	position.x = ground_enemy.child("position").attribute("x").as_int();
-	position.y = ground_enemy.child("position").attribute("y").as_int();
-	speed.x = ground_enemy.child("velocity").attribute("x").as_float();
-	speed.y = ground_enemy.child("velocity").attribute("y").as_float();
-	facing_right = ground_enemy.child("status").child("facing_right").attribute("value").as_bool();
+	position.x		= ground_enemy.child("position").attribute("x").as_int();
+	position.y		= ground_enemy.child("position").attribute("y").as_int();
+	speed.x			= ground_enemy.child("velocity").attribute("x").as_float();
+	speed.y			= ground_enemy.child("velocity").attribute("y").as_float();
+	facing_right	= ground_enemy.child("status").child("facing_right").attribute("value").as_bool();
 
-	ground_enemy = ground_enemy.next_sibling("ground_enemy");
+	ground_enemy	= ground_enemy.next_sibling("ground_enemy");
 	return true;
 }
 

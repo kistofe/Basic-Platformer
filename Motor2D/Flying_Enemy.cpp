@@ -18,20 +18,22 @@ Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_EN
 	pugi::xml_node config;
 	pugi::xml_node data;
 
-	config = App->LoadConfig(config_file);
-	data = config.child("entity_manager").child("flying_enemy");
+	config				= App->LoadConfig(config_file);
+	data				= config.child("entity_manager").child("flying_enemy");
 
-	position.x = x;
-	position.y = y;
+	position.x			= x;
+	position.y			= y;
 
 	//Saving original position to later restart it
 	original_position.x = x;
 	original_position.y = y;
 
-	default_animation = &fly;
+	default_animation	= &fly;
 
-	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
-	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
+	current_tex			= App->tex->Load("images/Flying Enemy.png");
+
+	collider_offset.x	= data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y	= data.child("collider_offset_y").attribute("value").as_int();
 
 	
 }
@@ -45,14 +47,12 @@ Flying_Enemy::~Flying_Enemy()
 bool Flying_Enemy::Start()
 {
 	LOG("Loading Flying Enemy");
-
-	current_tex = App->tex->Load("images/Flying Enemy.png");
-
+	
 	//Creating Colliders
-	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
-	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
+	collider			= App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
+	future_collider		= App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
 
-	current_animation = &fly;
+	current_animation	= &fly;
 	
 	return true;
 }
@@ -72,8 +72,8 @@ bool Flying_Enemy::Update(float d_time)
 	BROFILER_CATEGORY("Flying_Enemy - Update", Profiler::Color::GoldenRod);
 	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
-	iPoint position_world = App->map->WorldToMap(position.x, position.y);
-	int distance_to_player = (position_world.DistanceNoSqrt(App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y)));
+	iPoint position_world	= App->map->WorldToMap(position.x, position.y);
+	int distance_to_player	= (position_world.DistanceNoSqrt(App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y)));
 
 	if (distance_to_player < 230)
 		MoveTowardsPlayer(d_time);
@@ -99,13 +99,13 @@ bool Flying_Enemy::CleanUp()
 bool Flying_Enemy::Load(pugi::xml_node& data)
 {
 	static pugi::xml_node flying_enemy = data.child("flying_enemy");
-	position.x = flying_enemy.child("position").attribute("x").as_int();
-	position.y = flying_enemy.child("position").attribute("y").as_int();
-	speed.x = flying_enemy.child("velocity").attribute("x").as_float();
-	speed.y = flying_enemy.child("velocity").attribute("y").as_float();
-	facing_right = flying_enemy.child("status").child("facing_right").attribute("value").as_bool();
+	position.x		= flying_enemy.child("position").attribute("x").as_int();
+	position.y		= flying_enemy.child("position").attribute("y").as_int();
+	speed.x			= flying_enemy.child("velocity").attribute("x").as_float();
+	speed.y			= flying_enemy.child("velocity").attribute("y").as_float();
+	facing_right	= flying_enemy.child("status").child("facing_right").attribute("value").as_bool();
 
-	flying_enemy = flying_enemy.next_sibling("flying_enemy");
+	flying_enemy	= flying_enemy.next_sibling("flying_enemy");
 	return true;
 }
 

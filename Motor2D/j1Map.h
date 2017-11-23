@@ -210,7 +210,6 @@ public:
 	MapData data;
 	p2List<p2SString*> map_name;
 	uint max_map_x;
-	uint max_map_y;
 
 private:
 

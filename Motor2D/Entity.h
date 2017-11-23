@@ -57,10 +57,10 @@ protected:
 	iPoint		original_position;
 	fPoint		speed = { 0, 0 };
 
-	EntityType	type;
-	SDL_Texture* texture = NULL;
-	Animation*	current_animation = nullptr;
-	Animation* default_animation = nullptr;
+	EntityType		type;
+	SDL_Texture*	current_tex = NULL;
+	Animation*		current_animation = nullptr;
+	Animation*		default_animation = nullptr;
 
 	p2SString	death_sfx_source;
 

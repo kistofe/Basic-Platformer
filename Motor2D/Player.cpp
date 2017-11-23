@@ -32,6 +32,11 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 
 	default_animation = &idle;
 
+	//Setting textures
+	default_tex = App->tex->Load("images/Ramona.png");
+	god_mode_tex = App->tex->Load("images/Ramona_godmode.png");
+	current_tex = default_tex;
+
 	moving_speed = data.child("moving_speed").attribute("value").as_float();
 	jumping_speed = data.child("jumping_speed").attribute("value").as_float();
 	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
@@ -49,16 +54,13 @@ Player::~Player()
 bool Player::Start()
 {
 	LOG("Loading player");
-	
-	texture = App->tex->Load("images/Ramona.png");
-	
+		
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 35, 65 }, COLLIDER_PLAYER, this);
 	future_collider = App->collision->AddCollider({ collider->rect.x, collider->rect.y, 35, 65 }, COLLIDER_FUTURE, this);
 
 	current_animation = &idle;
-
-
+	
 	return true;
 }
 
@@ -68,6 +70,11 @@ bool Player::PreUpdate(float d_time)
 
 	//Update Future Player Collider with new speed
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
+
+	if (god_mode)
+		current_tex = god_mode_tex;
+	else
+		current_tex = default_tex;
 
 	return true;
 }
@@ -102,8 +109,7 @@ bool Player::Update(float d_time)
 	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
 	//Update Player's Blit ----------------------------------------------
 	Draw();
-
-	LOG("dt: %f", d_time);
+	
 	return true;
 }
 
@@ -111,7 +117,8 @@ bool Player::CleanUp()
 {
 	LOG("Unloading player");
 	
-	App->tex->UnLoad(texture);
+	App->tex->UnLoad(default_tex);
+	App->tex->UnLoad(god_mode_tex);
 	
 		return true;
 }
@@ -161,48 +168,48 @@ void Player::CreateAnimationPushBacks()
 	idle.PushBack({ 0, 0, 54, 69 });
 	
 	//running animation
-	run.PushBack({ 0, 207, 54, 69 });
-	run.PushBack({ 54, 207, 54, 69 });
-	run.PushBack({ 108, 207, 54, 69 });
-	run.PushBack({ 162, 207, 54, 69 });
-	run.PushBack({ 216, 207, 54, 69 });
-	run.PushBack({ 270, 207, 54, 69 });
-	run.PushBack({ 324, 207, 54, 69 });
-	run.PushBack({ 378, 207, 54, 69 });
+	run.PushBack({ 0, 138, 54, 69 });
+	run.PushBack({ 54, 138, 54, 69 });
+	run.PushBack({ 108, 138, 54, 69 });
+	run.PushBack({ 162, 138, 54, 69 });
+	run.PushBack({ 216, 138, 54, 69 });
+	run.PushBack({ 270, 138, 54, 69 });
+	run.PushBack({ 324, 138, 54, 69 });
+	run.PushBack({ 378, 138, 54, 69 });
 	run.loop = true;
 	run.speed = 0.4f;
 	
 	//jumping animation
-	jump.PushBack({ 0, 138, 54, 69 });
-	jump.PushBack({ 54, 138, 54, 69 });
-	jump.PushBack({ 108, 138, 54, 69 });
-	jump.PushBack({ 162, 138, 54, 69 });
-	jump.PushBack({ 216, 138, 54, 69 });
-	jump.PushBack({ 270, 138, 54, 69 });
-	jump.PushBack({ 324, 138, 54, 69 });
-	jump.PushBack({ 378, 138, 54, 69 });
+	jump.PushBack({ 0, 69, 54, 69 });
+	jump.PushBack({ 54, 69, 54, 69 });
+	jump.PushBack({ 108, 69, 54, 69 });
+	jump.PushBack({ 162, 69, 54, 69 });
+	jump.PushBack({ 216, 69, 54, 69 });
+	jump.PushBack({ 270, 69, 54, 69 });
+	jump.PushBack({ 324, 69, 54, 69 });
+	jump.PushBack({ 378, 69, 54, 69 });
 	jump.loop = false;
 	jump.speed = 0.5f;
 
 	//Double Jump animation
-	double_jump.PushBack({ 0, 276, 54, 69 });
-	double_jump.PushBack({ 54, 276, 54, 69 });
-	double_jump.PushBack({ 108, 276, 54, 69 });
-	double_jump.PushBack({ 162, 276, 54, 69 });
-	double_jump.PushBack({ 216, 276, 54, 69 });
+	double_jump.PushBack({ 0, 207, 54, 69 });
+	double_jump.PushBack({ 54, 207, 54, 69 });
+	double_jump.PushBack({ 108, 207, 54, 69 });
+	double_jump.PushBack({ 162, 207, 54, 69 });
+	double_jump.PushBack({ 216, 207, 54, 69 });
 	double_jump.loop = true;
 	double_jump.speed = 0.4f;
 
-	win.PushBack({ 0, 483, 54, 69 });
-	win.PushBack({ 54, 483, 54, 69 });
-	win.PushBack({ 108, 483, 54, 69 });
-	win.PushBack({ 162, 483, 54, 69 });
-	win.PushBack({ 216, 483, 54, 69 });
+	win.PushBack({ 0, 276, 54, 69 });
+	win.PushBack({ 54, 276, 54, 69 });
+	win.PushBack({ 108, 276, 54, 69 });
+	win.PushBack({ 162, 276, 54, 69 });
+	win.PushBack({ 216, 276, 54, 69 });
 	win.loop = true;
 	win.speed = 0.4f;
 
 	//Falling animation
-	fall.PushBack({ 378, 138, 54, 69 });
+	fall.PushBack({ 378, 69, 54, 69 });
 
 }
 
@@ -211,14 +218,11 @@ void Player::SetCameraToPlayer()
 	App->render->camera.x = App->render->camera.w / 3 - position.x;
 	if (App->render->camera.x > 0)
 		App->render->camera.x = 0;
-//	else if (App->render->camera.x <= App->map->max_map_x)
-	//	App->render->camera.x = App->map->max_map_x;
+	else if (App->render->camera.x - App->render->camera.w / 3 <= App->map->max_map_x)
+		App->render->camera.x = App->map->max_map_x + App->render->camera.w / 3;
 	App->render->camera.y = App->render->camera.h / 1.35 - position.y;
 	if (App->render->camera.y > 0)
 		App->render->camera.y = 0;
-	//else if (App->render->camera.y <= App->map->max_map_y)
-	//	App->render->camera.y = App->map->max_map_y;
-			
 }
 
 void Player::SetSpeed(float d_time)

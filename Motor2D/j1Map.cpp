@@ -43,7 +43,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 	max_map_x = config.child("max_map_x").attribute("value").as_uint();
-	max_map_y = config.child("max_map_y").attribute("value").as_uint();
 
 	return ret;
 }
@@ -69,7 +68,7 @@ void j1Map::Draw()
 					for (int x = 0; x < data.width; x++)
 					{
 						if (data.map_layers[i]->properties.Get("Navigation") != 1)
-						App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
+							App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
 					}
 				}
 			}

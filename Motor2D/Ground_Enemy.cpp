@@ -42,7 +42,7 @@ bool Ground_Enemy::Start()
 {
 	LOG("Loading Ground Enemy");
 
-	texture = App->tex->Load("images/Ground Enemy.png");
+	current_tex = App->tex->Load("images/Ground Enemy.png");
 
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 70, 40 }, COLLIDER_ENEMY, this);
@@ -79,7 +79,7 @@ bool Ground_Enemy::Update(float d_time)
 bool Ground_Enemy::CleanUp()
 {
 	//Unload Texture
-	App->tex->UnLoad(texture);
+	App->tex->UnLoad(current_tex);
 
 	return true;
 }

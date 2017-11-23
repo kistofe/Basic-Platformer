@@ -46,7 +46,7 @@ bool Flying_Enemy::Start()
 {
 	LOG("Loading Flying Enemy");
 
-	texture = App->tex->Load("images/Flying Enemy.png");
+	current_tex = App->tex->Load("images/Flying Enemy.png");
 
 	//Creating Colliders
 	collider = App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
@@ -92,7 +92,7 @@ bool Flying_Enemy::Update(float d_time)
 bool Flying_Enemy::CleanUp()
 {
 	//Unload Texture
-	App->tex->UnLoad(texture);
+	App->tex->UnLoad(current_tex);
 	return true;
 }
 

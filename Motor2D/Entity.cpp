@@ -11,10 +11,8 @@
 Entity::Entity(EntityType type) : type(type)
 {}
 
-
 Entity::~Entity()
-{
-}
+{}
 
 void Entity::SetToStart()
 {
@@ -28,10 +26,10 @@ void Entity::SetToStart()
 void Entity::Draw()
 {
 	if (facing_right)
-		App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()));
+		App->render->Blit(current_tex, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f, 0.0, 2147483647, 2147483647);
 
 	else
-		App->render->Blit(texture, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0F, 0.0, 2147483647, 2147483647, true);
+		App->render->Blit(current_tex, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f, 0.0, 2147483647, 2147483647, true);
 }
 
 void Entity::Move()

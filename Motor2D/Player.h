@@ -72,6 +72,8 @@ private:
 	p2SString landing_sfx_source;
 
 	bool has_reached_end = false;
+	SDL_Texture* god_mode_tex = nullptr;
+	SDL_Texture* default_tex = NULL;
 
 };
 

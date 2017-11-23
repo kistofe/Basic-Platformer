@@ -86,12 +86,14 @@ bool Ground_Enemy::CleanUp()
 
 bool Ground_Enemy::Load(pugi::xml_node& data)
 {
-	pugi::xml_node ground_enemy = data.child("ground_enemy");
+	static pugi::xml_node ground_enemy = data.child("ground_enemy");
 	position.x = ground_enemy.child("position").attribute("x").as_int();
 	position.y = ground_enemy.child("position").attribute("y").as_int();
 	speed.x = ground_enemy.child("velocity").attribute("x").as_float();
 	speed.y = ground_enemy.child("velocity").attribute("y").as_float();
 	facing_right = ground_enemy.child("status").child("facing_right").attribute("value").as_bool();
+
+	ground_enemy = ground_enemy.next_sibling("ground_enemy");
 	return true;
 }
 

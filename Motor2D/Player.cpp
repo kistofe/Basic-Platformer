@@ -126,13 +126,14 @@ bool Player::CleanUp()
 //Load Player info
 bool Player::Load(pugi::xml_node& data)
 {
-	position.x = data.child("position").attribute("x").as_int();
-	position.y = data.child("position").attribute("y").as_int();
-	speed.x = data.child("velocity").attribute("x").as_float();
-	speed.y = data.child("velocity").attribute("y").as_float();
-	is_grounded = data.child("status").child("is_grounded").attribute("value").as_bool();
-	facing_right = data.child("status").child("facing_right").attribute("value").as_bool();
-	jumps_left = data.child("status").child("jumps_left").attribute("value").as_uint();
+	pugi::xml_node player = data.child("player");
+	position.x = player.child("position").attribute("x").as_int();
+	position.y = player.child("position").attribute("y").as_int();
+	speed.x = player.child("velocity").attribute("x").as_float();
+	speed.y = player.child("velocity").attribute("y").as_float();
+	is_grounded = player.child("status").child("is_grounded").attribute("value").as_bool();
+	facing_right = player.child("status").child("facing_right").attribute("value").as_bool();
+	jumps_left = player.child("status").child("jumps_left").attribute("value").as_uint();
 	
 	return true;
 }

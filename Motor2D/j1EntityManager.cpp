@@ -141,10 +141,25 @@ bool j1EntityManager::Load(pugi::xml_node & data)
 
 	p2List_item<Entity*>* entity_iterator;
 	entity_iterator = entity_list.start;
+	pugi::xml_node& player_data = data.child("player");
+	pugi::xml_node& fenemy_data = data.child("flying_enemy");
+	pugi::xml_node& genemy_data = data.child("ground_enemy");
 
 	while (entity_iterator != NULL && ret == true)
 	{
-		ret = entity_iterator->data->Load(data);
+		if (entity_iterator->data->name == "player")
+			ret = entity_iterator->data->Load(player_data);
+
+		if (entity_iterator->data->name == "flying_enemy")
+		{
+			ret = entity_iterator->data->Load(fenemy_data);
+			fenemy_data = fenemy_data.next_sibling("flying_enemy");
+		}
+		if (entity_iterator->data->name == "ground_enemy")
+		{
+			ret = entity_iterator->data->Load(genemy_data);
+			genemy_data = genemy_data.next_sibling("ground_enemy");
+		}
 		entity_iterator = entity_iterator->next;
 	}
 

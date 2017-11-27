@@ -30,7 +30,7 @@
 
   <map>
     <folder>maps/</folder>
-    <max_map_x value = "-4115"/>
+    <max_map_x value = "-7315"/>
     <map_name name = "Level1.tmx">
       <music name = "Level_1.ogg"/>
     </map_name>

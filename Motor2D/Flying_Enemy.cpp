@@ -70,7 +70,6 @@ bool Flying_Enemy::PreUpdate(float d_time)
 bool Flying_Enemy::Update(float d_time)
 {
 	BROFILER_CATEGORY("Flying_Enemy - Update", Profiler::Color::GoldenRod);
-	//Check bool alive (only enter if the enemy is still alive
 	//Call SetAnimations()
 	iPoint position_world	= App->map->WorldToMap(position.x, position.y);
 	int distance_to_player	= (position_world.DistanceNoSqrt(App->map->WorldToMap(App->entities->player1->position.x, App->entities->player1->position.y)));
@@ -137,6 +136,11 @@ void Flying_Enemy::MoveTowardsPlayer(float d_time)
 	// create a speed vector
 	iPoint speed_to_go;
 	speed_to_go.create(distance.x, distance.y);
+
+	if (speed_to_go.x > 0)
+		facing_right = true;
+	else
+		facing_right = false;
 
 	ChangeSpeed(speed_to_go, d_time);
 }

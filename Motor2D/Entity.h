@@ -10,7 +10,6 @@
 #include "SDL\include\SDL.h"
 
 struct Collider;
-struct Object;
 
 class Entity 
 {

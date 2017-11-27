@@ -69,6 +69,18 @@
     <ClCompile Include="j1Fonts.cpp">
       <Filter>Desenvolupament ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Widgets.cpp">
+      <Filter>Desenvolupament ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicLabel.cpp">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -161,6 +173,18 @@
     <ClInclude Include="j1Fonts.h">
       <Filter>Desenvolupament ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Widgets.h">
+      <Filter>Desenvolupament ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicLabel.h">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -189,6 +213,12 @@
     </Filter>
     <Filter Include="Desenvolupament ========\Entities\Enemies">
       <UniqueIdentifier>{f53df9de-c6e7-4675-8029-d3faa8a057e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament ========\UI">
+      <UniqueIdentifier>{0e700ca3-2ab7-4d88-b5e9-c2b294d0e60d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament ========\UI\UI Elems">
+      <UniqueIdentifier>{4ee6da78-8fef-478f-b256-52ccb8056a3b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

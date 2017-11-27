@@ -38,6 +38,7 @@
       <music name = "Level_2.ogg"/>
     </map_name>
   </map>
+
   <entity_manager>
     <player>
       <moving_speed value = "250"/>
@@ -57,6 +58,11 @@
       <collider_offset_y value = "0"/>
     </ground_enemy>
   </entity_manager>
+
+  <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>
+
   <scene>
      <gravity_x value = "0"/>
     <gravity_y value = "-50"/>

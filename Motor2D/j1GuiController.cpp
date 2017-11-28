@@ -27,44 +27,31 @@ bool j1GuiController::Awake(pugi::xml_node& conf)
 	return ret;
 }
 
-// Called before the first frame
-bool j1GuiController::Start()
+bool j1GuiController::Update(float d_time)
 {
+	bool ret = true;
+
+	p2List_item<Widgets*>* ui_elem_iterator = ui_elems.start;
+	while (ui_elem_iterator)
+	{
+		ui_elem_iterator->data->Draw();
+		ui_elem_iterator = ui_elem_iterator->next;
+	}
+
 	return true;
 }
 
-// Update all guis
-bool j1GuiController::PreUpdate()
-{
-	return true;
-}
-
-bool j1GuiController::Update()
-{
-	return true;
-}
-
-// Called after all Updates
-bool j1GuiController::PostUpdate()
-{
-	return true;
-}
-
-// Called before quitting
-bool j1GuiController::CleanUp()
-{
-	return true;
-}
-
-Widgets* j1GuiController::CreateWidget(UiElemType type, uint x, uint y, Widgets* callback)
+Widgets* j1GuiController::CreateWidget(Widgets::UiElemType type, uint x, uint y, j1Module* callback)
 {
 	Widgets* ret = nullptr;
 
 	switch (type)
 	{
-	case UiElemType::BUTTON:			ret = new Button(x, y);
+	case Widgets::UiElemType::BUTTON:			
+		ret = new Button(x, y, callback);
 		break;
-	case UiElemType::LABEL:			ret = new Label(x, y);
+	case Widgets::UiElemType::LABEL:	
+		ret = new Label(x, y, callback);
 		break;
 	//case UiElemType::DYNAMIC_LABEL:	ret = new DynamicLabel(x, y);
 	}

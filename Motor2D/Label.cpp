@@ -1,17 +1,21 @@
-#include "Label.h"
 #include "j1App.h"
+#include "Label.h"
+#include "j1Textures.h"
+#include "j1Render.h"
 #include "j1Fonts.h"
 
 
 Label::Label(uint x, uint y, j1Module* callback) : Widgets(Widgets::UiElemType::LABEL)
 {
 	this->callback = callback;
+	position.x = x;
+	position.y = y;
 }
 
 Label::~Label()
 {
 	if (text_texture != nullptr)
-	App->tex->UnLoad(text_texture);
+		App->tex->UnLoad(text_texture);
 }
 
 void Label::SetText(const char* content, const SDL_Color &color)

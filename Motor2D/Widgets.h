@@ -4,6 +4,11 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
+
+class Widgets
+{
+public:
+
 enum UiElemType
 {
 	LABEL,
@@ -12,11 +17,7 @@ enum UiElemType
 	IMAGE,
 };
 
-class Widgets
-{
-public:
-
-	Widgets();
+	Widgets(UiElemType type);
 
 	~Widgets();
 

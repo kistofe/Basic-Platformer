@@ -11,6 +11,7 @@
 
 
 class j1App;
+class Widgets;
 
 class j1Module
 {

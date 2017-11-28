@@ -11,12 +11,12 @@ class Button : public Widgets
 public:
 	Button(uint x, uint y, j1Module* callback);
 	~Button();
-
+	
+	bool Update();
 	void Draw();
 
 private:
 
-	void OnEvent();
 	bool CheckClick(const SDL_Rect& button);
 	bool MouseOver(const SDL_Rect& button);
 

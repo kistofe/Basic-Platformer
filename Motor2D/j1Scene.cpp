@@ -47,8 +47,8 @@ bool j1Scene::Start()
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 
-	my_text = (Label*)App->gui->CreateWidget(LABEL, 500, 500);
-	my_text->SetText("HELLO", { (200), (200), (200), (255) });
+	my_text = (Label*)App->gui->CreateWidget(Widgets::UiElemType::LABEL, 200, 1500, this);
+	my_text->SetText("HELLO", { (255), (255), (255), (255) });
 	
 	return true;
 }

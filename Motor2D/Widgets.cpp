@@ -2,7 +2,7 @@
 #include "Widgets.h"
 
 
-Widgets::Widgets() : type(type)
+Widgets::Widgets(UiElemType type) : type(type)
 {}
 
 

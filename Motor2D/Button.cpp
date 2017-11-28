@@ -8,6 +8,8 @@
 Button::Button(uint x, uint y, j1Module* callback) : Widgets(Widgets::UiElemType::BUTTON)
 {
 	this->callback = callback;
+	position.x = x;
+	position.y = y;
 }
 
 
@@ -15,13 +17,13 @@ Button::~Button()
 {
 }
 
-void Button::Draw()
+bool Button::Update()
 {
+	return true;
 }
 
-void Button::OnEvent()
+void Button::Draw()
 {
-
 }
 
 bool Button::CheckClick(const SDL_Rect& button_area)

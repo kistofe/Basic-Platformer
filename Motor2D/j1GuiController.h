@@ -29,22 +29,10 @@ enum MouseEvents
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
-	// Call before first frame
-	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	bool Update();
-
-	// Called after all Updates
-	bool PostUpdate();
-
-	// Called before quitting
-	bool CleanUp();
+	bool Update(float d_time);
 
 	// Gui creation functions
-	Widgets* CreateWidget(UiElemType type, uint x, uint y, Widgets* callback = nullptr);
+	Widgets* CreateWidget(Widgets::UiElemType type, uint x, uint y, j1Module* callback = nullptr);
 	bool DestroyWidget(Widgets* widget);
 
 	const SDL_Texture* GetAtlas() const;

@@ -17,7 +17,12 @@ j1Pathfinding::~j1Pathfinding()
 {
 }
 
-iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination)
+iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination, const bool is_ground)
+{
+	return iPoint();
+}
+
+iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination, const bool is_ground)
 {
 	BROFILER_CATEGORY("Pathfinding Method", Profiler::Color::Khaki);
 	// check if origin or destination are not walkable and return origin if that's the case
@@ -93,9 +98,16 @@ bool j1Pathfinding::CheckBoundaries(const iPoint& pos) const
 }
 
 // Utility: returns true is the tile is walkable
-bool j1Pathfinding::IsWalkable(const iPoint& pos) const
+bool j1Pathfinding::IsWalkable(const iPoint& pos, const bool is_ground) const
 {
 	uchar t = GetTileAt(pos);
+	if (is_ground)
+	{
+		if (t != 0 || t != 1)
+			return true;
+		else if (t == 0 || t == 1)
+			return false;
+	}
 	if (t != 0)
 		return true;
 	else if (t == 0)
@@ -123,28 +135,28 @@ PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : 
 PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), position(node.position), parent(node.parent)
 {}
 
-uint PathNode::FindWalkableAdjacents(PathList & list_to_fill) const
+uint PathNode::FindWalkableAdjacents(PathList & list_to_fill, const bool is_ground) const
 {
 	iPoint cell;
 
 	// north
 	cell.create(position.x, position.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, is_ground))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(position.x, position.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, is_ground))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(position.x + 1, position.y);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, is_ground))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(position.x - 1, position.y);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, is_ground))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	return list_to_fill.list.count();

@@ -13,11 +13,11 @@ public:
 	j1Pathfinding();
 	~j1Pathfinding();
 	
-	iPoint GetNextTile(const iPoint& origin, const iPoint& destination); // method that gives the next tile in the path from origin to destination
+	iPoint GetNextTile(const iPoint& origin, const iPoint& destination, const bool is_ground = false); // method that gives the next tile in the path from origin to destination
 
 	void SetMap(uint width, uint height, uchar* data);
 	bool CheckBoundaries(const iPoint& pos) const;
-	bool IsWalkable(const iPoint& pos) const; // checks walkability of the tile in given position
+	bool IsWalkable(const iPoint& pos, const bool is_ground = false) const; // checks walkability of the tile in given position
 	uint GetTileAt(const iPoint& pos) const;
 
 private:
@@ -41,7 +41,7 @@ struct PathNode
 	PathNode(const PathNode& node); //copy constructor
 
 	// Fills a PathList of all walkable adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	uint FindWalkableAdjacents(PathList& list_to_fill, const bool is_ground = false) const;
 	// Computes the score of the tile
 	int Score() const;
 	// Compute the F for a given destination tile

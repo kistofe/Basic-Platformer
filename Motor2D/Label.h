@@ -2,6 +2,7 @@
 #define _LABEL_
 
 #include "Widgets.h"
+#include "j1Fonts.h"
 
 #include "SDL/include/SDL.h"
 
@@ -11,15 +12,11 @@ public:
 	Label(uint x, uint y);
 	~Label();
 
-	bool Start();
-	bool PreUpdate();
-	bool Update();
-	bool PostUpdate();
-	bool CleanUp();
+	void SetText(const char* content, const SDL_Color &color);
 
 	void Draw();
 
 public:
-	SDL_Texture* text;
+	SDL_Texture* text_texture;
 };
 #endif 

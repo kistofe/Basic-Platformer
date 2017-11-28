@@ -12,12 +12,6 @@ public:
 	Button(uint x, uint y);
 	~Button();
 
-	bool Start();
-	bool PreUpdate();
-	bool Update();
-	bool PostUpdate();
-	bool CleanUp();
-
 	void Draw();
 
 private:
@@ -27,9 +21,9 @@ private:
 	bool MouseOver(const SDL_Rect& button);
 
 private:
-	SDL_Rect atlas_click_rect;
-	SDL_Rect atlas_idle_rect;
-	SDL_Rect atlas_highlighted_rect;
+	SDL_Rect atlas_click_sect;
+	SDL_Rect atlas_idle_sect;
+	SDL_Rect atlas_highlighted_sect;
 
 	Label* text;
 };

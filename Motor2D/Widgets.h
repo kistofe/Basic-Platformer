@@ -3,26 +3,23 @@
 
 #include "p2Point.h"
 
-class Widgets
-{
-public:
-
 enum UiElemType
 {
 	LABEL,
 	BUTTON,
 	DYNAMIC_LABEL,
+	IMAGE,
 };
 
-	Widgets(UiElemType type);
+class Widgets
+{
+public:
+
+	Widgets();
 
 	~Widgets();
 
-	virtual bool Start() { return true; };
-	virtual bool PreUpdate() { return true; };
 	virtual bool Update() { return true; };
-	virtual bool PostUpdate() { return true; };
-	virtual bool CleanUp() { return true; };
 	virtual void Draw();
 
 protected:

@@ -2,6 +2,7 @@
 #define __j1FONTS_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT "fonts/open_sans/OpenSans-Regular.ttf"
@@ -37,6 +38,7 @@ public:
 
 	p2List<_TTF_Font*>	fonts;
 	_TTF_Font*			default;
+	_TTF_Font*			default1;
 };
 
 

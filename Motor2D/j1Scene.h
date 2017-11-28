@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "p2Defs.h"
 #include "j1EntityManager.h"
+#include "j1GuiController.h"
 #include <math.h>
 
 #define LAST_LVL 2
@@ -50,6 +51,7 @@ public:
 	uint current_lvl = 1;
 	fPoint gravity;
 	fPoint max_gravity;
+	Label* my_text;
 
 private:
 

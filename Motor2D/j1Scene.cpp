@@ -13,6 +13,7 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1EntityManager.h"
+#include "j1GuiController.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -45,6 +46,9 @@ bool j1Scene::Start()
 	Initialize(App->map->map_name.start->data->GetString());
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
+
+	my_text = (Label*)App->gui->CreateWidget(LABEL, 500, 500);
+	my_text->SetText("HELLO", { (200), (200), (200), (255) });
 	
 	return true;
 }

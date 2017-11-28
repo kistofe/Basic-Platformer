@@ -4,6 +4,7 @@
 
 #include "SDL\include\SDL.h"
 
+
 Button::Button(uint x, uint y, j1Module* callback) : Widgets(Widgets::UiElemType::BUTTON)
 {
 	this->callback = callback;
@@ -12,31 +13,6 @@ Button::Button(uint x, uint y, j1Module* callback) : Widgets(Widgets::UiElemType
 
 Button::~Button()
 {
-}
-
-bool Button::Start()
-{
-	return true;
-}
-
-bool Button::PreUpdate()
-{
-	return true;
-}
-
-bool Button::Update()
-{
-	return true;
-}
-
-bool Button::PostUpdate()
-{
-	return true;
-}
-
-bool Button::CleanUp()
-{
-	return true;
 }
 
 void Button::Draw()

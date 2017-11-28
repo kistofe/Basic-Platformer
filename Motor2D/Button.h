@@ -12,12 +12,6 @@ public:
 	Button(uint x, uint y, j1Module* callback);
 	~Button();
 
-	bool Start();
-	bool PreUpdate();
-	bool Update();
-	bool PostUpdate();
-	bool CleanUp();
-
 	void Draw();
 
 private:
@@ -31,6 +25,7 @@ private:
 	SDL_Rect atlas_idle_rect;
 	SDL_Rect atlas_highlighted_rect;
 	SDL_Rect area;
+
 
 	Label* text;
 };

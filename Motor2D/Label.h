@@ -8,13 +8,9 @@
 class Label : public Widgets
 {
 public:
-	Label(uint x, uint y);
+	Label(uint x, uint y, j1Module* callback);
 	~Label();
 
-	bool Start();
-	bool PreUpdate();
-	bool Update();
-	bool PostUpdate();
 	bool CleanUp();
 
 	void Draw();

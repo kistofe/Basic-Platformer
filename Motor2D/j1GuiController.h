@@ -14,6 +14,13 @@ class j1GuiController : public j1Module
 {
 public:
 
+enum MouseEvents
+{
+	MOUSE_ENTER = 0,
+	MOUSE_LEAVE,
+	MOUSE_CLICK
+};
+
 	j1GuiController();
 
 	// Destructor
@@ -39,7 +46,7 @@ public:
 	bool DestroyWidget(Widgets* widget);
 
 	const SDL_Texture* GetAtlas() const;
-
+	
 private:
 	p2List<Widgets*> ui_elems;
 	SDL_Texture* atlas;

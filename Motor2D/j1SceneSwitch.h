@@ -25,6 +25,8 @@ public:
 
 	bool SwitchMap(const char* map_on);
 
+	bool DestroyEnemies();
+
 public:
 
 private:

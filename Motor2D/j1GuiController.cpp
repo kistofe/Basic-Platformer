@@ -126,5 +126,6 @@ const SDL_Texture* j1GuiController::GetAtlas() const
 	return atlas;
 }
 
+
 // class Gui ---------------------------------------------------
 

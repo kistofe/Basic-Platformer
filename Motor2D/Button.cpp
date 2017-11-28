@@ -4,8 +4,10 @@
 
 #include "SDL\include\SDL.h"
 
-Button::Button(uint x, uint y) : Widgets(Widgets::UiElemType::BUTTON)
-{}
+Button::Button(uint x, uint y, j1Module* callback) : Widgets(Widgets::UiElemType::BUTTON)
+{
+	this->callback = callback;
+}
 
 
 Button::~Button()
@@ -41,14 +43,15 @@ void Button::Draw()
 {
 }
 
-void Button::OnClick()
+void Button::OnEvent()
 {
+
 }
 
-bool Button::CheckClick(const SDL_Rect& button)
+bool Button::CheckClick(const SDL_Rect& button_area)
 {
 	bool ret = false;
-	bool is_over = MouseOver(button);
+	bool is_over = MouseOver(button_area);
 
 	if (is_over && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT == KEY_DOWN))
 		ret = true;

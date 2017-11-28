@@ -2,6 +2,7 @@
 #define _WIDGETS_
 
 #include "p2Point.h"
+#include "j1Module.h"
 
 class Widgets
 {
@@ -29,5 +30,6 @@ protected:
 
 	iPoint		position;
 	UiElemType	type;
+	j1Module*	callback = nullptr;
 };
 #endif // !_WIDGETS_

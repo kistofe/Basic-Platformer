@@ -52,3 +52,8 @@ bool j1SceneSwitch::SwitchMap(const char* map_on)
 
 	return true;
 }
+
+bool j1SceneSwitch::DestroyEnemies()
+{
+	return false;
+}

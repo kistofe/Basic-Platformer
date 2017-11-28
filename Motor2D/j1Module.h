@@ -70,6 +70,10 @@ public:
 		return true;
 	}
 
+	virtual bool OnEvent(Widgets* ui_elem, int event)
+	{
+		return true;
+	}
 				
 public:
 

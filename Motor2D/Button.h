@@ -9,7 +9,7 @@ class Label;
 class Button : public Widgets
 {
 public:
-	Button(uint x, uint y);
+	Button(uint x, uint y, j1Module* callback);
 	~Button();
 
 	bool Start();
@@ -22,7 +22,7 @@ public:
 
 private:
 
-	void OnClick();
+	void OnEvent();
 	bool CheckClick(const SDL_Rect& button);
 	bool MouseOver(const SDL_Rect& button);
 
@@ -30,6 +30,7 @@ private:
 	SDL_Rect atlas_click_rect;
 	SDL_Rect atlas_idle_rect;
 	SDL_Rect atlas_highlighted_rect;
+	SDL_Rect area;
 
 	Label* text;
 };

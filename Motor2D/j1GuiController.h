@@ -28,7 +28,8 @@ enum MouseEvents
 
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
-
+	
+	bool PreUpdate(float d_time);
 	bool Update(float d_time);
 
 	// Gui creation functions

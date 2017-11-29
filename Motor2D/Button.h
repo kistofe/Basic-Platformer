@@ -12,7 +12,7 @@ public:
 	Button(uint x, uint y, j1Module* callback);
 	~Button();
 
-	bool Update();
+	bool PreUpdate(float d_time);
 	void Draw();
 
 	bool CheckClick(const SDL_Rect& button);

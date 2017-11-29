@@ -21,7 +21,8 @@ enum UiElemType
 
 	~Widgets();
 
-	virtual bool Update() { return true; };
+	virtual bool PreUpdate(float d_time) { return true; };
+	virtual bool Update(float d_time) { return true; };
 	virtual void Draw() { return; };
 
 protected:

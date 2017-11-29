@@ -28,6 +28,21 @@ bool j1GuiController::Awake(pugi::xml_node& conf)
 	return ret;
 }
 
+bool j1GuiController::PreUpdate(float d_time)
+{
+	bool ret = true;
+
+	//Draw all ui elements 
+	p2List_item<Widgets*>* ui_elem_iterator = ui_elems.start;
+	while (ui_elem_iterator)
+	{
+		ui_elem_iterator->data->PreUpdate(d_time);
+		ui_elem_iterator = ui_elem_iterator->next;
+	}
+
+	return ret;
+}
+
 bool j1GuiController::Update(float d_time)
 {
 	bool ret = true;
@@ -39,9 +54,7 @@ bool j1GuiController::Update(float d_time)
 		ui_elem_iterator->data->Draw();
 		ui_elem_iterator = ui_elem_iterator->next;
 	}
-
-	//Check if any ui element is on event
-
+	
 	return true;
 }
 

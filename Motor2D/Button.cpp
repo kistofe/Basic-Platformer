@@ -1,9 +1,11 @@
 #include "j1App.h"
+#include "p2Log.h"
 #include "Button.h"
 #include "j1Input.h"
 #include "Label.h"
 #include "j1Fonts.h"
 #include "j1Render.h"
+#include "j1EntityManager.h" //debug
 #include "j1GuiController.h"
 
 #include "SDL\include\SDL.h"
@@ -22,9 +24,19 @@ Button::~Button()
 {
 }
 
-bool Button::Update()
+bool Button::PreUpdate(float d_time)
 {
-	
+	area = { position.x, position.y, current_rect->w, current_rect->h };
+
+	if (MouseOver(area))
+	{
+		if (CheckClick(area))
+			LOG("Clicked");
+		else
+			LOG("Is over");
+	}
+	else
+		LOG("Not over");
 	return true;
 }
 
@@ -47,10 +59,11 @@ bool Button::CheckClick(const SDL_Rect& button_area)
 
 bool Button::MouseOver(const SDL_Rect& button)
 {
-	int x, y;
-	App->input->GetMousePosition(x, y);
+	iPoint mouse_cords;
+	App->input->GetMousePosition(mouse_cords.x, mouse_cords.y);
+	mouse_cords = App->render->ScreenToWorld(mouse_cords.x, mouse_cords.y);
 
-	return (x >= button.x && x <= button.x + button.w) && (y >= button.y && y <= button.y + button.h);
+	return (mouse_cords.x >= button.x && mouse_cords.x <= button.x + button.w) && (mouse_cords.y >= button.y && mouse_cords.y <= button.y + button.h);
 }
 
 void Button::SetSection(SDL_Rect button_rec)

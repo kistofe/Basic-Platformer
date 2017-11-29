@@ -22,7 +22,8 @@ bool j1GuiController::Awake(pugi::xml_node& conf)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	atlas_file_name = conf.child("atlas").attribute("file").as_string();
+	atlas = App->tex->Load(atlas_file_name.GetString());
 
 	return ret;
 }
@@ -31,12 +32,15 @@ bool j1GuiController::Update(float d_time)
 {
 	bool ret = true;
 
+	//Draw all ui elements 
 	p2List_item<Widgets*>* ui_elem_iterator = ui_elems.start;
 	while (ui_elem_iterator)
 	{
 		ui_elem_iterator->data->Draw();
 		ui_elem_iterator = ui_elem_iterator->next;
 	}
+
+	//Check if any ui element is on event
 
 	return true;
 }
@@ -77,7 +81,7 @@ bool j1GuiController::DestroyWidget(Widgets* widget)
 }
 
 // const getter for atlas
-const SDL_Texture* j1GuiController::GetAtlas() const
+SDL_Texture* j1GuiController::GetAtlas() const
 {
 	return atlas;
 }

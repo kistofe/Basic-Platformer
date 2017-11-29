@@ -22,7 +22,7 @@ enum UiElemType
 	~Widgets();
 
 	virtual bool Update() { return true; };
-	virtual void Draw();
+	virtual void Draw() { return; };
 
 protected:
 

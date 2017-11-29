@@ -35,8 +35,8 @@ enum MouseEvents
 	Widgets* CreateWidget(Widgets::UiElemType type, uint x, uint y, j1Module* callback = nullptr);
 	bool DestroyWidget(Widgets* widget);
 
-	const SDL_Texture* GetAtlas() const;
-	
+	SDL_Texture* GetAtlas() const;
+
 private:
 	p2List<Widgets*> ui_elems;
 	SDL_Texture* atlas;

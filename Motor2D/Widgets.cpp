@@ -9,5 +9,3 @@ Widgets::Widgets(UiElemType type) : type(type)
 Widgets::~Widgets()
 {}
 
-void Widgets::Draw()
-{}

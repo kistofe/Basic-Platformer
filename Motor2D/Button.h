@@ -11,22 +11,23 @@ class Button : public Widgets
 public:
 	Button(uint x, uint y, j1Module* callback);
 	~Button();
-	
+
 	bool Update();
 	void Draw();
 
-private:
-
 	bool CheckClick(const SDL_Rect& button);
 	bool MouseOver(const SDL_Rect& button);
+	void SetSection(SDL_Rect button_rec);
+	void CreateButtonLabel(Label* button_label, const char* content, SDL_Color color);
 
 private:
-	SDL_Rect atlas_click_rect;
-	SDL_Rect atlas_idle_rect;
-	SDL_Rect atlas_highlighted_rect;
+
+	Label* text = nullptr;
+	SDL_Rect click_rect;
+	SDL_Rect idle_rect;
+	SDL_Rect highlighted_rect;
 	SDL_Rect area;
-
-
-	Label* text;
+	SDL_Rect* current_rect = nullptr;
+	
 };
 #endif

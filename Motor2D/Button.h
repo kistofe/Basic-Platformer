@@ -15,12 +15,12 @@ public:
 	bool PreUpdate(float d_time);
 	void Draw();
 
-	bool CheckClick(const SDL_Rect& button);
 	bool MouseOver(const SDL_Rect& button);
 	void SetSection(SDL_Rect button_rec);
 	void CreateButtonLabel(Label* button_label, const char* content, SDL_Color color);
 
 private:
+	bool hovering = false;
 
 	Label* text = nullptr;
 	SDL_Rect click_rect;

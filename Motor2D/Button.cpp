@@ -28,15 +28,22 @@ bool Button::PreUpdate(float d_time)
 {
 	area = { position.x, position.y, current_rect->w, current_rect->h };
 
-	if (MouseOver(area))
+	if (MouseOver(area) && !hovering)
 	{
-		if (CheckClick(area))
+		hovering = true;
+		LOG("Is over");
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
 			LOG("Clicked");
-		else
-			LOG("Is over");
+		}
+			
 	}
-	else
+	if (!MouseOver(area) && hovering)
+	{
+		hovering = false;
 		LOG("Not over");
+	}
+	
 	return true;
 }
 
@@ -46,16 +53,6 @@ void Button::Draw()
 	App->render->Blit(App->gui->GetAtlas(), position.x, position.y, current_rect);
 }
 
-bool Button::CheckClick(const SDL_Rect& button_area)
-{
-	bool ret = false;
-	bool is_over = MouseOver(button_area);
-
-	if (is_over && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT == KEY_DOWN))
-		ret = true;
-
-	return ret;
-}
 
 bool Button::MouseOver(const SDL_Rect& button)
 {

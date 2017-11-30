@@ -5,7 +5,7 @@
 #include "j1Module.h"
 
 
-class Widgets
+class Widget
 {
 public:
 
@@ -17,9 +17,9 @@ enum UiElemType
 	IMAGE,
 };
 
-	Widgets(UiElemType type);
+	Widget(UiElemType type);
 
-	~Widgets();
+	~Widget();
 
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };

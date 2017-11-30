@@ -150,7 +150,7 @@ void j1Scene::Initialize(const char* map_initialized)
 	RELEASE_ARRAY(data);
 }
 
-bool j1Scene::OnEvent(Widgets * ui_elem, int event)
+bool j1Scene::OnEvent(Widget * ui_elem, int event)
 {
 	
 	
@@ -159,11 +159,11 @@ bool j1Scene::OnEvent(Widgets * ui_elem, int event)
 
 void j1Scene::AddUiElems()
 {
-	my_text = (Label*)App->gui->CreateWidget(Widgets::UiElemType::LABEL, 200, 1500, this);
+	my_text = (Label*)App->gui->CreateWidget(Widget::UiElemType::LABEL, 200, 1500, this);
 	my_text->SetText("HELLO", { (255), (255), (255), (255) });
 
-	test_button = (Button*)App->gui->CreateWidget(Widgets::UiElemType::BUTTON, 200, 1450, this);
-	test_button_label = (Label*)App->gui->CreateWidget(Widgets::UiElemType::LABEL, 225, 1525, this);
+	test_button = (Button*)App->gui->CreateWidget(Widget::UiElemType::BUTTON, 200, 1450, this);
 	test_button->SetSection({ 642, 169, 229, 69 });
+	test_button_label = (Label*)App->gui->CreateWidget(Widget::UiElemType::LABEL, 225, 1525, this);
 	test_button->CreateButtonLabel(test_button_label, "HELLO", { 255,255,255,255 });
 }

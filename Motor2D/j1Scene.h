@@ -11,7 +11,7 @@
 #define LAST_LVL 2
 
 struct SDL_Texture;
-class Widgets;
+class Widget;
 
 class j1Scene : public j1Module
 {
@@ -44,7 +44,7 @@ public:
 
 	void Initialize(const char* map_initialized);
 
-	bool OnEvent(Widgets* ui_elem, int event);
+	bool OnEvent(Widget* ui_elem, int event);
 
 private:
 	void AddUiElems();

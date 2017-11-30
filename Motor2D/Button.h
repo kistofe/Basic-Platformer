@@ -6,7 +6,7 @@
 #include "SDL/include/SDL.h"
 class Label;
 
-class Button : public Widgets
+class Button : public Widget
 {
 public:
 	Button(uint x, uint y, j1Module* callback);

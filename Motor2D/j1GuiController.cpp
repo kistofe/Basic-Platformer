@@ -23,17 +23,22 @@ bool j1GuiController::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-	atlas = App->tex->Load("gui/atlas.png");
-
+	
 	return ret;
 }
 
+bool j1GuiController::Start()
+{
+	atlas = App->tex->Load(atlas_file_name.GetString());
+
+	return true;
+}
 bool j1GuiController::PreUpdate(float d_time)
 {
 	bool ret = true;
 
 	//Draw all ui elements 
-	p2List_item<Widgets*>* ui_elem_iterator = ui_elems.start;
+	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
 	while (ui_elem_iterator)
 	{
 		ui_elem_iterator->data->PreUpdate(d_time);
@@ -48,7 +53,7 @@ bool j1GuiController::Update(float d_time)
 	bool ret = true;
 
 	//Draw all ui elements 
-	p2List_item<Widgets*>* ui_elem_iterator = ui_elems.start;
+	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
 	while (ui_elem_iterator)
 	{
 		ui_elem_iterator->data->Draw();
@@ -58,16 +63,16 @@ bool j1GuiController::Update(float d_time)
 	return true;
 }
 
-Widgets* j1GuiController::CreateWidget(Widgets::UiElemType type, uint x, uint y, j1Module* callback)
+Widget* j1GuiController::CreateWidget(Widget::UiElemType type, uint x, uint y, j1Module* callback)
 {
-	Widgets* ret = nullptr;
+	Widget* ret = nullptr;
 
 	switch (type)
 	{
-	case Widgets::UiElemType::BUTTON:			
+	case Widget::UiElemType::BUTTON:			
 		ret = new Button(x, y, callback);
 		break;
-	case Widgets::UiElemType::LABEL:	
+	case Widget::UiElemType::LABEL:	
 		ret = new Label(x, y, callback);
 		break;
 	//case UiElemType::DYNAMIC_LABEL:	ret = new DynamicLabel(x, y);
@@ -80,7 +85,7 @@ Widgets* j1GuiController::CreateWidget(Widgets::UiElemType type, uint x, uint y,
 	return ret;
 }
 
-bool j1GuiController::DestroyWidget(Widgets* widget)
+bool j1GuiController::DestroyWidget(Widget* widget)
 {
 	bool ret = true;
 

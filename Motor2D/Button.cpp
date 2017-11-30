@@ -5,13 +5,12 @@
 #include "Label.h"
 #include "j1Fonts.h"
 #include "j1Render.h"
-#include "j1EntityManager.h" //debug
 #include "j1GuiController.h"
 
 #include "SDL\include\SDL.h"
 
 
-Button::Button(uint x, uint y, j1Module* callback) : Widgets(Widgets::UiElemType::BUTTON)
+Button::Button(uint x, uint y, j1Module* callback) : Widget(Widget::UiElemType::BUTTON)
 {
 	this->callback = callback;
 	position.x = x;
@@ -32,11 +31,11 @@ bool Button::PreUpdate(float d_time)
 	{
 		hovering = true;
 		LOG("Is over");
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			LOG("Clicked");
-		}
-			
+					
+	}
+	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		LOG("Clicked");
 	}
 	if (!MouseOver(area) && hovering)
 	{

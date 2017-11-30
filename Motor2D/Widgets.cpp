@@ -2,10 +2,10 @@
 #include "Widgets.h"
 
 
-Widgets::Widgets(UiElemType type) : type(type)
+Widget::Widget(UiElemType type) : type(type)
 {}
 
 
-Widgets::~Widgets()
+Widget::~Widget()
 {}
 

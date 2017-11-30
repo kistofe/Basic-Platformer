@@ -29,17 +29,18 @@ enum MouseEvents
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 	
+	bool Start();
 	bool PreUpdate(float d_time);
 	bool Update(float d_time);
 
 	// Gui creation functions
-	Widgets* CreateWidget(Widgets::UiElemType type, uint x, uint y, j1Module* callback = nullptr);
-	bool DestroyWidget(Widgets* widget);
+	Widget* CreateWidget(Widget::UiElemType type, uint x, uint y, j1Module* callback = nullptr);
+	bool DestroyWidget(Widget* widget);
 
 	SDL_Texture* GetAtlas() const;
 
 private:
-	p2List<Widgets*> ui_elems;
+	p2List<Widget*> ui_elems;
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
 };

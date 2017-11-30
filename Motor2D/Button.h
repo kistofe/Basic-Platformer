@@ -1,7 +1,7 @@
 #ifndef _BUTTON_
 #define _BUTTON_
 
-#include "Widgets.h"
+#include "Widget.h"
 
 #include "SDL/include/SDL.h"
 class Label;
@@ -16,8 +16,12 @@ public:
 	void Draw();
 
 	bool MouseOver(const SDL_Rect& button);
-	void SetSection(SDL_Rect button_rec);
+	void SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec);
 	void CreateButtonLabel(Label* button_label, const char* content, SDL_Color color);
+
+private:
+
+	void ChangeVisualState(const int event);
 
 private:
 	bool hovering = false;

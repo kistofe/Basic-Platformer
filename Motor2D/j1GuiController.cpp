@@ -63,16 +63,16 @@ bool j1GuiController::Update(float d_time)
 	return true;
 }
 
-Widget* j1GuiController::CreateWidget(Widget::UiElemType type, uint x, uint y, j1Module* callback)
+Widget* j1GuiController::CreateWidget(UiElemType type, uint x, uint y, j1Module* callback)
 {
 	Widget* ret = nullptr;
 
 	switch (type)
 	{
-	case Widget::UiElemType::BUTTON:			
+	case UiElemType::BUTTON:			
 		ret = new Button(x, y, callback);
 		break;
-	case Widget::UiElemType::LABEL:	
+	case UiElemType::LABEL:	
 		ret = new Label(x, y, callback);
 		break;
 	//case UiElemType::DYNAMIC_LABEL:	ret = new DynamicLabel(x, y);

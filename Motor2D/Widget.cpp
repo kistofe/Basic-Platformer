@@ -1,5 +1,5 @@
 #include "j1App.h"
-#include "Widgets.h"
+#include "Widget.h"
 
 
 Widget::Widget(UiElemType type) : type(type)

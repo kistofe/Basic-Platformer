@@ -1,13 +1,8 @@
-#ifndef _WIDGETS_
-#define _WIDGETS_
+#ifndef _WIDGET_
+#define _WIDGET_
 
 #include "p2Point.h"
 #include "j1Module.h"
-
-
-class Widget
-{
-public:
 
 enum UiElemType
 {
@@ -17,18 +12,23 @@ enum UiElemType
 	IMAGE,
 };
 
+class Widget
+{
+public:
+
+
 	Widget(UiElemType type);
 
-	~Widget();
+	virtual ~Widget();
 
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
 	virtual void Draw() { return; };
-
+	
 protected:
 
 	iPoint		position;
 	UiElemType	type;
 	j1Module*	callback = nullptr;
 };
-#endif // !_WIDGETS_
+#endif 

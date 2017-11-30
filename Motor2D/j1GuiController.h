@@ -2,7 +2,7 @@
 #define __j1GUICONTROLLER_H__
 
 #include "j1Module.h"
-#include "Widgets.h"
+#include "Widget.h"
 #include "Button.h"
 #include "Label.h"
 #include "DynamicLabel.h"
@@ -10,18 +10,19 @@
 #define CURSOR_WIDTH 2
 
 // ---------------------------------------------------
-class j1GuiController : public j1Module
-{
-public:
-
 enum MouseEvents
 {
 	MOUSE_ENTER = 0,
 	MOUSE_LEAVE,
-	MOUSE_CLICK
+	MOUSE_CLICK,
+	MOUSE_RELEASE
 };
 
-	j1GuiController();
+class j1GuiController : public j1Module
+{
+public:
+
+		j1GuiController();
 
 	// Destructor
 	virtual ~j1GuiController();
@@ -34,7 +35,7 @@ enum MouseEvents
 	bool Update(float d_time);
 
 	// Gui creation functions
-	Widget* CreateWidget(Widget::UiElemType type, uint x, uint y, j1Module* callback = nullptr);
+	Widget* CreateWidget(UiElemType type, uint x, uint y, j1Module* callback = nullptr);
 	bool DestroyWidget(Widget* widget);
 
 	SDL_Texture* GetAtlas() const;

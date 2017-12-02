@@ -46,10 +46,8 @@ bool j1Scene::Start()
 	Initialize(App->map->map_name.start->data->GetString());
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
+	AddUiElems();
 
-	my_text = (Label*)App->gui->CreateWidget(Widgets::UiElemType::LABEL, 200, 1500, this);
-	my_text->SetText("HELLO", { (255), (255), (255), (255) });
-	
 	return true;
 }
 
@@ -150,4 +148,23 @@ void j1Scene::Initialize(const char* map_initialized)
 		App->pathfinding->SetMap(w, h, data);
 
 	RELEASE_ARRAY(data);
+}
+
+bool j1Scene::OnEvent(Widget * ui_elem, int event)
+{
+	
+		
+	
+	return true;
+}
+
+void j1Scene::AddUiElems()
+{
+	my_text = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 200, 1500, this);
+	my_text->SetText("HELLO", { (255), (255), (255), (255) });
+
+	test_button = (Button*)App->gui->CreateWidget(UiElemType::BUTTON, 200, 1450, this);
+	test_button->SetSection({ 0, 113, 229, 69 }, { 411,169,229,69 }, { 642, 169, 229, 69 });
+	test_button_label = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 225, 1525, this);
+	test_button->CreateButtonLabel(test_button_label, "HELLO", { 255,255,255,255 });
 }

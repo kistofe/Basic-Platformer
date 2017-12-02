@@ -1,12 +1,12 @@
 #ifndef _LABEL_
 #define _LABEL_
 
-#include "Widgets.h"
+#include "Widget.h"
 #include "j1Fonts.h"
 
 #include "SDL/include/SDL.h"
 
-class Label : public Widgets
+class Label : public Widget
 {
 public:
 	Label(uint x, uint y, j1Module* callback);

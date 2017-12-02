@@ -11,7 +11,7 @@
 
 
 class j1App;
-class Widgets;
+class Widget;
 
 class j1Module
 {
@@ -71,7 +71,7 @@ public:
 		return true;
 	}
 
-	virtual bool OnEvent(Widgets* ui_elem, int event)
+	virtual bool OnEvent(Widget* ui_elem, int event)
 	{
 		return true;
 	}

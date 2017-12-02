@@ -11,6 +11,7 @@
 #define LAST_LVL 2
 
 struct SDL_Texture;
+class Widget;
 
 class j1Scene : public j1Module
 {
@@ -43,15 +44,19 @@ public:
 
 	void Initialize(const char* map_initialized);
 
-private:
+	bool OnEvent(Widget* ui_elem, int event);
 
+private:
+	void AddUiElems();
 
 public:
 
 	uint current_lvl = 1;
 	fPoint gravity;
 	fPoint max_gravity;
-	Label* my_text;
+	Label* my_text = nullptr;
+	Button* test_button = nullptr;
+	Label* test_button_label = nullptr;
 
 private:
 

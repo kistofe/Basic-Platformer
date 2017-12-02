@@ -66,8 +66,11 @@ bool Ground_Enemy::Update(float d_time)
 {
 	//Check bool alive (only enter if the enemy is still alive
 	//Call Draw()
-	//Call Move()
+
 	//Call SetAnimations()
+	MoveTowardsPlayer(d_time);
+
+	Move();
 	
 	//Update Collider Position-------------------------------------
 	collider->SetPos(position.x + collider_offset.x, position.y + collider_offset.y);

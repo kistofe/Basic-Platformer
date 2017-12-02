@@ -19,11 +19,6 @@ j1Pathfinding::~j1Pathfinding()
 
 iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination, const bool is_ground)
 {
-	return iPoint();
-}
-
-iPoint j1Pathfinding::GetNextTile(const iPoint & origin, const iPoint & destination, const bool is_ground)
-{
 	BROFILER_CATEGORY("Pathfinding Method", Profiler::Color::Khaki);
 	// check if origin or destination are not walkable and return origin if that's the case
 	if (!IsWalkable(origin) || !IsWalkable(destination))

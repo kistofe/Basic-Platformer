@@ -57,7 +57,7 @@ void j1Map::Draw()
 	BROFILER_CATEGORY("j1Map - Draw", Profiler::Color::PaleVioletRed);
 	if (map_loaded == false)
 		return;
-//	iPoint	screen_cords;
+	iPoint	screen_coords;
 	//loop through all layers and all tiles 
 		for (int i = 0; i < data.map_layers.count(); i++)
 		{
@@ -69,10 +69,11 @@ void j1Map::Draw()
 					{
 						if (data.map_layers[i]->properties.Get("Navigation") != 1)
 						{
-							//screen_cords = MapToWorld(x, y);
-
-							//if (screen_cords.x >= App->render->camera.x && screen_cords.x <= App->render->camera.x + App->render->camera.w && screen_cords.y >= App->render->camera.y  && screen_cords.y <= App->render->camera.y + App->render->camera.h)
+							screen_coords = MapToWorld(-x,-y);
+						
+						if (screen_coords.x <= App->render->camera.x + App->entities->player1->position.x  && screen_coords.x >= App->render->camera.x - App->render->camera.w && screen_coords.y <= App->render->camera.y + 30 && screen_coords.y >= App->render->camera.y - App->render->camera.h)
 							App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
+						
 						}
 					}
 				}

@@ -11,12 +11,17 @@ public:
 	~UIWindow();
 
 	void Draw();
+	void Drag();
+
+	SDL_Rect GetArea();
 private:
 
 public:
 
 private:
 	SDL_Rect atlas_section;
+	bool being_clicked = false;
+	iPoint last_mousepos = { 0, 0 };
 };
 
 #endif //_UIWINDOW_

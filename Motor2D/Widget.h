@@ -26,6 +26,7 @@ public:
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
 	virtual void Draw() { return; };
+	virtual void Drag() { return; };
 
 	void UpdateAttachedPositions();
 	void Attach(Widget* widg_to_attach, const iPoint relative_pos);

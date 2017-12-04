@@ -52,11 +52,12 @@ bool j1GuiController::Update(float d_time)
 {
 	bool ret = true;
 
-	//Draw all ui elements 
+	//Draw all ui elements and call their Drag if they have one
 	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
 	while (ui_elem_iterator)
 	{
 		ui_elem_iterator->data->Draw();
+		ui_elem_iterator->data->Drag();
 		ui_elem_iterator = ui_elem_iterator->next;
 	}
 	

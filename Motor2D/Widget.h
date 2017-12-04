@@ -2,6 +2,7 @@
 #define _WIDGET_
 
 #include "p2Point.h"
+#include "p2List.h"
 #include "j1Module.h"
 
 enum UiElemType
@@ -10,6 +11,7 @@ enum UiElemType
 	BUTTON,
 	DYNAMIC_LABEL,
 	IMAGE,
+	WINDOW,
 };
 
 class Widget
@@ -17,18 +19,24 @@ class Widget
 public:
 
 
-	Widget(UiElemType type);
+	Widget(UiElemType type, iPoint pos, j1Module* callback);
 
 	virtual ~Widget();
 
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
 	virtual void Draw() { return; };
+
+	void UpdateAttachedPositions();
+	void Attach(Widget* widg_to_attach, const iPoint relative_pos);
 	
 protected:
 
 	iPoint		position;
+	iPoint		relative_position; // position relative to the element they are attached to
 	UiElemType	type;
 	j1Module*	callback = nullptr;
+
+	p2List<Widget*> attached_widgets;
 };
 #endif 

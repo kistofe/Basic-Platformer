@@ -9,7 +9,7 @@ class Label;
 class Button : public Widget
 {
 public:
-	Button(uint x, uint y, j1Module* callback);
+	Button(iPoint pos, j1Module* callback);
 	~Button();
 
 	bool PreUpdate(float d_time);

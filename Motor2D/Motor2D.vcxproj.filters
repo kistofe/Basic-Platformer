@@ -81,6 +81,9 @@
     <ClCompile Include="Widget.cpp">
       <Filter>Desenvolupament ========\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIWindow.cpp">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Widget.h">
       <Filter>Desenvolupament ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWindow.h">
+      <Filter>Desenvolupament ========\UI\UI Elems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -67,15 +67,22 @@ Widget* j1GuiController::CreateWidget(UiElemType type, uint x, uint y, j1Module*
 {
 	Widget* ret = nullptr;
 
+	//Temporary position variable that is passed to the constructors of the elements
+	iPoint temp_pos;
+	temp_pos.create(x, y);
+
 	switch (type)
 	{
 	case UiElemType::BUTTON:			
-		ret = new Button(x, y, callback);
+		ret = new Button(temp_pos, callback);
 		break;
 	case UiElemType::LABEL:	
-		ret = new Label(x, y, callback);
+		ret = new Label(temp_pos, callback);
 		break;
 	//case UiElemType::DYNAMIC_LABEL:	ret = new DynamicLabel(x, y);
+	case UiElemType::WINDOW:
+		ret = new UIWindow(temp_pos, callback);
+		break;
 	}
 
 

@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "Label.h"
 #include "DynamicLabel.h"
+#include "UIWindow.h"
 
 #define CURSOR_WIDTH 2
 

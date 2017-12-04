@@ -5,11 +5,8 @@
 #include "j1Fonts.h"
 
 
-Label::Label(uint x, uint y, j1Module* callback) : Widget(UiElemType::LABEL)
+Label::Label(iPoint pos, j1Module* callback) : Widget(UiElemType::LABEL, pos, callback)
 {
-	this->callback = callback;
-	position.x = x;
-	position.y = y;
 }
 
 Label::~Label()

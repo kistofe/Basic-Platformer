@@ -35,7 +35,7 @@ void UIWindow::Drag()
 	temp_mousepos_sdl.y = App->render->ScreenToWorld(temp_mousepos_sdl.x, temp_mousepos_sdl.y).y;
 	if (!being_clicked && SDL_PointInRect(&temp_mousepos_sdl, &GetArea()) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		being_clicked = true, LOG("Clicked = TRUE");
-	if (being_clicked && (!SDL_PointInRect(&temp_mousepos_sdl, &GetArea()) || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP))
+	if (being_clicked && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		being_clicked = false, LOG("Clicked = FALSE");
 	iPoint temp_mousepos;
 	temp_mousepos.create(temp_mousepos_sdl.x, temp_mousepos_sdl.y);

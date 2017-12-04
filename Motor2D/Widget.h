@@ -28,16 +28,18 @@ public:
 	virtual void Draw() { return; };
 	virtual void Drag() { return; };
 
+
 	void UpdateAttachedPositions();
 	void Attach(Widget* widg_to_attach, const iPoint relative_pos);
-	
+public:
+
+	UiElemType	type;
+		
 protected:
 
 	iPoint		position;
 	iPoint		relative_position; // position relative to the element they are attached to
-	UiElemType	type;
 	j1Module*	callback = nullptr;
-
 	p2List<Widget*> attached_widgets;
 };
 #endif 

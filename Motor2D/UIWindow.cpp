@@ -11,10 +11,10 @@
 
 UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, pos, callback)
 {
-	atlas_section.x = 32;
-	atlas_section.y = 543;
-	atlas_section.h = 421;
-	atlas_section.w = 454;
+	atlas_section.x = 10;
+	atlas_section.y = 423;
+	atlas_section.h = 198;
+	atlas_section.w = 466;
 }
 
 UIWindow::~UIWindow()

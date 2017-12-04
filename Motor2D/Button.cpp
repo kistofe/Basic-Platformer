@@ -26,27 +26,22 @@ bool Button::PreUpdate(float d_time)
 	if (MouseOver(area) && !hovering)
 	{
 		hovering = true;
-		LOG("Is over");
 		ChangeVisualState(MOUSE_ENTER);
 		callback->OnEvent(this, MOUSE_ENTER); //Mouse enter
-		
 	}
 	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		LOG("Clicked");
 		ChangeVisualState(MOUSE_CLICK);
 		callback->OnEvent(this, MOUSE_CLICK);
 	}
 	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		LOG("Released");
 		ChangeVisualState(MOUSE_RELEASE);
 		callback->OnEvent(this, MOUSE_RELEASE);
 	}
 	if (!MouseOver(area) && hovering)
 	{
 		hovering = false;
-		LOG("Not over");
 		ChangeVisualState(MOUSE_LEAVE);
 		callback->OnEvent(this, MOUSE_LEAVE);
 	}

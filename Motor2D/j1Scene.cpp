@@ -30,10 +30,10 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	gravity.x = 0;
-	gravity.y = 0;
-	max_gravity.x = 0;
-	max_gravity.y = 0;
+	gravity.x = config.child("gravity_x").attribute("value").as_float();
+	gravity.y = config.child("gravity_y").attribute("value").as_float();
+	max_gravity.x = config.child("max_gravity_x").attribute("value").as_float();
+	max_gravity.y = config.child("max_gravity_y").attribute("value").as_float();
 	
 	return ret;
 }

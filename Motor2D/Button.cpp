@@ -9,11 +9,8 @@
 #include "SDL\include\SDL.h"
 
 
-Button::Button(uint x, uint y, j1Module* callback) : Widget(UiElemType::BUTTON)
+Button::Button(iPoint pos, j1Module* callback) : Widget(UiElemType::BUTTON, pos, callback)
 {
-	this->callback = callback;
-	position.x = x;
-	position.y = y;
 	current_rect = &idle_rect;
 }
 

@@ -30,10 +30,10 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	gravity.x = config.child("gravity_x").attribute("value").as_float();
-	gravity.y = config.child("gravity_y").attribute("value").as_float();
-	max_gravity.x = config.child("max_gravity_x").attribute("value").as_float();
-	max_gravity.y = config.child("max_gravity_y").attribute("value").as_float();
+	gravity.x = 0;
+	gravity.y = 0;
+	max_gravity.x = 0;
+	max_gravity.y = 0;
 	
 	return ret;
 }
@@ -171,4 +171,6 @@ void j1Scene::AddUiElems()
 	test_button->SetSection({ 10, 8, 192, 64 }, { 10, 72, 192, 64 }, { 10, 136, 192, 64 });
 	test_button_label = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 225, 1525, this);
 	test_button->CreateButtonLabel(test_button_label, "HELLO", { 255,255,255,255 });
+
+	UIWindow* ui_window = (UIWindow*)App->gui->CreateWidget(UiElemType::WINDOW, 200, 1000, this);
 }

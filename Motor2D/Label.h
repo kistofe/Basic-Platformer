@@ -9,7 +9,7 @@
 class Label : public Widget
 {
 public:
-	Label(uint x, uint y, j1Module* callback);
+	Label(iPoint pos, j1Module* callback);
 	~Label();
 
 	

@@ -6,7 +6,6 @@
 #include "p2Point.h"
 #include "p2Log.h"
 #include "p2Defs.h"
-#include "j1Collision.h"
 #include "Entity.h"
 
 #include "SDL/include/SDL.h"

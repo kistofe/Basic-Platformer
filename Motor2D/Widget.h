@@ -24,11 +24,14 @@ public:
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
 	virtual void Draw() { return; };
-	
+
+public:
+
+	UiElemType	type;
+
 protected:
 
 	iPoint		position;
-	UiElemType	type;
 	j1Module*	callback = nullptr;
 };
 #endif 

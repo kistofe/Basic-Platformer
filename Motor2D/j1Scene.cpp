@@ -176,15 +176,15 @@ bool j1Scene::OnEvent(Button* button)
 
 void j1Scene::AddUiElems()
 {
-	my_text = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 200, 1500, this);
-	my_text->SetText("HELLO", { (255), (255), (255), (255) });
+//	my_text = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 200, 1500, this);
+//	my_text->SetText("HELLO", { (255), (255), (255), (255) });
 
 	test_button = (Button*)App->gui->CreateWidget(UiElemType::BUTTON, 200, 1450, this);
 	test_button->SetSection({ 10, 8, 192, 64 }, { 10, 72, 192, 64 }, { 10, 136, 192, 64 });
 	test_button->SetButtonType(EXIT);
-	test_button_label = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 225, 1525, this);
-	test_button->CreateButtonLabel(test_button_label, "HELLO", { 255,255,255,255 });
 
 	UIWindow* ui_window = (UIWindow*)App->gui->CreateWidget(UiElemType::WINDOW, 200, 1000, this);
+
+	ui_window->Attach(test_button, { 0, 0 });
 
 }

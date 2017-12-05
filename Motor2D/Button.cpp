@@ -22,9 +22,10 @@ Button::~Button()
 bool Button::PreUpdate(float d_time)
 {
 	bool ret = true;
-	area = { position.x, position.y, current_rect->w, current_rect->h };
 
-	if (MouseOver(area) && !hovering)
+	world_area = { position.x, position.y, current_rect->w, current_rect->h };
+
+	if (MouseOver(world_area) && !hovering)
 	{
 		hovering = true;
 		ChangeVisualState(MOUSE_ENTER);
@@ -40,7 +41,7 @@ bool Button::PreUpdate(float d_time)
 		ChangeVisualState(MOUSE_RELEASE);
 	//	callback->OnEvent(this, MOUSE_RELEASE);
 	}
-	if (!MouseOver(area) && hovering)
+	if (!MouseOver(world_area) && hovering)
 	{
 		hovering = false;
 		ChangeVisualState(MOUSE_LEAVE);
@@ -84,16 +85,12 @@ void Button::SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_s
 	click_rect.h = clicked_sec.h;
 }
 
-void Button::CreateButtonLabel(Label* button_label, const char* content, SDL_Color color)
-{
-	text = button_label;
-	text->SetText(content, color);
-}
 
 void Button::SetButtonType(ButtonType type)
 {
 	button_type = type;
 }
+
 
 void Button::ChangeVisualState(const int event)
 {

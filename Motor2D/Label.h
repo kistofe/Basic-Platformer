@@ -15,6 +15,7 @@ public:
 	
 	void SetText(const char* content, const SDL_Color &color);
 	void Draw();
+	void SetArea(uint w, uint h);
 
 public:
 	SDL_Texture* text_texture;

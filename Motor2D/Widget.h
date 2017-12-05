@@ -5,6 +5,8 @@
 #include "p2List.h"
 #include "j1Module.h"
 
+#include "SDL\include\SDL.h"
+
 enum UiElemType
 {
 	LABEL,
@@ -26,7 +28,7 @@ public:
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
 	virtual void Draw() { return; };
-	virtual void Drag() { return; };
+	void Drag();
 
 
 	void UpdateAttachedPositions();
@@ -34,6 +36,8 @@ public:
 public:
 
 	UiElemType	type;
+	bool being_clicked;
+	SDL_Rect world_area;
 		
 protected:
 
@@ -41,5 +45,8 @@ protected:
 	iPoint		relative_position; // position relative to the element they are attached to
 	j1Module*	callback = nullptr;
 	p2List<Widget*> attached_widgets;
+
+	bool attached;
+	iPoint last_mousepos;
 };
 #endif 

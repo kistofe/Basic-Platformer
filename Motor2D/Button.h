@@ -26,11 +26,9 @@ private:
 private:
 	bool hovering = false;
 
-	Label* text = nullptr;
 	SDL_Rect click_rect;
 	SDL_Rect idle_rect;
 	SDL_Rect highlighted_rect;
-	SDL_Rect area;
 	SDL_Rect* current_rect = nullptr;
 	
 };

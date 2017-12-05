@@ -44,7 +44,7 @@ public:
 
 	void Initialize(const char* map_initialized);
 
-	bool OnEvent(Widget* ui_elem, int event);
+	bool OnEvent(Button* button);
 
 private:
 	void AddUiElems();

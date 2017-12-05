@@ -1,14 +1,12 @@
 #include "j1App.h"
 #include "Widget.h"
 
-
 Widget::Widget(UiElemType type, iPoint pos, j1Module* callback) : type(type)
 {
 	this->callback = callback;
 	position.create(pos.x, pos.y);
 	relative_position.create(0, 0);
 }
-
 
 Widget::~Widget()
 {}

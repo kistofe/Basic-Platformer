@@ -61,8 +61,6 @@ bool Flying_Enemy::Start()
 
 bool Flying_Enemy::PreUpdate(float d_time)
 {
-	//Call ChangeSpeed()
-
 	//Update Future Collider with new speed
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 

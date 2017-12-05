@@ -150,14 +150,26 @@ void j1Scene::Initialize(const char* map_initialized)
 	RELEASE_ARRAY(data);
 }
 
-bool j1Scene::OnEvent(Widget * ui_elem, int event)
+bool j1Scene::OnEvent(Button* button)
 {
-	/*if (ui_elem->type == BUTTON)
-		switch (event)
-		{
-		case MOUSE_CLICK:
-		}
-		*/
+	bool ret = true;
+
+	switch (button->button_type)
+	{
+	case NEW_GAME: //fade to "ingame" scene
+		break;
+	case LOAD_GAME: //load if save exists
+		break;
+	case OPTIONS: //fade to "options" scene
+		break;
+	case CREDITS: //fade to "credits" scene
+		break;
+	case EXIT: 
+		ret = false;
+		break;
+	case CLOSE_WINDOW:
+		break;
+	}
 	
 	return true;
 }
@@ -169,8 +181,10 @@ void j1Scene::AddUiElems()
 
 	test_button = (Button*)App->gui->CreateWidget(UiElemType::BUTTON, 200, 1450, this);
 	test_button->SetSection({ 10, 8, 192, 64 }, { 10, 72, 192, 64 }, { 10, 136, 192, 64 });
+	test_button->SetButtonType(EXIT);
 	test_button_label = (Label*)App->gui->CreateWidget(UiElemType::LABEL, 225, 1525, this);
 	test_button->CreateButtonLabel(test_button_label, "HELLO", { 255,255,255,255 });
 
 	UIWindow* ui_window = (UIWindow*)App->gui->CreateWidget(UiElemType::WINDOW, 200, 1000, this);
+
 }

@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "j1Module.h"
 
+
 enum UiElemType
 {
 	LABEL,
@@ -34,7 +35,7 @@ public:
 public:
 
 	UiElemType	type;
-		
+			
 protected:
 
 	iPoint		position;

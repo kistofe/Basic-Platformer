@@ -71,11 +71,7 @@ public:
 		return true;
 	}
 
-	virtual bool OnEvent(Widget* ui_elem, int event)
-	{
-		return true;
-	}
-				
+					
 public:
 
 	p2SString	name;

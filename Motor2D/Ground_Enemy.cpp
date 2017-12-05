@@ -55,9 +55,9 @@ bool Ground_Enemy::Start()
 
 bool Ground_Enemy::PreUpdate(float d_time)
 {
-	//Call ChangeSpeed()
 	//Update Future collider
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
+
 	facing_right = false;
 	return true;
 }
@@ -121,9 +121,7 @@ bool Ground_Enemy::Save(pugi::xml_node& data) const
 void Ground_Enemy::OnCollision(Collider * c1, Collider * c2)
 {
 	//Check collision with scenario
-	//Check collision with player
 }
-
 
 void Ground_Enemy::SetAnimations()
 {

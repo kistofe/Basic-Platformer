@@ -21,32 +21,33 @@ Button::~Button()
 
 bool Button::PreUpdate(float d_time)
 {
+	bool ret = true;
 	area = { position.x, position.y, current_rect->w, current_rect->h };
 
 	if (MouseOver(area) && !hovering)
 	{
 		hovering = true;
 		ChangeVisualState(MOUSE_ENTER);
-		callback->OnEvent(this, MOUSE_ENTER); //Mouse enter
+	//	callback->OnEvent(this, MOUSE_ENTER); //Mouse enter
 	}
 	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		ChangeVisualState(MOUSE_CLICK);
-		callback->OnEvent(this, MOUSE_CLICK);
+		ret = callback->OnEvent(this);
 	}
 	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		ChangeVisualState(MOUSE_RELEASE);
-		callback->OnEvent(this, MOUSE_RELEASE);
+	//	callback->OnEvent(this, MOUSE_RELEASE);
 	}
 	if (!MouseOver(area) && hovering)
 	{
 		hovering = false;
 		ChangeVisualState(MOUSE_LEAVE);
-		callback->OnEvent(this, MOUSE_LEAVE);
+	//	callback->OnEvent(this, MOUSE_LEAVE);
 	}
 	
-	return true;
+	return ret;
 }
 
 
@@ -87,6 +88,11 @@ void Button::CreateButtonLabel(Label* button_label, const char* content, SDL_Col
 {
 	text = button_label;
 	text->SetText(content, color);
+}
+
+void Button::SetButtonType(ButtonType type)
+{
+	button_type = type;
 }
 
 void Button::ChangeVisualState(const int event)

@@ -27,9 +27,6 @@
     <ClCompile Include="Flying_Enemy.cpp">
       <Filter>Desenvolupament ========\Entities\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="j1Scene.cpp">
-      <Filter>Desenvolupament ========\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="j1Audio.cpp">
       <Filter>Desenvolupament ========\Modules</Filter>
     </ClCompile>
@@ -84,6 +81,15 @@
     <ClCompile Include="UIWindow.cpp">
       <Filter>Desenvolupament ========\UI\UI Elems</Filter>
     </ClCompile>
+    <ClCompile Include="j1MainMenu.cpp">
+      <Filter>Desenvolupament ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1InGameScene.cpp">
+      <Filter>Desenvolupament ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1CharacterSel.cpp">
+      <Filter>Desenvolupament ========\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -136,9 +142,6 @@
     <ClInclude Include="Player.h">
       <Filter>Desenvolupament ========\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Scene.h">
-      <Filter>Desenvolupament ========\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="j1Audio.h">
       <Filter>Desenvolupament ========\Modules</Filter>
     </ClInclude>
@@ -190,6 +193,15 @@
     </ClInclude>
     <ClInclude Include="UIWindow.h">
       <Filter>Desenvolupament ========\UI\UI Elems</Filter>
+    </ClInclude>
+    <ClInclude Include="j1MainMenu.h">
+      <Filter>Desenvolupament ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1InGameScene.h">
+      <Filter>Desenvolupament ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1CharacterSel.h">
+      <Filter>Desenvolupament ========\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

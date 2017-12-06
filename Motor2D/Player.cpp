@@ -2,7 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "Player.h"
-#include "j1Scene.h"
+#include "j1InGameScene.h"
 #include "j1SceneSwitch.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
@@ -10,6 +10,7 @@
 #include "j1Input.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "j1EntityManager.h"
 
 Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 {
@@ -229,11 +230,11 @@ void Player::SetCameraToPlayer()
 void Player::SetSpeed(float d_time)
 {
 	//Set maximum value for gravity
-	if (speed.y < App->scene->max_gravity.y)
-		speed.y -= App->scene->gravity.y * d_time;
+	if (speed.y < App->ingamescene->max_gravity.y)
+		speed.y -= App->ingamescene->gravity.y * d_time;
 
 	else
-		speed.y = App->scene->max_gravity.y * d_time;
+		speed.y = App->ingamescene->max_gravity.y * d_time;
 		
 	//Set value for Horizontal Speed
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)

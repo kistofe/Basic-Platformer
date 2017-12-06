@@ -63,10 +63,10 @@
     <atlas file="gui/atlas.png"/>
   </gui>
 
-  <scene>
+  <ingame_scene>
      <gravity_x value = "0"/>
     <gravity_y value = "-50"/>
     <max_gravity_x value = "0"/>
     <max_gravity_y value = "700"/>
-  </scene>
+  </ingame_scene>
 </config>

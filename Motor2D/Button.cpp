@@ -29,23 +29,20 @@ bool Button::PreUpdate(float d_time)
 	{
 		hovering = true;
 		ChangeVisualState(MOUSE_ENTER);
-	//	callback->OnEvent(this, MOUSE_ENTER); //Mouse enter
 	}
 	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		ChangeVisualState(MOUSE_CLICK);
-		ret = callback->OnEvent(this);
 	}
 	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		ChangeVisualState(MOUSE_RELEASE);
-	//	callback->OnEvent(this, MOUSE_RELEASE);
+		ret = callback->OnEvent(this);
 	}
 	if (!MouseOver(world_area) && hovering)
 	{
 		hovering = false;
 		ChangeVisualState(MOUSE_LEAVE);
-	//	callback->OnEvent(this, MOUSE_LEAVE);
 	}
 	
 	return ret;
@@ -90,7 +87,6 @@ void Button::SetButtonType(ButtonType type)
 {
 	button_type = type;
 }
-
 
 void Button::ChangeVisualState(const int event)
 {

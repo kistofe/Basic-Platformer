@@ -39,7 +39,7 @@ bool j1SceneSwitch::Update(float d_time)
 
 bool j1SceneSwitch::CleanUp()
 {
-	return false;
+	return true;
 }
 
 bool j1SceneSwitch::SwitchMap(const char* map_on)
@@ -48,7 +48,7 @@ bool j1SceneSwitch::SwitchMap(const char* map_on)
 	App->map->CleanUp();
 
 	//Load Again
-	App->scene->Initialize(map_on);
+	//App->scene->Initialize(map_on);
 
 	return true;
 }

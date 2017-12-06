@@ -39,9 +39,9 @@ bool j1GuiController::PreUpdate(float d_time)
 
 	//Draw all ui elements 
 	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
-	while (ui_elem_iterator)
+	while (ui_elem_iterator && ret)
 	{
-		ui_elem_iterator->data->PreUpdate(d_time);
+		ret = ui_elem_iterator->data->PreUpdate(d_time);
 		ui_elem_iterator = ui_elem_iterator->next;
 	}
 
@@ -91,8 +91,7 @@ Widget* j1GuiController::CreateWidget(UiElemType type, uint x, uint y, j1Module*
 		ret = new UIWindow(temp_pos, callback);
 		break;
 	}
-
-
+	
 	if (ret != nullptr)
 		ui_elems.add(ret);
 	

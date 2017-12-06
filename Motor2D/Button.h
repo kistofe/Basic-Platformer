@@ -10,7 +10,7 @@ enum ButtonType
 {
 	NEW_GAME = 0,
 	LOAD_GAME,
-	OPTIONS,
+	SETTINGS,
 	CREDITS,
 	EXIT,
 	CLOSE_WINDOW,

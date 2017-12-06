@@ -8,8 +8,6 @@
 #include "j1GuiController.h"
 #include <math.h>
 
-#define LAST_LVL 2
-
 struct SDL_Texture;
 class Widget;
 
@@ -26,41 +24,27 @@ public:
 	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
-	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
+	virtual bool Start() { return true; };
 
 	// Called each loop iteration
-	bool Update(float d_time);
+	virtual bool Update(float d_time) { return true; };
 
 	// Called before all Updates
-	bool PostUpdate();
+	virtual bool PostUpdate(float d_time) { return true; };
 
 	// Called before quitting
-	bool CleanUp();
+	virtual bool CleanUp() { return true; }
 
-	void NextLevel();
-
-	void Initialize(const char* map_initialized);
-
-	bool OnEvent(Button* button);
-
-private:
-	void AddUiElems();
 
 public:
 
-	uint current_lvl = 1;
-	fPoint gravity;
-	fPoint max_gravity;
 	Label* my_text = nullptr;
 	Button* test_button = nullptr;
 	Label* test_button_label = nullptr;
 
-private:
+protected:
 
-	SDL_Texture* debug_tex;
+	SDL_Texture* background = nullptr;
 };
 
 #endif // __j1SCENE_H__

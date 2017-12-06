@@ -11,7 +11,7 @@
 
 
 class j1App;
-class Widget;
+class Button;
 
 class j1Module
 {
@@ -71,7 +71,15 @@ public:
 		return true;
 	}
 
-					
+	virtual bool OnEvent(Button* button)
+	{
+		return true;
+	}
+
+	virtual void AddUiElem()
+	{
+		return;
+	}
 public:
 
 	p2SString	name;

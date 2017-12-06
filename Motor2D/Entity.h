@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "p2List.h"
 #include "p2SString.h"
+#include "j1App.h"
 
 #include "SDL\include\SDL.h"
 

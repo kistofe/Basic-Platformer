@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "j1MainMenu.h"
 #include "j1GuiController.h"
+#include "j1Textures.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -12,11 +13,18 @@ j1MainMenu::~j1MainMenu()
 
 bool j1MainMenu::Start()
 {
+//	AddUiElems();
+	background = App->tex->Load("images/Background.png");
+	title = App->tex->Load("images/title.png");
+	
 	return true;
 }
 
 bool j1MainMenu::CleanUp()
 {
+	App->tex->UnLoad(background);
+	App->tex->UnLoad(title);
+
 	return true;
 }
 
@@ -30,9 +38,11 @@ bool j1MainMenu::OnEvent(Button * button)
 		break;
 	case LOAD_GAME: //load if save exists
 		break;
-	case SETTINGS: //fade to "options" scene
+	case SETTINGS: 
+		CreateSettingsWindow();
 		break;
-	case CREDITS: //fade to "credits" scene
+	case CREDITS: 
+		CreateCreditsWindow();
 		break;
 	case EXIT:
 		ret = false;
@@ -70,8 +80,10 @@ void j1MainMenu::AddUiElems()
 
 void j1MainMenu::CreateSettingsWindow()
 {
+
 }
 
 void j1MainMenu::CreateCreditsWindow()
 {
+
 }

@@ -76,7 +76,7 @@ public:
 		return true;
 	}
 
-	virtual void AddUiElem()
+	virtual void AddUiElems()
 	{
 		return;
 	}

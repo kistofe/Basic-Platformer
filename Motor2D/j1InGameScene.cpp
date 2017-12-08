@@ -5,11 +5,14 @@
 #include "j1Input.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
+#include "j1Textures.h"
 
 
 j1InGameScene::j1InGameScene()
 {
 	name.create("ingame_scene");
+	
+
 }
 
 j1InGameScene::~j1InGameScene()
@@ -26,6 +29,9 @@ bool j1InGameScene::Awake(pugi::xml_node & config)
 	max_gravity.x = config.child("max_gravity_x").attribute("value").as_float();
 	max_gravity.y = config.child("max_gravity_y").attribute("value").as_float();
 
+	char1_life_icon = { 0, 0, 70, 56 };
+	char2_life_icon = { 76, 0, 70, 56 };
+	time_icon = { 7, 78, 51, 51 };
 	return ret;
 }
 
@@ -34,7 +40,7 @@ bool j1InGameScene::Start()
 	Initialize(App->map->map_name.start->data->GetString());
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
-	AddUiElems();
+	hud_tex = App->tex->Load("gui/HUD.png");
 
 	return true;
 }
@@ -42,6 +48,7 @@ bool j1InGameScene::Start()
 bool j1InGameScene::Update(float d_time)
 {
 	HandleInput();
+
 
 	App->map->Draw();
 
@@ -54,6 +61,7 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
+	AddUiElems();
 	return true;
 }
 
@@ -98,6 +106,25 @@ void j1InGameScene::Initialize(const char * map_initialized)
 
 void j1InGameScene::AddUiElems()
 {
+	iPoint temp;
+	
+	//Life Icon
+	temp = { 15, 40 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	App->render->Blit(hud_tex, temp.x, temp.y, &char1_life_icon);
+
+	temp = { 70, 70 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
+	curr_character->SetText("RAMONA", { 255,255,255,255 });
+	
+	
+	//Time Icon
+	temp = { 450, 40 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	App->render->Blit(hud_tex, temp.x, temp.y, &time_icon);
+
+	
 }
 
 void j1InGameScene::HandleInput()

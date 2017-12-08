@@ -34,8 +34,8 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	default_animation = &idle;
 
 	//Setting textures
-	default_tex			= App->tex->Load("images/Ramona.png");
-	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png");
+	default_tex			= App->tex->Load("images/Ramona.png"); //Read from config
+	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png"); //Read from config
 	current_tex			= default_tex;
 
 	moving_speed		= data.child("moving_speed").attribute("value").as_float();
@@ -222,7 +222,7 @@ void Player::SetCameraToPlayer()
 		App->render->camera.x = 0;
 	else if (App->render->camera.x - App->render->camera.w / 3 <= App->map->max_map_x)
 		App->render->camera.x = App->map->max_map_x + App->render->camera.w / 3;
-	App->render->camera.y = App->render->camera.h / 1.35 - position.y;
+	App->render->camera.y = App->render->camera.h / 1.45 - position.y;
 	if (App->render->camera.y > 0)
 		App->render->camera.y = 0;
 }

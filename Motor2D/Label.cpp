@@ -28,7 +28,7 @@ void Label::SetText(const char* content, const SDL_Color &color)
 {
 	text_texture = App->font->Print(content, color, App->font->default1);
 	int w = 0, h = 0;
-	SDL_QueryTexture(text_texture, nullptr, nullptr, &w, &h);
+	SDL_QueryTexture(text_texture, NULL, NULL, &w, &h);
 	SetArea(w, h);
 }
 

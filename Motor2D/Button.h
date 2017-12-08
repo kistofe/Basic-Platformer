@@ -28,7 +28,6 @@ public:
 
 	bool MouseOver(const SDL_Rect& button);
 	void SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec);
-	void CreateButtonLabel(Label* button_label, const char* content, SDL_Color color);
 	void SetButtonType(ButtonType type);
 
 private:

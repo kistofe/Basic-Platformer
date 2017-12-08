@@ -71,7 +71,7 @@ void j1Map::Draw()
 						{
 							screen_coords = MapToWorld(-x,-y);
 						
-						if (screen_coords.x <= App->render->camera.x + App->entities->player1->position.x  && screen_coords.x >= App->render->camera.x - App->render->camera.w && screen_coords.y <= App->render->camera.y + 30 && screen_coords.y >= App->render->camera.y - App->render->camera.h)
+						if (screen_coords.x <= App->render->camera.x + App->entities->player1->position.x + 7  && screen_coords.x >= App->render->camera.x - App->render->camera.w && screen_coords.y <= App->render->camera.y + 30 && screen_coords.y >= App->render->camera.y - App->render->camera.h)
 							App->render->Blit(data.tilesets[j]->texture, x*data.tile_width, y*data.tile_height, &data.tilesets[j]->GetTileRect(data.map_layers[i]->layer_gid[data.map_layers[i]->Get(x, y)]), data.map_layers[i]->properties.Get("Parallax speed"));
 						
 						}

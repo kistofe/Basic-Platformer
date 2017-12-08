@@ -4,6 +4,8 @@
 #include "j1Module.h"
 #include "j1GuiController.h"
 
+#include "SDL\include\SDL.h"
+
 class j1MainMenu : public j1Module
 {
 
@@ -40,6 +42,10 @@ public:
 
 	//Copyright
 	Label* copyright = nullptr;
+
+	//Images
+	SDL_Texture* background = nullptr;
+	SDL_Texture* title = nullptr;
 	
 };
 #endif

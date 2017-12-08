@@ -37,13 +37,18 @@ public:
 	//DynamicLabel* coins = nullptr;
 
 	//UI Textures
-	SDL_Texture* life_tex = nullptr;
-	SDL_Texture* time_tex = nullptr;
-	SDL_Texture* coins_tex = nullptr;
+	SDL_Texture* hud_tex = nullptr;
+
+	//HUD elements
+	SDL_Rect char1_life_icon;
+	SDL_Rect char2_life_icon;
+	SDL_Rect time_icon;
+	SDL_Rect coins_icon;
 	
 	//Labels
 	Label* curr_character = nullptr;
 	Label* curr_level_lab = nullptr;
+	Label* score_lab = nullptr;
 
 	//Scene Properties
 	uint current_lvl = 1;

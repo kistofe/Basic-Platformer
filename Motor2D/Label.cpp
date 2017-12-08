@@ -24,9 +24,9 @@ void Label::SetArea(uint w, uint h)
 	world_area = { position.x, position.y, wint, hint };
 }
 
-void Label::SetText(const char* content, const SDL_Color &color)
+void Label::SetText(const char* content, const SDL_Color &color, _TTF_Font* font_size)
 {
-	text_texture = App->font->Print(content, color, App->font->default1);
+	text_texture = App->font->Print(content, color, font_size);
 	int w = 0, h = 0;
 	SDL_QueryTexture(text_texture, NULL, NULL, &w, &h);
 	SetArea(w, h);

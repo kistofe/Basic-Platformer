@@ -116,9 +116,18 @@ void j1InGameScene::AddUiElems()
 	temp = { 70, 70 };
 	temp = App->render->ScreenToWorld(temp.x, temp.y);
 	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
-	curr_character->SetText("RAMONA", { 255,255,255,255 });
+	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
 	
-	
+	temp = { 70, 100 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
+	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->medium_size);
+
+	temp = { 70, 130 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
+	curr_character->SetText("Ramona", { 255,255,255,255 }, App->font->small_size);
+
 	//Time Icon
 	temp = { 450, 40 };
 	temp = App->render->ScreenToWorld(temp.x, temp.y);

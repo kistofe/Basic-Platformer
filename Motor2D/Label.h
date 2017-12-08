@@ -13,7 +13,7 @@ public:
 	~Label();
 
 	
-	void SetText(const char* content, const SDL_Color &color);
+	void SetText(const char* content, const SDL_Color &color, _TTF_Font* font_size);
 	void Draw();
 	void SetArea(uint w, uint h);
 

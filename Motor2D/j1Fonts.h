@@ -5,8 +5,6 @@
 #include "p2List.h"
 #include "SDL\include\SDL_pixels.h"
 
-#define DEFAULT_FONT "fonts/VCR_OSD_MONO_1.001.ttf"
-#define DEFAULT_FONT_SIZE 32
 
 struct SDL_Texture;
 struct _TTF_Font;

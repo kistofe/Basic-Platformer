@@ -59,6 +59,13 @@
     </ground_enemy>
   </entity_manager>
 
+  <fonts>
+    <default path = "fonts/VCR_OSD_MONO_1.001.ttf"/>
+    <large_font size = "40"/>
+    <medium_font size = "30"/>
+    <small_font size = "15"/>
+  </fonts>
+  
   <gui>
     <atlas file="gui/atlas.png"/>
   </gui>

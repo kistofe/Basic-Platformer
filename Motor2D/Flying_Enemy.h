@@ -34,11 +34,11 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
-	
+
 private:
 
 	Animation fly;
 	Animation bite;
-	
+		
 };
 #endif 

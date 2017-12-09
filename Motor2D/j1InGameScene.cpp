@@ -11,13 +11,10 @@
 j1InGameScene::j1InGameScene()
 {
 	name.create("ingame_scene");
-	
-
 }
 
 j1InGameScene::~j1InGameScene()
-{
-}
+{}
 
 bool j1InGameScene::Awake(pugi::xml_node & config)
 {
@@ -42,6 +39,8 @@ bool j1InGameScene::Start()
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
 
+	AddUiElems();
+
 	return true;
 }
 
@@ -49,9 +48,8 @@ bool j1InGameScene::Update(float d_time)
 {
 	HandleInput();
 
-
 	App->map->Draw();
-
+	
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
@@ -61,7 +59,8 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
-	AddUiElems();
+	UpdateUIpos();
+	
 	return true;
 }
 
@@ -77,6 +76,8 @@ bool j1InGameScene::PostUpdate(float d_time)
 
 bool j1InGameScene::CleanUp()
 {
+	App->tex->UnLoad(hud_tex);
+
 	return true;
 }
 
@@ -106,34 +107,13 @@ void j1InGameScene::Initialize(const char * map_initialized)
 
 void j1InGameScene::AddUiElems()
 {
-	iPoint temp;
-	
-	//Life Icon
-	temp = { 15, 40 };
-	temp = App->render->ScreenToWorld(temp.x, temp.y);
-	App->render->Blit(hud_tex, temp.x, temp.y, &char1_life_icon);
-
-	temp = { 70, 70 };
-	temp = App->render->ScreenToWorld(temp.x, temp.y);
-	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
+	//Current Character Label
+	curr_character = (Label*)App->gui->CreateWidget(LABEL, 100, 45, this);
 	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
-	
-	temp = { 70, 100 };
-	temp = App->render->ScreenToWorld(temp.x, temp.y);
-	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
-	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->medium_size);
 
-	temp = { 70, 130 };
-	temp = App->render->ScreenToWorld(temp.x, temp.y);
-	curr_character = (Label*)App->gui->CreateWidget(LABEL, temp.x, temp.y, this);
-	curr_character->SetText("Ramona", { 255,255,255,255 }, App->font->small_size);
-
-	//Time Icon
-	temp = { 450, 40 };
-	temp = App->render->ScreenToWorld(temp.x, temp.y);
-	App->render->Blit(hud_tex, temp.x, temp.y, &time_icon);
-
-	
+	//Character lives left
+	life = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 60, 45, this);
+	life->SetText("x3", { 255,255,255,255 }, App->font->medium_size);
 }
 
 void j1InGameScene::HandleInput()
@@ -168,4 +148,26 @@ void j1InGameScene::HandleInput()
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 		App->audio->VolumeControl();
+}
+
+void j1InGameScene::UpdateUIpos()
+{
+	iPoint temp;
+
+	//Life Icon
+	temp = { 15, 40 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	App->render->Blit(hud_tex, temp.x, temp.y, &char1_life_icon);
+
+	//Character's name label
+	temp = { 100, 45 };
+	curr_character->position = App->render->ScreenToWorld(temp.x, temp.y);
+
+	if (App->entities->player1)
+	//life->ChangeContent
+
+	//Time Icon
+	temp = { 450, 40 };
+	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	App->render->Blit(hud_tex, temp.x, temp.y, &time_icon);
 }

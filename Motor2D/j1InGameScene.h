@@ -27,14 +27,15 @@ private:
 
 	void AddUiElems();
 	void HandleInput();
+	void UpdateUIpos();
 
 public:
 
 	//Main UI
-	//DynamicLabel* life = nullptr;
-	//DynamicLabel* time = nullptr;
-	//DynamicLabel* score = nullptr;
-	//DynamicLabel* coins = nullptr;
+	DynamicLabel* life = nullptr;
+	DynamicLabel* time = nullptr;
+	DynamicLabel* score = nullptr;
+	DynamicLabel* coins = nullptr;
 
 	//UI Textures
 	SDL_Texture* hud_tex = nullptr;

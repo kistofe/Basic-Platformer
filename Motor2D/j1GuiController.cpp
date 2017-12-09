@@ -86,7 +86,9 @@ Widget* j1GuiController::CreateWidget(UiElemType type, uint x, uint y, j1Module*
 	case UiElemType::LABEL:	
 		ret = new Label(temp_pos, callback);
 		break;
-	//case UiElemType::DYNAMIC_LABEL:	ret = new DynamicLabel(x, y);
+	case UiElemType::DYNAMIC_LABEL:
+		ret = new DynamicLabel(temp_pos, callback);
+		break;
 	case UiElemType::WINDOW:
 		ret = new UIWindow(temp_pos, callback);
 		break;

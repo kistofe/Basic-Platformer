@@ -22,6 +22,7 @@ enum EntityType
 	PLAYER,
 	FLYING_ENEMY,
 	GROUND_ENEMY,
+	COIN,
 };
 
 	Entity(EntityType type);

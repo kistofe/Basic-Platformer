@@ -90,6 +90,9 @@
     <ClCompile Include="j1CharacterSel.cpp">
       <Filter>Desenvolupament ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Desenvolupament ========\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h" />
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="j1CharacterSel.h">
       <Filter>Desenvolupament ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Desenvolupament ========\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

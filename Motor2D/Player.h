@@ -45,6 +45,7 @@ private:
 public:
 
 	bool god_mode = false;
+	uint lives_left = 3;
 
 private:
 

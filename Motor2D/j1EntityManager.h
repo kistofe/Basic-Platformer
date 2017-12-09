@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "Flying_Enemy.h"
 #include "Ground_Enemy.h"
+#include "Coin.h"
 
 class j1EntityManager : public j1Module
 {

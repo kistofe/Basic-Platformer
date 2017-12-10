@@ -199,5 +199,17 @@ void j1EntityManager::SetToStart()
 		entity_iterator->data->SetToStart();
 		entity_iterator = entity_iterator->next;
 	}
+	   
+}
 
+void j1EntityManager::Draw()
+{
+	p2List_item<Entity*>* entity_iterator;
+	entity_iterator = entity_list.start;
+
+	while (entity_iterator != NULL)
+	{
+		entity_iterator->data->Draw();;
+		entity_iterator = entity_iterator->next;
+	}
 }

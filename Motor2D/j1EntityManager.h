@@ -27,6 +27,7 @@ public:
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;
 	void SetToStart();
+	void Draw();
 
 private:
 	

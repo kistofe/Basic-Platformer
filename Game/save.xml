@@ -4,15 +4,17 @@
 	<window />
 	<textures />
 	<audio>
-		<volume value="80" />
+		<volume value="0" />
 	</audio>
-	<scene />
+	<main_menu />
+	<:anonymous />
+	<ingame_scene />
 	<collisions />
 	<scene_switch />
 	<map />
 	<entity_manager>
 		<player>
-			<position x="200" y="1566" />
+			<position x="320" y="1566" />
 			<velocity x="0" y="0" />
 			<status>
 				<is_grounded value="true" />
@@ -60,6 +62,6 @@
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="0" y="-997" />
+		<camera x="0" y="-1036" />
 	</renderer>
 </game_state>

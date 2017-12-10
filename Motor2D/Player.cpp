@@ -110,7 +110,7 @@ bool Player::Update(float d_time)
 	//Update Player Collider ---------------------------------------------
 	collider->SetPos((position.x + collider_offset.x), (position.y + collider_offset.y));
 	//Update Player's Blit ----------------------------------------------
-	Draw();
+//	Draw();
 	return true;
 }
 

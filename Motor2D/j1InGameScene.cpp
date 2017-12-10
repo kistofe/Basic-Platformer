@@ -50,6 +50,7 @@ bool j1InGameScene::Update(float d_time)
 	HandleInput();
 
 	App->map->Draw();
+	App->entities->Draw();
 	
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -61,6 +62,7 @@ bool j1InGameScene::Update(float d_time)
 		map_coordinates.x, map_coordinates.y);
 
 	UpdateUIpos();
+	App->gui->Draw();
 	
 	return true;
 }

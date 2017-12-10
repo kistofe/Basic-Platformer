@@ -115,11 +115,11 @@ SDL_Texture* j1GuiController::GetAtlas() const
 
 void j1GuiController::Draw()
 {
-	p2List_item<Widget*>* ui_elem_iterator = ui_elems.end;
+	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
 	while (ui_elem_iterator)
 	{
 		ui_elem_iterator->data->Draw();
-		ui_elem_iterator = ui_elem_iterator->prev;
+		ui_elem_iterator = ui_elem_iterator->next;
 	}
 }
 

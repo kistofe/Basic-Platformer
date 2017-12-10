@@ -50,6 +50,13 @@ public:
 	Label* curr_character = nullptr;
 	Label* curr_level_lab = nullptr;
 	Label* score_lab = nullptr;
+	Label* tuto_window_content1 = nullptr;
+	Label* tuto_window_content2 = nullptr;
+	Label* tuto_window_content3 = nullptr;
+	Label* tuto_window_content4 = nullptr;
+
+	//Windows
+	UIWindow* tuto_window = nullptr;
 
 	//Scene Properties
 	uint current_lvl = 1;

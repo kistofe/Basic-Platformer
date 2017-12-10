@@ -50,6 +50,10 @@ bool j1InGameScene::Update(float d_time)
 	HandleInput();
 
 	App->map->Draw();
+
+	UpdateUIpos();
+	App->gui->Draw();
+
 	App->entities->Draw();
 	
 	int x, y;
@@ -61,8 +65,7 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
-	UpdateUIpos();
-	App->gui->Draw();
+
 	
 	return true;
 }
@@ -117,6 +120,31 @@ void j1InGameScene::AddUiElems()
 	curr_character = (Label*)App->gui->CreateWidget(LABEL, 100, 45, this);
 	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
 
+	//Score Label
+	score_lab = (Label*)App->gui->CreateWidget(LABEL, 15, 100, this);
+	score_lab->SetText("Score:", { 255,255,255,255 }, App->font->medium_size);
+
+	//Mini Tutorial Window
+	tuto_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1200, this);
+	tuto_window->SetWindowType(2);
+	tuto_window->SetArea();
+
+	tuto_window_content1 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
+	tuto_window_content1->SetText("PRESS ~SPACE~ TO PERFORM A REGULAR JUMP", { 255,255,255,255 }, App->font->small_size);
+	tuto_window->Attach(tuto_window_content1, { 15, 60 });
+
+	tuto_window_content2 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
+	tuto_window_content2->SetText("PRESS ~SPACE~ AGAIN WHILE IN AIR TO", { 255,255,255,255 }, App->font->small_size);
+	tuto_window->Attach(tuto_window_content2, { 15, 100 });
+
+	tuto_window_content3 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
+	tuto_window_content3->SetText("PERFORM A DOUBLE JUMP!", { 255,255,255,255 }, App->font->small_size);
+	tuto_window->Attach(tuto_window_content3, { 15, 130 });
+
+	tuto_window_content4 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
+	tuto_window_content4->SetText("*STARTER'S HINT*", { 255,255,255,255 }, App->font->small_size);
+	tuto_window->Attach(tuto_window_content4, { 130, 20 });
+	
 	//Character lives left
 	life = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 60, 45, this);
 	life->SetText("x3", { 255,255,255,255 }, App->font->medium_size);
@@ -169,8 +197,8 @@ void j1InGameScene::UpdateUIpos()
 	temp = { 100, 45 };
 	curr_character->position = App->render->ScreenToWorld(temp.x, temp.y);
 
-	if (App->entities->player1)
-	//life->ChangeContent
+	temp = { 15, 100 };
+	score_lab->position = App->render->ScreenToWorld(temp.x, temp.y);
 
 	//Time Icon
 	temp = { 450, 40 };

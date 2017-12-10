@@ -148,8 +148,7 @@ void Flying_Enemy::MoveTowardsPlayer(float d_time)
 
 void Flying_Enemy::OnCollision(Collider * c1, Collider * c2)
 {
-	//Maybe flying enemy does not collide with scenario
-	//Check collision with player
+
 }
 
 

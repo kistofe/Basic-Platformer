@@ -114,6 +114,9 @@ Entity* j1EntityManager::CreateEntity(Entity::EntityType type, uint x, uint y)
 		case Entity::EntityType::FLYING_ENEMY:		ret = new Flying_Enemy(x, y);
 			break;
 		case Entity::EntityType::GROUND_ENEMY:		ret = new Ground_Enemy(x, y);
+			break;
+		case Entity::EntityType::COIN:				ret = new Coin(x, y);
+			break;
 	}
 
 

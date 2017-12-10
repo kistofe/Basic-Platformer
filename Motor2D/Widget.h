@@ -37,14 +37,13 @@ public:
 	void Attach(Widget* widg_to_attach, const iPoint relative_pos);
 public:
 
-	UiElemType	type;
-	bool being_clicked;
-	SDL_Rect world_area;
-		
+	UiElemType		type;
+	bool			being_clicked;
+	SDL_Rect		world_area;
+	iPoint			position;
 
 protected:
 
-	iPoint		position;
 	iPoint		relative_position; // position relative to the element they are attached to
 	j1Module*	callback = nullptr;
 	p2List<Widget*> attached_widgets;

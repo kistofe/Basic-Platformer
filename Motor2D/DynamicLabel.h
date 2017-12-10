@@ -1,18 +1,21 @@
-//#ifndef _DYNAMICLABEL_
-//#define _DYNAMICLABEL_
-//
-//#include "p2SString.h"
-//#include "Label.h"
-//
-//#include "SDL\include\SDL.h"
-//
-//class DynamicLabel : public Label
-//{
-//public:
-//	DynamicLabel(uint x, uint y);
-//	~DynamicLabel();
-//
-//private:
-//	p2SString* content;
-//};
-//#endif
+#ifndef _DYNAMICLABEL_
+#define _DYNAMICLABEL_
+
+#include "p2SString.h"
+#include "Label.h"
+
+#include "SDL\include\SDL.h"
+
+class DynamicLabel : public Label
+{
+public:
+	DynamicLabel(iPoint pos, j1Module* callback);
+	~DynamicLabel();
+
+	bool Update(float d_time);
+	void ChangeContent(const char* new_content);
+
+private:
+	char* content;
+};
+#endif

@@ -17,11 +17,11 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float d_time);
-	bool PostUpdate(float d_time);
+	bool PostUpdate();
 	bool CleanUp();
 
 	void NextLevel();
-	void Initialize(const char* map_initialized);
+	void InitializeMap(const char* map_initialized);
 
 private:
 

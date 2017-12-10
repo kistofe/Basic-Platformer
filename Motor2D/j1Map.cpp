@@ -155,19 +155,10 @@ bool j1Map::CleanUp()
 	}
 	data.objgroup.clear();
 
-	// Remove all entities
-	p2List_item<Entity*>* entity;
-	entity = App->entities->entity_list.start;
-	
-	while (entity)
-	{
-		RELEASE(entity->data);
-		entity = entity->next;
-	}
-	App->entities->entity_list.clear();
-
 	// Clean up the pugui tree
 	map_file.reset();
+
+	active = false;
 
 	
 	return true;

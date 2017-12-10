@@ -4,6 +4,7 @@
 #include "j1Audio.h"
 #include "j1Input.h"
 #include "j1EntityManager.h"
+#include "j1SceneSwitch.h"
 #include "j1Pathfinding.h"
 #include "j1Textures.h"
 
@@ -37,7 +38,7 @@ bool j1InGameScene::Awake(pugi::xml_node & config)
 
 bool j1InGameScene::Start()
 {
-	Initialize(App->map->map_name.start->data->GetString());
+	InitializeMap(App->map->map_name.start->data->GetString());
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
@@ -65,12 +66,15 @@ bool j1InGameScene::Update(float d_time)
 	return true;
 }
 
-bool j1InGameScene::PostUpdate(float d_time)
+bool j1InGameScene::PostUpdate()
 {
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+		App->sceneswitch->SwitchMap("Level2inprogress.tmx");
 
 	return ret;
 }
@@ -89,7 +93,7 @@ void j1InGameScene::NextLevel()
 		current_lvl = 1;
 }
 
-void j1InGameScene::Initialize(const char * map_initialized)
+void j1InGameScene::InitializeMap(const char * map_initialized)
 {
 	App->map->Load(map_initialized);
 	App->map->SetEntities();

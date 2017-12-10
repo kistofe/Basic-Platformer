@@ -92,9 +92,12 @@ bool j1EntityManager::CleanUp()
 
 	while (entity_iterator != NULL && ret == true)
 	{
-		ret = entity_iterator->data->CleanUp();
+		ret = DestroyEntity(entity_iterator->data);
 		entity_iterator = entity_iterator->prev;
 	}
+	entity_list.clear();
+	
+	active = false;
 
 	return ret;
 }

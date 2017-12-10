@@ -132,6 +132,7 @@ bool j1Collision::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
+	active = false;
 	
 	return true;
 }

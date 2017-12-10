@@ -70,6 +70,7 @@ bool Player::PreUpdate(float d_time)
 	SetSpeed(d_time);
 
 	//Update Future Player Collider with new speed
+	if (future_collider != nullptr)
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 
 	if (god_mode)

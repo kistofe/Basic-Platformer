@@ -56,6 +56,7 @@ bool Ground_Enemy::Start()
 bool Ground_Enemy::PreUpdate(float d_time)
 {
 	//Update Future collider
+	if (future_collider != nullptr && collider != nullptr)
 	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
 
 	facing_right = false;

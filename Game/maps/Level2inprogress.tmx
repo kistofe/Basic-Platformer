@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="250" height="60" tilewidth="32" tileheight="32" nextobjectid="126">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="250" height="60" tilewidth="32" tileheight="32" nextobjectid="126">
  <properties>
   <property name="Name" value="Level2inprogress"/>
  </properties>
@@ -25,6 +25,9 @@
   <image source="walkability.png" width="64" height="64"/>
  </tileset>
  <layer name="Last Background" width="250" height="60">
+  <properties>
+   <property name="Parallax speed" type="float" value="0"/>
+  </properties>
   <data>
    <tile gid="1042"/>
    <tile gid="1042"/>
@@ -15029,6 +15032,9 @@
   </data>
  </layer>
  <layer name="Scenario" width="250" height="60">
+  <properties>
+   <property name="Parallax speed" type="float" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>

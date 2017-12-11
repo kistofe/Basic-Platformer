@@ -81,8 +81,8 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar* data)
 	this->width = width;
 	this->height = height;
 	
-	if (map)
-		RELEASE_ARRAY(map);
+//	if (map)
+	//	RELEASE_ARRAY(map);
 	map = new uchar[width*height];
 	memcpy(map, data, width*height);
 }

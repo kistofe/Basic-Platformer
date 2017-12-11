@@ -246,7 +246,7 @@ void Player::SetSpeed(float d_time)
 		
 	else
 		speed.x = 0; 
-		
+
 	//Set Jumping Speed
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps_left != 0)
 		speed.y = jumping_speed * d_time;

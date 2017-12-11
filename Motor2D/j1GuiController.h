@@ -41,7 +41,6 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 	void Draw();
-	
 
 private:
 	p2List<Widget*> ui_elems;

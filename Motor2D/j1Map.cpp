@@ -705,6 +705,9 @@ bool j1Map::SetEntities()
 				if (current_entity->data->name == "Ground_Enemy")
 					App->entities->CreateEntity(Entity::EntityType::GROUND_ENEMY, current_entity->data->x, current_entity->data->y);
 
+				if (current_entity->data->name == "Coin")
+					App->entities->CreateEntity(Entity::EntityType::COIN, current_entity->data->x, current_entity->data->y);
+
 				current_entity = current_entity->next;
 			}
 		}

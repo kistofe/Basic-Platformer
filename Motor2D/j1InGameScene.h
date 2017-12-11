@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1GuiController.h"
+#include "j1Timer.h"
 
 #include "SDL\include\SDL.h"
 
@@ -28,7 +29,8 @@ private:
 	void AddUiElems();
 	void HandleInput();
 	void UpdateUIpos();
-
+	void UpdateTimer();
+	
 public:
 
 	//Main UI
@@ -59,8 +61,11 @@ public:
 	UIWindow* tuto_window = nullptr;
 
 	//Scene Properties
-	uint current_lvl = 1;
-	fPoint gravity; 
-	fPoint max_gravity; 
+	uint	timer_count = 0;
+	uint	current_time;
+	j1Timer	scene_timer;
+	uint32	current_lvl = 1;
+	fPoint	gravity; 
+	fPoint	max_gravity; 
 };
 #endif

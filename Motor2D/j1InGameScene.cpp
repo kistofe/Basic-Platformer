@@ -39,9 +39,10 @@ bool j1InGameScene::Start()
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
-
+	current_time = 200;
+	//scene_timer.Start();
 	AddUiElems();
-
+	
 	return true;
 }
 
@@ -50,7 +51,7 @@ bool j1InGameScene::Update(float d_time)
 	HandleInput();
 
 	App->map->Draw();
-
+	
 	UpdateUIpos();
 	App->gui->Draw();
 
@@ -65,8 +66,8 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
-
-	
+	timer_count = scene_timer.ReadSec();
+	//	UpdateTimer();
 	return true;
 }
 
@@ -76,9 +77,6 @@ bool j1InGameScene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
-
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-		App->sceneswitch->SwitchMap("Level2inprogress.tmx");
 
 	return ret;
 }
@@ -146,8 +144,13 @@ void j1InGameScene::AddUiElems()
 	tuto_window->Attach(tuto_window_content4, { 130, 20 });
 	
 	//Character lives left
-	life = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 60, 45, this);
+	life = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 70, 75, this);
 	life->SetText("x3", { 255,255,255,255 }, App->font->medium_size);
+
+	//Scene timer
+	p2SString _timer("%i", timer_count);
+	time = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 490, 40, this);
+	time->SetText(_timer.GetString(), { 255,255,255,255 }, App->font->small_size);
 }
 
 void j1InGameScene::HandleInput()
@@ -165,10 +168,8 @@ void j1InGameScene::HandleInput()
 		App->LoadGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
-		//App->sceneswitch->SwitchMap("Level2inprogress.tmx");
-	}
-
+		App->sceneswitch->SwitchMap("Level2inprogress.tmx");
+	
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		if (App->entities->player1->god_mode)
@@ -197,11 +198,36 @@ void j1InGameScene::UpdateUIpos()
 	temp = { 100, 45 };
 	curr_character->position = App->render->ScreenToWorld(temp.x, temp.y);
 
+	//Score num label
 	temp = { 15, 100 };
 	score_lab->position = App->render->ScreenToWorld(temp.x, temp.y);
+	
+	//Life num Label
+	temp = { 70, 75 };
+	life->position = App->render->ScreenToWorld(temp.x, temp.y);
 
 	//Time Icon
 	temp = { 450, 40 };
 	temp = App->render->ScreenToWorld(temp.x, temp.y);
 	App->render->Blit(hud_tex, temp.x, temp.y, &time_icon);
+
+	//Time Label
+	temp = { 510, 50 };
+	time->position = App->render->ScreenToWorld(temp.x, temp.y);
+	p2SString _timer("%i", timer_count);
+	time->ChangeContent(_timer.GetString());
+}
+
+void j1InGameScene::UpdateTimer()//Still to finish
+{
+	//Updating Timer
+	
+	current_time -= scene_timer.ReadSec();
+	if (current_time == 0)
+	{
+		App->entities->SetToStart();
+		scene_timer.Start();
+		timer_count = 0;
+		current_time = 0;
+	}
 }

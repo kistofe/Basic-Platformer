@@ -57,6 +57,10 @@
       <collider_offset_x value = "0"/>
       <collider_offset_y value = "0"/>
     </ground_enemy>
+    <coin>
+      <collider_offset_x value = "0"/>
+      <collider_offset_y value = "0"/>
+    </coin>
   </entity_manager>
 
   <fonts>

@@ -17,13 +17,13 @@ public:
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-	void SetAnimations();
 	void CreateAnimationPushBacks();
 
 public:
 	
-	Animation spin;
-	bool collected = false;
+	Animation			spin;
+	bool				collected = false;
+	SDL_Texture*		coin_tex = nullptr;
 
 };
 #endif

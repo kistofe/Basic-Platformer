@@ -75,8 +75,7 @@ bool Ground_Enemy::Update(float d_time)
 	
 	//Update Collider Position-------------------------------------
 	collider->SetPos(position.x + collider_offset.x, position.y + collider_offset.y);
-	//Update Blit -------------------------------------------------
-//	Draw();
+
 	return true;
 }
 

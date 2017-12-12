@@ -39,7 +39,7 @@ bool j1InGameScene::Start()
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
-	//scene_timer.Start();
+	
 	AddUiElems();
 	
 	return true;

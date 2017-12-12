@@ -34,14 +34,44 @@ bool j1SceneSwitch::Start()
 bool j1SceneSwitch::Update(float d_time)
 {
 	BROFILER_CATEGORY("j1SceneSwitch - Update", Profiler::Color::CadetBlue);
-	
-	return true;
+	bool ret = true;
+
+	if (current_step == fade_step::none)
+		return ret;
+
+	float normalized = MIN(1.0f, switchtimer.ReadSec() / fadetime);
+
+	switch (current_step)
+	{
+	case fade_step::fade_to_black:
+	{
+		if (switchtimer.ReadSec() >= fadetime)
+		{
+			to_disable->Disable();
+			App->gui->CleanUp();
+			to_enable->Enable();
+			switchtimer.Start();
+			current_step = fade_step::fade_from_black;
+		}
+	}break;
+
+	case fade_step::fade_from_black:
+	{
+		normalized = 1.0f - normalized;
+
+		if (switchtimer.ReadSec() >= fadetime)
+		{
+			current_step = fade_step::none;
+		}
+	}break;
+	}
+
+	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
+	SDL_RenderFillRect(App->render->renderer, &screen);
+
+	return ret;
 }
 
-bool j1SceneSwitch::CleanUp()
-{
-	return true;
-}
 
 bool j1SceneSwitch::SwitchMap(const char* map_on)
 {
@@ -65,4 +95,24 @@ bool j1SceneSwitch::SwitchMap(const char* map_on)
 bool j1SceneSwitch::DestroyEnemies()
 {
 	return false;
+}
+
+bool j1SceneSwitch::SwitchScene(j1Module * SceneIn, j1Module * SceneOut)
+{
+	bool ret = false;
+
+	if (current_step == fade_step::none)
+	{
+		current_step = fade_step::fade_to_black;
+		switchtimer.Start();
+		to_enable = SceneIn;
+		to_disable = SceneOut;
+		ret = true;
+	}
+	return ret;
+}
+
+bool j1SceneSwitch::IsSwitching() const
+{
+	return (current_step != fade_step::none);
 }

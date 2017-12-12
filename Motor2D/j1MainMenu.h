@@ -14,6 +14,7 @@ public:
 	~j1MainMenu();
 
 	bool Start();
+	bool Update(float d_time);
 	bool CleanUp();
 
 	bool OnEvent(Button* button);

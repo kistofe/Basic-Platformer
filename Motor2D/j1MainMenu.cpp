@@ -2,6 +2,9 @@
 #include "j1MainMenu.h"
 #include "j1GuiController.h"
 #include "j1Textures.h"
+#include "j1Render.h"
+#include "j1SceneSwitch.h"
+#include "j1InGameScene.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -13,10 +16,19 @@ j1MainMenu::~j1MainMenu()
 
 bool j1MainMenu::Start()
 {
-//	AddUiElems();
-	background = App->tex->Load("images/Background.png");
-	title = App->tex->Load("images/title.png");
+	AddUiElems();
+	background = App->tex->Load("gui/Background.png");
+	title = App->tex->Load("gui/title.png");
 	
+	return true;
+}
+
+bool j1MainMenu::Update(float d_time)
+{
+	App->render->Blit(background, -200, 1035);
+	App->render->Blit(title, 0, 1050);
+
+	App->gui->Draw();
 	return true;
 }
 
@@ -34,7 +46,8 @@ bool j1MainMenu::OnEvent(Button * button)
 
 	switch (button->button_type)
 	{
-	case NEW_GAME: //fade to "ingame" scene
+	case NEW_GAME: 
+		App->sceneswitch->SwitchScene(App->ingamescene, this);
 		break;
 	case LOAD_GAME: //load if save exists
 		break;
@@ -57,12 +70,12 @@ bool j1MainMenu::OnEvent(Button * button)
 void j1MainMenu::AddUiElems()
 {
 	//Start New Game Button
-	new_game = (Button*)App->gui->CreateWidget(BUTTON, 200, 1550, this);
+	new_game = (Button*)App->gui->CreateWidget(BUTTON, 45, 1450, this);
 	new_game->SetButtonType(NEW_GAME);
 	new_game->SetSection({ 10, 8, 192, 64 }, { 10, 72, 192, 64 }, { 10, 136, 192, 64 });
 
 	//Load Game Button
-	load_game = (Button*)App->gui->CreateWidget(BUTTON, 200, 1650, this);
+	load_game = (Button*)App->gui->CreateWidget(BUTTON, 50, 1650, this);
 	load_game->SetButtonType(LOAD_GAME);
 
 	//Settings Button
@@ -76,6 +89,10 @@ void j1MainMenu::AddUiElems()
 	//Exit Button
 	exit = (Button*)App->gui->CreateWidget(BUTTON, 200, 1950, this);
 	exit->SetButtonType(EXIT);
+
+	//New Game label
+	new_game_lab = (Label*)App->gui->CreateWidget(LABEL, 50, 1450, this);
+	new_game_lab->SetText("NEW GAME", { 255,255,255,255 }, App->font->medium_size);
 }
 
 void j1MainMenu::CreateSettingsWindow()

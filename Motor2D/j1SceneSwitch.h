@@ -20,18 +20,29 @@ public:
 
 	bool Update(float d_time);
 
-	// Called before quitting
-	bool CleanUp();
-
 	bool SwitchMap(const char* map_on);
 
 	bool DestroyEnemies();
 
+	bool SwitchScene(j1Module* SceneIn, j1Module* SceneOut);
+
+	bool IsSwitching() const;
+
 public:
 
 private:
+	enum fade_step
+	{
+		none,
+		fade_to_black,
+		fade_from_black
+	} current_step = fade_step::none;
 
+	float fadetime = 3.0f;
 	SDL_Rect screen;
+	j1Module* to_enable = nullptr;
+	j1Module* to_disable = nullptr;
+	j1Timer switchtimer;
 };
 
 

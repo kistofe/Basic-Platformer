@@ -140,16 +140,15 @@ bool j1EntityManager::DestroyEntity(Entity * entity)
 	{
 		if (temp->data == entity)
 		{
-			delete entity;
+			App->collision->EraseCollider(entity->GetCollider());
 			entity->GetCollider()->callback = nullptr;
+			delete entity;
 			entity_list.del(temp);
 			break;
 		}
 		temp = temp->next;
 	}
 	
-	App->collision->EraseCollider(entity->GetCollider());
-
 	return ret;
 }
 

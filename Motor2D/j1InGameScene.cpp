@@ -117,8 +117,12 @@ void j1InGameScene::AddUiElems()
 	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
 
 	//Score Label
-	score_lab = (Label*)App->gui->CreateWidget(LABEL, 15, 100, this);
-	score_lab->SetText("Score:", { 255,255,255,255 }, App->font->medium_size);
+	score = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 15, 115, this);
+	score->SetText("Score:", { 255,255,255,255 }, App->font->medium_size);
+
+	//Coins label
+	coins = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 800, 45, this);
+	coins->SetText("Coins:", { 255, 255, 255, 255 }, App->font->medium_size);
 
 	//Mini Tutorial Window
 	tuto_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1200, this);
@@ -198,9 +202,11 @@ void j1InGameScene::UpdateUI()
 	curr_character->position = App->render->ScreenToWorld(temp.x, temp.y);
 
 	//Score num label
-	temp = { 15, 100 };
-	score_lab->position = App->render->ScreenToWorld(temp.x, temp.y);
-	
+	temp = { 15, 115 };
+	score->position = App->render->ScreenToWorld(temp.x, temp.y);
+	temp_string.create("Score:%i", App->entities->player1->score);
+	score->ChangeContent(temp_string.GetString());
+
 	//Life num Label
 	temp = { 70, 75 };
 	life->position = App->render->ScreenToWorld(temp.x, temp.y);
@@ -217,6 +223,12 @@ void j1InGameScene::UpdateUI()
 	time->position = App->render->ScreenToWorld(temp.x, temp.y);
 	temp_string.create("%i", current_time);
 	time->ChangeContent(temp_string.GetString());
+
+	//Coins num Label
+	temp = { 15, 150 };
+	coins->position = App->render->ScreenToWorld(temp.x, temp.y);
+	temp_string.create("Coins:%i", App->entities->player1->coins);
+	coins->ChangeContent(temp_string.GetString());
 }
 
 void j1InGameScene::UpdateTimer()//Still to finish

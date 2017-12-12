@@ -22,7 +22,6 @@ public:
 public:
 	
 	Animation			spin;
-	bool				collected = false;
 	SDL_Texture*		coin_tex = nullptr;
 
 };

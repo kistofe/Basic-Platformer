@@ -46,6 +46,8 @@ public:
 
 	bool god_mode = false;
 	uint lives_left = 3;
+	uint score = 0;
+	uint coins = 0;
 
 private:
 

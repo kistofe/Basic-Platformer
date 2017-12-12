@@ -171,7 +171,15 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Entity* ca
 
 bool j1Collision::EraseCollider(Collider * collider)
 {
-	return false;
+	bool ret = true;
+
+	if (collider != nullptr)
+		delete collider;
+
+	else
+		ret = false;
+
+	return ret;
 }
 
 void j1Collision::DebugDraw()

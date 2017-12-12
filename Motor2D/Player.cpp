@@ -413,6 +413,12 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		}
 	}
 
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_COIN)
+	{
+		coins++;
+		score += 50;
+		App->entities->DestroyEntity(c2->callback);
+	}
 }
 
 

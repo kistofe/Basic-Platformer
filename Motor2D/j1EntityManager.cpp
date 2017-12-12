@@ -137,6 +137,19 @@ bool j1EntityManager::DestroyEntity(Entity * entity)
 	else
 		ret = false;
 
+	p2List_item<Entity*>* temp = entity_list.start;
+	while (temp && ret)
+	{
+		if (temp->data == entity)
+		{
+			entity_list.del(temp);
+			break;
+		}
+		temp = temp->next;
+	}
+	
+	App->collision->EraseCollider(entity->GetCollider());
+
 	return ret;
 }
 

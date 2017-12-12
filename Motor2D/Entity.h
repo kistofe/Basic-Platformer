@@ -43,6 +43,7 @@ enum EntityType
 	void SetToStart();
 	void Draw();
 	void Move();
+	Collider* GetCollider();
 	
 public:
 
@@ -67,7 +68,7 @@ protected:
 
 	bool		facing_right = true;
 	uint		death_sfx;
-
+	
 	
 };
 #endif

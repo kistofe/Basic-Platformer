@@ -28,9 +28,10 @@ private:
 
 	void AddUiElems();
 	void HandleInput();
-	void UpdateUIpos();
+	void UpdateUI();
 	void UpdateTimer();
-	
+	void ResetTimer();
+	void UpdateScore();
 public:
 
 	//Main UI
@@ -63,6 +64,7 @@ public:
 	//Scene Properties
 	uint	timer_count = 0;
 	uint	current_time;
+	uint	max_time = 200;
 	j1Timer	scene_timer;
 	uint32	current_lvl = 1;
 	fPoint	gravity; 

@@ -26,6 +26,10 @@ Coin::Coin(uint x, uint y) : Entity(Entity::EntityType::COIN)
 
 	original_position.x = x;
 	original_position.y = y;
+
+	collider_offset.x = data.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y = data.child("collider_offset_y").attribute("value").as_int();
+
 }
 
 

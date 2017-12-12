@@ -31,8 +31,6 @@ Ground_Enemy::Ground_Enemy(uint x, uint y) : Enemy(Entity::EntityType::GROUND_EN
 
 	collider_offset.x	= data.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y	= data.child("collider_offset_y").attribute("value").as_int();
-
-
 }
 
 

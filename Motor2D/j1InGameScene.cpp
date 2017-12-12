@@ -39,7 +39,6 @@ bool j1InGameScene::Start()
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
-	current_time = 200;
 	//scene_timer.Start();
 	AddUiElems();
 	
@@ -52,7 +51,7 @@ bool j1InGameScene::Update(float d_time)
 
 	App->map->Draw();
 	
-	UpdateUIpos();
+	UpdateUI();
 	App->gui->Draw();
 
 	App->entities->Draw();
@@ -66,8 +65,8 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
-	timer_count = scene_timer.ReadSec();
-	//	UpdateTimer();
+
+	UpdateTimer();
 	return true;
 }
 
@@ -148,7 +147,7 @@ void j1InGameScene::AddUiElems()
 	life->SetText("x3", { 255,255,255,255 }, App->font->medium_size);
 
 	//Scene timer
-	p2SString _timer("%i", timer_count);
+	p2SString _timer("%i", current_time);
 	time = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 490, 40, this);
 	time->SetText(_timer.GetString(), { 255,255,255,255 }, App->font->small_size);
 }
@@ -185,7 +184,7 @@ void j1InGameScene::HandleInput()
 		App->audio->VolumeControl();
 }
 
-void j1InGameScene::UpdateUIpos()
+void j1InGameScene::UpdateUI()
 {
 	iPoint temp;
 
@@ -214,20 +213,29 @@ void j1InGameScene::UpdateUIpos()
 	//Time Label
 	temp = { 510, 50 };
 	time->position = App->render->ScreenToWorld(temp.x, temp.y);
-	p2SString _timer("%i", timer_count);
+	p2SString _timer("%i", current_time);
 	time->ChangeContent(_timer.GetString());
 }
 
 void j1InGameScene::UpdateTimer()//Still to finish
 {
 	//Updating Timer
-	
-	current_time -= scene_timer.ReadSec();
+
+	timer_count = scene_timer.ReadSec();
+	current_time = max_time - scene_timer.ReadSec();
 	if (current_time == 0)
 	{
-		App->entities->SetToStart();
-		scene_timer.Start();
-		timer_count = 0;
-		current_time = 0;
+		LOG("Now you'd go to Main Scene!");
+		ResetTimer();
 	}
+}
+
+void j1InGameScene::ResetTimer()
+{
+	current_time = max_time;
+}
+
+void j1InGameScene::UpdateScore()
+{
+	App->entities->player1 += current_time * 100 + App->entities->player1->lives_left * 100;
 }

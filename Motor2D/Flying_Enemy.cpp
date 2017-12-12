@@ -52,8 +52,7 @@ bool Flying_Enemy::Start()
 	
 	//Creating Colliders
 	collider			= App->collision->AddCollider({ position.x + collider_offset.x, position.y + collider_offset.y, 30, 30 }, COLLIDER_ENEMY, this);
-	future_collider		= App->collision->AddCollider({ collider->rect.x, collider->rect.y, 30, 30 }, COLLIDER_FUTURE, this);
-
+	
 	current_animation	= &fly;
 	
 	return true;
@@ -61,10 +60,7 @@ bool Flying_Enemy::Start()
 
 bool Flying_Enemy::PreUpdate(float d_time)
 {
-	//Update Future Collider with new speed
-	if (future_collider != nullptr && collider != nullptr)
-	future_collider->SetPos((collider->rect.x + speed.x), (collider->rect.y + speed.y));
-
+	
 	return true;
 }
 

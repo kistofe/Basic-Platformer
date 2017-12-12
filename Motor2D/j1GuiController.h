@@ -34,6 +34,7 @@ public:
 	bool Start();
 	bool PreUpdate(float d_time);
 	bool Update(float d_time);
+	bool CleanUp();
 
 	// Gui creation functions
 	Widget* CreateWidget(UiElemType type, uint x, uint y, j1Module* callback = nullptr);

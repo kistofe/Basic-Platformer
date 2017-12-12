@@ -64,6 +64,28 @@ bool j1GuiController::Update(float d_time)
 	return true;
 }
 
+bool j1GuiController::CleanUp()
+{
+	bool ret = true;
+
+	App->tex->UnLoad(atlas);
+
+	p2List_item<Widget*>* ui_iterator;
+	ui_iterator = ui_elems.end;
+
+	while (ui_iterator != NULL && ret == true)
+	{
+		ui_iterator->data->CleanUp();
+		ret = DestroyWidget(ui_iterator->data);
+		ui_iterator = ui_iterator->prev;
+	}
+	ui_elems.clear();
+
+	active = false;
+
+	return ret;
+}
+
 Widget* j1GuiController::CreateWidget(UiElemType type, uint x, uint y, j1Module* callback)
 {
 	Widget* ret = nullptr;

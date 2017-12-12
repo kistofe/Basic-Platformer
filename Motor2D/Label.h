@@ -12,7 +12,7 @@ public:
 	Label(iPoint pos, j1Module* callback);
 	~Label();
 
-	
+	bool CleanUp();
 	void SetText(const char* content, const SDL_Color &color, _TTF_Font* font_size);
 	void Draw();
 	void SetArea(uint w, uint h);

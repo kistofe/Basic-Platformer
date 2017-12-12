@@ -12,7 +12,6 @@ public:
 	DynamicLabel(iPoint pos, j1Module* callback);
 	~DynamicLabel();
 
-	bool Update(float d_time);
 	void ChangeContent(const char* new_content);
 
 private:

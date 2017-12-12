@@ -24,6 +24,11 @@ void Label::SetArea(uint w, uint h)
 	world_area = { position.x, position.y, wint, hint };
 }
 
+bool Label::CleanUp()
+{
+	return true;
+}
+
 void Label::SetText(const char* content, const SDL_Color &color, _TTF_Font* font_size)
 {
 	text_texture = App->font->Print(content, color, font_size);

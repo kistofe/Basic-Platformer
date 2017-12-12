@@ -39,8 +39,9 @@ bool j1InGameScene::Start()
 
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
-	
-	AddUiElems();
+
+	if (active)
+		AddUiElems();
 	
 	return true;
 }
@@ -82,6 +83,7 @@ bool j1InGameScene::PostUpdate()
 bool j1InGameScene::CleanUp()
 {
 	App->tex->UnLoad(hud_tex);
+
 
 	return true;
 }
@@ -231,12 +233,12 @@ void j1InGameScene::UpdateUI()
 	coins->ChangeContent(temp_string.GetString());
 }
 
-void j1InGameScene::UpdateTimer()//Still to finish
+void j1InGameScene::UpdateTimer()
 {
 	//Updating Timer
 
 	timer_count = scene_timer.ReadSec();
-	current_time = max_time - scene_timer.ReadSec();
+	current_time = max_time - timer_count;
 	if (current_time == 0)
 	{
 		LOG("Now you'd go to Main Scene!");

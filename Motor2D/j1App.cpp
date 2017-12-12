@@ -129,9 +129,9 @@ bool j1App::Awake()
 		}
 	}
 
-//	mainmenu->Enable();
-	charactersel->active = false;
-	ingamescene->active = false;
+	mainmenu->Disable();
+	charactersel->Disable();
+	ingamescene->Enable();
 
 	PERF_PEEK(ptimer);
 

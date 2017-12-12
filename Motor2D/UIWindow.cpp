@@ -11,13 +11,13 @@
 
 UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, pos, callback)
 {
-	horizontal_window.x = 10;
-	horizontal_window.y = 429;
+	horizontal_window.x = 3;
+	horizontal_window.y = 645;
 	horizontal_window.h = 192;
 	horizontal_window.w = 414;
 
-	vertical_window.x = 10;
-	vertical_window.y = 639;
+	vertical_window.x = 647;
+	vertical_window.y = 319;
 	vertical_window.h = 304;
 	vertical_window.w = 272;
 

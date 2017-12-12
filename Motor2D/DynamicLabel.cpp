@@ -12,11 +12,6 @@ DynamicLabel::~DynamicLabel()
 {
 }
 
-bool DynamicLabel::Update(float d_time)
-{
-	return true;
-}
-
 void DynamicLabel::ChangeContent(const char* new_content)
 {
 	if (text_texture != nullptr)

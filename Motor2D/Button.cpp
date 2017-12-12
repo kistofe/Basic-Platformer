@@ -48,7 +48,7 @@ bool Button::PreUpdate(float d_time)
 	return ret;
 }
 
-
+  
 void Button::Draw()
 {
 	App->render->Blit(App->gui->GetAtlas(), position.x, position.y, current_rect);

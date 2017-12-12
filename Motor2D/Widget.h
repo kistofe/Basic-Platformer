@@ -29,6 +29,7 @@ public:
 
 	virtual bool PreUpdate(float d_time) { return true; };
 	virtual bool Update(float d_time) { return true; };
+	virtual bool CleanUp() { return true; };
 	virtual void Draw() { return; };
 	void Drag();
 

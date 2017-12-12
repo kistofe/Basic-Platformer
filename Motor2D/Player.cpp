@@ -85,13 +85,20 @@ bool Player::PreUpdate(float d_time)
 bool Player::Update(float d_time) 
 {
 	SetCameraToPlayer();
-	//Check Horizontal Movement ----------------------------------------
+	//Check Horizontal Movement ------------------------------------------
 	//Right
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		facing_right = true;
 	
 	//Left
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		facing_right = false;
+	//--------------------------------------------------------------------
+
+	//Prevent animations from glitching-----------------------------------
+	if (speed.x > 0)
+		facing_right = true;
+	if (speed.x < 0)
 		facing_right = false;
 	//--------------------------------------------------------------------
 
@@ -102,7 +109,8 @@ bool Player::Update(float d_time)
 		is_grounded = false;
 		App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
 	}
-
+	if (jumps_left == 2 && speed.y > 0)
+		jumps_left--;
 	//Set Animation ------------------------------------------------------
 	SetAnimations();
 	//Update Player Position ---------------------------------------------	
@@ -400,16 +408,16 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{
 		App->audio->PlayFx(death_sfx, 0, App->audio->music_vol);
-		SetToStart();
+		App->entities->SetToStart();
 	}
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && god_mode == false)
 	{
 		lives_left--;
+		App->entities->SetToStart();
 		if (lives_left == 0)
 		{
 			lives_left = 3;
-			App->entities->SetToStart();
 		}
 	}
 

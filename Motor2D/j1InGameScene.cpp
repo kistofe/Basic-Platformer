@@ -205,6 +205,9 @@ void j1InGameScene::UpdateUIpos()
 	//Life num Label
 	temp = { 70, 75 };
 	life->position = App->render->ScreenToWorld(temp.x, temp.y);
+	p2SString temp_string;
+	temp_string.create("x%i", App->entities->player1->lives_left);
+	life->ChangeContent(temp_string.GetString());
 
 	//Time Icon
 	temp = { 450, 40 };

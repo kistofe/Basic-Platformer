@@ -414,10 +414,10 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && god_mode == false)
 	{
 		lives_left--;
+		App->entities->SetToStart();
 		if (lives_left == 0)
 		{
 			lives_left = 3;
-			App->entities->SetToStart();
 		}
 	}
 

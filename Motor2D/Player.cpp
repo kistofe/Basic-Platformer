@@ -403,10 +403,9 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		SetToStart();
 	}
 	
-
-
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{
+		lives_left--;
 		App->audio->PlayFx(death_sfx, 0, App->audio->music_vol);
 		App->entities->SetToStart();
 	}

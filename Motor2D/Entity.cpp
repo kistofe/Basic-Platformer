@@ -38,7 +38,7 @@ void Entity::Move()
 	position.y += speed.y;
 }
 
-Collider * Entity::GetCollider()
+Collider* Entity::GetCollider()
 {
 	return collider;
 }

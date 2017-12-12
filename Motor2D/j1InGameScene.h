@@ -64,7 +64,7 @@ public:
 	//Scene Properties
 	uint	timer_count = 0;
 	uint	current_time;
-	uint	max_time = 200;
+	uint	max_time = 201;
 	j1Timer	scene_timer;
 	uint32	current_lvl = 1;
 	fPoint	gravity; 

@@ -92,6 +92,7 @@ bool j1EntityManager::CleanUp()
 
 	while (entity_iterator != NULL && ret == true)
 	{
+		entity_iterator->data->CleanUp();
 		ret = DestroyEntity(entity_iterator->data);
 		entity_iterator = entity_iterator->prev;
 	}
@@ -131,10 +132,7 @@ bool j1EntityManager::DestroyEntity(Entity * entity)
 {
 	bool ret = true;
 
-	if (entity != nullptr)
-		delete entity;
-
-	else
+	if (entity == nullptr)
 		ret = false;
 
 	p2List_item<Entity*>* temp = entity_list.start;
@@ -142,6 +140,8 @@ bool j1EntityManager::DestroyEntity(Entity * entity)
 	{
 		if (temp->data == entity)
 		{
+			delete entity;
+			entity->GetCollider()->callback = nullptr;
 			entity_list.del(temp);
 			break;
 		}

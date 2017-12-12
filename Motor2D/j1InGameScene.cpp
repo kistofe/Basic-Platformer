@@ -65,7 +65,6 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
-
 	UpdateTimer();
 	return true;
 }
@@ -187,6 +186,7 @@ void j1InGameScene::HandleInput()
 void j1InGameScene::UpdateUI()
 {
 	iPoint temp;
+	p2SString temp_string;
 
 	//Life Icon
 	temp = { 15, 40 };
@@ -204,7 +204,6 @@ void j1InGameScene::UpdateUI()
 	//Life num Label
 	temp = { 70, 75 };
 	life->position = App->render->ScreenToWorld(temp.x, temp.y);
-	p2SString temp_string;
 	temp_string.create("x%i", App->entities->player1->lives_left);
 	life->ChangeContent(temp_string.GetString());
 
@@ -216,8 +215,8 @@ void j1InGameScene::UpdateUI()
 	//Time Label
 	temp = { 510, 50 };
 	time->position = App->render->ScreenToWorld(temp.x, temp.y);
-	p2SString _timer("%i", current_time);
-	time->ChangeContent(_timer.GetString());
+	temp_string.create("%i", current_time);
+	time->ChangeContent(temp_string.GetString());
 }
 
 void j1InGameScene::UpdateTimer()//Still to finish

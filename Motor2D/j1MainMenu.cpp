@@ -3,8 +3,8 @@
 #include "j1GuiController.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1CharacterSel.h"
 #include "j1SceneSwitch.h"
-#include "j1InGameScene.h"
 #include "Widget.h"
 
 j1MainMenu::j1MainMenu()
@@ -52,7 +52,7 @@ bool j1MainMenu::OnEvent(Button* button)
 	switch (button->button_type)
 	{
 	case NEW_GAME: 
-		App->sceneswitch->SwitchScene(App->ingamescene, this);
+		App->sceneswitch->SwitchScene(App->charactersel, this);
 		break;
 	case LOAD_GAME: //load if save exists
 		break;

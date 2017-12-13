@@ -21,6 +21,11 @@ UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, p
 	vertical_window.h = 304;
 	vertical_window.w = 272;
 
+	title_window.x = 647;
+	title_window.y = 645;
+	title_window.h = 60;
+	title_window.w = 204;
+
 }
 
 UIWindow::~UIWindow()
@@ -41,12 +46,22 @@ void UIWindow::SetArea()
 	world_area.y = position.y;
 }
 
-void UIWindow::SetWindowType(uint window_type)
+void UIWindow::SetWindowType(WindowType type)
 {
-	if (window_type == 1)
-		atlas_section = &vertical_window;
-	else if (window_type == 2)
+	switch (type)
+	{
+	case HORIZONTAL_WINDOW:
 		atlas_section = &horizontal_window;
-	else
+		break;
+	case VERTICAL_WINDOW:
+		atlas_section = &vertical_window;
+		break;
+	case TITLE_WINDOW:
+		atlas_section = &title_window;
+		break;
+	default:
 		LOG("Window Type does not exist");
+		break;
+	}
+
 }

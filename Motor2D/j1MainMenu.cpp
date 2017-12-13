@@ -65,6 +65,7 @@ bool j1MainMenu::OnEvent(Button * button)
 		ret = false;
 		break;
 	case CLOSE_WINDOW:
+		
 		break;
 	}
 
@@ -121,15 +122,38 @@ void j1MainMenu::AddUiElems()
 	//Copyright label
 	copyright = (Label*)App->gui->CreateWidget(LABEL, 550, 1770, this);
 	copyright->SetText("All rights reserved - Edgypoint Castellbisbal -", { 255,255,255,255 }, App->font->small_size);
+
 }
 
 void j1MainMenu::CreateSettingsWindow()
 {
-	settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 50, 50, this);
-	settings_win->SetWindowType(1);
+	//Main Window
+	settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1400, this);
+	settings_win->SetWindowType(VERTICAL_WINDOW);
+	settings_win->SetArea();
+	settings_win->draggable = true;
+
+	//Title Small window
+	settings_title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 1390, this);
+	settings_title_win->SetWindowType(TITLE_WINDOW);
+	settings_title_win->SetArea();
+	settings_win->Attach(settings_title_win, { 35,-10 });
+
+	//Settings Label
+	settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 1405, this);
+	settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
+	settings_title_win->Attach(settings_lab, { 33, 15 });
+
+	//Close Window Button
+	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 1400, this);
+	close_window->SetButtonType(CLOSE_WINDOW);
+	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
+	settings_win->Attach(close_window, { 270, 0 });
 }
 
 void j1MainMenu::CreateCreditsWindow()
 {
 
 }
+
+

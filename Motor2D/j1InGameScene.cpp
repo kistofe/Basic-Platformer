@@ -128,7 +128,7 @@ void j1InGameScene::AddUiElems()
 
 	//Mini Tutorial Window
 	tuto_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1200, this);
-	tuto_window->SetWindowType(2);
+	tuto_window->SetWindowType(HORIZONTAL_WINDOW);
 	tuto_window->SetArea();
 
 	tuto_window_content1 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);

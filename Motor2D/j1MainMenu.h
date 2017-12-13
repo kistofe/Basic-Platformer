@@ -33,6 +33,7 @@ public:
 	Button* settings = nullptr;
 	Button* credits = nullptr;
 	Button* exit = nullptr;
+	Button* close_window = nullptr;
 
 	//Label for each button
 	Label* new_game_lab = nullptr;
@@ -46,7 +47,9 @@ public:
 
 	//Windows
 	UIWindow* settings_win = nullptr;
+	UIWindow* settings_title_win = nullptr;
 	UIWindow* credits_win = nullptr;
+	UIWindow* credits_title_win = nullptr;
 
 	//Images
 	SDL_Texture* background = nullptr;

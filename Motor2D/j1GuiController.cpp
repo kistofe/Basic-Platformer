@@ -37,7 +37,6 @@ bool j1GuiController::PreUpdate(float d_time)
 {
 	bool ret = true;
 
-	//Draw all ui elements 
 	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
 	while (ui_elem_iterator && ret)
 	{

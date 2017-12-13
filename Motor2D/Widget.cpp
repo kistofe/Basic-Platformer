@@ -48,7 +48,7 @@ void Widget::Drag()
 	{
 		position += temp_mousepos - last_mousepos;
 	}
-	if (attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0 && draggable)
+	if (attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0)
 	{
 		relative_position += temp_mousepos - last_mousepos;
 	}

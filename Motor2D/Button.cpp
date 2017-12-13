@@ -80,6 +80,7 @@ void Button::SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_s
 	click_rect.y = clicked_sec.y;
 	click_rect.w = clicked_sec.w;
 	click_rect.h = clicked_sec.h;
+	
 }
 
 

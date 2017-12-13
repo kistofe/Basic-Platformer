@@ -44,6 +44,7 @@ private:
 	SDL_Rect click_rect;
 	SDL_Rect idle_rect;
 	SDL_Rect highlighted_rect;
+	SDL_Rect disabled;
 	SDL_Rect* current_rect = nullptr;
 	
 };

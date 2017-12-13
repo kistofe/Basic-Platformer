@@ -63,5 +63,6 @@ void UIWindow::SetWindowType(WindowType type)
 		LOG("Window Type does not exist");
 		break;
 	}
-
 }
+
+

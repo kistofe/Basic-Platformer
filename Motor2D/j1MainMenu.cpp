@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "j1SceneSwitch.h"
 #include "j1InGameScene.h"
+#include "Widget.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -65,8 +66,20 @@ bool j1MainMenu::OnEvent(Button * button)
 		ret = false;
 		break;
 	case CLOSE_WINDOW:
-		
+	{
+		p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.start;
+		while (ui_iterator)
+		{
+			if (ui_iterator->data->type == WINDOW && ui_iterator->data)
+			{
+				App->gui->DestroyWidget(ui_iterator->data);
+				break;
+			}
+			ui_iterator = ui_iterator->next;
+		}
 		break;
+	}
+		
 	}
 
 	return ret;
@@ -134,15 +147,15 @@ void j1MainMenu::CreateSettingsWindow()
 	settings_win->draggable = true;
 
 	//Title Small window
-	settings_title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 1390, this);
-	settings_title_win->SetWindowType(TITLE_WINDOW);
-	settings_title_win->SetArea();
-	settings_win->Attach(settings_title_win, { 35,-10 });
+	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 1390, this);
+	title_win->SetWindowType(TITLE_WINDOW);
+	title_win->SetArea();
+	settings_win->Attach(title_win, { 35,-10 });
 
 	//Settings Label
 	settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 1405, this);
 	settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
-	settings_title_win->Attach(settings_lab, { 33, 15 });
+	title_win->Attach(settings_lab, { 33, 15 });
 
 	//Close Window Button
 	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 1400, this);
@@ -153,7 +166,27 @@ void j1MainMenu::CreateSettingsWindow()
 
 void j1MainMenu::CreateCreditsWindow()
 {
+	//Main Window
+	credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1400, this);
+	credits_win->SetWindowType(VERTICAL_WINDOW);
+	credits_win->SetArea();
+	credits_win->draggable = true;
+	
+	//Title small window
+	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 1390, this);
+	title_win->SetWindowType(TITLE_WINDOW);
+	title_win->SetArea();
+	credits_win->Attach(title_win, { 35, -10 });
 
+	//Credits Label
+	credits_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 1405, this);
+	credits_lab->SetText("CREDITS", { 255,255,255,255 }, App->font->medium_size);
+	title_win->Attach(credits_lab, { 33, 15 });
+
+	//Close window Button
+	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 1400, this);
+	close_window->SetButtonType(CLOSE_WINDOW);
+	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
+	credits_win->Attach(close_window, { 270, 0 });
 }
-
 

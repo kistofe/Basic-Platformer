@@ -19,8 +19,7 @@ public:
 	void Draw();
 	void SetArea();
 	void SetWindowType(WindowType type);
-	void CloseWindow(UIWindow*);
-
+	
 public:
 
 	SDL_Rect vertical_window;

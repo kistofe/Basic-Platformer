@@ -47,9 +47,8 @@ public:
 
 	//Windows
 	UIWindow* settings_win = nullptr;
-	UIWindow* settings_title_win = nullptr;
 	UIWindow* credits_win = nullptr;
-	UIWindow* credits_title_win = nullptr;
+	UIWindow* title_win = nullptr;
 
 	//Images
 	SDL_Texture* background = nullptr;

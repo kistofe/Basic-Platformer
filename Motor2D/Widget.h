@@ -43,14 +43,12 @@ public:
 	bool			draggable = false;
 	SDL_Rect		world_area;
 	iPoint			position;
-
+	p2List<Widget*> attached_widgets;
 protected:
 
 	iPoint		relative_position; // position relative to the element they are attached to
 	j1Module*	callback = nullptr;
-	p2List<Widget*> attached_widgets;
-
-	bool attached;
-	iPoint last_mousepos;
+	bool		attached;
+	iPoint		last_mousepos;
 };
 #endif 

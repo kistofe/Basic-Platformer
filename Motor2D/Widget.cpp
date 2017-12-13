@@ -31,6 +31,9 @@ void Widget::Drag()
 		iterator = iterator->prev;
 	}
 
+	if (!draggable)
+		return;
+
 	// Check if the element is being clicked or not
 	SDL_Point temp_mousepos_sdl;
 	App->input->GetMousePosition(temp_mousepos_sdl.x, temp_mousepos_sdl.y);
@@ -44,7 +47,7 @@ void Widget::Drag()
 	temp_mousepos.create(temp_mousepos_sdl.x, temp_mousepos_sdl.y);
 
 	// Move element if it's clicked and if last mouse position is different from the new one
-	if (!attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0 && draggable)
+	if (!attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0)
 	{
 		position += temp_mousepos - last_mousepos;
 	}

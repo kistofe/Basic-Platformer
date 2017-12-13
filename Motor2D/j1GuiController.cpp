@@ -119,11 +119,29 @@ bool j1GuiController::DestroyWidget(Widget* widget)
 {
 	bool ret = true;
 
-	if (widget != nullptr)
-		delete widget;
-
-	else
+	if (widget == nullptr)
 		ret = false;
+
+	p2List_item<Widget*>* temp = ui_elems.start;
+	while (temp && ret)
+	{
+		if (temp->data == widget)
+		{
+			if (temp->data->attached_widgets.start)
+			{
+				p2List_item<Widget*>* attached_elem_iter = temp->data->attached_widgets.start;
+				while (attached_elem_iter && temp)
+				{
+					DestroyWidget(attached_elem_iter->data);
+					attached_elem_iter = attached_elem_iter->next;
+				}
+			}
+			delete widget;
+			ui_elems.del(temp);
+			break;
+		}
+		temp = temp->next;
+	}
 
 	return ret;
 }

@@ -43,8 +43,12 @@ public:
 	SDL_Texture* GetAtlas() const;
 	void Draw();
 
-private:
+public:
+
 	p2List<Widget*> ui_elems;
+
+private:
+	
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
 };

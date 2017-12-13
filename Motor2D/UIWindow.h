@@ -7,6 +7,7 @@ enum WindowType
 {
 	HORIZONTAL_WINDOW,
 	VERTICAL_WINDOW,
+	HORIZONTAL_WINDOW_S,
 	TITLE_WINDOW
 };
 
@@ -25,6 +26,7 @@ public:
 	SDL_Rect vertical_window;
 	SDL_Rect horizontal_window;
 	SDL_Rect title_window;
+	SDL_Rect horizontal_window_s;
 	
 private:
 	SDL_Rect* atlas_section = nullptr;

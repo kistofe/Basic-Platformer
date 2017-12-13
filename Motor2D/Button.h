@@ -14,6 +14,7 @@ enum ButtonType
 	CREDITS,
 	EXIT,
 	CLOSE_WINDOW,
+	OK,
 	NONE
 };
 

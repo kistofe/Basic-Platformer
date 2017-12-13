@@ -75,7 +75,7 @@ private:
 
 	bool has_reached_end = false;
 	SDL_Texture* god_mode_tex = nullptr;
-	SDL_Texture* default_tex = NULL;
+	SDL_Texture* default_tex = nullptr;
 
 };
 

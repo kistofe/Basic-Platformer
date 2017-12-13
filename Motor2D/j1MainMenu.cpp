@@ -28,7 +28,7 @@ bool j1MainMenu::Start()
 
 bool j1MainMenu::Update(float d_time)
 {
-	App->render->Blit(background, -200, 1035);
+	App->render->Blit(background, -150, 1035);
 	App->render->Blit(title, 0, 1050);
 	
 	App->gui->Draw();
@@ -45,7 +45,7 @@ bool j1MainMenu::CleanUp()
 	return true;
 }
 
-bool j1MainMenu::OnEvent(Button * button)
+bool j1MainMenu::OnEvent(Button* button)
 {
 	bool ret = true;
 

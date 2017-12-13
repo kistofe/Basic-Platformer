@@ -17,7 +17,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1080" height="768" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -41,10 +41,22 @@
 
   <entity_manager>
     <player>
-      <moving_speed value = "250"/>
-      <jumping_speed value = "-550"/>
-      <collider_offset_x value = "7"/>
-      <collider_offset_y value = "1"/>
+      <ramona>
+        <moving_speed value = "250"/>
+        <jumping_speed value = "-550"/>
+        <collider_offset_x value = "7"/>
+        <collider_offset_y value = "1"/>
+        <default_texture source = "image/Ramona.png"/>
+        <godmode_texture source = "image/Ramona_godmode.png"/>
+      </ramona>
+      <scott>
+        <moving_speed value = "200"/>
+        <jumping_speed value = "-600"/>
+        <collider_offset_x value = "7"/>
+        <collider_offset_y value = "1"/>
+        <default_texture source = "image/Scott.png"/>
+        <godmode_texture source = "image/Scott_godmode.png"/>
+      </scott>
       <death_sfx source = "audio/sfx/Death.wav"/>
       <jump_sfx source = "audio/sfx/Jumping.wav"/>
       <land_sfx source = "audio/sfx/Landing.wav"/>

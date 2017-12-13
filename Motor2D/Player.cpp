@@ -34,8 +34,8 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	default_animation = &idle;
 
 	//Setting textures
-	default_tex			= App->tex->Load("images/Ramona.png"); //Read from config
-	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png"); //Read from config
+	default_tex			= App->tex->Load("images/Ramona.png"); 
+	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png"); 
 	current_tex			= default_tex;
 
 	moving_speed		= data.child("moving_speed").attribute("value").as_float();
@@ -176,6 +176,12 @@ void Player::CreateAnimationPushBacks()
 
 	//idle animation
 	idle.PushBack({ 0, 0, 54, 69 });
+	idle.PushBack({ 54, 0, 54, 69 });
+	idle.PushBack({ 108, 0, 54, 69 });
+	idle.PushBack({ 162, 0, 54, 69 });
+	idle.PushBack({ 216, 0, 54, 69 });
+	idle.loop = true;
+	idle.speed = 0.25f;
 	
 	//running animation
 	run.PushBack({ 0, 138, 54, 69 });

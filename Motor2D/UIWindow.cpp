@@ -11,6 +11,7 @@
 
 UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, pos, callback)
 {
+	//READ FROM XML
 	horizontal_window.x = 3;
 	horizontal_window.y = 645;
 	horizontal_window.h = 192;
@@ -26,6 +27,10 @@ UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, p
 	title_window.h = 60;
 	title_window.w = 204;
 
+	horizontal_window_s.x = 647;
+	horizontal_window_s.y = 706;
+	horizontal_window_s.h = 149;
+	horizontal_window_s.w = 302;
 }
 
 UIWindow::~UIWindow()
@@ -58,6 +63,9 @@ void UIWindow::SetWindowType(WindowType type)
 		break;
 	case TITLE_WINDOW:
 		atlas_section = &title_window;
+		break;
+	case HORIZONTAL_WINDOW_S:
+		atlas_section = &horizontal_window_s;
 		break;
 	default:
 		LOG("Window Type does not exist");

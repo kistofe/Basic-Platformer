@@ -40,6 +40,7 @@ public:
 
 	UiElemType		type;
 	bool			being_clicked;
+	bool			draggable = false;
 	SDL_Rect		world_area;
 	iPoint			position;
 

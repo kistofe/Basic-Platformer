@@ -38,7 +38,7 @@ private:
 		fade_from_black
 	} current_step = fade_step::none;
 
-	float fadetime = 3.0f;
+	float fadetime = 1.0f;
 	SDL_Rect screen;
 	j1Module* to_enable = nullptr;
 	j1Module* to_disable = nullptr;

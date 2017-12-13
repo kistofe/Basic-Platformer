@@ -44,11 +44,11 @@ void Widget::Drag()
 	temp_mousepos.create(temp_mousepos_sdl.x, temp_mousepos_sdl.y);
 
 	// Move element if it's clicked and if last mouse position is different from the new one
-	if (!attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0)
+	if (!attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0 && draggable)
 	{
 		position += temp_mousepos - last_mousepos;
 	}
-	if (attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0)
+	if (attached && being_clicked && last_mousepos != temp_mousepos && last_mousepos.x != 0 && last_mousepos.y != 0 && draggable)
 	{
 		relative_position += temp_mousepos - last_mousepos;
 	}

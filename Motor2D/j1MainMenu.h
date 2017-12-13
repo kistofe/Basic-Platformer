@@ -44,6 +44,10 @@ public:
 	//Copyright
 	Label* copyright = nullptr;
 
+	//Windows
+	UIWindow* settings_win = nullptr;
+	UIWindow* credits_win = nullptr;
+
 	//Images
 	SDL_Texture* background = nullptr;
 	SDL_Texture* title = nullptr;

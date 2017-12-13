@@ -125,7 +125,8 @@ void j1MainMenu::AddUiElems()
 
 void j1MainMenu::CreateSettingsWindow()
 {
-
+	settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 50, 50, this);
+	settings_win->SetWindowType(1);
 }
 
 void j1MainMenu::CreateCreditsWindow()

@@ -23,28 +23,37 @@ bool Button::PreUpdate(float d_time)
 {
 	bool ret = true;
 
+	if (!enabled)
+	{
+		current_rect = &disabled_rect;
+		return ret;
+	}
+
 	world_area = { position.x, position.y, current_rect->w, current_rect->h };
 
-	if (MouseOver(world_area) && !hovering)
+	if (!App->gui->dragging)
 	{
-		hovering = true;
-		ChangeVisualState(MOUSE_ENTER);
+		if (MouseOver(world_area) && !hovering)
+		{
+			hovering = true;
+			ChangeVisualState(MOUSE_ENTER);
+		}
+		if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			ChangeVisualState(MOUSE_CLICK);
+		}
+		if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+		{
+			ChangeVisualState(MOUSE_RELEASE);
+			ret = callback->OnEvent(this);
+		}
+		if (!MouseOver(world_area) && hovering)
+		{
+			hovering = false;
+			ChangeVisualState(MOUSE_LEAVE);
+		}
 	}
-	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		ChangeVisualState(MOUSE_CLICK);
-	}
-	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-	{
-		ChangeVisualState(MOUSE_RELEASE);
-		ret = callback->OnEvent(this);
-	}
-	if (!MouseOver(world_area) && hovering)
-	{
-		hovering = false;
-		ChangeVisualState(MOUSE_LEAVE);
-	}
-	
+
 	return ret;
 }
 
@@ -64,7 +73,7 @@ bool Button::MouseOver(const SDL_Rect& button)
 	return (mouse_cords.x >= button.x && mouse_cords.x <= button.x + button.w) && (mouse_cords.y >= button.y && mouse_cords.y <= button.y + button.h);
 }
 
-void Button::SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec)
+void Button::SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec, SDL_Rect disabled_sec)
 {
 	idle_rect.x = idle_sec.x;
 	idle_rect.y = idle_sec.y;
@@ -80,7 +89,16 @@ void Button::SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_s
 	click_rect.y = clicked_sec.y;
 	click_rect.w = clicked_sec.w;
 	click_rect.h = clicked_sec.h;
-	
+
+	if (disabled_sec.h != 0 && disabled_sec.w != 0)
+	{
+		disabled_rect.h = disabled_sec.h;
+		disabled_rect.w = disabled_sec.w;
+		disabled_rect.x = disabled_sec.x;
+		disabled_rect.y = disabled_sec.y;
+
+		enabled = false;
+	}
 }
 
 

@@ -94,7 +94,12 @@ void j1MainMenu::AddUiElems()
 	//Load Game Button
 	load_game = (Button*)App->gui->CreateWidget(BUTTON, 360, 400, this);
 	load_game->SetButtonType(LOAD_GAME);
-	load_game->SetSection({ 318, 7, 289, 96 }, { 318, 103, 289, 96 }, { 318, 199, 289, 96 });
+	pugi::xml_document doc;
+	pugi::xml_parse_result save_exists = doc.load_file("save.xml");
+	if (save_exists)
+		load_game->SetSection({ 318, 7, 289, 96 }, { 3, 103, 289, 96 }, { 318, 199, 289, 96 });
+	if (!save_exists)
+		load_game->SetSection({ 318, 7, 289, 96 }, { 3, 103, 289, 96 }, { 318, 199, 289, 96 }, { 318, 103, 289, 96 });
 
 	//Settings Button
 	settings = (Button*)App->gui->CreateWidget(BUTTON, 45, 520, this);

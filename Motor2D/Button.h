@@ -28,7 +28,7 @@ public:
 	void Draw();
 
 	bool MouseOver(const SDL_Rect& button);
-	void SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec);
+	void SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec, SDL_Rect disabled_sec = { 0,0,0,0 });
 	void SetButtonType(ButtonType type);
 
 private:
@@ -41,11 +41,12 @@ public:
 
 private:
 	bool hovering = false;
+	bool enabled = true;
 
 	SDL_Rect click_rect;
 	SDL_Rect idle_rect;
 	SDL_Rect highlighted_rect;
-	SDL_Rect disabled;
+	SDL_Rect disabled_rect;
 	SDL_Rect* current_rect = nullptr;
 	
 };

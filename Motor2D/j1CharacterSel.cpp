@@ -22,7 +22,7 @@ bool j1CharacterSel::Start()
 	title = App->tex->Load("gui/character_select_title.png");
 	character1_portrait = App->tex->Load("images/Ramona Character Portrait.png");
 	character2_portrait = App->tex->Load("images/Scott Character Portrait.png");
-
+	
 	return true;
 }
 
@@ -35,7 +35,7 @@ bool j1CharacterSel::Update(float d_time)
 
 	App->render->Blit(character1_portrait, 250, 1313);
 	App->render->Blit(character2_portrait, 570, 1305);
-
+	
 	return true;
 }
 

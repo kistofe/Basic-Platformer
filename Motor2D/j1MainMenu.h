@@ -24,6 +24,7 @@ private:
 	void AddUiElems();
 	void CreateSettingsWindow();
 	void CreateCreditsWindow();
+	void CloseWindow();
 
 public:
 

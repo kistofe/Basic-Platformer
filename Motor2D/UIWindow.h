@@ -30,8 +30,7 @@ public:
 	
 private:
 	SDL_Rect* atlas_section = nullptr;
-
-
+	
 };
 
 #endif //_UIWINDOW_

@@ -46,16 +46,16 @@
         <jumping_speed value = "-550"/>
         <collider_offset_x value = "7"/>
         <collider_offset_y value = "1"/>
-        <default_texture source = "image/Ramona.png"/>
-        <godmode_texture source = "image/Ramona_godmode.png"/>
+        <default_texture source = "images/Ramona.png"/>
+        <godmode_texture source = "images/Ramona_godmode.png"/>
       </ramona>
       <scott>
         <moving_speed value = "200"/>
         <jumping_speed value = "-600"/>
         <collider_offset_x value = "7"/>
         <collider_offset_y value = "1"/>
-        <default_texture source = "image/Scott.png"/>
-        <godmode_texture source = "image/Scott_godmode.png"/>
+        <default_texture source = "images/Scott.png"/>
+        <godmode_texture source = "images/Scott_godmode.png"/>
       </scott>
       <death_sfx source = "audio/sfx/Death.wav"/>
       <jump_sfx source = "audio/sfx/Jumping.wav"/>

@@ -7,6 +7,7 @@
 #include "j1SceneSwitch.h"
 #include "j1Pathfinding.h"
 #include "j1Textures.h"
+#include "j1CharacterSel.h"
 
 
 j1InGameScene::j1InGameScene()
@@ -117,7 +118,10 @@ void j1InGameScene::AddUiElems()
 {
 	//Current Character Label
 	curr_character = (Label*)App->gui->CreateWidget(LABEL, 100, 45, this);
-	curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
+	if (App->charactersel->selected_character == 0)
+		curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
+	if (App->charactersel->selected_character == 1)
+		curr_character->SetText("SCOTT", { 255,255,255,255 }, App->font->large_size);
 
 	//Score Label
 	score = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 15, 115, this);
@@ -197,7 +201,10 @@ void j1InGameScene::UpdateUI()
 	//Life Icon
 	temp = { 15, 40 };
 	temp = App->render->ScreenToWorld(temp.x, temp.y);
-	App->render->Blit(hud_tex, temp.x, temp.y, &char1_life_icon);
+	if (App->charactersel->selected_character == 0)
+		App->render->Blit(hud_tex, temp.x, temp.y, &char1_life_icon);
+	if (App->charactersel->selected_character == 1)
+		App->render->Blit(hud_tex, temp.x, temp.y, &char2_life_icon);
 
 	//Character's name label
 	temp = { 100, 45 };

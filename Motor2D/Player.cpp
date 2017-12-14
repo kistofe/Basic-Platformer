@@ -34,11 +34,7 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 
 	default_animation = &idle;
 
-	//Setting textures
-	default_tex			= App->tex->Load("images/Ramona.png"); 
-	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png"); 
-	current_tex			= default_tex;
-
+	//Loading the selected character's info
 	pugi::xml_node character;
 	if (App->charactersel->selected_character == 0)
 		character = data.child("ramona");
@@ -49,10 +45,18 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	jumping_speed		= character.child("jumping_speed").attribute("value").as_float();
 	collider_offset.x	= character.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y	= character.child("collider_offset_y").attribute("value").as_int();
+	default_texture_src = character.child("default_texture").attribute("source").as_string();
+	godmode_texutre_src = character.child("godmode_texture").attribute("source").as_string();
 
-	death_sfx_source	= data.child("death_sfx").attribute("source").as_string();
-	jumping_sfx_source	= data.child("jump_sfx").attribute("source").as_string();
-	landing_sfx_source	= data.child("land_sfx").attribute("source").as_string();
+	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
+	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
+	landing_sfx_source = data.child("land_sfx").attribute("source").as_string();
+
+	//Loading player's textures
+	default_tex			= App->tex->Load(default_texture_src.GetString());
+	god_mode_tex		= App->tex->Load(godmode_texutre_src.GetString());
+
+	current_tex = default_tex;
 }
 
 Player::~Player()

@@ -3,6 +3,7 @@
 #include "j1GuiController.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1InGameScene.h"
 #include "j1CharacterSel.h"
 #include "j1SceneSwitch.h"
 #include "Widget.h"
@@ -54,7 +55,9 @@ bool j1MainMenu::OnEvent(Button* button)
 	case NEW_GAME: 
 		App->sceneswitch->SwitchScene(App->charactersel, this);
 		break;
-	case LOAD_GAME: //load if save exists
+	case LOAD_GAME: 
+	//	App->sceneswitch->SwitchScene(App->ingamescene, this);
+	//	App->LoadGame();
 		break;
 	case SETTINGS: 
 		CreateSettingsWindow();
@@ -66,20 +69,8 @@ bool j1MainMenu::OnEvent(Button* button)
 		ret = false;
 		break;
 	case CLOSE_WINDOW:
-	{
-		p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.start;
-		while (ui_iterator)
-		{
-			if (ui_iterator->data->type == WINDOW && ui_iterator->data)
-			{
-				App->gui->DestroyWidget(ui_iterator->data);
-				break;
-			}
-			ui_iterator = ui_iterator->next;
-		}
+		CloseWindow();		
 		break;
-	}
-		
 	}
 
 	return ret;
@@ -188,5 +179,19 @@ void j1MainMenu::CreateCreditsWindow()
 	close_window->SetButtonType(CLOSE_WINDOW);
 	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
 	credits_win->Attach(close_window, { 270, 0 });
+}
+
+void j1MainMenu::CloseWindow()
+{
+	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.start;
+	while (ui_iterator)
+	{
+		if (ui_iterator->data->type == WINDOW && ui_iterator->data)
+		{
+			App->gui->DestroyWidget(ui_iterator->data);
+			break;
+		}
+		ui_iterator = ui_iterator->next;
+	}
 }
 

@@ -2,6 +2,8 @@
 #include "j1CharacterSel.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1GuiController.h"
+
 
 j1CharacterSel::j1CharacterSel()
 {
@@ -45,6 +47,13 @@ bool j1CharacterSel::CleanUp()
 	App->tex->UnLoad(title);
 	App->tex->UnLoad(character1_portrait);
 	App->tex->UnLoad(character2_portrait);
+
+	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.end;
+	while (ui_iterator)
+	{
+		App->gui->DestroyWidget(ui_iterator->data);
+		ui_iterator = ui_iterator->prev;
+	}
 
 	return true;
 }

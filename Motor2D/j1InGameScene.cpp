@@ -40,9 +40,8 @@ bool j1InGameScene::Start()
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
 
-	if (active)
-		AddUiElems();
-	
+	AddUiElems();
+			
 	return true;
 }
 
@@ -83,8 +82,13 @@ bool j1InGameScene::PostUpdate()
 bool j1InGameScene::CleanUp()
 {
 	App->tex->UnLoad(hud_tex);
-
-
+	
+	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.end;
+	while (ui_iterator)
+	{
+		App->gui->DestroyWidget(ui_iterator->data);
+		ui_iterator = ui_iterator->prev;
+	}
 	return true;
 }
 

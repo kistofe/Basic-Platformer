@@ -13,7 +13,8 @@ enum ButtonType
 	CREDITS,
 	EXIT,
 	CLOSE_WINDOW,
-	OK,
+	SELECT_RAMONA,
+	SELECT_SCOTT,
 	NONE
 };
 

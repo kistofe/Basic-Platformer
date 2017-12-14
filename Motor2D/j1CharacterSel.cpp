@@ -5,6 +5,8 @@
 #include "j1GuiController.h"
 #include "j1SceneSwitch.h"
 #include "j1InGameScene.h"
+#include "j1EntityManager.h"
+#include "j1Map.h"
 
 
 j1CharacterSel::j1CharacterSel()
@@ -66,7 +68,12 @@ bool j1CharacterSel::OnEvent(Button * button)
 
 	switch (button->button_type)
 	{
-	case OK:
+	case SELECT_RAMONA:
+		selected_character = 0;
+		App->sceneswitch->SwitchScene(App->ingamescene, this);
+		break;
+	case SELECT_SCOTT:
+		selected_character = 1;
 		App->sceneswitch->SwitchScene(App->ingamescene, this);
 		break;
 	}
@@ -92,14 +99,14 @@ void j1CharacterSel::AddUiElems()
 	character2_win2 = (UIWindow*)App->gui->CreateWidget(WINDOW, 545, 540, this);
 	character2_win2->SetWindowType(HORIZONTAL_WINDOW_S);
 
-	//
+	//Character 1 Select Button
 	character1 = (Button*)App->gui->CreateWidget(BUTTON, 330, 695, this);
-	character1->SetButtonType(OK);
+	character1->SetButtonType(SELECT_RAMONA);
 	character1->SetSection({ 422, 717, 110, 36 }, { 422, 755, 110, 36 }, { 422, 793, 110, 36 });
 
 	//Character 2 Select Button
 	character2 = (Button*)App->gui->CreateWidget(BUTTON, 650, 695, this);
-	character2->SetButtonType(OK);
+	character2->SetButtonType(SELECT_SCOTT);
 	character2->SetSection({ 422, 717, 110, 36 }, { 422, 755, 110, 36 }, { 422, 793, 110, 36 });
 	
 	//Character 1 Select Label

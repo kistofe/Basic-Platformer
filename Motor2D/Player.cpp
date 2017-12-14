@@ -11,6 +11,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 #include "j1EntityManager.h"
+#include "j1CharacterSel.h"
 
 Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 {
@@ -38,10 +39,17 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	god_mode_tex		= App->tex->Load("images/Ramona_godmode.png"); 
 	current_tex			= default_tex;
 
-	moving_speed		= data.child("moving_speed").attribute("value").as_float();
-	jumping_speed		= data.child("jumping_speed").attribute("value").as_float();
-	collider_offset.x	= data.child("collider_offset_x").attribute("value").as_int();
-	collider_offset.y	= data.child("collider_offset_y").attribute("value").as_int();
+	pugi::xml_node character;
+	if (App->charactersel->selected_character == 0)
+		character = data.child("ramona");
+	else if (App->charactersel->selected_character == 1)
+		character = data.child("scott");
+	
+	moving_speed		= character.child("moving_speed").attribute("value").as_float();
+	jumping_speed		= character.child("jumping_speed").attribute("value").as_float();
+	collider_offset.x	= character.child("collider_offset_x").attribute("value").as_int();
+	collider_offset.y	= character.child("collider_offset_y").attribute("value").as_int();
+
 	death_sfx_source	= data.child("death_sfx").attribute("source").as_string();
 	jumping_sfx_source	= data.child("jump_sfx").attribute("source").as_string();
 	landing_sfx_source	= data.child("land_sfx").attribute("source").as_string();

@@ -30,6 +30,7 @@ public:
 	bool MouseOver(const SDL_Rect& button);
 	void SetSection(SDL_Rect idle_sec, SDL_Rect high_sec, SDL_Rect clicked_sec, SDL_Rect disabled_sec = { 0,0,0,0 });
 	void SetButtonType(ButtonType type);
+	void SetArea(uint w, uint h);
 
 private:
 

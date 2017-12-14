@@ -112,7 +112,7 @@ void j1MainMenu::AddUiElems()
 	credits->SetSection({ 647, 7, 289, 96 }, { 647, 103, 289, 96 }, { 647, 199, 289, 96 });
 
 	//Exit Button
-	exit = (Button*)App->gui->CreateWidget(BUTTON, 250, 620, this);
+	exit = (Button*)App->gui->CreateWidget(BUTTON, 200, 625, this);
 	exit->SetButtonType(EXIT);
 	exit->SetSection({ 318, 319, 289, 96 }, { 318, 415, 289, 96 }, { 318, 511, 289, 96 });
 
@@ -133,7 +133,7 @@ void j1MainMenu::AddUiElems()
 	credits_lab->SetText("CREDITS", { 255, 255, 255, 255 }, App->font->medium_size);
 
 	//Exit Label
-	exit_lab = (Label*)App->gui->CreateWidget(LABEL, 314, 673, this);
+	exit_lab = (Label*)App->gui->CreateWidget(LABEL, 295, 658, this);
 	exit_lab->SetText("EXIT", { 255,255,255,255 }, App->font->medium_size);
 
 	//Copyright label
@@ -145,24 +145,22 @@ void j1MainMenu::AddUiElems()
 void j1MainMenu::CreateSettingsWindow()
 {
 	//Main Window
-	settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1400, this);
+	settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
 	settings_win->SetWindowType(VERTICAL_WINDOW);
-	settings_win->SetArea();
 	settings_win->draggable = true;
 
 	//Title Small window
-	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 1390, this);
+	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
 	title_win->SetWindowType(TITLE_WINDOW);
-	title_win->SetArea();
 	settings_win->Attach(title_win, { 35,-10 });
 
 	//Settings Label
-	settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 1405, this);
+	settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
 	settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
 	title_win->Attach(settings_lab, { 33, 15 });
 
 	//Close Window Button
-	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 1400, this);
+	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
 	close_window->SetButtonType(CLOSE_WINDOW);
 	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
 	settings_win->Attach(close_window, { 270, 0 });
@@ -171,24 +169,22 @@ void j1MainMenu::CreateSettingsWindow()
 void j1MainMenu::CreateCreditsWindow()
 {
 	//Main Window
-	credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1400, this);
+	credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
 	credits_win->SetWindowType(VERTICAL_WINDOW);
-	credits_win->SetArea();
 	credits_win->draggable = true;
 	
 	//Title small window
-	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 1390, this);
+	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
 	title_win->SetWindowType(TITLE_WINDOW);
-	title_win->SetArea();
 	credits_win->Attach(title_win, { 35, -10 });
 
 	//Credits Label
-	credits_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 1405, this);
+	credits_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
 	credits_lab->SetText("CREDITS", { 255,255,255,255 }, App->font->medium_size);
 	title_win->Attach(credits_lab, { 33, 15 });
 
 	//Close window Button
-	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 1400, this);
+	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
 	close_window->SetButtonType(CLOSE_WINDOW);
 	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
 	credits_win->Attach(close_window, { 270, 0 });

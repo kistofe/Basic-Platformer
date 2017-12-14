@@ -13,6 +13,8 @@ Widget::Widget(UiElemType type, iPoint pos, j1Module* callback) : type(type)
 	being_clicked = false;
 	attached = false;
 	last_mousepos = { 0, 0 };
+	world_area.x = pos.x;
+	world_area.y = pos.y;
 }
 
 Widget::~Widget()

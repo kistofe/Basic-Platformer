@@ -18,9 +18,11 @@ public:
 	~UIWindow();
 
 	void Draw();
-	void SetArea();
 	void SetWindowType(WindowType type);
-	
+
+private:
+	void SetArea(uint w, uint h);
+
 public:
 
 	SDL_Rect vertical_window;

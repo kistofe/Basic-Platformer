@@ -133,7 +133,6 @@ void j1InGameScene::AddUiElems()
 	//Mini Tutorial Window
 	tuto_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1200, this);
 	tuto_window->SetWindowType(HORIZONTAL_WINDOW);
-	tuto_window->SetArea();
 
 	tuto_window_content1 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
 	tuto_window_content1->SetText("PRESS ~SPACE~ TO PERFORM A REGULAR JUMP", { 255,255,255,255 }, App->font->small_size);

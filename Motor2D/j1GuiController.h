@@ -49,7 +49,7 @@ public:
 	bool dragging = false;
 
 private:
-	
+	bool debug = false;
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
 };

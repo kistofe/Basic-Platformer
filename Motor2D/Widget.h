@@ -31,6 +31,7 @@ public:
 	virtual bool Update(float d_time) { return true; };
 	virtual bool CleanUp() { return true; };
 	virtual void Draw() { return; };
+	virtual void SetArea(uint w, uint h) { return; };
 	void Drag();
 
 
@@ -44,6 +45,7 @@ public:
 	SDL_Rect		world_area;
 	iPoint			position;
 	p2List<Widget*> attached_widgets;
+
 protected:
 
 	iPoint		relative_position; // position relative to the element they are attached to

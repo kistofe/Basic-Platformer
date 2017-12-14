@@ -15,6 +15,8 @@ public:
 	bool CleanUp();
 	void SetText(const char* content, const SDL_Color &color, _TTF_Font* font_size);
 	void Draw();
+
+private:
 	void SetArea(uint w, uint h);
 
 public:

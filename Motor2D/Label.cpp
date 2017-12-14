@@ -20,8 +20,8 @@ Label::~Label()
 
 void Label::SetArea(uint w, uint h)
 {
-	int wint = w, hint = h;
-	world_area = { position.x, position.y, wint, hint };
+	world_area.w = w;
+	world_area.h = h;
 }
 
 bool Label::CleanUp()
@@ -32,7 +32,7 @@ bool Label::CleanUp()
 void Label::SetText(const char* content, const SDL_Color &color, _TTF_Font* font_size)
 {
 	text_texture = App->font->Print(content, color, font_size);
-	int w = 0, h = 0;
+	int w, h;
 	SDL_QueryTexture(text_texture, NULL, NULL, &w, &h);
 	SetArea(w, h);
 }

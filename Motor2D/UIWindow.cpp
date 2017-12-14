@@ -9,7 +9,7 @@
 
 
 
-UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, pos, callback)
+UIWindow::UIWindow(iPoint pos, j1Module* callback) : Widget(UiElemType::WINDOW, pos, callback)
 {
 	//READ FROM XML
 	horizontal_window.x = 3;
@@ -31,6 +31,7 @@ UIWindow::UIWindow(iPoint pos, j1Module* callback): Widget(UiElemType::WINDOW, p
 	horizontal_window_s.y = 706;
 	horizontal_window_s.h = 149;
 	horizontal_window_s.w = 302;
+
 }
 
 UIWindow::~UIWindow()
@@ -43,12 +44,10 @@ void UIWindow::Draw()
 }
 
 
-void UIWindow::SetArea()
+void UIWindow::SetArea(uint w, uint h)
 {
-	world_area.h = atlas_section->h;
-	world_area.w = atlas_section->w;
-	world_area.x = position.x;
-	world_area.y = position.y;
+	world_area.w = w;
+	world_area.h = h;
 }
 
 void UIWindow::SetWindowType(WindowType type)
@@ -71,6 +70,8 @@ void UIWindow::SetWindowType(WindowType type)
 		LOG("Window Type does not exist");
 		break;
 	}
+	
+	SetArea(atlas_section->w, atlas_section->h);
 }
 
 

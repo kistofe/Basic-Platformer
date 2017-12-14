@@ -14,7 +14,6 @@ Button::Button(iPoint pos, j1Module* callback) : Widget(UiElemType::BUTTON, pos,
 	current_rect = &idle_rect;
 }
 
-
 Button::~Button()
 {
 }
@@ -107,6 +106,12 @@ void Button::SetButtonType(ButtonType type)
 	button_type = type;
 }
 
+void Button::SetArea(uint w, uint h)
+{
+	world_area.w = w;
+	world_area.h = h;
+}
+
 void Button::ChangeVisualState(const int event)
 {
 	switch (event)
@@ -120,4 +125,6 @@ void Button::ChangeVisualState(const int event)
 	case MOUSE_LEAVE:
 		current_rect = &idle_rect; break;
 	}
+
+	SetArea(current_rect->w, current_rect->h);
 }

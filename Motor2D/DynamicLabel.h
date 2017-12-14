@@ -15,6 +15,9 @@ public:
 	void ChangeContent(const char* new_content);
 
 private:
+	void SetArea(uint w, uint h);
+
+private:
 	char* content;
 };
 #endif

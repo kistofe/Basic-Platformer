@@ -106,7 +106,7 @@ void j1InGameScene::InitializeMap(const char * map_initialized)
 	App->map->Load(map_initialized);
 	App->map->SetEntities();
 
-
+	App->entities->Start();
 	App->entities->SetToStart();
 	int w, h;
 	uchar* data = NULL;

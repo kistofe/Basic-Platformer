@@ -50,9 +50,9 @@ bool j1SceneSwitch::Update(float d_time)
 			to_disable->Disable();
 			App->gui->CleanUp();
 			App->gui->Start();
-			to_enable->Enable();
 			switchtimer.Start();
 			current_step = fade_step::fade_from_black;
+			to_enable->Enable();
 		}
 	}break;
 

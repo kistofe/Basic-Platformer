@@ -4,9 +4,6 @@
 #include "j1Input.h"
 #include "j1Map.h"
 #include "j1SceneSwitch.h"
-#include "j1Scene.h"
-
-
 
 Entity::Entity(EntityType type) : type(type)
 {}

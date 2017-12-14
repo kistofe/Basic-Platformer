@@ -80,8 +80,6 @@ bool j1GuiController::CleanUp()
 	}
 	ui_elems.clear();
 
-	active = false;
-
 	return ret;
 }
 

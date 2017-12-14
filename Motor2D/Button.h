@@ -4,7 +4,6 @@
 #include "Widget.h"
 
 #include "SDL/include/SDL.h"
-class Label;
 
 enum ButtonType
 {

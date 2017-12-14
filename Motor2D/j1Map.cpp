@@ -6,7 +6,6 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include "j1Input.h"
-#include "j1Scene.h"
 #include "Player.h"
 #include "j1SceneSwitch.h"
 #include "j1EntityManager.h"

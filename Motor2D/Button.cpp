@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Render.h"
 #include "j1GuiController.h"
+
 #include "SDL\include\SDL.h"
 
 
@@ -126,5 +127,5 @@ void Button::ChangeVisualState(const int event)
 		current_rect = &idle_rect; break;
 	}
 
-	SetArea(current_rect->w, current_rect->h);
+//	SetArea(current_rect->w, current_rect->h);
 }

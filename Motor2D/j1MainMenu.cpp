@@ -90,6 +90,7 @@ void j1MainMenu::AddUiElems()
 	new_game = (Button*)App->gui->CreateWidget(BUTTON, 45, 400, this);
 	new_game->SetButtonType(NEW_GAME);
 	new_game->SetSection({ 3, 7, 289, 96 }, { 3, 103, 289, 96 }, { 3, 199, 289, 96 });
+	LOG("w:%d, h:%d", new_game->world_area.w, new_game->world_area.h);
 
 	//Load Game Button
 	load_game = (Button*)App->gui->CreateWidget(BUTTON, 360, 400, this);
@@ -105,7 +106,7 @@ void j1MainMenu::AddUiElems()
 	settings = (Button*)App->gui->CreateWidget(BUTTON, 45, 520, this);
 	settings->SetButtonType(SETTINGS);
 	settings->SetSection({ 3, 319, 289, 96 }, { 3, 415, 289, 96 }, { 3, 511, 289, 96 });
-
+	
 	//Credits Button
 	credits = (Button*)App->gui->CreateWidget(BUTTON, 360, 520, this);
 	credits->SetButtonType(CREDITS);

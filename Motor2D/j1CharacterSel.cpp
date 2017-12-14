@@ -3,7 +3,8 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1GuiController.h"
-#include "Widget.h"
+#include "j1SceneSwitch.h"
+#include "j1InGameScene.h"
 
 
 j1CharacterSel::j1CharacterSel()
@@ -60,7 +61,17 @@ bool j1CharacterSel::CleanUp()
 
 bool j1CharacterSel::OnEvent(Button * button)
 {
-	return true;
+	
+	bool ret = true;
+
+	switch (button->button_type)
+	{
+	case OK:
+		App->sceneswitch->SwitchScene(App->ingamescene, this);
+		break;
+	}
+
+	return ret;
 }
 
 void j1CharacterSel::AddUiElems()

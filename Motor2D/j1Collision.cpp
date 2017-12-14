@@ -5,7 +5,6 @@
 #include "j1Input.h"
 #include "Player.h"
 #include "j1SceneSwitch.h"
-#include "j1Scene.h"
 #include "Brofiler\Brofiler.h"
 
 j1Collision::j1Collision()

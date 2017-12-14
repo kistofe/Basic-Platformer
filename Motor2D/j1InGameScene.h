@@ -32,6 +32,8 @@ private:
 	void UpdateTimer();
 	void ResetTimer();
 	void UpdateScore();
+	void PauseGame();
+
 public:
 
 	//Main UI
@@ -57,17 +59,21 @@ public:
 	Label* tuto_window_content2 = nullptr;
 	Label* tuto_window_content3 = nullptr;
 	Label* tuto_window_content4 = nullptr;
+	Label* pause_window_lab = nullptr;
 
 	//Windows
 	UIWindow* tuto_window = nullptr;
+	UIWindow* pause_window = nullptr;
+	UIWindow* pause_window_title = nullptr;
 
 	//Scene Properties
 	uint	timer_count = 0;
 	uint	current_time;
-	uint	max_time = 201;
+	uint	max_time = 200;
 	j1Timer	scene_timer;
 	uint32	current_lvl = 1;
 	fPoint	gravity; 
 	fPoint	max_gravity; 
+	bool	paused = false;
 };
 #endif

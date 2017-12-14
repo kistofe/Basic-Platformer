@@ -34,9 +34,9 @@ public:
 	virtual void SetArea(uint w, uint h) { return; };
 	void Drag();
 
-
 	void UpdateAttachedPositions();
 	void Attach(Widget* widg_to_attach, const iPoint relative_pos);
+
 public:
 
 	UiElemType		type;

@@ -1,5 +1,6 @@
 #include "j1EntityManager.h"
 #include "j1App.h"
+#include "j1InGameScene.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -59,7 +60,9 @@ bool j1EntityManager::Update(float d_time)
 
 	while (entity_iterator != NULL && ret == true)
 	{
-		ret = entity_iterator->data->Update(d_time);
+		if (!App->ingamescene->paused)
+			ret = entity_iterator->data->Update(d_time);
+
 		entity_iterator = entity_iterator->next;
 	}
 

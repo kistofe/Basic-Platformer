@@ -64,8 +64,8 @@ bool j1MainMenu::OnEvent(Button* button)
 		App->sceneswitch->SwitchScene(App->charactersel, this);
 		break;
 	case LOAD_GAME: 
-	//	App->sceneswitch->SwitchScene(App->ingamescene, this);
-	//	App->LoadGame();
+		App->sceneswitch->SwitchScene(App->ingamescene, this);
+		App->loading_game = true;
 		break;
 	case SETTINGS: 
 		CreateSettingsWindow();

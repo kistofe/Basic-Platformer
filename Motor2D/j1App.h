@@ -102,6 +102,8 @@ public:
 	j1Fonts*			font = NULL;
 	j1GuiController*	gui = NULL;
 
+	bool				loading_game = false;
+
 private:
 
 	p2List<j1Module*>	modules;

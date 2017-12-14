@@ -48,6 +48,9 @@ bool j1InGameScene::Start()
 
 bool j1InGameScene::Update(float d_time)
 {
+	if (App->loading_game)
+		App->LoadGame(); App->loading_game = false;
+
 	HandleInput();
 
 	App->map->Draw();

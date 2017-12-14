@@ -41,6 +41,7 @@ bool j1InGameScene::Start()
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
 
+	scene_timer.Start();
 	AddUiElems();
 			
 	return true;
@@ -49,14 +50,12 @@ bool j1InGameScene::Start()
 bool j1InGameScene::Update(float d_time)
 {
 	HandleInput();
-
 	App->map->Draw();
-	
 	UpdateUI();
-	App->gui->Draw();
-
 	App->entities->Draw();
-	
+	App->gui->Draw();
+	UpdateTimer();
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
@@ -66,7 +65,7 @@ bool j1InGameScene::Update(float d_time)
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y);
 
-	UpdateTimer();
+
 	return true;
 }
 
@@ -163,6 +162,13 @@ void j1InGameScene::AddUiElems()
 
 void j1InGameScene::HandleInput()
 {
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		PauseGame();
+
+	if (paused)
+		return;
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->entities->SetToStart();
 
@@ -191,6 +197,7 @@ void j1InGameScene::HandleInput()
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 		App->audio->VolumeControl();
+
 }
 
 void j1InGameScene::UpdateUI()
@@ -242,8 +249,10 @@ void j1InGameScene::UpdateUI()
 
 void j1InGameScene::UpdateTimer()
 {
-	//Updating Timer
+	if (paused)
+		return;
 
+	//Updating Timer
 	timer_count = scene_timer.ReadSec();
 	current_time = max_time - timer_count;
 	if (current_time == 0)
@@ -261,4 +270,29 @@ void j1InGameScene::ResetTimer()
 void j1InGameScene::UpdateScore()
 {
 	App->entities->player1 += current_time * 100 + App->entities->player1->lives_left * 100;
+}
+
+void j1InGameScene::PauseGame()
+{
+	if (!paused)
+		paused = true;
+	else
+		paused = false;
+
+	if (!paused)
+		return;
+
+	//Main Pause Window
+	pause_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 300, 1400, this);
+	pause_window->SetWindowType(HORIZONTAL_WINDOW);
+	
+	//Main Pause Window Title Window
+	pause_window_title = (UIWindow*)App->gui->CreateWidget(WINDOW, 410, 1390, this);
+	pause_window_title->SetWindowType(TITLE_WINDOW);
+	pause_window->Attach(pause_window_title, { 110, -10 });
+
+	//Label
+	pause_window_lab = (Label*)App->gui->CreateWidget(LABEL, 475, 1405, this);
+	pause_window_lab->SetText("PAUSE", { 255,255,255,255 }, App->font->medium_size);
+	pause_window_title->Attach(pause_window_lab, { 65, 15 });
 }

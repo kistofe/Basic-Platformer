@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Map.h"
 #include "j1SceneSwitch.h"
+#include "j1InGameScene.h"
 
 Entity::Entity(EntityType type) : type(type)
 {}
@@ -22,6 +23,9 @@ void Entity::SetToStart()
 
 void Entity::Draw()
 {
+	if (App->ingamescene->paused)
+		current_animation->speed = 0;
+
 	if (facing_right)
 		App->render->Blit(current_tex, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f, 0.0, 2147483647, 2147483647);
 

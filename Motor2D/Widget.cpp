@@ -2,6 +2,7 @@
 #include "Widget.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "j1GuiController.h"
 #include "p2Log.h"
 
 Widget::Widget(UiElemType type, iPoint pos, j1Module* callback) : type(type)
@@ -56,7 +57,9 @@ void Widget::Drag()
 		relative_position += temp_mousepos - last_mousepos;
 	}
 	if (being_clicked)
-	last_mousepos = temp_mousepos;
+		last_mousepos = temp_mousepos; App->gui->dragging = true;
+	if (!being_clicked)
+		App->gui->dragging = false;
 }
 
 void Widget::UpdateAttachedPositions()

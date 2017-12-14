@@ -31,27 +31,29 @@ bool Button::PreUpdate(float d_time)
 
 	world_area = { position.x, position.y, current_rect->w, current_rect->h };
 
-	if (MouseOver(world_area) && !hovering)
+	if (!App->gui->dragging)
 	{
-		hovering = true;
-		ChangeVisualState(MOUSE_ENTER);
-	}
-	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		ChangeVisualState(MOUSE_CLICK);
-	}
-	if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-	{
-		ChangeVisualState(MOUSE_RELEASE);
-		ret = callback->OnEvent(this);
-	}
-	if (!MouseOver(world_area) && hovering)
-	{
-		hovering = false;
-		ChangeVisualState(MOUSE_LEAVE);
+		if (MouseOver(world_area) && !hovering)
+		{
+			hovering = true;
+			ChangeVisualState(MOUSE_ENTER);
+		}
+		if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			ChangeVisualState(MOUSE_CLICK);
+		}
+		if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+		{
+			ChangeVisualState(MOUSE_RELEASE);
+			ret = callback->OnEvent(this);
+		}
+		if (!MouseOver(world_area) && hovering)
+		{
+			hovering = false;
+			ChangeVisualState(MOUSE_LEAVE);
+		}
 	}
 
-	
 	return ret;
 }
 

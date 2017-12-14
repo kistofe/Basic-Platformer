@@ -46,6 +46,7 @@ public:
 public:
 
 	p2List<Widget*> ui_elems;
+	bool dragging = false;
 
 private:
 	

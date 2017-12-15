@@ -37,7 +37,7 @@ bool j1InGameScene::Awake(pugi::xml_node & config)
 bool j1InGameScene::Start()
 {
 	InitializeMap(App->map->map_name.start->data->GetString());
-
+	
 	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load("gui/HUD.png");
 
@@ -50,7 +50,7 @@ bool j1InGameScene::Start()
 bool j1InGameScene::Update(float d_time)
 {
 	if (App->loading_game)
-		App->LoadGame(); App->loading_game = false;
+		App->LoadGame(); 
 
 	HandleInput();
 	App->map->Draw();
@@ -92,6 +92,22 @@ bool j1InGameScene::CleanUp()
 	return true;
 }
 
+bool j1InGameScene::Load(pugi::xml_node& data)
+{
+	saved_time = data.child("current_time").attribute("value").as_uint();
+
+	current_time = saved_time;
+
+	return true;
+}
+
+bool j1InGameScene::Save(pugi::xml_node& data) const
+{
+	data.append_child("current_time").append_attribute("value") = current_time;
+
+	return true;
+}
+
 void j1InGameScene::NextLevel()
 {
 	if (current_lvl != LAST_LVL)
@@ -120,9 +136,9 @@ void j1InGameScene::AddUiElems()
 {
 	//Current Character Label
 	curr_character = (Label*)App->gui->CreateWidget(LABEL, 100, 45, this);
-	if (App->charactersel->selected_character == 0)
+	if (App->entities->player1->sel_char == 0)
 		curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
-	if (App->charactersel->selected_character == 1)
+	if (App->entities->player1->sel_char == 1)
 		curr_character->SetText("SCOTT", { 255,255,255,255 }, App->font->large_size);
 
 	//Score Label

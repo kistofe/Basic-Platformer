@@ -221,9 +221,9 @@ void j1App::FinishUpdate()
 	if(want_to_save == true)
 		SavegameNow();
 
-	if(want_to_load == true)
+	if (want_to_load == true)
 		LoadGameNow();
-
+			
 	if (last_sec_frame_time.Read() > 1000)
 	{
 		last_sec_frame_time.Start();
@@ -418,6 +418,8 @@ bool j1App::LoadGameNow()
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
 
 	want_to_load = false;
+	loading_game = false;
+
 	return ret;
 }
 

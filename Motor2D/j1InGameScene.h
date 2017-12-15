@@ -21,8 +21,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-//	bool Load(pugi::xml_node&);
-//	bool Save(pugi::xml_node&) const;
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	void NextLevel();
 	void InitializeMap(const char* map_initialized);
@@ -71,8 +71,9 @@ public:
 
 	//Scene Properties
 	uint	timer_count = 0;
-	uint	current_time;
+	uint	current_time = 0;
 	uint	max_time = 200;
+	uint	saved_time = 0;
 	j1Timer	scene_timer;
 	uint32	current_lvl = 1;
 	fPoint	gravity; 

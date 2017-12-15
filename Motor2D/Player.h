@@ -37,10 +37,13 @@ public:
 	void SetAnimations();
 
 	void CreateAnimationPushBacks();
-		
+
+	void LoadPLayerInfo();
+
 private:
 	void SetSpeed(float d_time);
 	void SetCameraToPlayer();
+	
 
 public:
 
@@ -48,6 +51,7 @@ public:
 	uint lives_left = 3;
 	uint score = 0;
 	uint coins = 0;
+	int sel_char = 0;
 	
 private:
 
@@ -78,6 +82,10 @@ private:
 	bool has_reached_end = false;
 	SDL_Texture* god_mode_tex = nullptr;
 	SDL_Texture* default_tex = nullptr;
+
+	pugi::xml_document config_file;
+	pugi::xml_node config;
+	pugi::xml_node data;
 
 };
 

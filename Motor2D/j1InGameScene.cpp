@@ -161,6 +161,11 @@ void j1InGameScene::AddUiElems()
 	p2SString _timer("%i", current_time);
 	time = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 490, 40, this);
 	time->SetText(_timer.GetString(), { 255,255,255,255 }, App->font->small_size);
+
+	//Current Level
+	p2SString _level("Lvl: %i", current_lvl);
+	level = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 850, 40, this);
+	level->SetText(_level.GetString(), { 255,255,255,255 }, App->font->small_size);
 }
 
 void j1InGameScene::HandleInput()
@@ -248,6 +253,12 @@ void j1InGameScene::UpdateUI()
 	coins->position = App->render->ScreenToWorld(temp.x, temp.y);
 	temp_string.create("Coins:%i", App->entities->player1->coins);
 	coins->ChangeContent(temp_string.GetString());
+
+	//Current Level 
+	temp = { 850, 40 };
+	level->position = App->render->ScreenToWorld(temp.x, temp.y);
+	temp_string.create("Lvl: %i", current_lvl);
+	level->ChangeContent(temp_string.GetString());
 }
 
 void j1InGameScene::UpdateTimer()

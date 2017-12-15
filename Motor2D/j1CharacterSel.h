@@ -14,6 +14,9 @@ public:
 	bool Update(float d_time);
 	bool CleanUp();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	bool OnEvent(Button* button);
 
 private:

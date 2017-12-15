@@ -46,7 +46,7 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 	collider_offset.x	= character.child("collider_offset_x").attribute("value").as_int();
 	collider_offset.y	= character.child("collider_offset_y").attribute("value").as_int();
 	default_texture_src = character.child("default_texture").attribute("source").as_string();
-	godmode_texutre_src = character.child("godmode_texture").attribute("source").as_string();
+	godmode_texture_src = character.child("godmode_texture").attribute("source").as_string();
 
 	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
 	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
@@ -54,7 +54,7 @@ Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 
 	//Loading player's textures
 	default_tex			= App->tex->Load(default_texture_src.GetString());
-	god_mode_tex		= App->tex->Load(godmode_texutre_src.GetString());
+	god_mode_tex		= App->tex->Load(godmode_texture_src.GetString());
 
 	current_tex = default_tex;
 }
@@ -146,15 +146,20 @@ bool Player::CleanUp()
 //Load Player info
 bool Player::Load(pugi::xml_node& data)
 {
-	position.x		= data.child("position").attribute("x").as_int();
-	position.y		= data.child("position").attribute("y").as_int();
-	speed.x			= data.child("velocity").attribute("x").as_float();
-	speed.y			= data.child("velocity").attribute("y").as_float();
-	is_grounded		= data.child("status").child("is_grounded").attribute("value").as_bool();
-	facing_right	= data.child("status").child("facing_right").attribute("value").as_bool();
-	jumps_left		= data.child("status").child("jumps_left").attribute("value").as_uint();
-	god_mode		= data.child("status").child("god_mode").attribute("value").as_bool();
-	
+	position.x			= data.child("position").attribute("x").as_int();
+	position.y			= data.child("position").attribute("y").as_int();
+	speed.x				= data.child("velocity").attribute("x").as_float();
+	speed.y				= data.child("velocity").attribute("y").as_float();
+	is_grounded			= data.child("status").child("is_grounded").attribute("value").as_bool();
+	facing_right		= data.child("status").child("facing_right").attribute("value").as_bool();
+	jumps_left			= data.child("status").child("jumps_left").attribute("value").as_uint();
+	god_mode			= data.child("status").child("god_mode").attribute("value").as_bool();
+	default_texture_src = data.child("textures").child("default_tex").attribute("source").as_string();
+	godmode_texture_src = data.child("textures").child("godmode_tex").attribute("source").as_string();
+	score				= data.child("status").child("score").attribute("value").as_uint();
+	coins				= data.child("status").child("coins").attribute("value").as_uint();
+	lives_left			= data.child("status").child("lives_left").attribute("value").as_uint();
+
 	return true;
 }
 
@@ -178,6 +183,14 @@ bool Player::Save(pugi::xml_node& data) const
 	status.append_child("facing_right").append_attribute("value") = facing_right;
 	status.append_child("jumps_left").append_attribute("value") = jumps_left;
 	status.append_child("god_mode").append_attribute("value") = god_mode;
+	status.append_child("score").append_attribute("value") = score;
+	status.append_child("coins").append_attribute("value") = coins;
+	status.append_child("lives_left").append_attribute("value") = lives_left;
+
+	pugi::xml_node texture = player.append_child("textures");
+	
+	texture.append_child("default_tex").append_attribute("source") = default_texture_src.GetString();
+	texture.append_child("godmode_tex").append_attribute("source") = godmode_texture_src.GetString();
 
 	return true;
 }

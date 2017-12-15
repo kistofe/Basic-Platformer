@@ -66,7 +66,7 @@ private:
 	float	jumping_speed;
 	float	moving_speed;
 	p2SString default_texture_src;
-	p2SString godmode_texutre_src;
+	p2SString godmode_texture_src;
 
 	uint jumping_sfx;
 	uint landing_sfx;

@@ -40,8 +40,7 @@ Flying_Enemy::Flying_Enemy(uint x, uint y) : Enemy(Entity::EntityType::FLYING_EN
 
 Flying_Enemy::~Flying_Enemy()
 {
-	//Unload Textures
-	//Destroy colliders
+	
 }
 
 

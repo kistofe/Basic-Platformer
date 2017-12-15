@@ -89,6 +89,7 @@ bool j1SceneSwitch::SwitchMap(const char* map_on)
 	App->entities->active = true;
 	App->collision->Start();
 	App->collision->active = true;
+	App->ingamescene->NextLevel();
 
 	return true;
 }

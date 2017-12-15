@@ -61,6 +61,20 @@ bool j1CharacterSel::CleanUp()
 	return true;
 }
 
+bool j1CharacterSel::Load(pugi::xml_node& data)
+{
+	selected_character = data.child("selected_character").attribute("value").as_int();
+
+	return true;
+}
+
+bool j1CharacterSel::Save(pugi::xml_node& data) const
+{
+	data.append_child("selected_character").append_attribute("value") = selected_character;
+
+	return true;
+}
+
 bool j1CharacterSel::OnEvent(Button * button)
 {
 	

@@ -21,6 +21,9 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+//	bool Load(pugi::xml_node&);
+//	bool Save(pugi::xml_node&) const;
+
 	void NextLevel();
 	void InitializeMap(const char* map_initialized);
 
@@ -41,6 +44,7 @@ public:
 	DynamicLabel* time = nullptr;
 	DynamicLabel* score = nullptr;
 	DynamicLabel* coins = nullptr;
+	DynamicLabel* level = nullptr;
 
 	//UI Textures
 	SDL_Texture* hud_tex = nullptr;
@@ -53,7 +57,6 @@ public:
 	
 	//Labels
 	Label* curr_character = nullptr;
-	Label* curr_level_lab = nullptr;
 	Label* score_lab = nullptr;
 	Label* tuto_window_content1 = nullptr;
 	Label* tuto_window_content2 = nullptr;

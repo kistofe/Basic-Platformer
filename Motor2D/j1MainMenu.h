@@ -22,8 +22,7 @@ public:
 private:
 
 	void AddUiElems();
-	void CreateSettingsWindow();
-	void CreateCreditsWindow();
+	void OpenWindow(uint type);
 	void CloseWindow();
 
 public:

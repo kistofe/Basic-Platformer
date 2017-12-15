@@ -35,6 +35,7 @@ private:
 	void UpdateTimer();
 	void ResetTimer();
 	void UpdateScore();
+	void OpenWindow(uint type);
 	void PauseGame();
 
 public:

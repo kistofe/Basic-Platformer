@@ -47,7 +47,7 @@ public:
 
 	p2List<Widget*> ui_elems;
 	bool dragging = false;
-
+	
 private:
 	bool debug = false;
 	SDL_Texture* atlas;

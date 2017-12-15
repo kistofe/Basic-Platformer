@@ -81,6 +81,11 @@ public:
 		return;
 	}
 
+	virtual void OpenWindow(uint type)
+	{
+		return;
+	}
+
 	void Enable()
 	{
 		if (!active)

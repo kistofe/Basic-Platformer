@@ -302,6 +302,31 @@ void j1InGameScene::UpdateScore()
 	App->entities->player1 += current_time * 100 + App->entities->player1->lives_left * 100;
 }
 
+void j1InGameScene::OpenWindow(uint type)
+{
+	switch (type)
+	{
+		case 1: //Creating Pause Window
+		{
+			//Main Pause Window
+			pause_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 300, 1400, this);
+			pause_window->SetWindowType(HORIZONTAL_WINDOW);
+
+			//Main Pause Window Title Window
+			pause_window_title = (UIWindow*)App->gui->CreateWidget(WINDOW, 410, 1390, this);
+			pause_window_title->SetWindowType(TITLE_WINDOW);
+			pause_window->Attach(pause_window_title, { 110, -10 });
+
+			//Label
+			pause_window_lab = (Label*)App->gui->CreateWidget(LABEL, 475, 1405, this);
+			pause_window_lab->SetText("PAUSE", { 255,255,255,255 }, App->font->medium_size);
+			pause_window_title->Attach(pause_window_lab, { 65, 15 });
+		}
+		break;
+	
+	}
+}
+
 void j1InGameScene::PauseGame()
 {
 	if (!paused)
@@ -312,17 +337,6 @@ void j1InGameScene::PauseGame()
 	if (!paused)
 		return;
 
-	//Main Pause Window
-	pause_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 300, 1400, this);
-	pause_window->SetWindowType(HORIZONTAL_WINDOW);
-	
-	//Main Pause Window Title Window
-	pause_window_title = (UIWindow*)App->gui->CreateWidget(WINDOW, 410, 1390, this);
-	pause_window_title->SetWindowType(TITLE_WINDOW);
-	pause_window->Attach(pause_window_title, { 110, -10 });
+	OpenWindow(1);
 
-	//Label
-	pause_window_lab = (Label*)App->gui->CreateWidget(LABEL, 475, 1405, this);
-	pause_window_lab->SetText("PAUSE", { 255,255,255,255 }, App->font->medium_size);
-	pause_window_title->Attach(pause_window_lab, { 65, 15 });
 }

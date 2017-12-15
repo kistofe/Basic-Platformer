@@ -8,7 +8,7 @@
   </app>
 	
   <audio>
-    <volume_default value = "80"/>
+    <volume_default value = "65"/>
     <volume_modifier value = "30"/>
   </audio>
 
@@ -30,7 +30,7 @@
 
   <map>
     <folder>maps/</folder>
-    <max_map_x value = "-7315"/>
+    <max_map_x value = "-7270"/>
     <map_name name = "Level1.tmx">
       <music name = "Level_1.ogg"/>
     </map_name>
@@ -43,15 +43,15 @@
     <player>
       <ramona>
         <moving_speed value = "250"/>
-        <jumping_speed value = "-550"/>
+        <jumping_speed value = "-570"/>
         <collider_offset_x value = "7"/>
         <collider_offset_y value = "1"/>
         <default_texture source = "images/Ramona.png"/>
         <godmode_texture source = "images/Ramona_godmode.png"/>
       </ramona>
       <scott>
-        <moving_speed value = "200"/>
-        <jumping_speed value = "-600"/>
+        <moving_speed value = "230"/>
+        <jumping_speed value = "-590"/>
         <collider_offset_x value = "7"/>
         <collider_offset_y value = "1"/>
         <default_texture source = "images/Scott.png"/>
@@ -90,6 +90,6 @@
      <gravity_x value = "0"/>
     <gravity_y value = "-50"/>
     <max_gravity_x value = "0"/>
-    <max_gravity_y value = "700"/>
+    <max_gravity_y value = "600"/>
   </ingame_scene>
 </config>

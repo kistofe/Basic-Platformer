@@ -39,9 +39,10 @@ private:
 public:
 
 	ButtonType button_type;
+	bool hovering = false;
 
 private:
-	bool hovering = false;
+	
 	bool enabled = true;
 
 	SDL_Rect click_rect;

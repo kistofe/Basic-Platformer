@@ -68,10 +68,10 @@ bool j1MainMenu::OnEvent(Button* button)
 		App->loading_game = true;
 		break;
 	case SETTINGS: 
-		CreateSettingsWindow();
+		OpenWindow(1);
 		break;
 	case CREDITS: 
-		CreateCreditsWindow();
+		OpenWindow(2);
 		break;
 	case EXIT:
 		ret = false;
@@ -143,53 +143,61 @@ void j1MainMenu::AddUiElems()
 
 }
 
-void j1MainMenu::CreateSettingsWindow()
+void j1MainMenu::OpenWindow(uint type)
 {
-	//Main Window
-	settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
-	settings_win->SetWindowType(VERTICAL_WINDOW);
-	settings_win->draggable = true;
+	switch (type)
+	{
+		case 1: //Creating Settings Window
+		{
+			//Main Window
+			settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
+			settings_win->SetWindowType(VERTICAL_WINDOW);
+			settings_win->draggable = true;
 
-	//Title Small window
-	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
-	title_win->SetWindowType(TITLE_WINDOW);
-	settings_win->Attach(title_win, { 35,-10 });
+			//Title Small window
+			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
+			title_win->SetWindowType(TITLE_WINDOW);
+			settings_win->Attach(title_win, { 35,-10 });
 
-	//Settings Label
-	settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
-	settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
-	title_win->Attach(settings_lab, { 33, 15 });
+			//Settings Label
+			settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
+			settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
+			title_win->Attach(settings_lab, { 33, 15 });
 
-	//Close Window Button
-	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
-	close_window->SetButtonType(CLOSE_WINDOW);
-	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
-	settings_win->Attach(close_window, { 270, 0 });
+			//Close Window Button
+			close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
+			close_window->SetButtonType(CLOSE_WINDOW);
+			close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
+			settings_win->Attach(close_window, { 270, 0 });
+		}
+		break;
+		case 2: //Creating Credits Window
+		{
+			//Main Window
+			credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
+			credits_win->SetWindowType(VERTICAL_WINDOW);
+			credits_win->draggable = true;
+
+			//Title small window
+			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
+			title_win->SetWindowType(TITLE_WINDOW);
+			credits_win->Attach(title_win, { 35, -10 });
+
+			//Credits Label
+			credits_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
+			credits_lab->SetText("CREDITS", { 255,255,255,255 }, App->font->medium_size);
+			title_win->Attach(credits_lab, { 33, 15 });
+
+			//Close window Button
+			close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
+			close_window->SetButtonType(CLOSE_WINDOW);
+			close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
+			credits_win->Attach(close_window, { 270, 0 });
+		}
+		break;
+	}
 }
 
-void j1MainMenu::CreateCreditsWindow()
-{
-	//Main Window
-	credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
-	credits_win->SetWindowType(VERTICAL_WINDOW);
-	credits_win->draggable = true;
-	
-	//Title small window
-	title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
-	title_win->SetWindowType(TITLE_WINDOW);
-	credits_win->Attach(title_win, { 35, -10 });
-
-	//Credits Label
-	credits_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
-	credits_lab->SetText("CREDITS", { 255,255,255,255 }, App->font->medium_size);
-	title_win->Attach(credits_lab, { 33, 15 });
-
-	//Close window Button
-	close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
-	close_window->SetButtonType(CLOSE_WINDOW);
-	close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
-	credits_win->Attach(close_window, { 270, 0 });
-}
 
 void j1MainMenu::CloseWindow()
 {

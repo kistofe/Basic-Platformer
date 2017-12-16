@@ -7,11 +7,18 @@
 #include "j1CharacterSel.h"
 #include "j1SceneSwitch.h"
 #include "j1EntityManager.h"
-#include "Widget.h"
+#include "j1Audio.h"
 
 j1MainMenu::j1MainMenu()
 {
 	name.create("main_menu");
+
+	config		= App->LoadUiConfig(ui_elements);
+	data		= config.child("main_menu");
+	textures	= data.child("textures");
+	labels		= data.child("labels");
+	buttons		= data.child("buttons");
+	windows		= data.child("windows");
 }
 
 j1MainMenu::~j1MainMenu()
@@ -20,9 +27,9 @@ j1MainMenu::~j1MainMenu()
 bool j1MainMenu::Start()
 {
 	AddUiElems();
-
-	background = App->tex->Load("gui/Background.png");
-	title = App->tex->Load("gui/title.png");
+	App->audio->PlayMusic("audio/music/MainMenu.ogg");
+	background = App->tex->Load(textures.child("background").attribute("source").as_string());
+	title = App->tex->Load(textures.child("title").attribute("source").as_string());
 	
 	return true;
 }
@@ -30,8 +37,8 @@ bool j1MainMenu::Start()
 bool j1MainMenu::Update(float d_time)
 {
 	
-	App->render->Blit(background, -150, 0);
-	App->render->Blit(title, 0, 0);
+	App->render->Blit(background, textures.child("backgroundpos_x").attribute("value").as_int(), textures.child("backgroundpos_y").attribute("value").as_int());
+	App->render->Blit(title, textures.child("titlepos_x").attribute("value").as_int(), textures.child("titlepos_y").attribute("value").as_int());
 	
 	App->gui->Draw();
 	
@@ -43,13 +50,6 @@ bool j1MainMenu::CleanUp()
 {
 	App->tex->UnLoad(background);
 	App->tex->UnLoad(title);
-
-	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.end;
-	while (ui_iterator)
-	{
-		App->gui->DestroyWidget(ui_iterator->data);
-		ui_iterator = ui_iterator->prev;
-	}
 
 	return true;
 }
@@ -86,113 +86,154 @@ bool j1MainMenu::OnEvent(Button* button)
 
 void j1MainMenu::AddUiElems()
 {
+	//READING UI XML FILE TO CREATE THE UI
+
 	//Start New Game Button
-	new_game = (Button*)App->gui->CreateWidget(BUTTON, 45, 400, this);
+	pugi::xml_node temp = buttons.child("new_game");
+	new_game = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	new_game->SetButtonType(NEW_GAME);
-	new_game->SetSection({ 3, 7, 289, 96 }, { 3, 103, 289, 96 }, { 3, 199, 289, 96 });
-	LOG("w:%d, h:%d", new_game->world_area.w, new_game->world_area.h);
+	new_game->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int()},
+	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+	{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int()});
 
 	//Load Game Button
-	load_game = (Button*)App->gui->CreateWidget(BUTTON, 360, 400, this);
+	temp = buttons.child("load_game");
+	load_game = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	load_game->SetButtonType(LOAD_GAME);
 	pugi::xml_document doc;
 	pugi::xml_parse_result save_exists = doc.load_file("save.xml");
 	if (save_exists)
-		load_game->SetSection({ 318, 7, 289, 96 }, { 3, 103, 289, 96 }, { 318, 199, 289, 96 });
+		load_game->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int()},
+		{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+		{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
 	if (!save_exists)
-		load_game->SetSection({ 318, 7, 289, 96 }, { 3, 103, 289, 96 }, { 318, 199, 289, 96 }, { 318, 103, 289, 96 });
-
+	{
+		load_game->SetSection({ temp.child("idle").attribute("x").as_int(), temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int()},
+		{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+		{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() }, 
+		{ temp.child("disabled").attribute("x").as_int(), temp.child("disabled").attribute("y").as_int(), temp.child("disabled").attribute("w").as_int(), temp.child("disabled").attribute("h").as_int() });
+	}
+		
 	//Settings Button
-	settings = (Button*)App->gui->CreateWidget(BUTTON, 45, 520, this);
+	temp = buttons.child("settings");
+	settings = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	settings->SetButtonType(SETTINGS);
-	settings->SetSection({ 3, 319, 289, 96 }, { 3, 415, 289, 96 }, { 3, 511, 289, 96 });
+	settings->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+	{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
 	
 	//Credits Button
-	credits = (Button*)App->gui->CreateWidget(BUTTON, 360, 520, this);
+	temp = buttons.child("credits");
+	credits = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	credits->SetButtonType(CREDITS);
-	credits->SetSection({ 647, 7, 289, 96 }, { 647, 103, 289, 96 }, { 647, 199, 289, 96 });
+	credits->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+	{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
 
 	//Exit Button
-	exit = (Button*)App->gui->CreateWidget(BUTTON, 200, 625, this);
+	temp = buttons.child("exit");
+	exit = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	exit->SetButtonType(EXIT);
-	exit->SetSection({ 318, 319, 289, 96 }, { 318, 415, 289, 96 }, { 318, 511, 289, 96 });
+	exit->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+	{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
 
 	//New Game label
-	new_game_lab = (Label*)App->gui->CreateWidget(LABEL, 140, 433, this);
-	new_game_lab->SetText("NEW GAME", { 255,255,255,255 }, App->font->medium_size);
+	temp = labels.child("new_game");
+	new_game_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	new_game_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255,255,255 }, App->font->medium_size);
 
 	//Load Game Label
-	load_game_lab = (Label*)App->gui->CreateWidget(LABEL, 455, 433, this);
-	load_game_lab->SetText("LOAD GAME", { 255,255,255,255 }, App->font->medium_size);
+	temp = labels.child("load_game");
+	load_game_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	load_game_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Settings Label
-	settings_lab = (Label*)App->gui->CreateWidget(LABEL, 140, 553, this);
-	settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
+	temp = labels.child("settings");
+	settings_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	settings_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Credits Label
-	credits_lab = (Label*)App->gui->CreateWidget(LABEL, 455, 553, this);
-	credits_lab->SetText("CREDITS", { 255, 255, 255, 255 }, App->font->medium_size);
+	temp = labels.child("credits");
+	credits_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	credits_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255, 255, 255 }, App->font->medium_size);
 
 	//Exit Label
-	exit_lab = (Label*)App->gui->CreateWidget(LABEL, 295, 658, this);
-	exit_lab->SetText("EXIT", { 255,255,255,255 }, App->font->medium_size);
+	temp = labels.child("exit");
+	exit_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	exit_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Copyright label
-	copyright = (Label*)App->gui->CreateWidget(LABEL, 570, 740, this);
-	copyright->SetText("All rights reserved - Edgypoint Castellbisbal -", { 255,255,255,255 }, App->font->small_size);
+	temp = labels.child("copyright");
+	copyright = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	copyright->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 
 }
 
 void j1MainMenu::OpenWindow(uint type)
 {
+	pugi::xml_node temp;
+
 	switch (type)
 	{
 		case 1: //Creating Settings Window
 		{
 			//Main Window
-			settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
+			temp = windows.child("settings");
+			settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			settings_win->SetWindowType(VERTICAL_WINDOW);
-			settings_win->draggable = true;
+			settings_win->draggable = temp.child("draggable").attribute("value").as_bool();
 
 			//Title Small window
-			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
+			temp = windows.child("title");
+			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			title_win->SetWindowType(TITLE_WINDOW);
-			settings_win->Attach(title_win, { 35,-10 });
+			settings_win->Attach(title_win, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
-			//Settings Label
-			settings_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
-			settings_lab->SetText("SETTINGS", { 255,255,255,255 }, App->font->medium_size);
-			title_win->Attach(settings_lab, { 33, 15 });
+			//Settings Title Label
+			temp = labels.child("settings_title");
+			settings_title_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
+			settings_title_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			title_win->Attach(settings_title_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Close Window Button
-			close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
+			temp = buttons.child("close_window");
+			close_window = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			close_window->SetButtonType(CLOSE_WINDOW);
-			close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
-			settings_win->Attach(close_window, { 270, 0 });
+			close_window->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int()});
+			settings_win->Attach(close_window, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 		}
 		break;
 		case 2: //Creating Credits Window
 		{
 			//Main Window
-			credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 400, this);
+			temp = windows.child("credits");
+			credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			credits_win->SetWindowType(VERTICAL_WINDOW);
 			credits_win->draggable = true;
 
 			//Title small window
-			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, 285, 390, this);
+			temp = windows.child("title");
+			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			title_win->SetWindowType(TITLE_WINDOW);
-			credits_win->Attach(title_win, { 35, -10 });
+			credits_win->Attach(title_win, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
-			//Credits Label
-			credits_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
-			credits_lab->SetText("CREDITS", { 255,255,255,255 }, App->font->medium_size);
-			title_win->Attach(credits_lab, { 33, 15 });
+			//Credits Title Label
+			temp = labels.child("credits_title");
+			credits_title_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			credits_title_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			title_win->Attach(credits_title_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
-			//Close window Button
-			close_window = (Button*)App->gui->CreateWidget(BUTTON, 520, 400, this);
+			//Close Window Button
+			temp = buttons.child("close_window");
+			close_window = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			close_window->SetButtonType(CLOSE_WINDOW);
-			close_window->SetSection({ 436, 645, 52, 64 }, { 499, 645, 52, 64 }, { 557, 645, 52, 64 });
-			credits_win->Attach(close_window, { 270, 0 });
+			close_window->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			credits_win->Attach(close_window, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 		}
 		break;
 	}

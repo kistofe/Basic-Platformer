@@ -205,6 +205,21 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 }
 
 // ---------------------------------------------
+pugi::xml_node j1App::LoadUiConfig(pugi::xml_document& config_file) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = config_file.load_file("ui_elements.xml");
+
+	if (result == NULL)
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	else
+		ret = config_file.child("ui_elements");
+
+	return ret;
+}
+
+// ---------------------------------------------
 void j1App::PrepareUpdate()
 {
 	frame_count++;

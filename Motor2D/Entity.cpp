@@ -24,8 +24,15 @@ void Entity::SetToStart()
 void Entity::Draw()
 {
 	if (App->ingamescene->paused)
+	{
+		if (this->temp_speed == 0)
+			this->temp_speed = current_animation->speed;
 		current_animation->speed = 0;
+	}
 
+	if (!App->ingamescene->paused && current_animation->speed == 0)
+		current_animation->speed = this->temp_speed;
+	
 	if (facing_right)
 		App->render->Blit(current_tex, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f, 0.0, 2147483647, 2147483647);
 
@@ -42,4 +49,9 @@ void Entity::Move()
 Collider* Entity::GetCollider()
 {
 	return collider;
+}
+
+float Entity::GetAnimationSpeed(Animation* current_anim)
+{
+	return current_anim->speed;
 }

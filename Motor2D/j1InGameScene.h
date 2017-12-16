@@ -18,7 +18,6 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float d_time);
-	bool PostUpdate();
 	bool CleanUp();
 
 	bool Load(pugi::xml_node&);
@@ -26,6 +25,7 @@ public:
 
 	void NextLevel();
 	void InitializeMap(const char* map_initialized);
+	bool OnEvent(Button* button);
 
 private:
 
@@ -37,6 +37,8 @@ private:
 	void UpdateScore();
 	void OpenWindow(uint type);
 	void PauseGame();
+	void ResumeGame();
+	
 
 public:
 
@@ -46,6 +48,7 @@ public:
 	DynamicLabel* score = nullptr;
 	DynamicLabel* coins = nullptr;
 	DynamicLabel* level = nullptr;
+	DynamicLabel* curr_character = nullptr;
 
 	//UI Textures
 	SDL_Texture* hud_tex = nullptr;
@@ -54,21 +57,25 @@ public:
 	SDL_Rect char1_life_icon;
 	SDL_Rect char2_life_icon;
 	SDL_Rect time_icon;
-	SDL_Rect coins_icon;
 	
+	//Buttons
+	Button* back_to_main_menu = nullptr;
+	Button* resume = nullptr;
+
 	//Labels
-	Label* curr_character = nullptr;
-	Label* score_lab = nullptr;
 	Label* tuto_window_content1 = nullptr;
 	Label* tuto_window_content2 = nullptr;
 	Label* tuto_window_content3 = nullptr;
 	Label* tuto_window_content4 = nullptr;
 	Label* pause_window_lab = nullptr;
+	Label* resume_lab = nullptr;
+	Label* back_lab = nullptr;
 
 	//Windows
 	UIWindow* tuto_window = nullptr;
 	UIWindow* pause_window = nullptr;
 	UIWindow* pause_window_title = nullptr;
+	UIWindow* hud_window = nullptr;
 
 	//Scene Properties
 	uint	timer_count = 0;
@@ -80,5 +87,16 @@ public:
 	fPoint	gravity; 
 	fPoint	max_gravity; 
 	bool	paused = false;
+
+private:
+
+	pugi::xml_document ui_elements;
+	pugi::xml_node config;
+	pugi::xml_node data;
+	pugi::xml_node textures;
+	pugi::xml_node labels;
+	pugi::xml_node windows;
+	pugi::xml_node dynamic_labels;
+	pugi::xml_node buttons;
 };
 #endif

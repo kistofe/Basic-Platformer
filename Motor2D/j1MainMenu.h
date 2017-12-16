@@ -41,6 +41,8 @@ public:
 	Label* settings_lab = nullptr;
 	Label* credits_lab = nullptr;
 	Label* exit_lab = nullptr;
+	Label* settings_title_lab = nullptr;
+	Label* credits_title_lab = nullptr;
 
 	//Copyright
 	Label* copyright = nullptr;
@@ -53,6 +55,16 @@ public:
 	//Images
 	SDL_Texture* background = nullptr;
 	SDL_Texture* title = nullptr;
-	
+
+private:
+
+	pugi::xml_document ui_elements;
+	pugi::xml_node config;
+	pugi::xml_node data;
+	pugi::xml_node textures;
+	pugi::xml_node labels;
+	pugi::xml_node buttons;
+	pugi::xml_node windows;
+		
 };
 #endif

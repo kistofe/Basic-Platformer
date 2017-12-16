@@ -8,11 +8,20 @@
 #include "j1Pathfinding.h"
 #include "j1Textures.h"
 #include "j1CharacterSel.h"
+#include "j1MainMenu.h"
 
 
 j1InGameScene::j1InGameScene()
 {
 	name.create("ingame_scene");
+
+	config = App->LoadUiConfig(ui_elements);
+	data = config.child("ingame_scene");
+	textures = data.child("textures");
+	labels = data.child("labels");
+	dynamic_labels = data.child("dynamic_labels");
+	windows = data.child("windows");
+	buttons = data.child("buttons");
 }
 
 j1InGameScene::~j1InGameScene()
@@ -28,9 +37,10 @@ bool j1InGameScene::Awake(pugi::xml_node & config)
 	max_gravity.x = config.child("max_gravity_x").attribute("value").as_float();
 	max_gravity.y = config.child("max_gravity_y").attribute("value").as_float();
 
-	char1_life_icon = { 0, 0, 70, 56 };
-	char2_life_icon = { 76, 0, 70, 56 };
-	time_icon = { 7, 78, 51, 51 };
+	char1_life_icon = { textures.child("char1_icon").attribute("x").as_int(), textures.child("char1_icon").attribute("y").as_int(), textures.child("char1_icon").attribute("w").as_int(), textures.child("char1_icon").attribute("h").as_int() };
+	char2_life_icon = { textures.child("char2_icon").attribute("x").as_int(), textures.child("char2_icon").attribute("y").as_int(), textures.child("char2_icon").attribute("w").as_int(), textures.child("char2_icon").attribute("h").as_int() };
+	time_icon = { textures.child("time_icon").attribute("x").as_int(), textures.child("time_icon").attribute("y").as_int(), textures.child("time_icon").attribute("w").as_int(), textures.child("time_icon").attribute("h").as_int() };
+
 	return ret;
 }
 
@@ -38,8 +48,8 @@ bool j1InGameScene::Start()
 {
 	InitializeMap(App->map->map_name.start->data->GetString());
 	
-	App->audio->PlayMusic("audio/music/Level_1.ogg");
-	hud_tex = App->tex->Load("gui/HUD.png");
+//	App->audio->PlayMusic("audio/music/Level_1.ogg");
+	hud_tex = App->tex->Load(textures.child("hud").attribute("source").as_string());
 
 	scene_timer.Start();
 	AddUiElems();
@@ -55,8 +65,8 @@ bool j1InGameScene::Update(float d_time)
 	HandleInput();
 	App->map->Draw();
 	UpdateUI();
-	App->entities->Draw();
 	App->gui->Draw();
+	App->entities->Draw();
 	UpdateTimer();
 
 	int x, y;
@@ -72,23 +82,10 @@ bool j1InGameScene::Update(float d_time)
 	return true;
 }
 
-bool j1InGameScene::PostUpdate()
-{
-	bool ret = true;
-
-	return ret;
-}
-
 bool j1InGameScene::CleanUp()
 {
 	App->tex->UnLoad(hud_tex);
 	
-	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.end;
-	while (ui_iterator)
-	{
-		App->gui->DestroyWidget(ui_iterator->data);
-		ui_iterator = ui_iterator->prev;
-	}
 	return true;
 }
 
@@ -132,63 +129,107 @@ void j1InGameScene::InitializeMap(const char * map_initialized)
 	RELEASE_ARRAY(data);
 }
 
+bool j1InGameScene::OnEvent(Button* button)
+{
+	bool ret = true;
+
+	switch (button->button_type)
+	{
+	case RESUME:
+		ResumeGame();
+		break;
+	case TO_MAIN_SCENE:
+		App->sceneswitch->SwitchScene(App->mainmenu, this);
+		break;
+	
+	}
+
+	return ret;
+}
+
 void j1InGameScene::AddUiElems()
 {
+	//READING UI XML FILE TO CREATE THE UI
+
+
 	//Current Character Label
-	curr_character = (Label*)App->gui->CreateWidget(LABEL, 100, 45, this);
+	 pugi::xml_node temp = dynamic_labels.child("current_character");
+	curr_character = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	if (App->entities->player1->sel_char == 0)
-		curr_character->SetText("RAMONA", { 255,255,255,255 }, App->font->large_size);
+		curr_character->SetText(temp.child("content1").attribute("value").as_string(), { 255,255,255,255 }, App->font->large_size);
 	if (App->entities->player1->sel_char == 1)
-		curr_character->SetText("SCOTT", { 255,255,255,255 }, App->font->large_size);
-
-	//Score Label
-	score = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 15, 115, this);
-	score->SetText("Score:", { 255,255,255,255 }, App->font->medium_size);
-
-	//Coins label
-	coins = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 800, 45, this);
-	coins->SetText("Coins:", { 255, 255, 255, 255 }, App->font->medium_size);
+		curr_character->SetText(temp.child("content2").attribute("value").as_string(), { 255,255,255,255 }, App->font->large_size);
 
 	//Mini Tutorial Window
-	tuto_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 250, 1200, this);
+	temp = windows.child("tutorial");
+	tuto_window = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	tuto_window->SetWindowType(HORIZONTAL_WINDOW);
 
-	tuto_window_content1 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
-	tuto_window_content1->SetText("PRESS ~SPACE~ TO PERFORM A REGULAR JUMP", { 255,255,255,255 }, App->font->small_size);
+	temp = labels.child("tutorial_1");
+	tuto_window_content1 = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	tuto_window_content1->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 	tuto_window->Attach(tuto_window_content1, { 15, 60 });
 
-	tuto_window_content2 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
-	tuto_window_content2->SetText("PRESS ~SPACE~ AGAIN WHILE IN AIR TO", { 255,255,255,255 }, App->font->small_size);
+	temp = labels.child("tutorial_2");
+	tuto_window_content2 = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	tuto_window_content2->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 	tuto_window->Attach(tuto_window_content2, { 15, 100 });
 
-	tuto_window_content3 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
-	tuto_window_content3->SetText("PERFORM A DOUBLE JUMP!", { 255,255,255,255 }, App->font->small_size);
+	temp = labels.child("tutorial_3");
+	tuto_window_content3 = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	tuto_window_content3->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 	tuto_window->Attach(tuto_window_content3, { 15, 130 });
 
-	tuto_window_content4 = (Label*)App->gui->CreateWidget(LABEL, 255, 1250, this);
-	tuto_window_content4->SetText("*STARTER'S HINT*", { 255,255,255,255 }, App->font->small_size);
+	temp = labels.child("tutorial_4");
+	tuto_window_content4 = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	tuto_window_content4->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 	tuto_window->Attach(tuto_window_content4, { 130, 20 });
-	
+
+	//Score Label
+	temp = dynamic_labels.child("score");
+	score = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	score->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+
+	//Coins label
+	temp = dynamic_labels.child("coins");
+	coins = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	coins->SetText(temp.child("content").attribute("value").as_string(), { 255, 255, 255, 255 }, App->font->medium_size);
+
 	//Character lives left
-	life = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 70, 75, this);
-	life->SetText("x3", { 255,255,255,255 }, App->font->medium_size);
+	temp = dynamic_labels.child("life");
+	life = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	life->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Scene timer
-	p2SString _timer("%i", current_time);
-	time = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 490, 40, this);
+	temp = dynamic_labels.child("time");
+	p2SString _timer(temp.child("content").attribute("value").as_string(), current_time);
+	time = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	time->SetText(_timer.GetString(), { 255,255,255,255 }, App->font->small_size);
 
 	//Current Level
-	p2SString _level("Lvl: %i", current_lvl);
-	level = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 850, 40, this);
+	temp = dynamic_labels.child("level");
+	p2SString _level(temp.child("content").attribute("value").as_string(), current_lvl);
+	level = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	level->SetText(_level.GetString(), { 255,255,255,255 }, App->font->small_size);
+	
 }
 
 void j1InGameScene::HandleInput()
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		PauseGame();
+	{
+		if (!paused)
+			PauseGame();
+		else
+			ResumeGame();
+	}
+		
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+		App->audio->VolumeControl();
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+		App->audio->VolumeControl();
 
 	if (paused)
 		return;
@@ -216,12 +257,6 @@ void j1InGameScene::HandleInput()
 			App->entities->player1->god_mode = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
-		App->audio->VolumeControl();
-
-	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
-		App->audio->VolumeControl();
-
 }
 
 void j1InGameScene::UpdateUI()
@@ -230,51 +265,79 @@ void j1InGameScene::UpdateUI()
 	p2SString temp_string;
 
 	//Life Icon
-	temp = { 15, 40 };
-	temp = App->render->ScreenToWorld(temp.x, temp.y);
+	temp = App->render->ScreenToWorld(textures.child("char_icon_pos_x").attribute("value").as_int(), textures.child("char_icon_pos_y").attribute("value").as_int());
 	if (App->charactersel->selected_character == 0)
 		App->render->Blit(hud_tex, temp.x, temp.y, &char1_life_icon);
 	if (App->charactersel->selected_character == 1)
 		App->render->Blit(hud_tex, temp.x, temp.y, &char2_life_icon);
 
-	//Character's name label
-	temp = { 100, 45 };
-	curr_character->position = App->render->ScreenToWorld(temp.x, temp.y);
-
-	//Score num label
-	temp = { 15, 115 };
-	score->position = App->render->ScreenToWorld(temp.x, temp.y);
-	temp_string.create("Score:%i", App->entities->player1->score);
-	score->ChangeContent(temp_string.GetString());
-
-	//Life num Label
-	temp = { 70, 75 };
-	life->position = App->render->ScreenToWorld(temp.x, temp.y);
-	temp_string.create("x%i", App->entities->player1->lives_left);
-	life->ChangeContent(temp_string.GetString());
-
 	//Time Icon
-	temp = { 450, 40 };
+	temp = { textures.child("time_icon_pos_x").attribute("value").as_int(), textures.child("time_icon_pos_y").attribute("value").as_int() };
 	temp = App->render->ScreenToWorld(temp.x, temp.y);
 	App->render->Blit(hud_tex, temp.x, temp.y, &time_icon);
 
+	//Character's name label
+	pugi::xml_node temp_node = dynamic_labels.child("current_character");
+	curr_character->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	if (App->charactersel->selected_character == 0)
+		curr_character->ChangeContent(temp_node.child("content1").attribute("value").as_string());
+	if (App->charactersel->selected_character == 1)
+		curr_character->ChangeContent(temp_node.child("content2").attribute("value").as_string());
+			
+	//Score num label
+	temp_node = dynamic_labels.child("score");
+	score->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	temp_string.create(temp_node.child("content").attribute("value").as_string(), App->entities->player1->score);
+	score->ChangeContent(temp_string.GetString());
+
+	//Life num Label
+	temp_node = dynamic_labels.child("life");
+	life->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	temp_string.create(temp_node.child("content").attribute("value").as_string(), App->entities->player1->lives_left);
+	life->ChangeContent(temp_string.GetString());
+
 	//Time Label
-	temp = { 510, 50 };
-	time->position = App->render->ScreenToWorld(temp.x, temp.y);
-	temp_string.create("%i", current_time);
+	temp_node = dynamic_labels.child("time");
+	time->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	temp_string.create(temp_node.child("content").attribute("value").as_string(), current_time);
 	time->ChangeContent(temp_string.GetString());
 
 	//Coins num Label
-	temp = { 15, 150 };
-	coins->position = App->render->ScreenToWorld(temp.x, temp.y);
-	temp_string.create("Coins:%i", App->entities->player1->coins);
+	temp_node = dynamic_labels.child("coins");
+	coins->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	temp_string.create(temp_node.child("content").attribute("value").as_string(), App->entities->player1->coins);
 	coins->ChangeContent(temp_string.GetString());
 
 	//Current Level 
-	temp = { 850, 40 };
-	level->position = App->render->ScreenToWorld(temp.x, temp.y);
-	temp_string.create("Lvl: %i", current_lvl);
+	temp_node = dynamic_labels.child("level");
+	level->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	temp_string.create(temp_node.child("content").attribute("value").as_string(), current_lvl);
 	level->ChangeContent(temp_string.GetString());
+
+	if (pause_window)
+	{
+		temp_node = windows.child("pause");
+		pause_window->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = windows.child("pause_title");
+		pause_window_title->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = labels.child("pause");
+		pause_window_lab->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = labels.child("resume");
+		resume_lab->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = labels.child("to_main_menu");
+		back_lab->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = buttons.child("back_to_main_menu");
+		back_to_main_menu->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = buttons.child("resume");
+		resume->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	}
+		
 }
 
 void j1InGameScene::UpdateTimer()
@@ -304,23 +367,58 @@ void j1InGameScene::UpdateScore()
 
 void j1InGameScene::OpenWindow(uint type)
 {
+	pugi::xml_node temp;
+
 	switch (type)
 	{
 		case 1: //Creating Pause Window
 		{
 			//Main Pause Window
-			pause_window = (UIWindow*)App->gui->CreateWidget(WINDOW, 300, 1400, this);
+			temp = windows.child("pause");
+			pause_window = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			pause_window->SetWindowType(HORIZONTAL_WINDOW);
-
+			
 			//Main Pause Window Title Window
-			pause_window_title = (UIWindow*)App->gui->CreateWidget(WINDOW, 410, 1390, this);
+			temp = windows.child("pause_title");
+			pause_window_title = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			pause_window_title->SetWindowType(TITLE_WINDOW);
-			pause_window->Attach(pause_window_title, { 110, -10 });
+			pause_window->Attach(pause_window_title, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Label
-			pause_window_lab = (Label*)App->gui->CreateWidget(LABEL, 475, 1405, this);
-			pause_window_lab->SetText("PAUSE", { 255,255,255,255 }, App->font->medium_size);
-			pause_window_title->Attach(pause_window_lab, { 65, 15 });
+			temp = labels.child("pause");
+			pause_window_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			pause_window_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255, 255, 255 }, App->font->large_size);
+			pause_window_title->Attach(pause_window_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+
+			//Back to main menu Button
+			temp = buttons.child("back_to_main_menu");
+			back_to_main_menu = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			back_to_main_menu->SetButtonType(TO_MAIN_SCENE);
+			back_to_main_menu->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			pause_window->Attach(back_to_main_menu, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int()});
+
+			//Resume Label
+			temp = labels.child("to_main_menu");
+			back_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			back_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255, 255, 255 }, App->font->medium_size);
+			pause_window->Attach(back_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+
+			//Resume Button
+			temp = buttons.child("resume");
+			resume = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			resume->SetButtonType(RESUME);
+			resume->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			pause_window->Attach(resume, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+
+			//Resume Label
+			temp = labels.child("resume");
+			resume_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			resume_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255, 255, 255 }, App->font->medium_size);
+			pause_window->Attach(resume_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 		}
 		break;
 	
@@ -329,14 +427,17 @@ void j1InGameScene::OpenWindow(uint type)
 
 void j1InGameScene::PauseGame()
 {
-	if (!paused)
-		paused = true;
-	else
-		paused = false;
-
-	if (!paused)
-		return;
+	paused = true;
 
 	OpenWindow(1);
 
 }
+
+void j1InGameScene::ResumeGame()
+{
+	paused = false;
+
+	App->gui->DestroyWidget(pause_window);
+}
+
+

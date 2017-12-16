@@ -60,6 +60,7 @@ bool j1GuiController::Update(float d_time)
 		ui_elem_iterator = ui_elem_iterator->next;
 	}
 	
+	DebugUi();
 	return true;
 }
 
@@ -158,6 +159,39 @@ void j1GuiController::Draw()
 		ui_elem_iterator->data->Draw();
 		ui_elem_iterator = ui_elem_iterator->next;
 	}
+}
+
+void j1GuiController::DebugUi()
+{
+	if ((App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN))
+		debug = !debug;
+
+	if (debug == false)
+		return;
+
+	uint alpha = 80;
+	p2List_item<Widget*>* ui_elem_iterator = ui_elems.start;
+	while (ui_elem_iterator)
+	{
+		switch (ui_elem_iterator->data->type)
+		{
+		case BUTTON: // red
+			App->render->DrawQuad(ui_elem_iterator->data->world_area, 255, 0, 0, alpha);
+			break;
+		case WINDOW: // blue
+			App->render->DrawQuad(ui_elem_iterator->data->world_area, 0, 0, 255, alpha);
+			break;
+		case LABEL: // gren
+			App->render->DrawQuad(ui_elem_iterator->data->world_area, 0, 255, 0, alpha);
+			break;
+		case DYNAMIC_LABEL: // purple
+			App->render->DrawQuad(ui_elem_iterator->data->world_area, 170, 0, 255, alpha);
+			break;
+		
+		}
+		ui_elem_iterator = ui_elem_iterator->next;
+	}
+			
 }
 
 

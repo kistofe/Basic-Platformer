@@ -14,7 +14,6 @@ enum UiElemType
 	LABEL,
 	BUTTON,
 	DYNAMIC_LABEL,
-	IMAGE,
 	WINDOW,
 };
 

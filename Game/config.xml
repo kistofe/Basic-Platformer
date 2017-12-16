@@ -87,9 +87,10 @@
   </gui>
 
   <ingame_scene>
-     <gravity_x value = "0"/>
+    <gravity_x value = "0"/>
     <gravity_y value = "-50"/>
     <max_gravity_x value = "0"/>
     <max_gravity_y value = "600"/>
+    <max_time value = "200"/>
   </ingame_scene>
 </config>

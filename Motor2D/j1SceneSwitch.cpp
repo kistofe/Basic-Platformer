@@ -49,10 +49,18 @@ bool j1SceneSwitch::Update(float d_time)
 		{
 			to_disable->Disable();
 			App->gui->CleanUp();
+			App->map->CleanUp();
+			if (to_disable->name == "ingame_scene")
+			{
+				App->collision->CleanUp();
+				App->entities->CleanUp();
+				App->render->camera.x = 0;
+				App->render->camera.y = 0;
+			}
 			App->gui->Start();
+			to_enable->Enable();
 			switchtimer.Start();
 			current_step = fade_step::fade_from_black;
-			to_enable->Enable();
 		}
 	}break;
 

@@ -434,7 +434,7 @@
 
       <pause>
         <position_x value = "475"/>
-        <position_y value = "1405"/>
+        <position_y value = "205"/>
         <relative_pos_x value = "65"/>
         <relative_pos_y value = "15"/>
         <r value = "255"/>
@@ -535,7 +535,7 @@
 
       <pause>
         <position_x value = "300"/>
-        <position_y value = "1400"/>
+        <position_y value = "200"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
         <draggable value = "true"/>
@@ -543,7 +543,7 @@
 
       <pause_title>
         <position_x value = "410"/>
-        <position_y value = "1390"/>
+        <position_y value = "190"/>
         <relative_pos_x value = "110"/>
         <relative_pos_y value = "-10"/>
         <draggable value = "false"/>

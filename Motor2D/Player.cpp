@@ -210,7 +210,7 @@ void Player::CreateAnimationPushBacks()
 	jump.PushBack({ 378, 69, 54, 69 });
 	jump.loop = false;
 	jump.speed = 0.5f;
-
+	
 	//Double Jump animation
 	double_jump.PushBack({ 0, 207, 54, 69 });
 	double_jump.PushBack({ 54, 207, 54, 69 });

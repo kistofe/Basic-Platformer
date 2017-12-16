@@ -212,8 +212,13 @@ void j1InGameScene::HandleInput()
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		PauseGame();
-
+	{
+		if (!paused)
+			PauseGame();
+		else
+			ResumeGame();
+	}
+		
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
 		App->audio->VolumeControl();
 
@@ -303,6 +308,15 @@ void j1InGameScene::UpdateUI()
 	temp_string.create(temp_node.child("content").attribute("value").as_string(), current_lvl);
 	level->ChangeContent(temp_string.GetString());
 
+	if (pause_window)
+	{
+		temp_node = windows.child("pause");
+		pause_window->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = windows.child("pause_title");
+		pause_window_title->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+	}
+		
 }
 
 void j1InGameScene::UpdateTimer()
@@ -363,15 +377,17 @@ void j1InGameScene::OpenWindow(uint type)
 
 void j1InGameScene::PauseGame()
 {
-	if (!paused)
-		paused = true;
-	else
-		paused = false;
-
-	if (!paused)
-		return;
+	paused = true;
 
 	OpenWindow(1);
 
 }
+
+void j1InGameScene::ResumeGame()
+{
+	paused = false;
+
+	App->gui->DestroyWidget(pause_window);
+}
+
 

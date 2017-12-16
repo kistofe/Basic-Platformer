@@ -37,6 +37,7 @@ private:
 	void UpdateScore();
 	void OpenWindow(uint type);
 	void PauseGame();
+	void ResumeGame();
 	
 
 public:

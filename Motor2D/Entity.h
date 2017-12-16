@@ -44,6 +44,7 @@ enum EntityType
 	void Draw();
 	void Move();
 	Collider* GetCollider();
+	float GetAnimationSpeed(Animation* current_anim);
 	
 public:
 
@@ -68,6 +69,7 @@ protected:
 
 	bool		facing_right = true;
 	uint		death_sfx;
+	float		temp_speed = 0;
 	
 	
 };

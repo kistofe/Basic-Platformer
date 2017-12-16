@@ -42,6 +42,7 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 	void Draw();
+	void DebugUi();
 
 public:
 

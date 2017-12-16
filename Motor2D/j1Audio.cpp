@@ -53,7 +53,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	music_vol = config.child("volume_default").attribute("value").as_int();
+	music_vol = config.child("volume_default").attribute("value").as_uint();
 	volume_modifier = config.child("volume_modifier").attribute("value").as_int();
 
 	Mix_VolumeMusic(music_vol);

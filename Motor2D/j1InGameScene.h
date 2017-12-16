@@ -26,6 +26,7 @@ public:
 
 	void NextLevel();
 	void InitializeMap(const char* map_initialized);
+	bool OnEvent(Button* button);
 
 private:
 
@@ -58,6 +59,10 @@ public:
 	SDL_Rect char2_life_icon;
 	SDL_Rect time_icon;
 	
+	//Buttons
+	Button* back_to_main_menu = nullptr;
+	Button* resume = nullptr;
+
 	//Labels
 	Label* tuto_window_content1 = nullptr;
 	Label* tuto_window_content2 = nullptr;
@@ -91,5 +96,6 @@ private:
 	pugi::xml_node labels;
 	pugi::xml_node windows;
 	pugi::xml_node dynamic_labels;
+	pugi::xml_node buttons;
 };
 #endif

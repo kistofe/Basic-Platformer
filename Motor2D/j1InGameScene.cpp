@@ -8,6 +8,7 @@
 #include "j1Pathfinding.h"
 #include "j1Textures.h"
 #include "j1CharacterSel.h"
+#include "j1MainMenu.h"
 
 
 j1InGameScene::j1InGameScene()
@@ -20,6 +21,7 @@ j1InGameScene::j1InGameScene()
 	labels = data.child("labels");
 	dynamic_labels = data.child("dynamic_labels");
 	windows = data.child("windows");
+	buttons = data.child("buttons");
 }
 
 j1InGameScene::~j1InGameScene()
@@ -140,6 +142,24 @@ void j1InGameScene::InitializeMap(const char * map_initialized)
 	RELEASE_ARRAY(data);
 }
 
+bool j1InGameScene::OnEvent(Button* button)
+{
+	bool ret = true;
+
+	switch (button->button_type)
+	{
+	case RESUME:
+		ResumeGame();
+		break;
+	case TO_MAIN_SCENE:
+		App->sceneswitch->SwitchScene(App->mainmenu, this);
+		break;
+	
+	}
+
+	return ret;
+}
+
 void j1InGameScene::AddUiElems()
 {
 	//READING UI XML FILE TO CREATE THE UI
@@ -205,7 +225,7 @@ void j1InGameScene::AddUiElems()
 	level = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	level->SetText(_level.GetString(), { 255,255,255,255 }, App->font->small_size);
 
-
+	
 }
 
 void j1InGameScene::HandleInput()
@@ -315,6 +335,12 @@ void j1InGameScene::UpdateUI()
 
 		temp_node = windows.child("pause_title");
 		pause_window_title->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = buttons.child("back_to_main_menu");
+		back_to_main_menu->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
+
+		temp_node = buttons.child("resume");
+		resume->position = App->render->ScreenToWorld(temp_node.child("position_x").attribute("value").as_int(), temp_node.child("position_y").attribute("value").as_int());
 	}
 		
 }
@@ -352,23 +378,42 @@ void j1InGameScene::OpenWindow(uint type)
 	{
 		case 1: //Creating Pause Window
 		{
-			temp = windows.child("pause");
 			//Main Pause Window
+			temp = windows.child("pause");
 			pause_window = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			pause_window->SetWindowType(HORIZONTAL_WINDOW);
 			pause_window->draggable = temp.child("draggable").attribute("value").as_bool();
 
-			temp = windows.child("pause_title");
+
 			//Main Pause Window Title Window
+			temp = windows.child("pause_title");
 			pause_window_title = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			pause_window_title->SetWindowType(TITLE_WINDOW);
 			pause_window->Attach(pause_window_title, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
-			temp = labels.child("pause");
 			//Label
+			temp = labels.child("pause");
 			pause_window_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			pause_window_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 			pause_window_title->Attach(pause_window_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+
+			//Back to main menu Button
+			temp = buttons.child("back_to_main_menu");
+			back_to_main_menu = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			back_to_main_menu->SetButtonType(TO_MAIN_SCENE);
+			back_to_main_menu->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			pause_window->Attach(back_to_main_menu, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+
+			//Resume Button
+			temp = buttons.child("resume");
+			resume = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			resume->SetButtonType(RESUME);
+			resume->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			pause_window->Attach(resume, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 		}
 		break;
 	

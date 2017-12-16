@@ -523,6 +523,30 @@
     </dynamic_labels>
     
     
+    <!--BUTTONS-->
+    <buttons>
+      <resume>
+        <position_x value = "570"/>
+        <position_y value = "300"/>
+        <relative_pos_x value = "270"/>
+        <relative_pos_y value = "100"/>
+        <idle x = "532" y = "717" w = "63" h = "32"/>
+        <hovering x = "532" y = "755" w = "63" h = "32"/>
+        <clicked x = "532" y = "793" w = "63" h = "32"/>
+      </resume>
+
+      <back_to_main_menu>
+        <position_x value = "380"/>
+        <position_y value = "300"/>
+        <relative_pos_x value = "80"/>
+        <relative_pos_y value = "100"/>
+        <idle x = "532" y = "717" w = "63" h = "32"/>
+        <hovering x = "532" y = "755" w = "63" h = "32"/>
+        <clicked x = "532" y = "793" w = "63" h = "32"/>
+      </back_to_main_menu>
+    </buttons>
+    
+    
     <!--WINDOWS-->
     <windows>
       <tutorial>

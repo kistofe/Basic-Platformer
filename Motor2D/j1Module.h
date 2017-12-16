@@ -85,7 +85,7 @@ public:
 	{
 		return;
 	}
-
+		
 	void Enable()
 	{
 		if (!active)

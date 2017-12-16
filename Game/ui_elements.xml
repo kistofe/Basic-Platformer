@@ -449,10 +449,6 @@
         <position_y value = "270"/>
         <relative_pos_x value = "250"/>
         <relative_pos_y value = "170"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "Resume"/>
       </resume>
 
@@ -461,10 +457,6 @@
         <position_y value = "270"/>
         <relative_pos_x value = "250"/>
         <relative_pos_y value = "170"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "Main Menu"/>
       </to_main_menu>
     </labels>
@@ -477,10 +469,6 @@
         <position_y value = "45"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content1 value = "RAMONA"/>
         <content2 value = "SCOTT"/>
       </current_character>
@@ -490,10 +478,6 @@
         <position_y value = "75"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "x%i"/>
       </life>
 

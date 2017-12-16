@@ -41,3 +41,4 @@ void Label::Draw()
 {
 	App->render->Blit(text_texture, position.x, position.y);
 }
+

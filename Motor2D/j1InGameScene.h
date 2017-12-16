@@ -37,6 +37,7 @@ private:
 	void UpdateScore();
 	void OpenWindow(uint type);
 	void PauseGame();
+	
 
 public:
 
@@ -46,6 +47,7 @@ public:
 	DynamicLabel* score = nullptr;
 	DynamicLabel* coins = nullptr;
 	DynamicLabel* level = nullptr;
+	DynamicLabel* curr_character = nullptr;
 
 	//UI Textures
 	SDL_Texture* hud_tex = nullptr;
@@ -54,11 +56,8 @@ public:
 	SDL_Rect char1_life_icon;
 	SDL_Rect char2_life_icon;
 	SDL_Rect time_icon;
-	SDL_Rect coins_icon;
 	
 	//Labels
-	Label* curr_character = nullptr;
-	Label* score_lab = nullptr;
 	Label* tuto_window_content1 = nullptr;
 	Label* tuto_window_content2 = nullptr;
 	Label* tuto_window_content3 = nullptr;
@@ -69,6 +68,7 @@ public:
 	UIWindow* tuto_window = nullptr;
 	UIWindow* pause_window = nullptr;
 	UIWindow* pause_window_title = nullptr;
+	UIWindow* hud_window = nullptr;
 
 	//Scene Properties
 	uint	timer_count = 0;
@@ -80,5 +80,15 @@ public:
 	fPoint	gravity; 
 	fPoint	max_gravity; 
 	bool	paused = false;
+
+private:
+
+	pugi::xml_document ui_elements;
+	pugi::xml_node config;
+	pugi::xml_node data;
+	pugi::xml_node textures;
+	pugi::xml_node labels;
+	pugi::xml_node windows;
+	pugi::xml_node dynamic_labels;
 };
 #endif

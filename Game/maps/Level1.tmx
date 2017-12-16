@@ -75144,7 +75144,7 @@
   <object id="122" name="Coin" type="Coin" x="6528" y="864" width="48" height="48"/>
   <object id="123" name="Coin" type="Coin" x="7616" y="704" width="48" height="48"/>
  </objectgroup>
- <layer name="Walkability" width="250" height="60" visible="0">
+ <layer name="Walkability" width="250" height="60">
   <properties>
    <property name="Navigation" type="int" value="1"/>
   </properties>

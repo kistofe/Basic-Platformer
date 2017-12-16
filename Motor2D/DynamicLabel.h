@@ -17,7 +17,6 @@ public:
 private:
 	void SetArea(uint w, uint h);
 
-private:
-	char* content;
+
 };
 #endif

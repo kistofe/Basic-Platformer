@@ -1,0 +1,553 @@
+<!-- Complementary file which every UI element in each Scene -->
+
+<ui_elements>
+  <main_menu>
+    <!--TEXTURES-->
+    <textures>
+      <background source = "gui/Background.png"/>
+      <backgroundpos_x value = "-150"/>
+      <backgroundpos_y value = "0"/>
+      <title source = "gui/title.png"/>
+      <titlepos_x value = "0"/>
+      <titlepos_y value = "0"/>
+    </textures>
+    
+    
+    <!--LABELS-->
+    <labels>
+      <new_game>
+        <position_x value = "140"/>
+        <position_y value = "433"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <content value = "NEW GAME"/>
+      </new_game>
+      
+      <load_game>
+        <position_x value = "455"/>
+        <position_y value = "433"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <content value = "LOAD GAME"/>
+      </load_game>
+      
+      <settings>
+        <position_x value = "140"/>
+        <position_y value = "553"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <content value = "SETTINGS"/>
+      </settings>
+
+      <settings_title>
+        <position_x value = "318"/>
+        <position_y value = "405"/>
+        <relative_pos_x value = "33"/>
+        <relative_pos_y value = "15"/>
+        <content value = "SETTINGS"/>
+      </settings_title>
+      
+      <credits>
+        <position_x value = "455"/>
+        <position_y value = "553"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "CREDITS"/>
+      </credits>
+
+      <credits_title>
+        <position_x value = "455"/>
+        <position_y value = "553"/>
+        <relative_pos_x value = "33"/>
+        <relative_pos_y value = "15"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "CREDITS"/>
+      </credits_title>
+      
+      <exit>
+        <position_x value = "295"/>
+        <position_y value = "658"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "EXIT"/>
+      </exit>
+      
+      <copyright>
+        <position_x value = "570"/>
+        <position_y value = "740"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "All rights reserved - Edgypoint Castellbisbal -"/>
+      </copyright>
+    </labels>
+    
+    
+    <!--BUTTONS-->
+    <buttons>
+      <new_game>
+        <position_x value = "45"/>
+        <position_y value = "400"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "3" y = "7" w = "289" h = "96"/>
+        <hovering x = "3" y = "103" w = "289" h = "96"/>
+        <clicked x = "3" y = "199" w = "289" h = "96"/>
+      </new_game>
+      
+      <load_game>
+        <position_x value = "360"/>
+        <position_y value = "400"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "318" y = "7" w = "289" h = "96"/>
+        <hovering x = "3" y = "103" w = "289" h = "96"/>
+        <clicked x = "318" y = "199" w = "289" h = "96"/>
+        <disabled x = "318" y = "103" w = "289" h = "96"/>
+      </load_game>
+      
+      <settings>
+        <position_x value = "45"/>
+        <position_y value = "520"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "3" y = "319" w = "289" h = "96"/>
+        <hovering x = "3" y = "415" w = "289" h = "96"/>
+        <clicked x = "3" y = "511" w = "289" h = "96"/>
+       </settings>
+      
+      <credits>
+        <position_x value = "360"/>
+        <position_y value = "520"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "647" y = "7" w = "289" h = "96"/>
+        <hovering x = "647" y = "103" w = "289" h = "96"/>
+        <clicked x = "647" y = "199" w = "289" h = "96"/>
+      </credits>
+      
+      <exit>
+        <position_x value = "200"/>
+        <position_y value = "625"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "318" y = "319" w = "289" h = "96"/>
+        <hovering x = "318" y = "415" w = "289" h = "96"/>
+        <clicked x = "318" y = "511" w = "289" h = "96"/>
+      </exit>
+      
+      <close_window>
+        <position_x value = "520"/>
+        <position_y value = "400"/>
+        <relative_pos_x value = "270"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "436" y = "645" w = "52" h = "64"/>
+        <hovering x = "499" y = "645" w = "52" h = "64"/>
+        <clicked x = "577" y = "645" w = "52" h = "64"/>
+      </close_window>
+    </buttons>
+    
+    
+    <!--WINDOWS-->
+    <windows>
+      <settings>
+        <position_x value = "250"/>
+        <position_y value = "400"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "true"/>
+      </settings>
+      
+      <credits>
+        <position_x value = "250"/>
+        <position_y value = "400"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "true"/>
+      </credits>
+
+      <title>
+        <position_x value = "285"/>
+        <position_y value = "390"/>
+        <relative_pos_x value = "35"/>
+        <relative_pos_y value = "-10"/>
+        <draggable value = "false"/>
+      </title>
+    </windows>
+  </main_menu>
+  
+  <character_selection>
+    <!--TEXTURES-->
+    <textures>
+      <background source = "gui/character_select.png"/>
+      <backgroundpos_x value = "0"/>
+      <backgroundpos_y value = "0"/>
+      <title source = "gui/character_select_title.png"/>
+      <titlepos_x value = "330"/>
+      <titlepos_y value = "100"/>
+      <char1_portrait source = "images/Ramona Character Portrait.png"/>
+      <portrait1_pos_x value = "250"/>
+      <portrait1_pos_y value = "263"/>
+      <char2_portrait source = "images/Scott Character Portrait.png"/>
+      <portrait2_pos_x value = "570"/>
+      <portrait2_pos_y value = "255"/>
+    </textures>
+    
+    
+    <!--LABELS-->
+    <labels>
+      <char1_go>
+        <position_x value = "365"/>
+        <position_y value = "698"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "GO!"/>
+      </char1_go>
+
+      <char2_go>
+        <position_x value = "685"/>
+        <position_y value = "698"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "GO!"/>
+      </char2_go>
+
+      <char1_name>
+        <position_x value = "250"/>
+        <position_y value = "555"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "RAMONA"/>
+      </char1_name>
+
+      <char2_name>
+        <position_x value = "570"/>
+        <position_y value = "555"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "SCOTT"/>
+      </char2_name>
+
+      <speed1>
+        <position_x value = "250"/>
+        <position_y value = "595"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Speed: ***"/>
+      </speed1>
+
+      <jump1>
+        <position_x value = "250"/>
+        <position_y value = "625"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Jump: **"/>
+      </jump1>
+
+      <speed2>
+        <position_x value = "570"/>
+        <position_y value = "595"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Speed: **"/>
+      </speed2>
+
+      <jump2>
+        <position_x value = "570"/>
+        <position_y value = "625"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Jump: ***"/>
+      </jump2>
+    </labels>
+    
+    
+    <!--BUTTONS-->
+    <buttons>
+      <character1>
+        <position_x value = "330"/>
+        <position_y value = "695"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "422" y = "717" w = "110" h = "36"/>
+        <hovering x = "422" y = "755" w = "110" h = "36"/>
+        <clicked x = "422" y = "793" w = "110" h = "36"/>
+      </character1>
+
+      <character2>
+        <position_x value = "650"/>
+        <position_y value = "695"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <idle x = "422" y = "717" w = "110" h = "36"/>
+        <hovering x = "422" y = "755" w = "110" h = "36"/>
+        <clicked x = "422" y = "793" w = "110" h = "36"/>
+      </character2>
+    </buttons>
+    
+    
+    <!--WINDOWS-->
+    <windows>
+      <character1_win1>
+        <position_x value = "240"/>
+        <position_y value = "220"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "false"/>
+      </character1_win1>
+
+      <character1_win2>
+        <position_x value = "225"/>
+        <position_y value = "540"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "false"/>
+      </character1_win2>
+
+      <character2_win1>
+        <position_x value = "560"/>
+        <position_y value = "220"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "false"/>
+      </character2_win1>
+
+      <character2_win2>
+        <position_x value = "545"/>
+        <position_y value = "540"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "false"/>
+      </character2_win2>
+    </windows>
+  </character_selection>
+  
+  <ingame_scene>
+    <!--TEXTURES-->
+    <textures>
+      <hud source = "gui/HUD.png"/>
+      <char1_icon x = "0" y = "0" w = "70" h = "56"/>
+      <char_icon_pos_x value = "15"/>
+      <char_icon_pos_y value = "40"/>
+      <char2_icon x = "76" y = "0" w = "70" h = "56"/>
+      <time_icon x = "7" y = "78" w = "51" h = "51"/>
+      <time_icon_pos_x value = "430"/>
+      <time_icon_pos_y value = "40"/>
+     </textures>
+    
+    
+    <!--LABELS-->
+    <labels>
+      <tutorial_1>
+        <position_x value = "250"/>
+        <position_y value = "1200"/>
+        <relative_pos_x value = "15"/>
+        <relative_pos_y value = "60"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "PRESS ~SPACE~ TO PERFORM A REGULAR JUMP"/>
+        </tutorial_1>
+
+      <tutorial_2>
+        <position_x value = "255"/>
+        <position_y value = "1250"/>
+        <relative_pos_x value = "15"/>
+        <relative_pos_y value = "100"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "PRESS ~SPACE~ AGAIN WHILE IN AIR TO"/>
+      </tutorial_2>
+
+      <tutorial_3>
+        <position_x value = "255"/>
+        <position_y value = "1250"/>
+        <relative_pos_x value = "15"/>
+        <relative_pos_y value = "130"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "PERFORM A DOUBLE JUMP!"/>
+      </tutorial_3>
+
+      <tutorial_4>
+        <position_x value = "255"/>
+        <position_y value = "1250"/>
+        <relative_pos_x value = "130"/>
+        <relative_pos_y value = "20"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "*STARTER'S HINT*"/>
+      </tutorial_4>
+
+      <pause>
+        <position_x value = "475"/>
+        <position_y value = "1405"/>
+        <relative_pos_x value = "65"/>
+        <relative_pos_y value = "15"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "PAUSE"/>
+      </pause>
+    </labels>
+    
+    
+    <!--DYNAMIC LABELS-->
+    <dynamic_labels>
+      <current_character>
+        <position_x value = "100"/>
+        <position_y value = "45"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content1 value = "RAMONA"/>
+        <content2 value = "SCOTT"/>
+      </current_character>
+      
+      <life>
+        <position_x value = "70"/>
+        <position_y value = "75"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "x%i"/>
+      </life>
+
+      <time>
+        <position_x value = "490"/>
+        <position_y value = "50"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "%i"/>
+      </time>
+
+      <score>
+        <position_x value = "15"/>
+        <position_y value = "115"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Score:%i"/>
+      </score>
+
+      <coins>
+        <position_x value = "15"/>
+        <position_y value = "145"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Coins:%i"/>
+      </coins>
+
+      <level>
+        <position_x value = "850"/>
+        <position_y value = "40"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Lvl:%i"/>
+      </level>
+    </dynamic_labels>
+    
+    
+    <!--WINDOWS-->
+    <windows>
+      <tutorial>
+        <position_x value = "250"/>
+        <position_y value = "1200"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "false"/>
+      </tutorial>
+
+      <pause>
+        <position_x value = "300"/>
+        <position_y value = "1400"/>
+        <relative_pos_x value = "0"/>
+        <relative_pos_y value = "0"/>
+        <draggable value = "true"/>
+      </pause>
+
+      <pause_title>
+        <position_x value = "410"/>
+        <position_y value = "1390"/>
+        <relative_pos_x value = "110"/>
+        <relative_pos_y value = "-10"/>
+        <draggable value = "false"/>
+      </pause_title>
+    </windows>
+   </ingame_scene>
+</ui_elements>

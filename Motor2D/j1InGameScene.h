@@ -18,7 +18,6 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float d_time);
-	bool PostUpdate();
 	bool CleanUp();
 
 	bool Load(pugi::xml_node&);
@@ -69,6 +68,8 @@ public:
 	Label* tuto_window_content3 = nullptr;
 	Label* tuto_window_content4 = nullptr;
 	Label* pause_window_lab = nullptr;
+	Label* resume_lab = nullptr;
+	Label* back_lab = nullptr;
 
 	//Windows
 	UIWindow* tuto_window = nullptr;

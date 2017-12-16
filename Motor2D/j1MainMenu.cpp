@@ -51,13 +51,6 @@ bool j1MainMenu::CleanUp()
 	App->tex->UnLoad(background);
 	App->tex->UnLoad(title);
 
-	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.end;
-	while (ui_iterator)
-	{
-		App->gui->DestroyWidget(ui_iterator->data);
-		ui_iterator = ui_iterator->prev;
-	}
-
 	return true;
 }
 

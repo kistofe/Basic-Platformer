@@ -58,13 +58,6 @@ bool j1CharacterSel::CleanUp()
 	App->tex->UnLoad(character1_portrait);
 	App->tex->UnLoad(character2_portrait);
 
-	p2List_item<Widget*>* ui_iterator = App->gui->ui_elems.end;
-	while (ui_iterator)
-	{
-		App->gui->DestroyWidget(ui_iterator->data);
-		ui_iterator = ui_iterator->prev;
-	}
-
 	return true;
 }
 

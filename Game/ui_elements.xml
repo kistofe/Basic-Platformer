@@ -5,7 +5,7 @@
     <!--TEXTURES-->
     <textures>
       <background source = "gui/Background.png"/>
-      <backgroundpos_x value = "-150"/>
+      <backgroundpos_x value = "-145"/>
       <backgroundpos_y value = "0"/>
       <title source = "gui/title.png"/>
       <titlepos_x value = "0"/>
@@ -433,16 +433,40 @@
       </tutorial_4>
 
       <pause>
-        <position_x value = "475"/>
-        <position_y value = "205"/>
-        <relative_pos_x value = "65"/>
-        <relative_pos_y value = "15"/>
+        <position_x value = "455"/>
+        <position_y value = "200"/>
+        <relative_pos_x value = "45"/>
+        <relative_pos_y value = "10"/>
         <r value = "255"/>
         <g value = "255"/>
         <b value = "255"/>
         <alpha value = "255"/>
         <content value = "PAUSE"/>
       </pause>
+
+      <resume>
+        <position_x value = "550"/>
+        <position_y value = "270"/>
+        <relative_pos_x value = "250"/>
+        <relative_pos_y value = "170"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Resume"/>
+      </resume>
+
+      <to_main_menu>
+        <position_x value = "340"/>
+        <position_y value = "270"/>
+        <relative_pos_x value = "250"/>
+        <relative_pos_y value = "170"/>
+        <r value = "255"/>
+        <g value = "255"/>
+        <b value = "255"/>
+        <alpha value = "255"/>
+        <content value = "Main Menu"/>
+      </to_main_menu>
     </labels>
     
     
@@ -530,9 +554,9 @@
         <position_y value = "300"/>
         <relative_pos_x value = "270"/>
         <relative_pos_y value = "100"/>
-        <idle x = "532" y = "717" w = "63" h = "32"/>
-        <hovering x = "532" y = "755" w = "63" h = "32"/>
-        <clicked x = "532" y = "793" w = "63" h = "32"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
       </resume>
 
       <back_to_main_menu>
@@ -540,9 +564,9 @@
         <position_y value = "300"/>
         <relative_pos_x value = "80"/>
         <relative_pos_y value = "100"/>
-        <idle x = "532" y = "717" w = "63" h = "32"/>
-        <hovering x = "532" y = "755" w = "63" h = "32"/>
-        <clicked x = "532" y = "793" w = "63" h = "32"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
       </back_to_main_menu>
     </buttons>
     
@@ -562,7 +586,7 @@
         <position_y value = "200"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <draggable value = "true"/>
+        <draggable value = "false"/>
       </pause>
 
       <pause_title>

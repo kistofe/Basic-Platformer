@@ -57,6 +57,7 @@ public:
 	uint landing_sfx = 0;
 	uint death_sfx = 0;
 	uint malejumping_sfx = 0;
+	uint coin_sfx = 0;
 
 private:
 
@@ -82,6 +83,7 @@ private:
 	p2SString landing_sfx_source;
 	p2SString death_sfx_source;
 	p2SString malejumping_sfx_source;
+	p2SString coin_sfx_source;
 
 	bool has_reached_end = false;
 	SDL_Texture* god_mode_tex = nullptr;

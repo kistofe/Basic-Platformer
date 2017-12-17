@@ -101,10 +101,7 @@ bool Player::Update(float d_time)
 	{
 		jumps_left--;
 		is_grounded = false;
-		if (sel_char == 0)
 		App->audio->PlayFx(jumping_sfx, 0, App->audio->sfx_vol);
-		else if (sel_char == 1)
-		App->audio->PlayFx(malejumping_sfx, 0, App->audio->sfx_vol);
 	}
 	if (jumps_left == 2 && speed.y > 0)
 		jumps_left--;
@@ -273,10 +270,13 @@ void Player::LoadPLayerInfo()
 
 	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
 	landing_sfx_source = data.child("land_sfx").attribute("source").as_string();
+	malejumping_sfx_source = "audio/sfx/MaleJumping.wav";
+	coin_sfx_source = data.child("coin_sfx").attribute("source").as_string();
 
 	jumping_sfx = App->audio->LoadFx(jumping_sfx_source.GetString());
 	landing_sfx = App->audio->LoadFx(landing_sfx_source.GetString());
 	death_sfx = App->audio->LoadFx(death_sfx_source.GetString());
+	coin_sfx = App->audio->LoadFx(coin_sfx_source.GetString());
 
 	//Loading player's textures
 	default_tex = App->tex->Load(default_texture_src.GetString());
@@ -476,6 +476,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		coins++;
 		score += 50;
 		App->entities->DestroyEntity(c2->callback);
+		App->audio->PlayFx(coin_sfx, 0, App->audio->sfx_vol);
 	}
 }
 

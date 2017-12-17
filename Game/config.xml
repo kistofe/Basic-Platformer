@@ -59,6 +59,7 @@
         <godmode_texture source = "images/Scott_godmode.png"/>
         <jump_sfx source = "audio/sfx/MaleJumping.wav"/>
       </scott>
+      <coin_sfx source = "audio/sfx/Coin.wav"/>
       <death_sfx source = "audio/sfx/Death.wav"/>
       <land_sfx source = "audio/sfx/Landing.wav"/>
     </player>

@@ -58,6 +58,7 @@ public:
 	void LoadGame();
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	void SkipFrames(uint frames_to_skip);
 
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
@@ -105,6 +106,8 @@ public:
 	j1GuiController*	gui = NULL;
 
 	bool				loading_game = false;
+
+	int					frameskip = 0;
 
 private:
 

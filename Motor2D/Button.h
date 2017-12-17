@@ -22,6 +22,7 @@ enum ButtonType
 	SELECT_SCOTT,
 	RESUME,
 	TO_MAIN_SCENE,
+	WEBPAGE,
 	NONE
 };
 

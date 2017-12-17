@@ -40,6 +40,7 @@ public:
 	Button* s_volume_up = nullptr;
 	Button* s_volume_down = nullptr;
 	Button* toggle_fullscreen = nullptr;
+	Button* webpage = nullptr;
 
 	//Dynamic labels
 	DynamicLabel* m_volume = nullptr;
@@ -73,6 +74,7 @@ public:
 	//Images
 	SDL_Texture* background = nullptr;
 	SDL_Texture* title = nullptr;
+	SDL_Texture* github_logo = nullptr;
 
 private:
 

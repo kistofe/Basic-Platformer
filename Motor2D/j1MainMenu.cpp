@@ -30,6 +30,7 @@ bool j1MainMenu::Start()
 	App->audio->PlayMusic("audio/music/MainMenu.ogg");
 	background = App->tex->Load(textures.child("background").attribute("source").as_string());
 	title = App->tex->Load(textures.child("title").attribute("source").as_string());
+	github_logo = App->tex->Load("gui/GithubLogo.png");
 	example_sfx = App->audio->LoadFx("audio/sfx/Jumping.wav");
 	return true;
 }
@@ -39,6 +40,7 @@ bool j1MainMenu::Update(float d_time)
 	
 	App->render->Blit(background, textures.child("backgroundpos_x").attribute("value").as_int(), textures.child("backgroundpos_y").attribute("value").as_int());
 	App->render->Blit(title, textures.child("titlepos_x").attribute("value").as_int(), textures.child("titlepos_y").attribute("value").as_int());
+	App->render->Blit(github_logo, 10, 650);
 	
 	App->gui->Draw();
 	
@@ -116,6 +118,10 @@ bool j1MainMenu::OnEvent(Button* button)
 		break;
 	case CREDITS: 
 		OpenWindow(2);
+		break;
+	case WEBPAGE:
+		ShellExecute(0, 0, "https://kistofe.github.io/Ramona-Flowers-vs-The-Code/", 0, 0, SW_SHOW);
+		App->audio->PlayFx(example_sfx, 0, App->audio->sfx_vol);
 		break;
 	case EXIT:
 		ret = false;
@@ -212,6 +218,11 @@ void j1MainMenu::AddUiElems()
 	copyright = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 	copyright->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 
+	//Webpage button
+	webpage = (Button*)App->gui->CreateWidget(BUTTON, 10, 650, this);
+	webpage->SetButtonType(WEBPAGE);
+	webpage->SetSection({ 955, 859, 102, 102 }, { 955, 859, 102, 102 }, { 955, 859, 102, 102 });
+	webpage->SetArea(102, 102);
 }
 
 void j1MainMenu::OpenWindow(uint type)

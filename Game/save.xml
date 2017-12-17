@@ -4,26 +4,26 @@
 	<window />
 	<textures />
 	<audio>
-		<volume value="65" />
+		<volume value="90" />
 	</audio>
 	<main_menu />
 	<character_selection>
 		<selected_character value="0" />
 	</character_selection>
 	<ingame_scene>
-		<current_time value="198" />
+		<current_time value="199" />
 	</ingame_scene>
 	<collisions />
 	<scene_switch />
 	<map />
 	<entity_manager>
 		<player>
-			<position x="336" y="1566" />
-			<velocity x="0" y="0" />
+			<position x="384" y="1444" />
+			<velocity x="0" y="2.38999987" />
 			<status>
-				<is_grounded value="true" />
+				<is_grounded value="false" />
 				<facing_right value="true" />
-				<jumps_left value="2" />
+				<jumps_left value="1" />
 				<god_mode value="false" />
 				<score value="0" />
 				<coins value="0" />
@@ -35,14 +35,14 @@
 			</textures>
 		</player>
 		<flying_enemy>
-			<position x="801" y="1376" />
-			<velocity x="0" y="0" />
+			<position x="757" y="1376" />
+			<velocity x="-3.20000005" y="0" />
 			<status>
-				<facing_right value="true" />
+				<facing_right value="false" />
 			</status>
 		</flying_enemy>
 		<ground_enemy>
-			<position x="2079" y="1584" />
+			<position x="1920" y="1584" />
 			<velocity x="0" y="0" />
 			<status>
 				<facing_right value="false" />
@@ -94,6 +94,6 @@
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="0" y="-1036" />
+		<camera x="-24" y="-912" />
 	</renderer>
 </game_state>

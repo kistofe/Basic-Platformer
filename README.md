@@ -29,6 +29,9 @@ It is a simple 2D platformer, entirely coded in C and C++, part of a University 
 - Enemy Pathfinding using A-Star method
 - Properties loaded from XML, including UI elements
 
+## Gameplay trailer
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JLApyu2X3VA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
 ### Innovation Features
 - Entities and Colliders created as Object Layers in TILED
 - Pause Option which allows the player to resume or to go back to the main menu

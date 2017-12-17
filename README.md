@@ -1,4 +1,4 @@
-## Ramona Flowers vs The Code - About the Game -
+## About the Game 
 The game is tribute to the Scott Pilgrim vs The World videogame published by Ubisoft in 2010 and to the namesake comic book series made by Byran Lee O'Malley. 
 
 It is a simple 2D platformer, entirely coded in C and C++, part of a University Assignment. 

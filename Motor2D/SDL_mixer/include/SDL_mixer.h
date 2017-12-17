@@ -97,7 +97,7 @@ extern DECLSPEC void SDLCALL Mix_Quit(void);
 #define MIX_DEFAULT_FORMAT  AUDIO_S16MSB
 #endif
 #define MIX_DEFAULT_CHANNELS    2
-#define MIX_MAX_VOLUME          128 /* Volume of a chunk */
+#define MIX_MAX_VOLUME          90 /* Volume of a chunk */
 
 /* The internal format for an audio chunk */
 typedef struct Mix_Chunk {

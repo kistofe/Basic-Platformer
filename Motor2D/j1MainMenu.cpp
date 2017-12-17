@@ -77,6 +77,8 @@ bool j1MainMenu::OnEvent(Button* button)
 			m_volume_value++;
 			temp.create("%i", m_volume_value);
 			m_volume->ChangeContent(temp.GetString());
+			App->audio->music_vol += App->audio->volume_modifier;
+			Mix_VolumeMusic(App->audio->music_vol);
 		}
 		break;
 	case M_VOLUME_DOWN:
@@ -85,6 +87,8 @@ bool j1MainMenu::OnEvent(Button* button)
 			m_volume_value--;
 			temp.create("%i", m_volume_value);
 			m_volume->ChangeContent(temp.GetString());
+			App->audio->music_vol -= App->audio->volume_modifier;
+			Mix_VolumeMusic(App->audio->music_vol);
 		}
 		break;
 	case S_VOLUME_UP:

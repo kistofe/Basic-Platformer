@@ -8,8 +8,8 @@
   </app>
 	
   <audio>
-    <volume_default value = "65"/>
-    <volume_modifier value = "30"/>
+    <volume_default value = "90"/>
+    <volume_modifier value = "10"/>
   </audio>
 
   <renderer>

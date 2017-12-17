@@ -14,13 +14,15 @@ j1MainMenu::j1MainMenu()
 {
 	name.create("main_menu");
 
-	config		= App->LoadUiConfig(ui_elements);
+	config		= App->LoadConfig(config_document);
+	ui_config	= App->LoadUiConfig(ui_elements);
 	data		= config.child("main_menu");
-	textures	= data.child("textures");
-	labels		= data.child("labels");
-	buttons		= data.child("buttons");
-	windows		= data.child("windows");
-	dynamic_labels = data.child("dynamic_labels");
+	ui_data		= ui_config.child("main_menu");
+	textures	= ui_data.child("textures");
+	labels		= ui_data.child("labels");
+	buttons		= ui_data.child("buttons");
+	windows		= ui_data.child("windows");
+	dynamic_labels = ui_data.child("dynamic_labels");
 }
 
 j1MainMenu::~j1MainMenu()
@@ -29,11 +31,12 @@ j1MainMenu::~j1MainMenu()
 bool j1MainMenu::Start()
 {
 	AddUiElems();
-	App->audio->PlayMusic("audio/music/MainMenu.ogg");
+	App->audio->PlayMusic(data.child("music").attribute("source").as_string());
 	background = App->tex->Load(textures.child("background").attribute("source").as_string());
 	title = App->tex->Load(textures.child("title").attribute("source").as_string());
-	github_logo = App->tex->Load("gui/GithubLogo.png");
-	example_sfx = App->audio->LoadFx("audio/sfx/Jumping.wav");
+	github_logo = App->tex->Load(textures.child("logo").attribute("source").as_string());
+	example_sfx = App->audio->LoadFx(data.child("example_sfx").attribute("source").as_string());
+
 	return true;
 }
 
@@ -45,7 +48,7 @@ bool j1MainMenu::Update(float d_time)
 	App->render->Blit(background, temp.x, temp.y);
 	temp = App->render->ScreenToWorld(textures.child("titlepos_x").attribute("value").as_int(), textures.child("titlepos_y").attribute("value").as_int());
 	App->render->Blit(title, temp.x, temp.y);
-	temp = App->render->ScreenToWorld(10, 650);
+	temp = App->render->ScreenToWorld(textures.child("logo_pos_x").attribute("value").as_int(), textures.child("logo_pos_y").attribute("value").as_int());
 	App->render->Blit(github_logo, temp.x, temp.y);
 	
 	if (App->frameskip == 0)

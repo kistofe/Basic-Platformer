@@ -269,15 +269,14 @@ void Player::LoadPLayerInfo()
 	collider_offset.y = character.child("collider_offset_y").attribute("value").as_int();
 	default_texture_src = character.child("default_texture").attribute("source").as_string();
 	godmode_texture_src = character.child("godmode_texture").attribute("source").as_string();
+	jumping_sfx_source = character.child("jump_sfx").attribute("source").as_string();
 
 	death_sfx_source = data.child("death_sfx").attribute("source").as_string();
-	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
 	landing_sfx_source = data.child("land_sfx").attribute("source").as_string();
 
 	jumping_sfx = App->audio->LoadFx(jumping_sfx_source.GetString());
 	landing_sfx = App->audio->LoadFx(landing_sfx_source.GetString());
 	death_sfx = App->audio->LoadFx(death_sfx_source.GetString());
-	malejumping_sfx = App->audio->LoadFx("audio/sfx/MaleJumping.wav");
 
 	//Loading player's textures
 	default_tex = App->tex->Load(default_texture_src.GetString());

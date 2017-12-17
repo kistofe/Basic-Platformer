@@ -78,7 +78,10 @@ public:
 private:
 
 	pugi::xml_document ui_elements;
+	pugi::xml_document config_document;
 	pugi::xml_node config;
+	pugi::xml_node ui_config;
+	pugi::xml_node ui_data;
 	pugi::xml_node data;
 	pugi::xml_node textures;
 	pugi::xml_node labels;

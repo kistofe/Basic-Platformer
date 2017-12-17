@@ -10,6 +10,9 @@
       <title source = "gui/title.png"/>
       <titlepos_x value = "0"/>
       <titlepos_y value = "0"/>
+      <logo source = "gui/GithubLogo.png"/>
+      <logo_pos_x value = "10"/>
+      <logo_pos_y value = "650"/>
     </textures>
     
     

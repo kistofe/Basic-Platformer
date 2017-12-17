@@ -48,6 +48,7 @@
         <collider_offset_y value = "1"/>
         <default_texture source = "images/Ramona.png"/>
         <godmode_texture source = "images/Ramona_godmode.png"/>
+        <jump_sfx source = "audio/sfx/Jumping.wav"/>
       </ramona>
       <scott>
         <moving_speed value = "230"/>
@@ -56,9 +57,9 @@
         <collider_offset_y value = "1"/>
         <default_texture source = "images/Scott.png"/>
         <godmode_texture source = "images/Scott_godmode.png"/>
+        <jump_sfx source = "audio/sfx/MaleJumping.wav"/>
       </scott>
       <death_sfx source = "audio/sfx/Death.wav"/>
-      <jump_sfx source = "audio/sfx/Jumping.wav"/>
       <land_sfx source = "audio/sfx/Landing.wav"/>
     </player>
     <flying_enemy>
@@ -85,12 +86,18 @@
   <gui>
     <atlas file="gui/atlas.png"/>
   </gui>
-
+  
+  <main_menu>
+    <music source = "audio/music/MainMenu.ogg"/>
+    <example_sfx source = "audio/sfx/Jumping.wav"/>
+  </main_menu>
+  
   <ingame_scene>
     <gravity_x value = "0"/>
     <gravity_y value = "-50"/>
     <max_gravity_x value = "0"/>
     <max_gravity_y value = "600"/>
     <max_time value = "200"/>
+    <music source ="audio/music/Level_1.ogg"/>
   </ingame_scene>
 </config>

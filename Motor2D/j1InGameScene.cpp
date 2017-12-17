@@ -15,13 +15,15 @@ j1InGameScene::j1InGameScene()
 {
 	name.create("ingame_scene");
 
-	config = App->LoadUiConfig(ui_elements);
-	data = config.child("ingame_scene");
-	textures = data.child("textures");
-	labels = data.child("labels");
-	dynamic_labels = data.child("dynamic_labels");
-	windows = data.child("windows");
-	buttons = data.child("buttons");
+	config			= App->LoadConfig(config_document);
+	ui_config		= App->LoadUiConfig(ui_elements);
+	data			= config.child("ingame_scene");
+	ui_data			= ui_config.child("ingame_scene");
+	textures		= ui_data.child("textures");
+	labels			= ui_data.child("labels");
+	dynamic_labels	= ui_data.child("dynamic_labels");
+	windows			= ui_data.child("windows");
+	buttons			= ui_data.child("buttons");
 }
 
 j1InGameScene::~j1InGameScene()
@@ -48,7 +50,7 @@ bool j1InGameScene::Start()
 {
 	InitializeMap(App->map->map_name.start->data->GetString());
 	
-	App->audio->PlayMusic("audio/music/Level_1.ogg");
+	App->audio->PlayMusic(data.child("music").attribute("source").as_string());
 	hud_tex = App->tex->Load(textures.child("hud").attribute("source").as_string());
 
 	scene_timer.Start();

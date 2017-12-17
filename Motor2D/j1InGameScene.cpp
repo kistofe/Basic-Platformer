@@ -91,9 +91,7 @@ bool j1InGameScene::CleanUp()
 
 bool j1InGameScene::Load(pugi::xml_node& data)
 {
-	saved_time = data.child("current_time").attribute("value").as_uint();
-
-	current_time = saved_time;
+	current_time = data.child("current_time").attribute("value").as_uint();
 
 	return true;
 }

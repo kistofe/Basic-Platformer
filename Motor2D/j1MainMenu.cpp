@@ -8,6 +8,7 @@
 #include "j1SceneSwitch.h"
 #include "j1EntityManager.h"
 #include "j1Audio.h"
+#include "p2Log.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -36,13 +37,15 @@ bool j1MainMenu::Start()
 
 bool j1MainMenu::Update(float d_time)
 {
-	
-	App->render->Blit(background, textures.child("backgroundpos_x").attribute("value").as_int(), textures.child("backgroundpos_y").attribute("value").as_int());
-	App->render->Blit(title, textures.child("titlepos_x").attribute("value").as_int(), textures.child("titlepos_y").attribute("value").as_int());
+	iPoint temp;
+
+	temp = App->render->ScreenToWorld(textures.child("backgroundpos_x").attribute("value").as_int(), textures.child("backgroundpos_y").attribute("value").as_int());
+	App->render->Blit(background, temp.x, temp.y);
+	temp = App->render->ScreenToWorld(textures.child("titlepos_x").attribute("value").as_int(), textures.child("titlepos_y").attribute("value").as_int());
+	App->render->Blit(title, temp.x, temp.y);
 	
 	App->gui->Draw();
 	
-
 	return true;
 }
 
@@ -87,10 +90,13 @@ bool j1MainMenu::OnEvent(Button* button)
 void j1MainMenu::AddUiElems()
 {
 	//READING UI XML FILE TO CREATE THE UI
+	iPoint temp_pos;
+
 
 	//Start New Game Button
 	pugi::xml_node temp = buttons.child("new_game");
-	new_game = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	new_game = (Button*)App->gui->CreateWidget(BUTTON, temp_pos.x, temp_pos.y, this);
 	new_game->SetButtonType(NEW_GAME);
 	new_game->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int()},
 	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
@@ -98,7 +104,8 @@ void j1MainMenu::AddUiElems()
 
 	//Load Game Button
 	temp = buttons.child("load_game");
-	load_game = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	load_game = (Button*)App->gui->CreateWidget(BUTTON, temp_pos.x, temp_pos.y, this);
 	load_game->SetButtonType(LOAD_GAME);
 	pugi::xml_document doc;
 	pugi::xml_parse_result save_exists = doc.load_file("save.xml");
@@ -116,7 +123,8 @@ void j1MainMenu::AddUiElems()
 		
 	//Settings Button
 	temp = buttons.child("settings");
-	settings = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	settings = (Button*)App->gui->CreateWidget(BUTTON, temp_pos.x, temp_pos.y, this);
 	settings->SetButtonType(SETTINGS);
 	settings->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
 	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
@@ -124,7 +132,8 @@ void j1MainMenu::AddUiElems()
 	
 	//Credits Button
 	temp = buttons.child("credits");
-	credits = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	credits = (Button*)App->gui->CreateWidget(BUTTON, temp_pos.x, temp_pos.y, this);
 	credits->SetButtonType(CREDITS);
 	credits->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
 	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
@@ -132,7 +141,8 @@ void j1MainMenu::AddUiElems()
 
 	//Exit Button
 	temp = buttons.child("exit");
-	exit = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	exit = (Button*)App->gui->CreateWidget(BUTTON, temp_pos.x, temp_pos.y, this);
 	exit->SetButtonType(EXIT);
 	exit->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
 	{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
@@ -140,32 +150,38 @@ void j1MainMenu::AddUiElems()
 
 	//New Game label
 	temp = labels.child("new_game");
-	new_game_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	new_game_lab = (Label*)App->gui->CreateWidget(LABEL, temp_pos.x, temp_pos.y, this);
 	new_game_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255,255,255 }, App->font->medium_size);
 
 	//Load Game Label
 	temp = labels.child("load_game");
-	load_game_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	load_game_lab = (Label*)App->gui->CreateWidget(LABEL, temp_pos.x, temp_pos.y, this);
 	load_game_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Settings Label
 	temp = labels.child("settings");
-	settings_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	settings_lab = (Label*)App->gui->CreateWidget(LABEL, temp_pos.x, temp_pos.y, this);
 	settings_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Credits Label
 	temp = labels.child("credits");
-	credits_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	credits_lab = (Label*)App->gui->CreateWidget(LABEL, temp_pos.x, temp_pos.y, this);
 	credits_lab->SetText(temp.child("content").attribute("value").as_string(), { 255, 255, 255, 255 }, App->font->medium_size);
 
 	//Exit Label
 	temp = labels.child("exit");
-	exit_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	exit_lab = (Label*)App->gui->CreateWidget(LABEL, temp_pos.x, temp_pos.y, this);
 	exit_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 
 	//Copyright label
 	temp = labels.child("copyright");
-	copyright = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+	temp_pos = App->render->ScreenToWorld(temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int());
+	copyright = (Label*)App->gui->CreateWidget(LABEL, temp_pos.x, temp_pos.y, this);
 	copyright->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
 
 }

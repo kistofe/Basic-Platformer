@@ -50,14 +50,14 @@ public:
 
 	p2SString	name;
 	iPoint		position = { 0, 0 };
-	iPoint		collider_offset;
+	iPoint		collider_offset = { 0,0 };
 
 protected:
 
 	Collider*	collider;
 	Collider*	future_collider;
 	
-	iPoint		original_position;
+	iPoint		original_position = { 0,0 };
 	fPoint		speed = { 0, 0 };
 
 	EntityType		type;
@@ -68,7 +68,7 @@ protected:
 	p2SString	death_sfx_source;
 
 	bool		facing_right = true;
-	uint		death_sfx;
+	uint		death_sfx = 0;
 	float		temp_speed = 0;
 	
 	

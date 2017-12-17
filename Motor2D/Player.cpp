@@ -12,6 +12,7 @@
 #include "j1Audio.h"
 #include "j1EntityManager.h"
 #include "j1CharacterSel.h"
+#include "j1MainMenu.h"
 
 Player::Player(uint x, uint y) : Entity(Entity::EntityType::PLAYER)
 {
@@ -273,10 +274,10 @@ void Player::LoadPLayerInfo()
 void Player::SetSpeed(float d_time)
 {
 	//Set maximum value for gravity
-	if (speed.y < App->ingamescene->max_gravity.y)
+	if (speed.y < App->ingamescene->max_gravity.y && !App->ingamescene->paused)
 		speed.y -= App->ingamescene->gravity.y * d_time;
 
-	else
+	else if (speed.y > App->ingamescene->max_gravity.y && !App->ingamescene->paused)
 		speed.y = App->ingamescene->max_gravity.y * d_time;
 		
 	//Set value for Horizontal Speed
@@ -451,7 +452,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		App->entities->SetToStart();
 		if (lives_left == 0)
 		{
-			lives_left = 3;
+			App->sceneswitch->SwitchScene(App->mainmenu, App->ingamescene);
 		}
 	}
 

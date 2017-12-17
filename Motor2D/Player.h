@@ -67,13 +67,13 @@ private:
 	uint jumps_left			= 2;
 	bool is_grounded		= true;
 
-	float	jumping_speed;
-	float	moving_speed;
+	float	jumping_speed = 0;
+	float	moving_speed = 0;
 	p2SString default_texture_src;
 	p2SString godmode_texture_src;
 
-	uint jumping_sfx;
-	uint landing_sfx;
+	uint jumping_sfx = 0;
+	uint landing_sfx = 0;
 
 	//Player SFX
 	p2SString jumping_sfx_source;

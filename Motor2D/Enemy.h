@@ -33,10 +33,6 @@ public:
 	
 	virtual void MoveTowardsPlayer() { return; };
 
-public:
-	
-protected:
-
 };
 
 #endif

@@ -51,7 +51,7 @@ public:
 	SDL_Texture* character1_portrait = nullptr;
 	SDL_Texture* character2_portrait = nullptr;
 
-	int selected_character;
+	int selected_character = 0;
 
 private:
 

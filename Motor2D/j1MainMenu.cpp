@@ -127,6 +127,7 @@ bool j1MainMenu::OnEvent(Button* button)
 		break;
 	case CREDITS: 
 		OpenWindow(2);
+		App->SkipFrames(1);
 		break;
 	case WEBPAGE:
 		ShellExecute(0, 0, "https://kistofe.github.io/Ramona-Flowers-vs-The-Code/", 0, 0, SW_SHOW);

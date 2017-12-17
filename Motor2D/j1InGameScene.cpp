@@ -48,7 +48,7 @@ bool j1InGameScene::Start()
 {
 	InitializeMap(App->map->map_name.start->data->GetString());
 	
-//	App->audio->PlayMusic("audio/music/Level_1.ogg");
+	App->audio->PlayMusic("audio/music/Level_1.ogg");
 	hud_tex = App->tex->Load(textures.child("hud").attribute("source").as_string());
 
 	scene_timer.Start();

@@ -51,6 +51,7 @@ public:
 private:
 	
 	bool enabled = true;
+	uint click_sfx;
 
 	SDL_Rect click_rect;
 	SDL_Rect idle_rect;

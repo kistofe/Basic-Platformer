@@ -55,6 +55,8 @@ bool Player::Start()
 
 bool Player::PreUpdate(float d_time)
 {
+	if (d_time > 1.00)
+		return true;
 	SetSpeed(d_time);
 
 	//Update Future Player Collider with new speed
@@ -72,6 +74,9 @@ bool Player::PreUpdate(float d_time)
 
 bool Player::Update(float d_time) 
 {
+	if (d_time > 1.00)
+		return true;
+
 	SetCameraToPlayer();
 	//Check Horizontal Movement ------------------------------------------
 	//Right

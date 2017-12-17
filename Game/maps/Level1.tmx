@@ -60054,7 +60054,7 @@
  </layer>
  <layer name="Sea" width="250" height="60">
   <properties>
-   <property name="Parallax speed" type="float" value="0"/>
+   <property name="Parallax speed" type="float" value="0.5"/>
   </properties>
   <data>
    <tile gid="0"/>

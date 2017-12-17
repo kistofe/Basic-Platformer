@@ -7,14 +7,36 @@ It is a simple 2D platformer, entirely coded in C and C++, part of a University 
 ### Cristian Palos
 ![](http://i.imgur.com/AZKuqnw.png)
 
-- 
+- Entity System
+- Physics system and Collisions
+- Object Layer reading from XML
+- Entity and GUI info load from XML
+- Pause Option
+- Web Page
 
+### Joel Cabaco
+ 
+ - Enemy Pathfinding
+ - Collider Creation from XML
+ - GUI Attach option
+ - Window Drag
 
 ## Game Features
-The game features two different players: Ramona and Scott. Ramona is slightly faster whereas Scott jumps a bit more. 
-The player starts with 3 lives and a countdown of 200 seconds. If their lives reach 0 or so does the timer, the game is over. 
+- Collision detection using a second collider
+- Inheritance system with Entities and GUI elements
+- Map, Entity and Collider load from TMX file using TILED
+- Enemy Pathfinding using A-Star method
+- Properties loaded from XML, including UI elements
 
-## Game Controls
+### Innovation Features
+- Entities and Colliders created as Object Layers in TILED
+- Pause Option which allows the player to resume or to go back to the main menu
+
+	
+### Download our latest version [here](https://github.com/kistofe/Ramona-Flowers-vs-The-Code/releases)
+### Check the game's repository [here](https://github.com/kistofe/Ramona-Flowers-vs-The-Code)
+
+## Instructions to play
 
 	A-> Move Left
 	D-> Move Right
@@ -33,9 +55,6 @@ The player starts with 3 lives and a countdown of 200 seconds. If their lives re
 	KEYPAD "-"-> Reduce Volume
 	KEYPAD "+"-> Increase Volume 
 	
-### Download our latest version [here](https://github.com/kistofe/Ramona-Flowers-vs-The-Code/releases)
-### Check the game's repository [here](https://github.com/kistofe/Ramona-Flowers-vs-The-Code)
-
 ## License
 MIT License
 

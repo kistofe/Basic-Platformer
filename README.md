@@ -43,6 +43,7 @@ It is a simple 2D platformer, entirely coded in C and C++, part of a University 
 	J-> Run
 	SPACE-> Jump
 	SPACE twice-> Double Jump
+	ESC-> Open Pause Menu
 	
 --DEBUG FUNCTIONALITIES--
 	

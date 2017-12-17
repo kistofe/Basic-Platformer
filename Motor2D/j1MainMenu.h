@@ -24,6 +24,7 @@ private:
 	void AddUiElems();
 	void OpenWindow(uint type);
 	void CloseWindow();
+	void ToggleFullscreen();
 
 public:
 
@@ -34,8 +35,17 @@ public:
 	Button* credits = nullptr;
 	Button* exit = nullptr;
 	Button* close_window = nullptr;
+	Button* m_volume_up = nullptr;
+	Button* m_volume_down = nullptr;
+	Button* s_volume_up = nullptr;
+	Button* s_volume_down = nullptr;
+	Button* toggle_fullscreen = nullptr;
 
-	//Label for each button
+	//Dynamic labels
+	DynamicLabel* m_volume = nullptr;
+	DynamicLabel* s_volume = nullptr;
+
+	//Labels
 	Label* new_game_lab = nullptr;
 	Label* load_game_lab = nullptr;
 	Label* settings_lab = nullptr;
@@ -43,9 +53,17 @@ public:
 	Label* exit_lab = nullptr;
 	Label* settings_title_lab = nullptr;
 	Label* credits_title_lab = nullptr;
-
-	//Copyright
+	Label* credits_1 = nullptr;
+	Label* credits_2 = nullptr;
+	Label* credits_3 = nullptr;
 	Label* copyright = nullptr;
+	Label* m_volume_plus = nullptr;
+	Label* m_volume_minus = nullptr;
+	Label* s_volume_plus = nullptr;
+	Label* s_volume_minus = nullptr;
+	Label* music_volume = nullptr;
+	Label* sfx_volume = nullptr;
+	Label* fullscreen_lab = nullptr;
 
 	//Windows
 	UIWindow* settings_win = nullptr;
@@ -65,6 +83,13 @@ private:
 	pugi::xml_node labels;
 	pugi::xml_node buttons;
 	pugi::xml_node windows;
+
+	bool fullscreen_on = false;
+	int m_volume_value = 9;
+	int s_volume_value = 9;
+	UIWindow* opened_win = nullptr;
+
+	uint example_sfx;
 		
 };
 #endif

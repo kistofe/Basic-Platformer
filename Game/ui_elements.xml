@@ -165,19 +165,19 @@
     <!--WINDOWS-->
     <windows>
       <settings>
-        <position_x value = "250"/>
-        <position_y value = "400"/>
+        <position_x value = "700"/>
+        <position_y value = "210"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <draggable value = "true"/>
+        <draggable value = "false"/>
       </settings>
       
       <credits>
-        <position_x value = "250"/>
-        <position_y value = "400"/>
+        <position_x value = "700"/>
+        <position_y value = "210"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <draggable value = "true"/>
+        <draggable value = "false"/>
       </credits>
 
       <title>

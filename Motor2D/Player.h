@@ -52,7 +52,12 @@ public:
 	uint score = 0;
 	uint coins = 0;
 	int sel_char = 0;
-	
+
+	uint jumping_sfx = 0;
+	uint landing_sfx = 0;
+	uint death_sfx = 0;
+	uint malejumping_sfx = 0;
+
 private:
 
 	//Player Animations
@@ -72,12 +77,11 @@ private:
 	p2SString default_texture_src;
 	p2SString godmode_texture_src;
 
-	uint jumping_sfx = 0;
-	uint landing_sfx = 0;
-
 	//Player SFX
 	p2SString jumping_sfx_source;
 	p2SString landing_sfx_source;
+	p2SString death_sfx_source;
+	p2SString malejumping_sfx_source;
 
 	bool has_reached_end = false;
 	SDL_Texture* god_mode_tex = nullptr;

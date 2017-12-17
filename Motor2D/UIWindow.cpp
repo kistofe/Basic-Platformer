@@ -74,4 +74,3 @@ void UIWindow::SetWindowType(WindowType type)
 	SetArea(atlas_section->w, atlas_section->h);
 }
 
-

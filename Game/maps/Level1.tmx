@@ -75120,7 +75120,7 @@
  <objectgroup color="#00ff00" name="Entities">
   <object id="64" name="Player" type="Player" x="200" y="1566" width="35" height="65"/>
   <object id="65" name="Flying_Enemy" type="Enemy" x="801" y="1376" width="30" height="30"/>
-  <object id="66" name="Ground_Enemy" type="Enemy" x="2079" y="1584" width="70" height="40"/>
+  <object id="66" name="Ground_Enemy" type="Enemy" x="1920" y="1584" width="70" height="40"/>
   <object id="67" name="Flying_Enemy" type="Enemy" x="2240" y="320" width="30" height="30"/>
   <object id="68" name="Ground_Enemy" type="Enemy" x="3904" y="780" width="70" height="40"/>
   <object id="69" name="Ground_Enemy" type="Enemy" x="7168" y="174" width="70" height="40"/>

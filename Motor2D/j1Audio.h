@@ -45,6 +45,7 @@ private:
 public:
 
 	int music_vol;
+	int sfx_vol;
 	int volume_modifier;
 
 private:

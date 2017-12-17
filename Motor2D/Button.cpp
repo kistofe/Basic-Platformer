@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "j1Input.h"
 #include "Label.h"
+#include "j1Audio.h"
 #include "j1Fonts.h"
 #include "j1Render.h"
 #include "j1GuiController.h"
@@ -13,6 +14,7 @@
 Button::Button(iPoint pos, j1Module* callback) : Widget(UiElemType::BUTTON, pos, callback)
 {
 	current_rect = &idle_rect;
+	click_sfx = App->audio->LoadFx("audio/sfx/Click.wav");
 }
 
 Button::~Button()
@@ -41,6 +43,7 @@ bool Button::PreUpdate(float d_time)
 		if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
 			ChangeVisualState(MOUSE_CLICK);
+			App->audio->PlayFx(click_sfx, 0, App->audio->sfx_vol);
 		}
 		if (hovering && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		{

@@ -56,6 +56,8 @@ bool Player::Start()
 
 bool Player::PreUpdate(float d_time)
 {
+	if (d_time > 1.00)
+		return true;
 	SetSpeed(d_time);
 
 	//Update Future Player Collider with new speed
@@ -73,6 +75,9 @@ bool Player::PreUpdate(float d_time)
 
 bool Player::Update(float d_time) 
 {
+	if (d_time > 1.00)
+		return true;
+
 	SetCameraToPlayer();
 	//Check Horizontal Movement ------------------------------------------
 	//Right
@@ -96,7 +101,10 @@ bool Player::Update(float d_time)
 	{
 		jumps_left--;
 		is_grounded = false;
-		App->audio->PlayFx(jumping_sfx, 0, App->audio->music_vol);
+		if (sel_char == 0)
+		App->audio->PlayFx(jumping_sfx, 0, App->audio->sfx_vol);
+		else if (sel_char == 1)
+		App->audio->PlayFx(malejumping_sfx, 0, App->audio->sfx_vol);
 	}
 	if (jumps_left == 2 && speed.y > 0)
 		jumps_left--;
@@ -266,6 +274,11 @@ void Player::LoadPLayerInfo()
 	jumping_sfx_source = data.child("jump_sfx").attribute("source").as_string();
 	landing_sfx_source = data.child("land_sfx").attribute("source").as_string();
 
+	jumping_sfx = App->audio->LoadFx(jumping_sfx_source.GetString());
+	landing_sfx = App->audio->LoadFx(landing_sfx_source.GetString());
+	death_sfx = App->audio->LoadFx(death_sfx_source.GetString());
+	malejumping_sfx = App->audio->LoadFx("audio/sfx/MaleJumping.wav");
+
 	//Loading player's textures
 	default_tex = App->tex->Load(default_texture_src.GetString());
 	god_mode_tex = App->tex->Load(godmode_texture_src.GetString());
@@ -342,7 +355,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 							if (c1->rect.x <= c2->rect.x + c2->rect.w)
 								speed.y -= intersect_col.h, jumps_left = 2;
 							else
-								speed.x += intersect_col.w; 
+								speed.x += intersect_col.w;
 						}
 						else
 							speed.y -= intersect_col.h, jumps_left = 2;
@@ -454,6 +467,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 		{
 			App->sceneswitch->SwitchScene(App->mainmenu, App->ingamescene);
 		}
+		App->audio->PlayFx(death_sfx, 0, App->audio->sfx_vol);
 	}
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_COIN)

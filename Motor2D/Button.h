@@ -10,6 +10,11 @@ enum ButtonType
 	NEW_GAME = 0,
 	LOAD_GAME,
 	SETTINGS,
+	M_VOLUME_UP,
+	M_VOLUME_DOWN,
+	S_VOLUME_UP,
+	S_VOLUME_DOWN,
+	TOGGLE_FULLSCREEN,
 	CREDITS,
 	EXIT,
 	CLOSE_WINDOW,
@@ -46,6 +51,7 @@ public:
 private:
 	
 	bool enabled = true;
+	uint click_sfx;
 
 	SDL_Rect click_rect;
 	SDL_Rect idle_rect;

@@ -57,6 +57,7 @@ bool j1MainMenu::CleanUp()
 bool j1MainMenu::OnEvent(Button* button)
 {
 	bool ret = true;
+	p2SString temp;
 
 	switch (button->button_type)
 	{
@@ -69,6 +70,41 @@ bool j1MainMenu::OnEvent(Button* button)
 		break;
 	case SETTINGS: 
 		OpenWindow(1);
+		break;
+	case M_VOLUME_UP:
+		if (m_volume_value < 9)
+		{
+			m_volume_value++;
+			temp.create("%i", m_volume_value);
+			m_volume->ChangeContent(temp.GetString());
+		}
+		break;
+	case M_VOLUME_DOWN:
+		if (m_volume_value > 0)
+		{
+			m_volume_value--;
+			temp.create("%i", m_volume_value);
+			m_volume->ChangeContent(temp.GetString());
+		}
+		break;
+	case S_VOLUME_UP:
+		if (s_volume_value < 9)
+		{
+			s_volume_value++;
+			temp.create("%i", s_volume_value);
+			s_volume->ChangeContent(temp.GetString());
+		}
+		break;
+	case S_VOLUME_DOWN:
+		if (s_volume_value > 0)
+		{
+			s_volume_value--;
+			temp.create("%i", s_volume_value);
+			s_volume->ChangeContent(temp.GetString());
+		}
+		break;
+	case TOGGLE_FULLSCREEN:
+		ToggleFullscreen();
 		break;
 	case CREDITS: 
 		OpenWindow(2);
@@ -177,12 +213,14 @@ void j1MainMenu::OpenWindow(uint type)
 	switch (type)
 	{
 		case 1: //Creating Settings Window
+		if (opened_win == nullptr)
 		{
 			//Main Window
 			temp = windows.child("settings");
 			settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			settings_win->SetWindowType(VERTICAL_WINDOW);
-			settings_win->draggable = temp.child("draggable").attribute("value").as_bool();
+			//settings_win->draggable = temp.child("draggable").attribute("value").as_bool();
+			settings_win->draggable = false;
 
 			//Title Small window
 			temp = windows.child("title");
@@ -204,9 +242,87 @@ void j1MainMenu::OpenWindow(uint type)
 			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
 			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int()});
 			settings_win->Attach(close_window, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+			
+			//Music volume down button
+			m_volume_down = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			m_volume_down->SetButtonType(M_VOLUME_DOWN);
+			m_volume_down->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
+			settings_win->Attach(m_volume_down, { 27, 95 });
+
+			//Music volume down label
+			m_volume_minus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			m_volume_minus->SetText("-", { 255,255,255,255 }, App->font->medium_size);
+			m_volume_down->Attach(m_volume_minus, { 22, 2 });
+
+			//Music volume up button
+			m_volume_up = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			m_volume_up->SetButtonType(M_VOLUME_UP);
+			m_volume_up->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
+			settings_win->Attach(m_volume_up, { 177, 95 });
+
+			//Music volume up label
+			m_volume_plus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			m_volume_plus->SetText("+", { 255,255,255,255 }, App->font->medium_size);
+			m_volume_up->Attach(m_volume_plus, { 22, 2 });
+
+			//Music volume value label
+			m_volume = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 0, 0, this);
+			m_volume->SetText("9", { 255,255,255,255 }, App->font->medium_size);
+			settings_win->Attach(m_volume, { 125, 95 });
+
+			//Music volume label
+			music_volume = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			music_volume->SetText("Music volume:", { 255,255,255,255 }, App->font->small_size);
+			settings_win->Attach(music_volume, { 27, 72 });
+
+			//SFX volume down button
+			s_volume_down = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			s_volume_down->SetButtonType(S_VOLUME_DOWN);
+			s_volume_down->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
+			settings_win->Attach(s_volume_down, { 27, 165 });
+
+			//SFX volume down label
+			s_volume_minus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			s_volume_minus->SetText("-", { 255,255,255,255 }, App->font->medium_size);
+			s_volume_down->Attach(s_volume_minus, { 22, 2 });
+
+			//SFX volume up button
+			s_volume_up = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			s_volume_up->SetButtonType(S_VOLUME_UP);
+			s_volume_up->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
+			settings_win->Attach(s_volume_up, { 177, 165 });
+
+			//SFX volume up label
+			s_volume_plus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			s_volume_plus->SetText("+", { 255,255,255,255 }, App->font->medium_size);
+			s_volume_up->Attach(s_volume_plus, { 22, 2 });
+
+			//SFX volume value label
+			s_volume = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 0, 0, this);
+			s_volume->SetText("9", { 255,255,255,255 }, App->font->medium_size);
+			settings_win->Attach(s_volume, { 125, 165 });
+
+			//SFX volume label
+			sfx_volume = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			sfx_volume->SetText("SFX volume:", { 255,255,255,255 }, App->font->small_size);
+			settings_win->Attach(sfx_volume, { 27, 142 });
+
+			//Toggle fullscreen button
+			toggle_fullscreen = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			toggle_fullscreen->SetButtonType(TOGGLE_FULLSCREEN);
+			toggle_fullscreen->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
+			settings_win->Attach(toggle_fullscreen, { 100, 240 });
+
+			//Toggle fullscreen label
+			fullscreen_lab = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			fullscreen_lab->SetText("Fullscreen:", { 255,255,255,255 }, App->font->small_size);
+			settings_win->Attach(fullscreen_lab, { 27, 215 });
+
+			opened_win = settings_win;
 		}
 		break;
 		case 2: //Creating Credits Window
+		if (opened_win == nullptr)
 		{
 			//Main Window
 			temp = windows.child("credits");
@@ -234,6 +350,23 @@ void j1MainMenu::OpenWindow(uint type)
 			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
 			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
 			credits_win->Attach(close_window, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
+		
+			//First label
+			credits_1 = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			credits_1->SetText("Programming: Cristian Palos", { 255,255,255,255 }, App->font->small_size);
+			credits_win->Attach(credits_1, { 17, 85 });
+
+			//Second label
+			credits_2 = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			credits_2->SetText("Joel Cabaco", { 255,255,255,255 }, App->font->small_size);
+			credits_win->Attach(credits_2, { 135, 105 });
+
+			//Third label
+			credits_3 = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
+			credits_3->SetText("Sprites from:", { 255,255,255,255 }, App->font->small_size);
+			credits_win->Attach(credits_3, { 17, 145 });
+
+			opened_win = credits_win;
 		}
 		break;
 	}
@@ -252,5 +385,24 @@ void j1MainMenu::CloseWindow()
 		}
 		ui_iterator = ui_iterator->next;
 	}
+
+	opened_win = nullptr;
+}
+
+void j1MainMenu::ToggleFullscreen()
+{
+	if (!fullscreen_on)
+	{
+		fullscreen_on = true;
+		SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+	}
+
+	else if (fullscreen_on)
+	{
+		fullscreen_on = false;
+		SDL_SetWindowFullscreen(App->win->window, 0);
+	}
+
+	return;
 }
 

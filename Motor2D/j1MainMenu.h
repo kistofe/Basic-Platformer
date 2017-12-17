@@ -88,6 +88,8 @@ private:
 	int m_volume_value = 9;
 	int s_volume_value = 9;
 	UIWindow* opened_win = nullptr;
+
+	uint example_sfx;
 		
 };
 #endif

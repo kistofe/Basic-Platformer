@@ -30,7 +30,7 @@ bool j1MainMenu::Start()
 	App->audio->PlayMusic("audio/music/MainMenu.ogg");
 	background = App->tex->Load(textures.child("background").attribute("source").as_string());
 	title = App->tex->Load(textures.child("title").attribute("source").as_string());
-	
+	example_sfx = App->audio->LoadFx("audio/sfx/Jumping.wav");
 	return true;
 }
 
@@ -97,6 +97,8 @@ bool j1MainMenu::OnEvent(Button* button)
 			s_volume_value++;
 			temp.create("%i", s_volume_value);
 			s_volume->ChangeContent(temp.GetString());
+			App->audio->sfx_vol += App->audio->volume_modifier;
+			App->audio->PlayFx(example_sfx, 0, App->audio->sfx_vol);
 		}
 		break;
 	case S_VOLUME_DOWN:
@@ -105,6 +107,8 @@ bool j1MainMenu::OnEvent(Button* button)
 			s_volume_value--;
 			temp.create("%i", s_volume_value);
 			s_volume->ChangeContent(temp.GetString());
+			App->audio->sfx_vol -= App->audio->volume_modifier;
+			App->audio->PlayFx(example_sfx, 0, App->audio->sfx_vol);
 		}
 		break;
 	case TOGGLE_FULLSCREEN:

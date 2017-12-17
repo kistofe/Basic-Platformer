@@ -1,5 +1,6 @@
 # About the game
-This is a tribute to Gunbird, an arcade game developed by Psikyo. This project is used for the subject Project 1 in Game Development and Design in the CITM, from the Politecnical University of Catalonia.
+This is a tribute to  the Scott Pilgrim vs The World videogame published by Ubisoft in 2010 and to the namesake comic book series made by Byran Lee O'Malley.
+The game has been made as a project for the Videogame Design and Development degree of the Barcelona UPC.
 
 # Installation
 

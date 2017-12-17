@@ -80,16 +80,16 @@
       </copyright>
 
       <credits1>
-        <position_x value = "0"/>
-        <position_y value = "0"/>
+        <position_x value = "472"/>
+        <position_y value = "638"/>
         <relative_pos_x value = "17"/>
         <relative_pos_y value = "85"/>
         <content value = "Programming: Cristian Palos"/>
       </credits1>
 
       <credits2>
-        <position_x value = "0"/>
-        <position_y value = "0"/>
+        <position_x value = "590"/>
+        <position_y value = "658"/>
         <relative_pos_x value = "135"/>
         <relative_pos_y value = "105"/>
         <content value = "Joel Cabaco"/>
@@ -306,8 +306,8 @@
       </credits>
 
       <title>
-        <position_x value = "285"/>
-        <position_y value = "390"/>
+        <position_x value = "735"/>
+        <position_y value = "200"/>
         <relative_pos_x value = "35"/>
         <relative_pos_y value = "-10"/>
         <draggable value = "false"/>

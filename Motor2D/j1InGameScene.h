@@ -27,6 +27,8 @@ public:
 	void InitializeMap(const char* map_initialized);
 	bool OnEvent(Button* button);
 
+	void UpdateScore();
+
 private:
 
 	void AddUiElems();
@@ -34,7 +36,6 @@ private:
 	void UpdateUI();
 	void UpdateTimer();
 	void ResetTimer();
-	void UpdateScore();
 	void OpenWindow(uint type);
 	void PauseGame();
 	void ResumeGame();
@@ -79,7 +80,7 @@ public:
 
 	//Scene Properties
 	uint	timer_count = 0;
-	uint	current_time = 0;
+	uint	current_time = 200;
 	uint	max_time = 200;
 	j1Timer	scene_timer;
 	uint32	current_lvl = 1;

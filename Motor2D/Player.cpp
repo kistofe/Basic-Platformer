@@ -448,6 +448,7 @@ void Player::OnCollision(Collider * c1, Collider * c2)
 
 	if (c1->type == COLLIDER_FUTURE && c2->type == COLLIDER_ENDOFLEVEL)
 	{
+		App->ingamescene->UpdateScore();
 		has_reached_end = true;
 		SetToStart();
 	}

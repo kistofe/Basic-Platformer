@@ -60054,7 +60054,7 @@
  </layer>
  <layer name="Sea" width="250" height="60">
   <properties>
-   <property name="Parallax speed" type="float" value="0"/>
+   <property name="Parallax speed" type="float" value="0.5"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -75059,7 +75059,7 @@
    <tile gid="51"/>
   </data>
  </layer>
- <objectgroup color="#ff0000" name="Colliders" visible="0">
+ <objectgroup color="#ff0000" name="Colliders">
   <object id="3" name="wall" x="640" y="1536" width="96.0039" height="96"/>
   <object id="7" name="wall" x="0" y="1632" width="1088" height="64"/>
   <object id="17" name="wall" x="1344" y="1632" width="96" height="64"/>
@@ -75112,7 +75112,7 @@
   <object id="127" name="wall" x="5792" y="608" width="96" height="96"/>
  </objectgroup>
  <objectgroup color="#0000ff" name="LevelEnd">
-  <object id="9" name="LevelEnd" x="7904" y="128" width="32" height="96"/>
+  <object id="9" name="LevelEnd" x="7904" y="0" width="32" height="224"/>
  </objectgroup>
  <objectgroup color="#888888" name="Death colliders">
   <object id="55" name="death" x="650.121" y="1744" width="7349.88" height="96"/>
@@ -75144,7 +75144,7 @@
   <object id="122" name="Coin" type="Coin" x="6528" y="864" width="48" height="48"/>
   <object id="123" name="Coin" type="Coin" x="7616" y="704" width="48" height="48"/>
  </objectgroup>
- <layer name="Walkability" width="250" height="60">
+ <layer name="Walkability" width="250" height="60" visible="0">
   <properties>
    <property name="Navigation" type="int" value="1"/>
   </properties>

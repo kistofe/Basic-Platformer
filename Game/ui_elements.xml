@@ -52,10 +52,6 @@
         <position_y value = "553"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "CREDITS"/>
       </credits>
 
@@ -64,10 +60,6 @@
         <position_y value = "553"/>
         <relative_pos_x value = "33"/>
         <relative_pos_y value = "15"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "CREDITS"/>
       </credits_title>
       
@@ -76,10 +68,6 @@
         <position_y value = "658"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "EXIT"/>
       </exit>
       
@@ -88,14 +76,101 @@
         <position_y value = "740"/>
         <relative_pos_x value = "0"/>
         <relative_pos_y value = "0"/>
-        <r value = "255"/>
-        <g value = "255"/>
-        <b value = "255"/>
-        <alpha value = "255"/>
         <content value = "All rights reserved - Edgypoint Castellbisbal -"/>
       </copyright>
-    </labels>
+
+      <credits1>
+        <position_x value = "472"/>
+        <position_y value = "638"/>
+        <relative_pos_x value = "17"/>
+        <relative_pos_y value = "85"/>
+        <content value = "Programming: Cristian Palos"/>
+      </credits1>
+
+      <credits2>
+        <position_x value = "590"/>
+        <position_y value = "658"/>
+        <relative_pos_x value = "135"/>
+        <relative_pos_y value = "105"/>
+        <content value = "Joel Cabaco"/>
+      </credits2>
+
+      <m_up_lab>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "22"/>
+        <relative_pos_y value = "2"/>
+        <content value = "+"/>
+      </m_up_lab>
+
+      <m_down_lab>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "22"/>
+        <relative_pos_y value = "2"/>
+        <content value = "-"/>
+      </m_down_lab>
+
+      <s_up_lab>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "22"/>
+        <relative_pos_y value = "2"/>
+        <content value = "+"/>
+      </s_up_lab>
+
+      <s_down_lab>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "22"/>
+        <relative_pos_y value = "2"/>
+        <content value = "-"/>
+      </s_down_lab>
+
+      <music>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "27"/>
+        <relative_pos_y value = "72"/>
+        <content value = "Music Volume:"/>
+      </music>
+
+      <sfx>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "27"/>
+        <relative_pos_y value = "142"/>
+        <content value = "SFX Volume:"/>
+      </sfx>
+      
+      <fullscreen>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "27"/>
+        <relative_pos_y value = "215"/>
+        <content value = "Fullscreen:"/>
+      </fullscreen>
+     </labels>
     
+    
+    <!--DYNAMIC_LABELS-->
+    <dynamic_labels>
+      <sfx>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "125"/>
+        <relative_pos_y value = "165"/>
+        <content value = "9"/>
+      </sfx>
+
+      <music>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "125"/>
+        <relative_pos_y value = "95"/>
+        <content value = "9"/>
+      </music>
+    </dynamic_labels>
     
     <!--BUTTONS-->
     <buttons>
@@ -159,6 +234,56 @@
         <hovering x = "499" y = "645" w = "52" h = "64"/>
         <clicked x = "577" y = "645" w = "52" h = "64"/>
       </close_window>
+
+      <m_volume_up>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "177"/>
+        <relative_pos_y value = "95"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
+      </m_volume_up>
+
+      <m_volume_down>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "27"/>
+        <relative_pos_y value = "95"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
+      </m_volume_down>
+
+      <s_volume_up>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "177"/>
+        <relative_pos_y value = "165"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
+      </s_volume_up>
+
+      <s_volume_down>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "27"/>
+        <relative_pos_y value = "165"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
+      </s_volume_down>
+
+      <fullscreen>
+        <position_x value = "0"/>
+        <position_y value = "0"/>
+        <relative_pos_x value = "100"/>
+        <relative_pos_y value = "240"/>
+        <idle x = "532" y = "717" w = "64" h = "32"/>
+        <hovering x = "532" y = "755" w = "64" h = "32"/>
+        <clicked x = "532" y = "793" w = "64" h = "32"/>
+      </fullscreen>
     </buttons>
     
     
@@ -181,8 +306,8 @@
       </credits>
 
       <title>
-        <position_x value = "285"/>
-        <position_y value = "390"/>
+        <position_x value = "735"/>
+        <position_y value = "200"/>
         <relative_pos_x value = "35"/>
         <relative_pos_y value = "-10"/>
         <draggable value = "false"/>

@@ -20,6 +20,7 @@ j1MainMenu::j1MainMenu()
 	labels		= data.child("labels");
 	buttons		= data.child("buttons");
 	windows		= data.child("windows");
+	dynamic_labels = data.child("dynamic_labels");
 }
 
 j1MainMenu::~j1MainMenu()
@@ -261,9 +262,7 @@ void j1MainMenu::OpenWindow(uint type)
 			temp = windows.child("settings");
 			settings_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			settings_win->SetWindowType(VERTICAL_WINDOW);
-			//settings_win->draggable = temp.child("draggable").attribute("value").as_bool();
-			settings_win->draggable = false;
-
+			
 			//Title Small window
 			temp = windows.child("title");
 			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
@@ -272,7 +271,7 @@ void j1MainMenu::OpenWindow(uint type)
 
 			//Settings Title Label
 			temp = labels.child("settings_title");
-			settings_title_lab = (Label*)App->gui->CreateWidget(LABEL, 318, 405, this);
+			settings_title_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			settings_title_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
 			title_win->Attach(settings_title_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
@@ -286,79 +285,103 @@ void j1MainMenu::OpenWindow(uint type)
 			settings_win->Attach(close_window, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 			
 			//Music volume down button
-			m_volume_down = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			temp = buttons.child("m_volume_down");
+			m_volume_down = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			m_volume_down->SetButtonType(M_VOLUME_DOWN);
-			m_volume_down->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
-			settings_win->Attach(m_volume_down, { 27, 95 });
+			m_volume_down->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			settings_win->Attach(m_volume_down, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Music volume down label
-			m_volume_minus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			m_volume_minus->SetText("-", { 255,255,255,255 }, App->font->medium_size);
-			m_volume_down->Attach(m_volume_minus, { 22, 2 });
+			temp = labels.child("m_down_lab");
+			m_volume_minus = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			m_volume_minus->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			m_volume_down->Attach(m_volume_minus, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Music volume up button
-			m_volume_up = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			temp = buttons.child("m_volume_up");
+			m_volume_up = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			m_volume_up->SetButtonType(M_VOLUME_UP);
-			m_volume_up->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
-			settings_win->Attach(m_volume_up, { 177, 95 });
+			m_volume_up->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			settings_win->Attach(m_volume_up, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Music volume up label
-			m_volume_plus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			m_volume_plus->SetText("+", { 255,255,255,255 }, App->font->medium_size);
-			m_volume_up->Attach(m_volume_plus, { 22, 2 });
+			temp = labels.child("m_up_lab");
+			m_volume_plus = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			m_volume_plus->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			m_volume_up->Attach(m_volume_plus, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Music volume value label
-			m_volume = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 0, 0, this);
-			m_volume->SetText("9", { 255,255,255,255 }, App->font->medium_size);
-			settings_win->Attach(m_volume, { 125, 95 });
+			temp = dynamic_labels.child("music");
+			m_volume = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			m_volume->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			settings_win->Attach(m_volume, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Music volume label
-			music_volume = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			music_volume->SetText("Music volume:", { 255,255,255,255 }, App->font->small_size);
-			settings_win->Attach(music_volume, { 27, 72 });
+			temp = labels.child("music");
+			music_volume = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			music_volume->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
+			settings_win->Attach(music_volume, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//SFX volume down button
-			s_volume_down = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			temp = buttons.child("s_volume_down");
+			s_volume_down = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			s_volume_down->SetButtonType(S_VOLUME_DOWN);
-			s_volume_down->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
-			settings_win->Attach(s_volume_down, { 27, 165 });
+			s_volume_down->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			settings_win->Attach(s_volume_down, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//SFX volume down label
-			s_volume_minus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			s_volume_minus->SetText("-", { 255,255,255,255 }, App->font->medium_size);
-			s_volume_down->Attach(s_volume_minus, { 22, 2 });
+			temp = labels.child("s_down_lab");
+			s_volume_minus = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			s_volume_minus->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			s_volume_down->Attach(s_volume_minus, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//SFX volume up button
-			s_volume_up = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			temp = buttons.child("s_volume_up");
+			s_volume_up = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			s_volume_up->SetButtonType(S_VOLUME_UP);
-			s_volume_up->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
-			settings_win->Attach(s_volume_up, { 177, 165 });
+			s_volume_up->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			settings_win->Attach(s_volume_up, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//SFX volume up label
-			s_volume_plus = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			s_volume_plus->SetText("+", { 255,255,255,255 }, App->font->medium_size);
-			s_volume_up->Attach(s_volume_plus, { 22, 2 });
+			temp = labels.child("s_up_lab");
+			s_volume_plus = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			s_volume_plus->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			s_volume_up->Attach(s_volume_plus, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//SFX volume value label
-			s_volume = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, 0, 0, this);
-			s_volume->SetText("9", { 255,255,255,255 }, App->font->medium_size);
-			settings_win->Attach(s_volume, { 125, 165 });
+			temp = dynamic_labels.child("sfx");
+			s_volume = (DynamicLabel*)App->gui->CreateWidget(DYNAMIC_LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			s_volume->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->medium_size);
+			settings_win->Attach(s_volume, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//SFX volume label
-			sfx_volume = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			sfx_volume->SetText("SFX volume:", { 255,255,255,255 }, App->font->small_size);
-			settings_win->Attach(sfx_volume, { 27, 142 });
+			temp = labels.child("sfx");
+			sfx_volume = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			sfx_volume->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
+			settings_win->Attach(sfx_volume, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Toggle fullscreen button
-			toggle_fullscreen = (Button*)App->gui->CreateWidget(BUTTON, 0, 0, this);
+			temp = buttons.child("fullscreen");
+			toggle_fullscreen = (Button*)App->gui->CreateWidget(BUTTON, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			toggle_fullscreen->SetButtonType(TOGGLE_FULLSCREEN);
-			toggle_fullscreen->SetSection({ 532, 717, 64, 32 }, { 532, 755, 64, 32 }, { 532, 793, 64, 32 });
-			settings_win->Attach(toggle_fullscreen, { 100, 240 });
+			toggle_fullscreen->SetSection({ temp.child("idle").attribute("x").as_int() , temp.child("idle").attribute("y").as_int(), temp.child("idle").attribute("w").as_int(), temp.child("idle").attribute("h").as_int() },
+			{ temp.child("hovering").attribute("x").as_int(), temp.child("hovering").attribute("y").as_int(), temp.child("hovering").attribute("w").as_int(), temp.child("hovering").attribute("h").as_int() },
+			{ temp.child("clicked").attribute("x").as_int(), temp.child("clicked").attribute("y").as_int(), temp.child("clicked").attribute("w").as_int(), temp.child("clicked").attribute("h").as_int() });
+			settings_win->Attach(toggle_fullscreen, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Toggle fullscreen label
-			fullscreen_lab = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			fullscreen_lab->SetText("Fullscreen:", { 255,255,255,255 }, App->font->small_size);
-			settings_win->Attach(fullscreen_lab, { 27, 215 });
+			temp = labels.child("fullscreen");
+			fullscreen_lab = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			fullscreen_lab->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
+			settings_win->Attach(fullscreen_lab, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			opened_win = settings_win;
 		}
@@ -370,8 +393,7 @@ void j1MainMenu::OpenWindow(uint type)
 			temp = windows.child("credits");
 			credits_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
 			credits_win->SetWindowType(VERTICAL_WINDOW);
-			credits_win->draggable = true;
-
+		
 			//Title small window
 			temp = windows.child("title");
 			title_win = (UIWindow*)App->gui->CreateWidget(WINDOW, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
@@ -394,19 +416,16 @@ void j1MainMenu::OpenWindow(uint type)
 			credits_win->Attach(close_window, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 		
 			//First label
-			credits_1 = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			credits_1->SetText("Programming: Cristian Palos", { 255,255,255,255 }, App->font->small_size);
-			credits_win->Attach(credits_1, { 17, 85 });
+			temp = labels.child("credits1");
+			credits_1 = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			credits_1->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
+			credits_win->Attach(credits_1, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			//Second label
-			credits_2 = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			credits_2->SetText("Joel Cabaco", { 255,255,255,255 }, App->font->small_size);
-			credits_win->Attach(credits_2, { 135, 105 });
-
-			//Third label
-			credits_3 = (Label*)App->gui->CreateWidget(LABEL, 0, 0, this);
-			credits_3->SetText("Sprites from:", { 255,255,255,255 }, App->font->small_size);
-			credits_win->Attach(credits_3, { 17, 145 });
+			temp = labels.child("credits2");
+			credits_2 = (Label*)App->gui->CreateWidget(LABEL, temp.child("position_x").attribute("value").as_int(), temp.child("position_y").attribute("value").as_int(), this);
+			credits_2->SetText(temp.child("content").attribute("value").as_string(), { 255,255,255,255 }, App->font->small_size);
+			credits_win->Attach(credits_2, { temp.child("relative_pos_x").attribute("value").as_int(), temp.child("relative_pos_y").attribute("value").as_int() });
 
 			opened_win = credits_win;
 		}

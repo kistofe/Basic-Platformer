@@ -345,8 +345,9 @@ void j1InGameScene::UpdateTimer()
 		return;
 
 	//Updating Timer
-	timer_count = scene_timer.ReadSec();
-	current_time = max_time - timer_count;
+	
+	if (scene_timer.ReadSec() >= 1)
+		current_time--, scene_timer.Start();
 	if (current_time == 0)
 	{
 		ResetTimer();
@@ -357,11 +358,12 @@ void j1InGameScene::UpdateTimer()
 void j1InGameScene::ResetTimer()
 {
 	current_time = max_time;
+	scene_timer.Start();
 }
 
 void j1InGameScene::UpdateScore()
 {
-	App->entities->player1 += current_time * 100 + App->entities->player1->lives_left * 100;
+	App->entities->player1->score += current_time * 50 + App->entities->player1->lives_left * 50;
 }
 
 void j1InGameScene::OpenWindow(uint type)

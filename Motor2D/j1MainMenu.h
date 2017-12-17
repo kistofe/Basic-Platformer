@@ -56,7 +56,6 @@ public:
 	Label* credits_title_lab = nullptr;
 	Label* credits_1 = nullptr;
 	Label* credits_2 = nullptr;
-	Label* credits_3 = nullptr;
 	Label* copyright = nullptr;
 	Label* m_volume_plus = nullptr;
 	Label* m_volume_minus = nullptr;
@@ -85,6 +84,7 @@ private:
 	pugi::xml_node labels;
 	pugi::xml_node buttons;
 	pugi::xml_node windows;
+	pugi::xml_node dynamic_labels;
 
 	bool fullscreen_on = false;
 	int m_volume_value = 9;

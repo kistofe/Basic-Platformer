@@ -15,6 +15,7 @@ It is a simple 2D platformer, entirely coded in C and C++, part of a University 
 - Web Page
 
 ### Joel Cabaco
+![](https://i.imgur.com/IDu18wy.png)
  
  - Enemy Pathfinding
  - Collider Creation from XML

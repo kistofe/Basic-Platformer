@@ -81,10 +81,9 @@ public:
 	uint	timer_count = 0;
 	uint	current_time = 0;
 	uint	max_time = 200;
-	uint	saved_time = 0;
 	j1Timer	scene_timer;
 	uint32	current_lvl = 1;
-	fPoint	gravity; 
+	fPoint	gravity;
 	fPoint	max_gravity; 
 	bool	paused = false;
 

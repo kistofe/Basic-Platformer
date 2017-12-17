@@ -91,9 +91,7 @@ bool j1InGameScene::CleanUp()
 
 bool j1InGameScene::Load(pugi::xml_node& data)
 {
-	saved_time = data.child("current_time").attribute("value").as_uint();
-
-	current_time = saved_time;
+	current_time = data.child("current_time").attribute("value").as_uint();
 
 	return true;
 }
@@ -140,6 +138,7 @@ bool j1InGameScene::OnEvent(Button* button)
 		break;
 	case TO_MAIN_SCENE:
 		App->sceneswitch->SwitchScene(App->mainmenu, this);
+		paused = false;
 		break;
 	
 	}
@@ -350,8 +349,8 @@ void j1InGameScene::UpdateTimer()
 	current_time = max_time - timer_count;
 	if (current_time == 0)
 	{
-		LOG("Now you'd go to Main Scene!");
 		ResetTimer();
+		App->sceneswitch->SwitchScene(App->mainmenu, this);
 	}
 }
 

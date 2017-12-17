@@ -162,6 +162,7 @@ bool j1App::Start()
 bool j1App::Update()
 {
 	bool ret = true;
+
 	PrepareUpdate();
 
 	if(input->GetWindowEvent(WE_QUIT) == true)
@@ -397,6 +398,11 @@ void j1App::SaveGame() const
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
+}
+
+void j1App::SkipFrames(uint frames_to_skip)
+{
+	frameskip = frames_to_skip;
 }
 
 bool j1App::LoadGameNow()

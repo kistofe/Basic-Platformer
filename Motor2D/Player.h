@@ -53,10 +53,10 @@ public:
 	uint coins = 0;
 	int sel_char = 0;
 
-	uint jumping_sfx;
-	uint landing_sfx;
-	uint death_sfx;
-	uint malejumping_sfx;
+	uint jumping_sfx = 0;
+	uint landing_sfx = 0;
+	uint death_sfx = 0;
+	uint malejumping_sfx = 0;
 
 private:
 
@@ -72,8 +72,8 @@ private:
 	uint jumps_left			= 2;
 	bool is_grounded		= true;
 
-	float	jumping_speed;
-	float	moving_speed;
+	float	jumping_speed = 0;
+	float	moving_speed = 0;
 	p2SString default_texture_src;
 	p2SString godmode_texture_src;
 

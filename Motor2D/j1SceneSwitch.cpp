@@ -40,6 +40,7 @@ bool j1SceneSwitch::Update(float d_time)
 		return ret;
 
 	float normalized = MIN(1.0f, switchtimer.ReadSec() / fadetime);
+	static iPoint temp_cam;
 
 	switch (current_step)
 	{
@@ -54,10 +55,14 @@ bool j1SceneSwitch::Update(float d_time)
 			{
 				App->collision->CleanUp();
 				App->entities->CleanUp();
-				App->render->camera.x = 0;
-				App->render->camera.y = 0;
 			}
 			App->gui->Start();
+			if (to_enable->name == "ingame_scene")
+			{
+				App->map->active = true;
+				App->collision->active = true;
+				App->entities->active = true;
+			}
 			to_enable->Enable();
 			switchtimer.Start();
 			current_step = fade_step::fade_from_black;
